@@ -6,24 +6,26 @@ using System.Web;
 
 namespace backend.Models
 {
-    public enum Status
-    {
-        Active = 1,
-        Deactive = 0
-    }
-    public class Payment
+    public class BookingTicket
     {
         [Key]
         public int Id { get; set; }
         [Required]
-        public string PaymentMethod { get; set; }
+        public int TicketId { get; set; }
+        public virtual Ticket Ticket { get; set; }
         [Required]
         public int BookingId { get; set; }
         public virtual Booking Booking { get; set; }
         [Required]
-        public double Amount { get; set; }
+        public string SeatFlightCode { get; set; }
         [Required]
-        public Status Status { get; set; }
+        public string PassengerName { get; set; }
+        [Required]
+        public string SeatFlightFree { get; set; }
+        [Required]
+        public string PassengerPhone { get; set; }
+        [Required]
+        public string PassengerIdentityNumber { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

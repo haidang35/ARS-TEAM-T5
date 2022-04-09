@@ -6,9 +6,10 @@ using System.Web;
 
 namespace backend.Models
 {
-    public enum RoleStatus {
-        active=0,
-        deactive =1
+    public enum RoleStatus
+    {
+        active = 0,
+        deactive = 1
     }
     public class Role
     {

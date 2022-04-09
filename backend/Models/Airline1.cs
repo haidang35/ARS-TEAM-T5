@@ -6,20 +6,18 @@ using System.Web;
 
 namespace backend.Models
 {
-    public class Location
+    public class Airline
     {
         [Key]
         public int Id { get; set; }
         [Required]
-        public string City { get; set; }
+        public string Name { get; set; }
         [Required]
-        public string Province { get; set; }
-        [Required]
-        public string CityCode { get; set; }
-        [Required]
-        public string AirPortName { get; set; }
+        public string Code { get; set; }
         [Required]
         public string Country { get; set; }
+        [Required]
+        public string Logo { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

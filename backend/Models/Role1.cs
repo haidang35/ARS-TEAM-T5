@@ -6,21 +6,20 @@ using System.Web;
 
 namespace backend.Models
 {
-    public class Location
+    public enum RoleStatus {
+        active=0,
+        deactive =1
+    }
+    public class Role
     {
         [Key]
         public int Id { get; set; }
         [Required]
-        public string City { get; set; }
+        public RoleStatus RoleName { get; set; }
         [Required]
-        public string Province { get; set; }
-        [Required]
-        public string CityCode { get; set; }
-        [Required]
-        public string AirPortName { get; set; }
-        [Required]
-        public string Country { get; set; }
+        public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
     }
 }

@@ -9,7 +9,7 @@ namespace backend.Models
     public enum BookingStatus
     {
         active = 0,
-        deactive = 1
+        deactive =1
     }
     public class Booking
     {
