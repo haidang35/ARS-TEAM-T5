@@ -8,8 +8,8 @@ namespace backend.Models
 {
     public enum TicketStatus
     {
-        active =0,
-        deactive =1
+        active = 0,
+        deactive = 1
     }
     public class Ticket
     {
