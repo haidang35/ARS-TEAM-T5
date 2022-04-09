@@ -4,10 +4,9 @@ import Navbar from './Modules/Public/Shared/Components/Navbar/Navbar';
 
 function App() {
   return (
-    <>
-    <Navbar />
-    
-    </>
+   <>
+  <Navbar />
+   </>
   );
 }
 
