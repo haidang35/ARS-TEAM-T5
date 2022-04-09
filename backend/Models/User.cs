@@ -6,20 +6,22 @@ using System.Web;
 
 namespace backend.Models
 {
-    public class Location
+    public class User
     {
         [Key]
         public int Id { get; set; }
         [Required]
-        public string City { get; set; }
+        public string Name { get; set; }
         [Required]
-        public string Province { get; set; }
+        public string Vocative { get; set; }
         [Required]
-        public string CityCode { get; set; }
+        public string PhoneNumber { get; set; }
         [Required]
-        public string AirPortName { get; set; }
+        public string Email { get; set; }
         [Required]
-        public string Country { get; set; }
+        public string Password { get; set; }
+        [Required]
+        public string Address { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

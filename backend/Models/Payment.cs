@@ -6,21 +6,24 @@ using System.Web;
 
 namespace backend.Models
 {
-    public class Location
+    public enum Status
+    {
+        Active = 1,
+        Deactive = 0
+    }
+    public class Payment
     {
         [Key]
         public int Id { get; set; }
         [Required]
-        public string City { get; set; }
+        public string PaymentMethod { get; set; }
         [Required]
-        public string Province { get; set; }
+        public int BookingId { get; set; }
+        public virtual Booking Booking { get; set; }
         [Required]
-        public string CityCode { get; set; }
+        public double Amount { get; set; }
         [Required]
-        public string AirPortName { get; set; }
-        [Required]
-        public string Country { get; set; }
+        public Status Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
-}
