@@ -1,12 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
-import Navbar from './Modules/Public/Shared/Components/Navbar/Navbar';
+import { Header } from './Modules/Public/Home/Components/Header/Header';
+import { ListDestination } from './Modules/Public/ListDestination/ListDestination';
+
 
 
 function App() {
   return (
    <>
-  <Navbar />
+   <Header />
+   {/* <ListDestination /> */}
+  
+  
    </>
   );
 }
