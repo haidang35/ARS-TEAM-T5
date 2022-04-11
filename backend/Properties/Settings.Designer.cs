@@ -26,9 +26,9 @@ namespace backend.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ARSData;Integrated Security=Tr" +
-            "ue;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationInte" +
-            "nt=ReadWrite;MultiSubnetFailover=False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\ADMIN\\AppData\\Local" +
+            "\\Microsoft\\Microsoft SQL Server Local DB\\Instances\\MSSQLLocalDB\\ARS.mdf\";Integra" +
+            "ted Security=True;Connect Timeout=30")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

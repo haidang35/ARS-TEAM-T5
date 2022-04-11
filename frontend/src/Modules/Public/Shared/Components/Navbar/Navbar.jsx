@@ -116,9 +116,7 @@ const Navbar = () => {
                   </MenuItem>
                 ))}
               </Menu>
-
             </Box>
-
             <Typography
               variant="h6"
               noWrap
@@ -138,9 +136,15 @@ const Navbar = () => {
                 </Button>
               ))}
             </Box>
-            <div className="search">
-              <input type="text" placeholder="Search" />
-            </div>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </Search>
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -155,6 +159,7 @@ const Navbar = () => {
                   vertical: 'top',
                   horizontal: 'right',
                 }}
+
                 keepMounted
                 transformOrigin={{
                   vertical: 'top',
@@ -168,12 +173,17 @@ const Navbar = () => {
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
+
               </Menu>
+
             </Box>
+
           </Toolbar>
+
+
         </Container>
       </AppBar>
-     
+
     </>
   )
 }

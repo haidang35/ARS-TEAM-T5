@@ -13,16 +13,16 @@ namespace backend.Data
         {
 
         }
-        public DbSet<Airline> Airline { get; set; }
-        public DbSet<Booking> Booking { get; set; }
-        public DbSet<BookingTicket> BookingTicket { get; set; }
-        public DbSet<Flight> Flight { get; set; }
-        public DbSet<Location> Location { get; set; }
-        public DbSet<Notification> Notification { get; set; }
-        public DbSet<Payment> Payment { get; set; }
-        public DbSet<Role> Role { get; set; }
-        public DbSet<Ticket> Ticket { get; set; }
-        public DbSet<User> User { get; set; }
-        public DbSet<UserRole> UserRole { get; set; }
+        public DbSet<Airline> Airlines { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<BookingTicket> BookingTickets { get; set; }
+        public DbSet<Flight> Flights { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
     }
 }
