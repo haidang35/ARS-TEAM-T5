@@ -15,6 +15,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Search from '@mui/icons-material/Search';
 import { style } from '@mui/system';
 import { InputBase } from '@mui/material';
+import "./Navbar.scss";
 
 
 const pages = ['Products', 'Pricing', 'Blog'];
@@ -137,9 +138,9 @@ const Navbar = () => {
                 </Button>
               ))}
             </Box>
-              <div className="search">
-                <input type="text" placeholder="Search"/>
-              </div>
+            <div className="search">
+              <input type="text" placeholder="Search" />
+            </div>
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -169,10 +170,10 @@ const Navbar = () => {
                 ))}
               </Menu>
             </Box>
-
           </Toolbar>
         </Container>
       </AppBar>
+     
     </>
   )
 }
