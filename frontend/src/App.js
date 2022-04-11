@@ -1,5 +1,5 @@
 import './App.css';
-import { Header } from './Modules/Public/Home/Header/Header';
+import { Header } from './Modules/Public/Home/Components/Header/Header';
 import { ListDestination } from './Modules/Public/ListDestination/ListDestination';
 
 
