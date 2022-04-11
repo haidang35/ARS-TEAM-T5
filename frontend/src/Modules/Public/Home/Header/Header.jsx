@@ -78,8 +78,12 @@ export class Header extends Component {
                                                         }
                                                     />
                                                 }
-                                                label="Round trip"
+                                                label="One Way"
                                             />
+                                           <div>
+                                           <TextField id="outlined-basic" label="" variant="outlined" />
+                                           <TextField id="outlined-basic" label="" variant="outlined" />
+                                           </div>
                                             <Stack component="form" noValidate spacing={3} className="datetime">
                                                 <TextField
                                                     id="date"
