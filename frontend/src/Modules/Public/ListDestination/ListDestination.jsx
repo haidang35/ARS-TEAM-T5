@@ -11,18 +11,7 @@ export class ListDestination extends Component {
     render(){
         return(
             <>
-            <Dialog open={onOpen} onClose={handleClone}>
-                <div className="list-destination">
-                    <Card className="card-content">
-                        <Typography>
-                            
-                        </Typography>
-
-                    </Card>
-
-                </div>
-
-            </Dialog>
+            
             </>
         )
     }
