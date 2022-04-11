@@ -192,6 +192,7 @@ export class Header extends Component {
                                                                 />
                                                             </div>
                                                         </div>
+                                                        <div className="search">
                                                         <Button
                                                             variant="contained"
                                                             className="btn-search-form"
@@ -208,6 +209,7 @@ export class Header extends Component {
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
                 <Footer />
 
