@@ -1,13 +1,14 @@
 import './App.css';
-import Navbar from './Modules/Public/Shared/Components/Navbar/Navbar';
-import Header from './Modules/Admin/Shared/Components/Header/Header';
+import { Header } from './Modules/Public/Home/Header/Header';
+
 
 
 function App() {
   return (
    <>
-  {/* <Navbar /> */}
-  <Header />
+   <Header />
+  
+  
    </>
   );
 }
