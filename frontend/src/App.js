@@ -1,16 +1,14 @@
-import './App.css';
-import { Header } from './Modules/Public/Home/Components/Header/Header';
-import { SearchTicketBox } from './Modules/Public/Shared/Components/SearchTiketBox/SearchTicketBox';
+import { Public } from "./Modules/Public/Public";
+
+
 
 
 
 function App() {
   return (
-   <>
-   {/* <Header /> */}
-  <SearchTicketBox />  
-  
-   </>
+    <>
+    <Public />
+    </>
   );
 }
 

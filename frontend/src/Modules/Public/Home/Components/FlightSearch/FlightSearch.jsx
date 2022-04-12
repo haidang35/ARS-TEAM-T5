@@ -2,22 +2,14 @@ import { Button, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import React, { Component } from "react";
 import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material";
 import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
 import Search from "@mui/icons-material/Search";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import InboxIcon from '@mui/icons-material/Inbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
+import { Location } from "../Location/Location";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { dateConvert, getDateTimeNow } from "../../../../../Helpers/datetime";
+
+
 
 
 export class FlightSearch extends Component {
@@ -28,22 +20,21 @@ export class FlightSearch extends Component {
             adults: 1,
             children: 0,
             infants: 0,
-            open: false,
-            locations: [
-                {
-                    id: 1,
-                    province: 'Ha Noi'
-                },
-                {
-                    id: 2,
-                    province: 'Ho Chi Minh'
-                }
-            ],
             searchData: {
-                departure: '',
-                destination: ''
-            }
+                departure: {
+                    province: ''
+                },
+                destination: {
+                    province: ''
+                },
+                departureDate: getDateTimeNow(),
+            },
+            openLocationDialog: false,
+            locationType: "",
+            value: "",
         }
+
+
     }
 
     handleChangeTripType = (ev) => {
@@ -52,30 +43,47 @@ export class FlightSearch extends Component {
         });
     };
 
-    handleClose = () => {
+    handleOpenDialog = (locationType) => {
         this.setState({
-            open: false
-        });
+            open: true,
+            locationType
+        })
     }
 
-    handleOpenDialog = () => {
-        this.setState({
-            open: true
-        });
-    }
+    selectLocation = (location) => {
+        let { searchData, locationType } = this.state;
+        if (locationType === 'departure') {
+            searchData['departure'] = location;
 
-    onSelectLocation = (location) => {
-        let { searchData } = this.state;
-        searchData['departure'] = location;
-        this.setState({ 
+        } else if (locationType === 'destination') {
+            searchData['destination'] = location;
+
+        }
+        this.setState({
             searchData,
-            open: false
-         });
+            open: false,
+        })
     }
+
+    onCloseDialog = () => {
+        this.setState({
+            open: false
+        })
+    }
+
+    handleDepartureDate = (newValue) => {
+        let { searchData } = this.state;
+        searchData['departureDate'] = newValue;
+        this.setState({
+            searchData
+        })
+    }
+
+
 
     render() {
-        const { open, locations } = this.state;
-        const { departure, destination } = this.state.searchData;
+        const { open, locations, value } = this.state;
+        const { departure, destination, departureDate } = this.state.searchData;
         return (
             <>
                 <div className="header-left">
@@ -123,22 +131,29 @@ export class FlightSearch extends Component {
                             }
                             label="One Way"
                         />
-                        <div>
-                            <TextField id="outlined-basic" label="" value={departure.province} variant="outlined" onClick={this.handleOpenDialog} />
-                            <TextField id="outlined-basic" label="" variant="outlined" />
+                        
+                        <div className="">
+                            <TextField label="" value={departure.province} variant="outlined" onClick={() => this.handleOpenDialog('departure')} />
+                            <TextField label="" value={destination.province} variant="outlined" onClick={() => this.handleOpenDialog('destination')} />
                         </div>
-                        <Stack component="form" noValidate spacing={3} className="datetime">
-                            <TextField
-                                id="date"
-                                label="Date"
-                                type="date"
-                                defaultValue="2022-04-11"
-                                sx={{ width: 220 }}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
+                                label="Departure Date"
+                                value={departureDate}
+                                inputFormat="dd/MM/yyyy"
+                                onChange={this.handleDepartureDate}
+                                renderInput={(params) => <TextField {...params} />}
                             />
-                        </Stack>
+                        </LocalizationProvider>
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
+                                label="Destination Date"
+                                value={departureDate}
+                                inputFormat="dd/MM/yyyy"
+                                onChange={this.handleDepartureDate}
+                                renderInput={(params) => <TextField {...params} />}
+                            />
+                        </LocalizationProvider>
                         <div className="passenger-type">
                             <div className="row">
                                 <div className="col-sm-4">
@@ -253,40 +268,7 @@ export class FlightSearch extends Component {
                         </div>
                     </div>
                 </div>
-                <Dialog
-                    open={open}
-                    onClose={this.handleClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">
-                        {"Departure"}
-                    </DialogTitle>
-                    <DialogContent>
-                        <List>
-                            {
-                                locations.map((location) => {
-                                    return (
-                                        <ListItem disablePadding key={location.id} onClick={() => this.onSelectLocation(location)}>
-                                            <ListItemButton>
-                                                <ListItemIcon>
-                                                    <InboxIcon />
-                                                </ListItemIcon>
-                                                <ListItemText primary={location.province} />
-                                            </ListItemButton>
-                                        </ListItem>
-                                    )
-                                })
-                            }
-                        </List>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleClose}>Disagree</Button>
-                        <Button onClick={this.handleClose} autoFocus>
-                            Agree
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                <Location open={open} selectLocation={this.selectLocation} onCloseDialog={this.onCloseDialog} />
             </>
         )
     }
