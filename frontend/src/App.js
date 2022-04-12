@@ -1,13 +1,14 @@
 import './App.css';
 import { Header } from './Modules/Public/Home/Components/Header/Header';
+import { SearchTicketBox } from './Modules/Public/Shared/Components/SearchTiketBox/SearchTicketBox';
 
 
 
 function App() {
   return (
    <>
-   <Header />
-  
+   {/* <Header /> */}
+  <SearchTicketBox />  
   
    </>
   );
