@@ -11,15 +11,15 @@ namespace backend.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string City { get; set; }
+        public int CityId { get; set; }
+        public virtual  City City { get; set; }
         [Required]
-        public string Province { get; set; }
-        [Required]
-        public string CityCode { get; set; }
+        public int ProvinceId { get; set; }
+        public virtual Province Province { get; set; }
         [Required]
         public string AirPortName { get; set; }
         [Required]
-        public string Country { get; set; }
+        public string AirPortCode { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

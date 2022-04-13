@@ -13,51 +13,51 @@ using backend.Models;
 
 namespace backend.Controllers
 {
-    public class AirlinesController : ApiController
+    public class ProvincesController : ApiController
     {
         private MyDbContext db = new MyDbContext();
 
-        // GET: api/Airlines
-        [Route("~/api/airlines")]
+        // GET: api/Provinces
+        [Route("~/api/provinces")]
         [HttpGet]
-        [ResponseType(typeof(ICollection <Airline>))]
-        public IHttpActionResult GetAirlines()
+        [ResponseType(typeof(Province))]
+        public IHttpActionResult GetProvinces()
         {
-            return Ok(db.Airlines.ToList());
+            return Ok(db.Provinces.ToList());
         }
 
-        // GET: api/Airlines/5
-        [Route("~/api/airlines/{id:int}")]
+        // GET: api/Provinces/5
+        [Route("~/api/provinces/{id:int}")]
         [HttpGet]
-        [ResponseType(typeof(Airline))]
-        public IHttpActionResult GetAirline(int id)
+        [ResponseType(typeof(Province))]
+        public IHttpActionResult GetProvince(int id)
         {
-            Airline airline = db.Airlines.Find(id);
-            if (airline == null)
+            Province province = db.Provinces.Find(id);
+            if (province == null)
             {
                 return NotFound();
             }
 
-            return Ok(airline);
+            return Ok(province);
         }
 
-        // PUT: api/Airlines/5
-        [Route("~/api/airlines/{id:int}")]
+        // PUT: api/Provinces/5
+        [Route("~/api/provinces/{id:int}")]
         [HttpPut]
-        [ResponseType(typeof(Airline))]
-        public IHttpActionResult PutAirline(int id, Airline airline)
+        [ResponseType(typeof(Province))]
+        public IHttpActionResult PutProvince(int id, Province province)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != airline.Id)
+            if (id != province.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(airline).State = EntityState.Modified;
+            db.Entry(province).State = EntityState.Modified;
 
             try
             {
@@ -65,7 +65,7 @@ namespace backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AirlineExists(id))
+                if (!ProvinceExists(id))
                 {
                     return NotFound();
                 }
@@ -75,43 +75,42 @@ namespace backend.Controllers
                 }
             }
 
-            return Ok(airline);
+            return Ok(province);
         }
 
-        // POST: api/Airlines
-        [Route("~/api/airlines")]
+        // POST: api/Provinces
+        [Route("~/api/provinces")]
         [HttpPost]
-        [ResponseType(typeof(Airline))]
-        public IHttpActionResult PostAirline(Airline airline)
+        [ResponseType(typeof(Province))]
+        public IHttpActionResult PostProvince(Province province)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Airlines.Add(airline);
+            db.Provinces.Add(province);
             db.SaveChanges();
 
-            return Ok(airline);
+            return Ok(province);
         }
 
-        // DELETE: api/Airlines/5
-        [Route("~/api/airlines/{id:int}")]
+        // DELETE: api/Provinces/5
+        [Route("~/api/provinces/{id:int}")]
         [HttpDelete]
-        [ResponseType(typeof(Airline))]
-       
-        public IHttpActionResult DeleteAirline(int id)
+        [ResponseType(typeof(Province))]
+        public IHttpActionResult DeleteProvince(int id)
         {
-            Airline airline = db.Airlines.Find(id);
-            if (airline == null)
+            Province province = db.Provinces.Find(id);
+            if (province == null)
             {
                 return NotFound();
             }
 
-            db.Airlines.Remove(airline);
+            db.Provinces.Remove(province);
             db.SaveChanges();
 
-            return Ok(airline);
+            return Ok(province);
         }
 
         protected override void Dispose(bool disposing)
@@ -123,9 +122,9 @@ namespace backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool AirlineExists(int id)
+        private bool ProvinceExists(int id)
         {
-            return db.Airlines.Count(e => e.Id == id) > 0;
+            return db.Provinces.Count(e => e.Id == id) > 0;
         }
     }
 }

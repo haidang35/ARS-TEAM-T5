@@ -7,13 +7,13 @@ namespace backend.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UpdateARS : IMigrationMetadata
+    public sealed partial class UpdateFlightTable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateARS));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateFlightTable));
         
         string IMigrationMetadata.Id
         {
-            get { return "202204091306194_Update ARS"; }
+            get { return "202204130339593_UpdateFlightTable"; }
         }
         
         string IMigrationMetadata.Source

@@ -17,6 +17,7 @@ namespace backend.Models
         public int Id { get; set; }
         [Required]
         public int FlightId { get; set; }
+        public virtual  Flight Flight { get; set; }
         [Required]
         public TicketStatus TicketType { get; set; }
         public DateTime ArrivalTime { get; set; }

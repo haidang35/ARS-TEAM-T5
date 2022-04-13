@@ -24,5 +24,7 @@ namespace backend.Data
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Province> Provinces { get; set; }
     }
 }
