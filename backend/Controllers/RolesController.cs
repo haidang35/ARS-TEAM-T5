@@ -13,51 +13,51 @@ using backend.Models;
 
 namespace backend.Controllers
 {
-    public class AirlinesController : ApiController
+    public class RolesController : ApiController
     {
         private MyDbContext db = new MyDbContext();
 
-        // GET: api/Airlines
-        [Route("~/api/airlines")]
+        // GET: api/Roles
+        [Route("~/api/roles")]
         [HttpGet]
-        [ResponseType(typeof(ICollection <Airline>))]
-        public IHttpActionResult GetAirlines()
+        [ResponseType(typeof(ICollection<Role>))]
+        public IHttpActionResult GetRoles()
         {
-            return Ok(db.Airlines.ToList());
+            return Ok(db.Roles.ToList());
         }
 
-        // GET: api/Airlines/5
-        [Route("~/api/airlines/{id:int}")]
+        // GET: api/Roles/5
+        [Route("~/api/roles/{id:int}")]
         [HttpGet]
-        [ResponseType(typeof(Airline))]
-        public IHttpActionResult GetAirline(int id)
+        [ResponseType(typeof(Role))]
+        public IHttpActionResult GetRole(int id)
         {
-            Airline airline = db.Airlines.Find(id);
-            if (airline == null)
+            Role role = db.Roles.Find(id);
+            if (role == null)
             {
                 return NotFound();
             }
 
-            return Ok(airline);
+            return Ok(role);
         }
 
-        // PUT: api/Airlines/5
-        [Route("~/api/airlines/{id:int}")]
+        // PUT: api/Roles/5
+        [Route("~/api/roles/{id:int}")]
         [HttpPut]
-        [ResponseType(typeof(Airline))]
-        public IHttpActionResult PutAirline(int id, Airline airline)
+        [ResponseType(typeof(Role))]
+        public IHttpActionResult PutRole(int id, Role role)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != airline.Id)
+            if (id != role.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(airline).State = EntityState.Modified;
+            db.Entry(role).State = EntityState.Modified;
 
             try
             {
@@ -65,7 +65,7 @@ namespace backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AirlineExists(id))
+                if (!RoleExists(id))
                 {
                     return NotFound();
                 }
@@ -75,43 +75,42 @@ namespace backend.Controllers
                 }
             }
 
-            return Ok(airline);
+            return Ok(role);
         }
 
-        // POST: api/Airlines
-        [Route("~/api/airlines")]
+        // POST: api/Roles
+        [Route("~/api/roles")]
         [HttpPost]
-        [ResponseType(typeof(Airline))]
-        public IHttpActionResult PostAirline(Airline airline)
+        [ResponseType(typeof(Role))]
+        public IHttpActionResult PostRole(Role role)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Airlines.Add(airline);
+            db.Roles.Add(role);
             db.SaveChanges();
 
-            return Ok(airline);
+            return Ok(role);
         }
 
-        // DELETE: api/Airlines/5
-        [Route("~/api/airlines/{id:int}")]
+        // DELETE: api/Roles/5
+        [Route("~/api/roles/{id:int}")]
         [HttpDelete]
-        [ResponseType(typeof(Airline))]
-       
-        public IHttpActionResult DeleteAirline(int id)
+        [ResponseType(typeof(Role))]
+        public IHttpActionResult DeleteRole(int id)
         {
-            Airline airline = db.Airlines.Find(id);
-            if (airline == null)
+            Role role = db.Roles.Find(id);
+            if (role == null)
             {
                 return NotFound();
             }
 
-            db.Airlines.Remove(airline);
+            db.Roles.Remove(role);
             db.SaveChanges();
 
-            return Ok(airline);
+            return Ok(role);
         }
 
         protected override void Dispose(bool disposing)
@@ -123,9 +122,9 @@ namespace backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool AirlineExists(int id)
+        private bool RoleExists(int id)
         {
-            return db.Airlines.Count(e => e.Id == id) > 0;
+            return db.Roles.Count(e => e.Id == id) > 0;
         }
     }
 }

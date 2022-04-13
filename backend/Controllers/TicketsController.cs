@@ -13,51 +13,51 @@ using backend.Models;
 
 namespace backend.Controllers
 {
-    public class AirlinesController : ApiController
+    public class TicketsController : ApiController
     {
         private MyDbContext db = new MyDbContext();
 
-        // GET: api/Airlines
-        [Route("~/api/airlines")]
+        // GET: api/Tickets
+        [Route("~/api/tickets")]
         [HttpGet]
-        [ResponseType(typeof(ICollection <Airline>))]
-        public IHttpActionResult GetAirlines()
+        [ResponseType(typeof(ICollection<Ticket>))]
+        public IHttpActionResult GetTickets()
         {
-            return Ok(db.Airlines.ToList());
+            return Ok(db.Tickets.ToList());
         }
 
-        // GET: api/Airlines/5
-        [Route("~/api/airlines/{id:int}")]
+        // GET: api/Tickets/5
+        [Route("~/api/tickets/{id:int}")]
         [HttpGet]
-        [ResponseType(typeof(Airline))]
-        public IHttpActionResult GetAirline(int id)
+        [ResponseType(typeof(Ticket))]
+        public IHttpActionResult GetTicket(int id)
         {
-            Airline airline = db.Airlines.Find(id);
-            if (airline == null)
+            Ticket ticket = db.Tickets.Find(id);
+            if (ticket == null)
             {
                 return NotFound();
             }
 
-            return Ok(airline);
+            return Ok(ticket);
         }
 
-        // PUT: api/Airlines/5
-        [Route("~/api/airlines/{id:int}")]
+        // PUT: api/Tickets/5
+        [Route("~/api/tickets/{id:int}")]
         [HttpPut]
-        [ResponseType(typeof(Airline))]
-        public IHttpActionResult PutAirline(int id, Airline airline)
+        [ResponseType(typeof(Ticket))]
+        public IHttpActionResult PutTicket(int id, Ticket ticket)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != airline.Id)
+            if (id != ticket.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(airline).State = EntityState.Modified;
+            db.Entry(ticket).State = EntityState.Modified;
 
             try
             {
@@ -65,7 +65,7 @@ namespace backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AirlineExists(id))
+                if (!TicketExists(id))
                 {
                     return NotFound();
                 }
@@ -75,43 +75,42 @@ namespace backend.Controllers
                 }
             }
 
-            return Ok(airline);
+            return Ok(ticket);
         }
 
-        // POST: api/Airlines
-        [Route("~/api/airlines")]
+        // POST: api/Tickets
+        [Route("~/api/tickets")]
         [HttpPost]
-        [ResponseType(typeof(Airline))]
-        public IHttpActionResult PostAirline(Airline airline)
+        [ResponseType(typeof(Ticket))]
+        public IHttpActionResult PostTicket(Ticket ticket)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Airlines.Add(airline);
+            db.Tickets.Add(ticket);
             db.SaveChanges();
 
-            return Ok(airline);
+            return Ok(ticket);
         }
 
-        // DELETE: api/Airlines/5
-        [Route("~/api/airlines/{id:int}")]
+        // DELETE: api/Tickets/5
+        [Route("~/api/tickets/{id:int}")]
         [HttpDelete]
-        [ResponseType(typeof(Airline))]
-       
-        public IHttpActionResult DeleteAirline(int id)
+        [ResponseType(typeof(Ticket))]
+        public IHttpActionResult DeleteTicket(int id)
         {
-            Airline airline = db.Airlines.Find(id);
-            if (airline == null)
+            Ticket ticket = db.Tickets.Find(id);
+            if (ticket == null)
             {
                 return NotFound();
             }
 
-            db.Airlines.Remove(airline);
+            db.Tickets.Remove(ticket);
             db.SaveChanges();
 
-            return Ok(airline);
+            return Ok(ticket);
         }
 
         protected override void Dispose(bool disposing)
@@ -123,9 +122,9 @@ namespace backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool AirlineExists(int id)
+        private bool TicketExists(int id)
         {
-            return db.Airlines.Count(e => e.Id == id) > 0;
+            return db.Tickets.Count(e => e.Id == id) > 0;
         }
     }
 }

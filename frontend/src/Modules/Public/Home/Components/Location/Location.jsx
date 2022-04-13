@@ -19,6 +19,7 @@ import Divider from '@mui/material/Divider';
 import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
 
+
 export class Location extends Component {
     constructor(props) {
         super(props);
@@ -32,6 +33,7 @@ export class Location extends Component {
                     id: 2,
                     province: 'ha noi '
                 }
+                
             ],
         }
     }

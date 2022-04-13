@@ -10,7 +10,10 @@ import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material";
 import Search from "@mui/icons-material/Search";
 import { Location } from "./Location/Location";
 
-
+const TRIP_TYPE = {
+    ONEWAY: 1,
+    ROUNDTRIP: 2,
+}
 
 export class SearchTicketBox extends Component {
     constructor(props) {
@@ -28,13 +31,19 @@ export class SearchTicketBox extends Component {
                     province: ''
                 },
                 departureDate: getDateTimeNow(),
+                returnDate: getDateTimeNow(),
+                tripType: TRIP_TYPE.ONEWAY,
             },
+
+
             openLocationDialog: false,
             locationType: "",
 
-
         }
+
+
     }
+
     handleChangeTripType = (ev) => {
         this.setState({
             tripType: ev.target.value,
@@ -47,11 +56,28 @@ export class SearchTicketBox extends Component {
             locationType
         })
     }
-    onCloseDialog = () => {
+
+    selectLocation = (location) => {
+        let { searchData, locationType } = this.state;
+        if (locationType === 'departure') {
+            searchData['departure'] = location;
+
+        } else if (locationType === 'destination') {
+            searchData['destination'] = location;
+
+        }
         this.setState({
-            open : false
+            searchData,
+            open: false,
         })
     }
+
+    onCloseDialog = () => {
+        this.setState({
+            open: false
+        })
+    }
+
     handleDepartureDate = (newValue) => {
         let { searchData } = this.state;
         searchData['departureDate'] = newValue;
@@ -59,8 +85,69 @@ export class SearchTicketBox extends Component {
             searchData
         })
     }
+
+    changeQuantityPassenger = (passengerType, action) => {
+        switch (passengerType) {
+            case 1:
+                this.setQuantityPassenger(action, "adults", this.state.adults);
+                break;
+            case 2:
+                this.setQuantityPassenger(
+                    action,
+                    "children",
+                    this.state.children
+                );
+                break;
+            case 3:
+                this.setQuantityPassenger(
+                    action,
+                    "infants",
+                    this.state.infants
+                );
+                break;
+            default:
+                break;
+        }
+    };
+
+    setQuantityPassenger = (action, stateName, stateValue) => {
+        if (action == 1) {
+            this.setState({
+                [stateName]: stateValue + 1,
+            });
+        } else if (action == 0 && stateValue > 0 && stateName !== "adults") {
+            this.setState({
+                [stateName]: stateValue - 1,
+            });
+        } else if (action == 0 && stateValue >= 2 && stateName == "adults") {
+            this.setState({
+                [stateName]: stateValue - 1,
+            });
+        }
+    };
+
+    handleReturnDate = (newValue) => {
+        let { searchData } = this.state;
+        searchData['returnDate'] = newValue;
+        this.setState({
+            searchData
+        });
+    }
+
+    handleChangeTripType = (ev) => {
+        const { name, value } = ev.target;
+        let { searchData } = this.state;
+        searchData['tripType'] = parseInt(value);
+        this.setState({
+            searchData
+        })
+
+    }
+
+
+
     render() {
-        const { departure, destination, departureDate } = this.state.searchData;
+        const { departure, destination, departureDate, returnDate, tripType } = this.state.searchData;
         const { open, location } = this.state;
 
         return (
@@ -77,12 +164,8 @@ export class SearchTicketBox extends Component {
                                                     name="checkedB"
                                                     color="primary"
                                                     className="check-box"
-                                                    checked={
-                                                        this.state.tripType == 1
-                                                            ? true
-                                                            : false
-                                                    }
-                                                    alue={1}
+
+                                                    value={TRIP_TYPE.ROUNDTRIP}
                                                     onChange={
                                                         this
                                                             .handleChangeTripType
@@ -97,12 +180,8 @@ export class SearchTicketBox extends Component {
                                                     name="checkedB"
                                                     color="primary"
                                                     className="check-box"
-                                                    checked={
-                                                        this.state.tripType == 1
-                                                            ? true
-                                                            : false
-                                                    }
-                                                    alue={1}
+
+                                                    value={TRIP_TYPE.ONEWAY}
                                                     onChange={
                                                         this
                                                             .handleChangeTripType
@@ -249,10 +328,13 @@ export class SearchTicketBox extends Component {
                                     <div className="input-destination">
                                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                                             <DatePicker
+                                            disabled={
+                                                tripType === TRIP_TYPE.ONEWAY
+                                            }
                                                 label="Destination Date"
-                                                value={departureDate}
+                                                value={returnDate}
                                                 inputFormat="dd/MM/yyyy"
-                                                onChange={this.handleDepartureDate}
+                                                onChange={this.handleReturnDate}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
                                         </LocalizationProvider>
@@ -277,7 +359,7 @@ export class SearchTicketBox extends Component {
                     </div>
 
                 </div>
-                <Location open={open} selectLocation={this.selectLocation} onCloseDialog={this.onCloseDialog}/>
+                <Location open={open} selectLocation={this.selectLocation} onCloseDialog={this.onCloseDialog} />
 
             </>
         )
