@@ -1,0 +1,23 @@
+#search-Ticket-Box {
+    width: 100vw;
+    height: 200px;
+    background-color: #7B68EE	;
+    box-sizing: content-box;
+
+
+    .search-Ticket {
+        background-color: blue;
+    }
+    .text-Field {
+        width: 50ch;
+        background-color: aliceblue;
+        display: flex;
+        flex-direction: row;    
+        margin-left: 10px;
+    }
+    .date-Time {
+        padding-top: 20px;
+        margin-left: 10px;
+        background-color: aliceblue;
+    }
+}

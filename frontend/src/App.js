@@ -1,12 +1,14 @@
-import './App.css';
-import Navbar from './Modules/Public/Shared/Components/Navbar/Navbar';
+import { Public } from "./Modules/Public/Public";
+
+
+
 
 
 function App() {
   return (
-   <>
-  <Navbar />
-   </>
+    <>
+    <Public />
+    </>
   );
 }
 
