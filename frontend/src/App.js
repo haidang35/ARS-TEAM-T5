@@ -1,5 +1,5 @@
 import { Public } from "./Modules/Public/Public";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 
 
 

@@ -8,6 +8,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { dateConvert, getDateTimeNow } from "../../../../../Helpers/datetime";
+import "./FlightSearch.scss"
 
 
 
@@ -86,7 +87,7 @@ export class FlightSearch extends Component {
         const { departure, destination, departureDate } = this.state.searchData;
         return (
             <>
-                <div className="header-left">
+                <div id="header-left">
                     <Typography variant="h1" className="title">
                         WHERE WOULD YOU LIKE TO GO ?
                     </Typography>
@@ -132,10 +133,17 @@ export class FlightSearch extends Component {
                             label="One Way"
                         />
                         
-                        <div className="">
+                        <div className="input">
+                            <div className="departure">
                             <TextField label="" value={departure.province} variant="outlined" onClick={() => this.handleOpenDialog('departure')} />
+                            </div>
+
+                            <div className="destination">
                             <TextField label="" value={destination.province} variant="outlined" onClick={() => this.handleOpenDialog('destination')} />
+                            </div>
+
                         </div>
+                        <div className="departure-date">
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Departure Date"
@@ -154,7 +162,9 @@ export class FlightSearch extends Component {
                                 renderInput={(params) => <TextField {...params} />}
                             />
                         </LocalizationProvider>
-                        <div className="passenger-type">
+                        </div>
+                        
+                        <div className="passenger-type" >
                             <div className="row">
                                 <div className="col-sm-4">
                                     <div className="choose-quantity">

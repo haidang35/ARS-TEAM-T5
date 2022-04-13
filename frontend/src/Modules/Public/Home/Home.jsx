@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Navbar from "../Shared/Components/Navbar/Navbar";
 import { Header } from "./Components/Header/Header";
 import { SeachFlightTicket } from "./Components/SearchFlightTicket/SeachFlightTicket";
 
@@ -13,7 +14,6 @@ export class Home extends Component {
     render(){
         return(
             <>
-             
             <Header /> 
              <SeachFlightTicket />
            

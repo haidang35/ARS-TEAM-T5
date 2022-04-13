@@ -1,82 +1,285 @@
-import Box from '@mui/material/Box';
-import "./SearchTicketBox.scss";
+import React, { Component } from "react";
+import "./SearchTicketBox.scss"
+import { Button, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import TextField from '@mui/material/TextField';
-import { Component } from 'react';
-import Stack from '@mui/material/Stack';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-
-
-
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { getDateTimeNow } from "../../../../../Helpers/datetime";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material";
+import Search from "@mui/icons-material/Search";
+import { Location } from "./Location/Location";
 
 
 
 export class SearchTicketBox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-      value : '',
+    constructor(props) {
+        super(props);
+        this.state = {
+            tripType: 1,
+            adults: 1,
+            children: 0,
+            infants: 0,
+            searchData: {
+                departure: {
+                    province: ''
+                },
+                destination: {
+                    province: ''
+                },
+                departureDate: getDateTimeNow(),
+            },
+            openLocationDialog: false,
+            locationType: "",
 
-      locations: [
-        {
-          id: 1,
-          province: 'Ha Noi'
-        },
-        {
-          id: 2,
-          province: 'Ho Chi Minh'
+
         }
-      ],
-      searchData: {
-        departure: '',
-        destination: ''
-      }
-      
     }
-  }
+    handleChangeTripType = (ev) => {
+        this.setState({
+            tripType: ev.target.value,
+        });
+    };
 
-  Dialog = () => {
-    this.setState({
-      open: true
-    });
-  }
+    handleOpenDialog = (locationType) => {
+        this.setState({
+            open: true,
+            locationType
+        })
+    }
+    onCloseDialog = () => {
+        this.setState({
+            open : false
+        })
+    }
+    handleDepartureDate = (newValue) => {
+        let { searchData } = this.state;
+        searchData['departureDate'] = newValue;
+        this.setState({
+            searchData
+        })
+    }
+    render() {
+        const { departure, destination, departureDate } = this.state.searchData;
+        const { open, location } = this.state;
 
-  handleChange = (newValue) => {
-    this.setState({
-       value : newValue,
-    });
-  };
-  
-  render() {
-    const { value } = this.state;
-    const { departure, destination } = this.state.searchData;
+        return (
+            <>
+                <div id="search-ticket-box">
+                    <div className="wrap-container">
+                        <div className="search-flight-bar">
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <div className="formcheck">
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    name="checkedB"
+                                                    color="primary"
+                                                    className="check-box"
+                                                    checked={
+                                                        this.state.tripType == 1
+                                                            ? true
+                                                            : false
+                                                    }
+                                                    alue={1}
+                                                    onChange={
+                                                        this
+                                                            .handleChangeTripType
+                                                    }
+                                                />
+                                            }
+                                            label="Round trip"
+                                        />
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    name="checkedB"
+                                                    color="primary"
+                                                    className="check-box"
+                                                    checked={
+                                                        this.state.tripType == 1
+                                                            ? true
+                                                            : false
+                                                    }
+                                                    alue={1}
+                                                    onChange={
+                                                        this
+                                                            .handleChangeTripType
+                                                    }
+                                                />
+                                            }
+                                            label="One Way"
+                                        />
 
-    return (
-      <>
-        <div id="search-Ticket-Box">
-          <Box
-            className="search-Ticket"
+                                    </div>
+                                </div>
 
+                                <div className="col-md-4">
+                                    <TextField
+                                        className="departure"
+                                        label="Departure" value={departure.province} variant="outlined" onClick={() => this.handleOpenDialog('departure')} />
+                                </div>
+                                <div className="col-md-4">
+                                    <TextField
+                                        className="destination"
+                                        label="Destination" value={destination.province} variant="outlined" onClick={() => this.handleOpenDialog('destination')} />
+                                </div>
+                                <div className="col-md-4">
+                                    <div className="passenger-type" >
+                                        <div className="row">
+                                            <div className="col-sm-4">
+                                                <div className="choose-quantity">
+                                                    <label className="title-passenger">
+                                                        Adults
+                                                    </label>
+                                                    <div className="content">
+                                                        <RemoveCircleOutline
+                                                            onClick={() =>
+                                                                this.changeQuantityPassenger(
+                                                                    1,
+                                                                    0
+                                                                )
+                                                            }
+                                                            className="icon"
+                                                        />
+                                                        <span className="quantity">
+                                                            {
+                                                                this.state
+                                                                    .adults
+                                                            }
+                                                        </span>
+                                                        <AddCircleOutline
+                                                            onClick={() =>
+                                                                this.changeQuantityPassenger(
+                                                                    1,
+                                                                    1
+                                                                )
+                                                            }
+                                                            className="icon"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-4">
+                                                <div className="choose-quantity">
+                                                    <label className="title-passenger">
+                                                        Children
+                                                    </label>
+                                                    <div className="content">
+                                                        <RemoveCircleOutline
+                                                            onClick={() =>
+                                                                this.changeQuantityPassenger(
+                                                                    2,
+                                                                    0
+                                                                )
+                                                            }
+                                                            className="icon"
+                                                        />
+                                                        <span className="quantity">
+                                                            {
+                                                                this.state
+                                                                    .children
+                                                            }
+                                                        </span>
+                                                        <AddCircleOutline
+                                                            onClick={() =>
+                                                                this.changeQuantityPassenger(
+                                                                    2,
+                                                                    1
+                                                                )
+                                                            }
+                                                            className="icon"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-4">
+                                                <div className="choose-quantity">
+                                                    <label className="title-passenger">
+                                                        Infants
+                                                    </label>
+                                                    <div className="content">
+                                                        <RemoveCircleOutline
+                                                            onClick={() =>
+                                                                this.changeQuantityPassenger(
+                                                                    3,
+                                                                    0
+                                                                )
+                                                            }
+                                                            className="icon"
+                                                        />
+                                                        <span className="quantity">
+                                                            {
+                                                                this.state
+                                                                    .infants
+                                                            }
+                                                        </span>
+                                                        <AddCircleOutline
+                                                            onClick={() =>
+                                                                this.changeQuantityPassenger(
+                                                                    3,
+                                                                    1
+                                                                )
+                                                            }
+                                                            className="icon"
+                                                        />
+                                                    </div>
+                                                </div>
 
-          />
-          <div className="text-Field">
-            <TextField id="outlined-basic" label="" value={departure.province} variant="outlined" onClick={this.Dialog} />
-            <TextField id="outlined-basic" label="" value={departure.province} variant="outlined" onClick={this.Dialog} />
-          </div>
-         <div>
-         <Stack spacing={3}>
-        <DesktopDatePicker
-          label="Date desktop"
-          inputFormat="dd/MM/yyyy"
-          value={value} 
-          onChange={this.handleChange}  
-          renderInput={(params) => <TextField {...params} />}
-        />
-         </Stack>
-         </div>
-        </div>
-      </>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-    );
-  }
+                                <div className="col-md-4">
+                                    <div className="input-destination">
+                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                            <DatePicker
+                                                label="Departure Date"
+                                                value={departureDate}
+                                                inputFormat="dd/MM/yyyy"
+                                                onChange={this.handleDepartureDate}
+                                                renderInput={(params) => <TextField {...params} />}
+                                            />
+                                        </LocalizationProvider>
+                                    </div>
+                                </div>
+                                <div className="col-md-4">
+                                    <div className="input-destination">
+                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                            <DatePicker
+                                                label="Destination Date"
+                                                value={departureDate}
+                                                inputFormat="dd/MM/yyyy"
+                                                onChange={this.handleDepartureDate}
+                                                renderInput={(params) => <TextField {...params} />}
+                                            />
+                                        </LocalizationProvider>
+
+                                    </div>
+                                </div>
+                                <div className="col-md-4">
+                                    <div className="search">
+                                        <Button
+                                            variant="contained"
+                                            className="btn-search-form"
+                                            startIcon={<Search />}
+                                        >
+                                            Search flights
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <Location open={open} selectLocation={this.selectLocation} onCloseDialog={this.onCloseDialog}/>
+
+            </>
+        )
+    }
 }
