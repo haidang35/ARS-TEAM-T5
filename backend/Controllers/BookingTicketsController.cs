@@ -90,7 +90,7 @@ namespace backend.Controllers
             }
 
             db.BookingTickets.Add(bookingTicket);
-            db.SaveChanges();
+                db.SaveChanges();
 
             return Ok(bookingTicket);
         }

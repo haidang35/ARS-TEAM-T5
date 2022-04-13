@@ -20,17 +20,17 @@ namespace backend.Controllers
         // GET: api/Notifications
         [Route("~/api/notifications")]
         [HttpGet]
-        [ResponseType(typeof(ICollection<Notification>))]
+        [ResponseType(typeof(Notification))]
         public IHttpActionResult GetNotifications()
         {
-            return Ok (db.Notifications.ToList());
+            return Ok(db.Notifications.ToList());
         }
 
         // GET: api/Notifications/5
         [Route("~/api/notifications/{id:int}")]
         [HttpGet]
         [ResponseType(typeof(Notification))]
-        public IHttpActionResult GetNotification(int id)
+        public IHttpActionResult GetNotification(string id)
         {
             Notification notification = db.Notifications.Find(id);
             if (notification == null)
@@ -45,14 +45,14 @@ namespace backend.Controllers
         [Route("~/api/notifications/{id:int}")]
         [HttpPut]
         [ResponseType(typeof(Notification))]
-        public IHttpActionResult PutNotification(int id, Notification notification)
+        public IHttpActionResult PutNotification(string id, Notification notification)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != notification.Type)
+            if (id != notification.Title)
             {
                 return BadRequest();
             }
@@ -90,7 +90,22 @@ namespace backend.Controllers
             }
 
             db.Notifications.Add(notification);
-            db.SaveChanges();
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                if (NotificationExists(notification.Title))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return Ok(notification);
         }
@@ -99,7 +114,7 @@ namespace backend.Controllers
         [Route("~/api/notifications/{id:int}")]
         [HttpDelete]
         [ResponseType(typeof(Notification))]
-        public IHttpActionResult DeleteNotification(int id)
+        public IHttpActionResult DeleteNotification(string id)
         {
             Notification notification = db.Notifications.Find(id);
             if (notification == null)
@@ -122,9 +137,9 @@ namespace backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool NotificationExists(int id)
+        private bool NotificationExists(string id)
         {
-            return db.Notifications.Count(e => e.Type == id) > 0;
+            return db.Notifications.Count(e => e.Title == id) > 0;
         }
     }
 }

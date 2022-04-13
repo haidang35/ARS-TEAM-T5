@@ -22,9 +22,11 @@ namespace backend.Models
         public DateTime DepartureTime { get; set; }
         [Required]
         public DateTime ArrivalTime { get; set; }
+        [Required]
         public int DepartureId { get; set; }
         [ForeignKey("DepartureId")]
         public virtual Location Departure { get; set; }
+        [Required]
         public int DestinationId { get; set; }
         [ForeignKey("DestinationId")]
         public virtual Location Destination { get; set; }

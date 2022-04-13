@@ -9,7 +9,7 @@ namespace backend.Models
     public class Notification
     {
         [Key]
-        public int Type { get; set; }
+        public string Title { get; set; }
         [Required]
         public string Message { get; set; }
         [Required]

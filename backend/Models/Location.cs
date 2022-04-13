@@ -19,7 +19,7 @@ namespace backend.Models
         [Required]
         public string AirPortName { get; set; }
         [Required]
-        public string Country { get; set; }
+        public string AirPortCode { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
