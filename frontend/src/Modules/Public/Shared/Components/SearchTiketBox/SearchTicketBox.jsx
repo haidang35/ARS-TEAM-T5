@@ -54,6 +54,9 @@ export class SearchTicketBox extends Component {
     return (
       <>
         <div id="search-Ticket-Box">
+          <h1>
+            Choose Flight
+          </h1>
           <Box
             className="search-Ticket"
 
