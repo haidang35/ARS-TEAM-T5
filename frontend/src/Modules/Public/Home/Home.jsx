@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { Header } from "./Components/Header/Header";
-import { SeachFlightTicket } from "./Components/SearchFlightTicket/SeachFlightTicket";
+import { SearchTicketBox } from "../Shared/Components/SearchTiketBox/SearchTicketBox";
+import { ChooseFlight } from "./Components/ChooseFlight/ChooseFlight";
+
+
 
 
 export class Home extends Component {
@@ -13,13 +15,9 @@ export class Home extends Component {
     render(){
         return(
             <>
-             
-            <Header /> 
-             <SeachFlightTicket />
-           
-         
-           
-           
+                {/* <SearchTicketBox /> */}
+                <ChooseFlight />
+        
             </>
         )
     }

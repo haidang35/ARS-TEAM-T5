@@ -12,7 +12,6 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import SearchIcon from '@mui/icons-material/Search';
-import Search from '@mui/icons-material/Search';
 import { style } from '@mui/system';
 import { InputBase } from '@mui/material';
 import "./Navbar.scss";
@@ -135,16 +134,52 @@ const Navbar = () => {
                   {page}
                 </Button>
               ))}
+              <div className="list-menu">
+                <div className="hotline">
+                  <img
+                    src="https://i.postimg.cc/ZnB4qS7v/Icon24h.png"
+                    className="icon-24h"
+                  />
+                  <div className="hotline-info">
+                    <Typography
+                      variant="body1"
+                      className="title"
+                    >
+                      Hotline
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      className="phone"
+                    >
+                      09111789JQK
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      className="phone"
+                    >
+                      -
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      className="phone"
+                    >
+                      09789789JQK
+                    </Typography>
+                  </div>
+                </div>
+              </div>
             </Box>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </Search>
+            
+            <IconButton size="large" aria-label="search" color="inherit">
+            <SearchIcon />
+          </IconButton>
+          <IconButton
+            size="large"
+            aria-label="display more actions"
+            edge="end"
+            color="inherit"
+          >
+          </IconButton>
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -159,7 +194,6 @@ const Navbar = () => {
                   vertical: 'top',
                   horizontal: 'right',
                 }}
-
                 keepMounted
                 transformOrigin={{
                   vertical: 'top',
@@ -173,17 +207,11 @@ const Navbar = () => {
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
-
               </Menu>
-
             </Box>
-
           </Toolbar>
-
-
         </Container>
       </AppBar>
-
     </>
   )
 }
