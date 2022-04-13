@@ -162,16 +162,23 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AirlinesController.cs" />
+    <Compile Include="Controllers\BookingTicketsController.cs" />
+    <Compile Include="Controllers\FlightsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LocationsController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\TicketsController.cs" />
+    <Compile Include="Controllers\UserRolesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Data\MyDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202204091306194_Update ARS.cs" />
-    <Compile Include="Migrations\202204091306194_Update ARS.Designer.cs">
-      <DependentUpon>202204091306194_Update ARS.cs</DependentUpon>
+    <Compile Include="Migrations\202204121548361_UpdateFlightTable.cs" />
+    <Compile Include="Migrations\202204121548361_UpdateFlightTable.Designer.cs">
+      <DependentUpon>202204121548361_UpdateFlightTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Airline.cs" />
@@ -280,8 +287,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202204091306194_Update ARS.resx">
-      <DependentUpon>202204091306194_Update ARS.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202204121548361_UpdateFlightTable.resx">
+      <DependentUpon>202204121548361_UpdateFlightTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

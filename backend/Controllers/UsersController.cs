@@ -21,13 +21,13 @@ namespace backend.Controllers
         [Route ("~/api/users")]
         [HttpGet]
         [ResponseType(typeof(ICollection<User>))]
-        public IQueryable<User> GetUsers()
+        public IHttpActionResult GetUsers()
         {
-            return db.Users;
+            return Ok(db.Users.ToList());
         }
 
         // GET: api/Users/5
-        [Route("~/api/users/{int:id}")]
+        [Route("~/api/users/{id:int}")]
         [HttpGet]
         [ResponseType(typeof(User))]
         public IHttpActionResult GetUser(int id)
@@ -42,7 +42,7 @@ namespace backend.Controllers
         }
 
         // PUT: api/Users/5
-        [Route("~/api/users/{int:id}")]
+        [Route("~/api/users/{id:int}")]
         [HttpPut]
         [ResponseType(typeof(User))]
         public IHttpActionResult PutUser(int id, User user)
@@ -75,11 +75,11 @@ namespace backend.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(user);
         }
 
         // POST: api/Users
-        [Route("~/api/user")]
+        [Route("~/api/users")]
         [HttpPost]
         [ResponseType(typeof(User))]
         public IHttpActionResult PostUser(User user)
@@ -92,11 +92,11 @@ namespace backend.Controllers
             db.Users.Add(user);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = user.Id }, user);
+            return Ok(user);
         }
 
         // DELETE: api/Users/5
-        [Route("~/api/user/{id:int}")]
+        [Route("~/api/users/{id:int}")]
         [HttpDelete]
         [ResponseType(typeof(User))]
         public IHttpActionResult DeleteUser(int id)
