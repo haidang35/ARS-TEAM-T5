@@ -6,6 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import "./SortByFlight.scss"
+import { ViewMode } from "../ViewMode/ViewMode";
 
 
 
@@ -61,6 +62,7 @@ export class SortByFlight extends Component {
                     </Box>
                    
                 </div>
+                <ViewMode />
 
             </>
         )
