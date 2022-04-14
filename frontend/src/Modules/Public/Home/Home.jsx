@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { SelectDateTicketBox } from "./Components/FlightSearch/SelectDate/SelectDateTicketBox"; 
+
+
 
 
 
@@ -7,19 +8,18 @@ import { SelectDateTicketBox } from "./Components/FlightSearch/SelectDate/Select
 
 
 export class Home extends Component {
-    constructor (props){
+    constructor(props) {
         super(props);
-        this.state ={
+        this.state = {
 
         }
     }
-    render(){
-        return(
+    render() {
+        return (
             <>
-            <SelectDateTicketBox />
-                
+               
 
-        
+
             </>
         )
     }
