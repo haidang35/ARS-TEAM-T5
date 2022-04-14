@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import "./SearchTicketBox.scss"
-import { Button, Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { Button, Checkbox, FormControlLabel,  } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { getDateTimeNow } from "../../../../../Helpers/datetime";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material";
 import Search from "@mui/icons-material/Search";
 import { Location } from "./Location/Location";
 import { BookingStepBar } from "./BookingStepBar/BookingStepBar";
 import { SortByFlight } from "./SortByFLlight/SortByFlight";
+import { RemoveCircleOutline , AddCircleOutline} from "@mui/icons-material";
+
+
 
 const TRIP_TYPE = {
     ONEWAY: 1,
