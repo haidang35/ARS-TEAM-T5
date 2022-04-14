@@ -10,7 +10,8 @@ import Search from "@mui/icons-material/Search";
 import { Location } from "./Location/Location";
 import { BookingStepBar } from "./BookingStepBar/BookingStepBar";
 import { SortByFlight } from "./SortByFLlight/SortByFlight";
-import { RemoveCircleOutline , AddCircleOutline} from "@mui/icons-material";
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 
 
@@ -217,7 +218,7 @@ export class SearchTicketBox extends Component {
                                                         Adults
                                                     </label>
                                                     <div className="content">
-                                                        <RemoveCircleOutline
+                                                        <RemoveCircleOutlineIcon
                                                             onClick={() =>
                                                                 this.changeQuantityPassenger(
                                                                     1,
@@ -232,7 +233,7 @@ export class SearchTicketBox extends Component {
                                                                     .adults
                                                             }
                                                         </span>
-                                                        <AddCircleOutline
+                                                        <AddCircleOutlineIcon
                                                             onClick={() =>
                                                                 this.changeQuantityPassenger(
                                                                     1,
@@ -250,7 +251,7 @@ export class SearchTicketBox extends Component {
                                                         Children
                                                     </label>
                                                     <div className="content">
-                                                        <RemoveCircleOutline
+                                                        <RemoveCircleOutlineIcon
                                                             onClick={() =>
                                                                 this.changeQuantityPassenger(
                                                                     2,
@@ -265,7 +266,7 @@ export class SearchTicketBox extends Component {
                                                                     .children
                                                             }
                                                         </span>
-                                                        <AddCircleOutline
+                                                        <AddCircleOutlineIcon
                                                             onClick={() =>
                                                                 this.changeQuantityPassenger(
                                                                     2,
@@ -283,7 +284,7 @@ export class SearchTicketBox extends Component {
                                                         Infants
                                                     </label>
                                                     <div className="content">
-                                                        <RemoveCircleOutline
+                                                        <RemoveCircleOutlineIcon
                                                             onClick={() =>
                                                                 this.changeQuantityPassenger(
                                                                     3,
@@ -298,7 +299,7 @@ export class SearchTicketBox extends Component {
                                                                     .infants
                                                             }
                                                         </span>
-                                                        <AddCircleOutline
+                                                        <AddCircleOutlineIcon
                                                             onClick={() =>
                                                                 this.changeQuantityPassenger(
                                                                     3,
