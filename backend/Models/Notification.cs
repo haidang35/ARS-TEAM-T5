@@ -6,6 +6,7 @@ using System.Web;
 
 namespace backend.Models
 {
+    
     public class Notification
     {
         [Key]
