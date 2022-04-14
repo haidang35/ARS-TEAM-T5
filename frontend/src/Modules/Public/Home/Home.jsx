@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { SearchTicketBox } from "../Shared/Components/SearchTiketBox/SearchTicketBox";
-import { ChooseFlight } from "./Components/ChooseFlight/ChooseFlight";
+import { SelectDateTicketBox } from "./Components/FlightSearch/SelectDate/SelectDateTicketBox"; 
+
+
 
 
 
@@ -15,8 +16,9 @@ export class Home extends Component {
     render(){
         return(
             <>
-                {/* <SearchTicketBox /> */}
-                <ChooseFlight />
+            <SelectDateTicketBox />
+                
+
         
             </>
         )

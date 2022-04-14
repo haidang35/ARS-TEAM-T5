@@ -7,7 +7,7 @@ import { Location } from "../Location/Location";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { dateConvert, getDateTimeNow } from "../../../../../Helpers/datetime";
+import { dateConvert, getDateTimeNow } from "../../../../../../Helpers/datetime";
 import "./FlightSearch.scss";
 
 
@@ -156,6 +156,24 @@ export class FlightSearch extends Component {
                     <Typography variant="h1" className="title">
                         WHERE WOULD YOU LIKE TO GO ?
                     </Typography>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                name="oneWay"
+                                checked={
+                                    tripType === TRIP_TYPE.ONEWAY
+                                }
+                                color="primary"
+                                className="check-box"
+                                value={TRIP_TYPE.ONEWAY}
+                                onChange={
+                                    this
+                                        .handleChangeTripType
+                                }
+                            />
+                        }
+                        label="One Way"
+                    />
                     <div className="formcheck">
                         <FormControlLabel
                             control={
@@ -176,27 +194,10 @@ export class FlightSearch extends Component {
                             }
                             label="Round trip"
                         />
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    name="oneWay"
-                                    checked={
-                                        tripType === TRIP_TYPE.ONEWAY
-                                    }
-                                    color="primary"
-                                    className="check-box"
-                                    value={TRIP_TYPE.ONEWAY}
-                                    onChange={
-                                        this
-                                            .handleChangeTripType
-                                    }
-                                />
-                            }
-                            label="One Way"
-                        />
+
 
                         <div className="depature">
-                            <TextField label="Departure" value={departure.province} variant="outlined" onClick={() => this.handleOpenDialog('departure')}  />
+                            <TextField label="Departure" value={departure.province} variant="outlined" onClick={() => this.handleOpenDialog('departure')} />
                         </div>
                         <div className="destination">
                             <TextField label="Destination" value={destination.province} variant="outlined" onClick={() => this.handleOpenDialog('destination')} />
@@ -204,7 +205,7 @@ export class FlightSearch extends Component {
                         <div className="date">
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
-                                   
+
                                     label="Departure Date"
                                     value={departureDate}
                                     inputFormat="dd/MM/yyyy"
@@ -214,9 +215,9 @@ export class FlightSearch extends Component {
                             </LocalizationProvider>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
-                                disabled={
-                                    tripType === TRIP_TYPE.ONEWAY 
-                                }
+                                    disabled={
+                                        tripType === TRIP_TYPE.ONEWAY
+                                    }
                                     label="Destination Date"
                                     value={returnDate}
                                     inputFormat="dd/MM/yyyy"
