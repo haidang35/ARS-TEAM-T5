@@ -9,6 +9,8 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material";
 import Search from "@mui/icons-material/Search";
 import { Location } from "./Location/Location";
+import { BookingStepBar } from "./BookingStepBar/BookingStepBar";
+import { SortByFlight } from "./SortByFLlight/SortByFlight";
 
 const TRIP_TYPE = {
     ONEWAY: 1,
@@ -360,6 +362,8 @@ export class SearchTicketBox extends Component {
 
                 </div>
                 <Location open={open} selectLocation={this.selectLocation} onCloseDialog={this.onCloseDialog} />
+                <BookingStepBar />
+                <SortByFlight />
 
             </>
         )
