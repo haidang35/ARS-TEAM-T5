@@ -8,8 +8,6 @@ import FormLabel from '@mui/material/FormLabel';
 import "./SortByFlight.scss"
 import { ViewMode } from "../ViewMode/ViewMode";
 
-
-
 export class SortByFlight extends Component {
     constructor(props) {
         super(props);
@@ -37,6 +35,7 @@ export class SortByFlight extends Component {
                                  <div className="title-bar">
                         <FormLabel
                          className="radio-buttons">Sort By Flight</FormLabel>
+                         
                          </div>
                          </div>
                          <div className="content">
