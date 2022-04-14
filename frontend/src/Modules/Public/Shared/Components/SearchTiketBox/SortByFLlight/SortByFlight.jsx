@@ -6,8 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import "./SortByFlight.scss"
-
-
+import { ViewMode } from "../ViewMode/ViewMode";
 
 export class SortByFlight extends Component {
     constructor(props) {
@@ -34,10 +33,9 @@ export class SortByFlight extends Component {
                          <FormControl>
                              <div className="side-bar-filter">
                                  <div className="title-bar">
-                                     <div className="sort-flights">
                         <FormLabel
                          className="radio-buttons">Sort By Flight</FormLabel>
-                         </div>
+                         
                          </div>
                          </div>
                          <div className="content">
@@ -48,10 +46,10 @@ export class SortByFlight extends Component {
                             defaultValue="female"
                             name="radio-buttons-group"
                         >
-                            <FormControlLabel value="female" control={<Radio />} label="Flight price (From low to high)" />
-                            <FormControlLabel value="male" control={<Radio />} label="Flight price (From high to low)" />
-                            <FormControlLabel value="other" control={<Radio />} label="Depart hour" />
-                            <FormControlLabel value="female" control={<Radio />} label="Flight time" />
+                            <FormControlLabel value="Flight price" control={<Radio />} label="Flight price (From low to high)" />
+                            <FormControlLabel value="Flight price low" control={<Radio />} label="Flight price (From high to low)" />
+                            <FormControlLabel value="Depart hour" control={<Radio />} label="Depart hour" />
+                            <FormControlLabel value="flight" control={<Radio />} label="Flight time" />
                             
 
                         </RadioGroup>
@@ -63,6 +61,7 @@ export class SortByFlight extends Component {
                     </Box>
                    
                 </div>
+                <ViewMode />
 
             </>
         )
