@@ -16,7 +16,7 @@ namespace backend.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string Paymentmethod { get; set; }
+        public string PaymentMethod { get; set; }
         [Required]
         public int BookingId { get; set; }
         public virtual Booking Booking { get; set; }
@@ -25,6 +25,6 @@ namespace backend.Models
         [Required]
         public Status Status { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdateAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }
