@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -17,12 +18,18 @@ namespace backend.Models
         public int Id { get; set; }
         [Required]
         public string FlightCode { get; set; }
+        [Required]
         public DateTime DepartureTime { get; set; }
+        [Required]
         public DateTime ArrivalTime { get; set; }
         [Required]
         public int DepartureId { get; set; }
+        [ForeignKey("DepartureId")]
+        public virtual Location Departure { get; set; }
         [Required]
         public int DestinationId { get; set; }
+        [ForeignKey("DestinationId")]
+        public virtual Location Destination { get; set; }
         public string Capacity { get; set; }
         [Required]
         public string BusinessSeats { get; set; }
@@ -40,8 +47,7 @@ namespace backend.Models
         public int SeatsAvaliable { get; set; }
         [Required]
         public int AirlineId { get; set; }
-        [Required]
-        public int TicketId { get; set; }
+        public virtual Airline Airline { get; set; }
         [Required]
         public FlightStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }

@@ -1,17 +1,14 @@
-import './App.css';
-import { Header } from './Modules/Public/Home/Components/Header/Header';
-import { ListDestination } from './Modules/Public/ListDestination/ListDestination';
+import { Public } from "./Modules/Public/Public";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 
 
 function App() {
   return (
-   <>
-   <Header />
-   {/* <ListDestination /> */}
-  
-  
-   </>
+    <>
+    <Public />
+    </>
   );
 }
 

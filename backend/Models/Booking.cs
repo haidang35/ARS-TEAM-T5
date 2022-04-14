@@ -17,6 +17,7 @@ namespace backend.Models
         public int Id { get; set; }
         [Required]
         public int UserId { get; set; }
+        public virtual User User { get; set; }
         [Required]
         public BookingStatus Status { get; set; }
         [Required]

@@ -18,12 +18,17 @@ namespace backend.Controllers
         private MyDbContext db = new MyDbContext();
 
         // GET: api/Airlines
-        public IQueryable<Airline> GetAirlines()
+        [Route("~/api/airlines")]
+        [HttpGet]
+        [ResponseType(typeof(ICollection <Airline>))]
+        public IHttpActionResult GetAirlines()
         {
-            return db.Airlines;
+            return Ok(db.Airlines.ToList());
         }
 
         // GET: api/Airlines/5
+        [Route("~/api/airlines/{id:int}")]
+        [HttpGet]
         [ResponseType(typeof(Airline))]
         public IHttpActionResult GetAirline(int id)
         {
@@ -37,7 +42,9 @@ namespace backend.Controllers
         }
 
         // PUT: api/Airlines/5
-        [ResponseType(typeof(void))]
+        [Route("~/api/airlines/{id:int}")]
+        [HttpPut]
+        [ResponseType(typeof(Airline))]
         public IHttpActionResult PutAirline(int id, Airline airline)
         {
             if (!ModelState.IsValid)
@@ -68,10 +75,12 @@ namespace backend.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(airline);
         }
 
         // POST: api/Airlines
+        [Route("~/api/airlines")]
+        [HttpPost]
         [ResponseType(typeof(Airline))]
         public IHttpActionResult PostAirline(Airline airline)
         {
@@ -83,11 +92,14 @@ namespace backend.Controllers
             db.Airlines.Add(airline);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = airline.Id }, airline);
+            return Ok(airline);
         }
 
         // DELETE: api/Airlines/5
+        [Route("~/api/airlines/{id:int}")]
+        [HttpDelete]
         [ResponseType(typeof(Airline))]
+       
         public IHttpActionResult DeleteAirline(int id)
         {
             Airline airline = db.Airlines.Find(id);

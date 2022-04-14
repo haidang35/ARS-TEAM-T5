@@ -30,7 +30,7 @@ export class Header extends Component {
     render() {
         return (
             <>
-                <div className="home-header">
+                <div id="home-header">
                     <Navbar />
                     <div className="wrap-container">
                         <div className="header-content">
@@ -42,7 +42,7 @@ export class Header extends Component {
                         </div>
                     </div>
                 </div>
-                <Footer />
+                
             </>
         )
     }
