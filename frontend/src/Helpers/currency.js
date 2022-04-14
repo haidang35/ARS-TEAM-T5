@@ -45,9 +45,9 @@ export default function nFormatter(num, digits) {
         return num >= item.value;
       });
     return item
-      ? formatCryptoUSDCurrency(
+      ? formatCurrencyToUSD(
           (num / item.value).toFixed(digits).replace(rx, "$1")
         ) + item.symbol
-      : formatCryptoUSDCurrency(0);
+      : formatCurrencyToUSD(0);
   }
   
