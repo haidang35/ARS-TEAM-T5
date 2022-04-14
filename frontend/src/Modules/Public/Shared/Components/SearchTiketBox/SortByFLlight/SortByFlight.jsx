@@ -34,12 +34,10 @@ export class SortByFlight extends Component {
                          <FormControl>
                              <div className="side-bar-filter">
                                  <div className="title-bar">
-                                     {/* <div className="sort-flights"> */}
                         <FormLabel
                          className="radio-buttons">Sort By Flight</FormLabel>
                          </div>
                          </div>
-                         {/* </div> */}
                          <div className="content">
                              <div className="radio-check">
                                  <div className="item-check">
