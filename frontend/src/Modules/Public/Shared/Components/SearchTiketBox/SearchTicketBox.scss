@@ -21,11 +21,16 @@
             width: 100%;
             margin-bottom: 1rem;
             margin-top: 1rem;
+            background:white;
+            border-radius: 8px;
         }
 
         .destination {
             width: 100%;
             margin-top: 1rem;
+            background: white;
+            border-radius: 8px;
+
         }
 
     }
@@ -35,6 +40,9 @@
         position: relative;
         display: inline-block;
         width: 100%;
+        background: white;
+        border-radius: 8px;
+
 
         .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
             width: 100%;
@@ -99,8 +107,7 @@
 
 
     .btn-search-form {
-        background: rgb(238, 206, 41);
-        background: linear-gradient(90deg, rgba(238, 206, 41, 0.9612219887955182) 25%, rgba(236, 153, 27, 0.9472163865546218) 69%);
+        background: linear-gradient(90deg, rgba(145, 226, 14, 0.96) 35%, rgb(27 236 62 / 95%) 69%);;
         border-radius: 35px;
         margin-top: 0.6rem;
         padding: 1rem 1rem;
