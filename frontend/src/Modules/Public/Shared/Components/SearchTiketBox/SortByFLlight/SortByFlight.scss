@@ -1,0 +1,57 @@
+@import "../../../../../../Shared/Styles/variables";
+
+#sort-by-flight {
+    height: auto;
+    border-radius: 1rem;
+    overflow: hidden;
+    background-color: aliceblue;
+
+    .side-bar-filter {
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        text-align: center;
+
+        .sort-flights {
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            margin-bottom: 1rem;
+
+        .title-bar {
+            display: flex;
+            align-items: center;
+            color: #ffff;
+            background-color: $background-color;
+            padding: 1rem;
+
+
+            .box {
+                background-color: #ffff;
+                box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+                margin-bottom: 1rem;
+            }
+
+            .radio-buttons {
+                text-align: center;
+            }
+
+        }
+    }
+}
+.content{
+    padding: 1.2rem;
+            display: flex;
+
+            .item-check {
+                margin-bottom: 1rem;
+
+                .radio-check {
+                    color: rgb(36, 226, 36);
+                }
+
+                .label-radio {
+                    font-size: 18px;
+                }
+            }
+
+
+        
+}
+}
