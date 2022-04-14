@@ -1,5 +1,6 @@
 import { Public } from "./Modules/Public/Public";
 import "bootstrap/dist/css/bootstrap.min.css";
+import {Admin} from "./Modules/Admin/Dashboard/Admin";
 
 
 
@@ -7,7 +8,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   return (
     <>
-     <Public />
+  <BrowserRouter>
+        <Switch>
+          <Route path="/admin">
+            <Admin/>
+          </Route>
+          <Route path="/">
+            <Public />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    
     </>
   );
 }
