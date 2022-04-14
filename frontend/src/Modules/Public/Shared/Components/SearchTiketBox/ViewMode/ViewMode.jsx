@@ -6,6 +6,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { FilterByFlight } from "../SortByFLlight/FilterByFlight/FilterByFlight";
 
 
 
@@ -25,7 +26,7 @@ export class ViewMode extends Component {
     render() {
         return (
             <>
-                <div id="sort-by-flight">
+                <div id="view-mode">
 
 
                     <Box
@@ -59,9 +60,12 @@ export class ViewMode extends Component {
                                     </div>
                                 </div>
                             </div>
+                            
+
                         </FormControl>
                     </Box>
-                </div>
+                    </div>
+                <FilterByFlight />
             </>
         )
     }

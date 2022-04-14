@@ -1,12 +1,13 @@
-@import "../../../../../../Shared/Styles/variables";
+@import "../../../../../../../Shared/Styles/variables";
 
-#view-mode {
+#filter-by-flight {
     height: auto;
     border-radius: 1rem;
     overflow: hidden;
     background-color: aliceblue;
     width: 19rem;
     margin-top: 35px;
+
 
     .side-bar-filter {
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -15,6 +16,9 @@
         height: 3rem;
         border-radius: 8px;
         background-color: $background-color;
+
+
+
 
         .title-bar {
             display: flex;
@@ -47,5 +51,20 @@
                 }
             }
         }
+    }
+
+    .h4 {
+        border-bottom: 2px solid #c3c2c2;
+
+
+    }
+
+    .h5 {
+        text-align: center;
+    }
+    .h4-2 {
+        text-align: center;
+        color: #c3c2c2;
+      
     }
 }
