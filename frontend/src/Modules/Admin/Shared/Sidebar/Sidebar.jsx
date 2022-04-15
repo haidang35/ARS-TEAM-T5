@@ -195,7 +195,6 @@ export const Sidebar = () => {
                         key={item.label}
                         sx={{ py: 0, minHeight: 32, color: 'rgba(255,255,255,.8)' }}
                       >
-                        
                         <ListItemIcon sx={{ color: 'inherit' }}>
                           {item.icon}
                         </ListItemIcon>
