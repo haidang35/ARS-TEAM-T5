@@ -1,24 +1,33 @@
 import React, { Component } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom"
+import { FlightTicket } from "./ChooseFlightTicket/FlightTicket";
 import { Home } from "./Home/Home";
-import Navbar from "./Shared/Components/Navbar/Navbar";
-import { SearchTicketBox } from "./Shared/Components/SearchTiketBox/SearchTicketBox";
 
 
 
 export class Public extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state ={
+        this.state = {
 
         }
     }
-    render(){
-        return(
+    render() {
+        return (
             <>
-            {/* <Navbar />  */}
-             {/* <Home /> */}
-             <SearchTicketBox />
-            
+                <BrowserRouter>
+                    <Switch >
+                        <Route path="/flight-ticket" exact>
+                            <FlightTicket />
+                        </Route>
+                        <Route path="/" exact>
+                            <Home />
+                        </Route>
+                    </Switch>
+                </BrowserRouter>
+
+
+
             </>
 
         )
