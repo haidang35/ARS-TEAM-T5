@@ -23,6 +23,7 @@ export class Public extends Component {
                         <Route path="/" exact>
                             <Home />
                         </Route>
+                        
                     </Switch>
                 </BrowserRouter>
 
