@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom"
-import { FlightTicket } from "./ChooseFlightTicket/FlightTicket";
-import { Home } from "./Home/Home";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Login from "../Admin/Auth/Components/Login/Login";
+import Register from "../Admin/Auth/Components/Register/Register";
+
 
 
 
@@ -16,18 +17,18 @@ export class Public extends Component {
         return (
             <>
                 <BrowserRouter>
-                    <Switch >
-                        <Route path="/flight-ticket" exact>
-                            <FlightTicket />
+                    <Switch>
+                        <Route path="/admin-login">
+                            <Login />
+
                         </Route>
-                        <Route path="/" exact>
-                            <Home />
+                        <Route path="/admin-register">
+                            <Register />
+
                         </Route>
                         
                     </Switch>
                 </BrowserRouter>
-
-
 
             </>
 
