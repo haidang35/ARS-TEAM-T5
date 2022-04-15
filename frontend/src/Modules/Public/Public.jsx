@@ -26,6 +26,7 @@ export class Public extends Component {
                             <Register />
 
                         </Route>
+                        
                     </Switch>
                 </BrowserRouter>
 
