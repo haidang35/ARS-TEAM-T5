@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import Navbar from "./Dashboard/Navbar/Navbar";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Login from "./Auth/Components/Login/Login";
+import Register from "./Auth/Components/Register/Register";
+import Navbar from "./Shared/Components/Navbar/Narbar";
+
 
 
 export class Admin extends Component{
@@ -12,7 +16,16 @@ export class Admin extends Component{
     render(){
         return(
             <>
-            <Navbar />
+            <BrowserRouter>
+            <Switch>
+                <Route path="/admin-login"> 
+                    <Login/>
+                </Route>
+                <Route path="/admin-register"> 
+                    <Register/>
+                </Route>
+            </Switch>
+            </BrowserRouter>
             </>
         )
     }

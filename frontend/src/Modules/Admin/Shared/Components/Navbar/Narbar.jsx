@@ -24,7 +24,7 @@ const Search = styled('div')(({ theme }) => ({
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
-  marginLeft: 0,
+  marginTop: 0,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
@@ -82,6 +82,7 @@ export default function Navbar() {
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
+
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
@@ -155,6 +156,8 @@ export default function Navbar() {
   );
 
   return (
+    <div id = "navbar">
+      <div className='font-Navbar'> 
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
@@ -220,5 +223,7 @@ export default function Navbar() {
       {renderMobileMenu}
       {renderMenu}
     </Box>
+    </div>
+    </div>
   );
 }
