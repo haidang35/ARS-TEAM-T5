@@ -6,8 +6,8 @@ import "./SelectDateTicketBox.scss";
 import {
     dateConvert,
     getDayOfWeek,
-} from "../../../../../../Helpers/datetime";
-import {formatCurrencyToVND} from "../../../../../../Helpers/currency";
+} from "../../../../../Helpers/datetime";
+import {formatCurrencyToVND} from "../../../../../Helpers/currency";
 
 export class SelectDateTicketBox extends Component {
     constructor(props) {
