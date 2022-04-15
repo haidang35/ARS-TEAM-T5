@@ -26,10 +26,10 @@ export class Public extends Component {
                         <Route  path="/" exact>
                             <Home />
                         </Route>
-                        <Route path="/sign-up" exact>
+                        <Route path="/signup" exact>
                             <SignUp />
                         </Route>
-                        <Route path="/sign-in" exact>
+                        <Route path="/signin" exact>
                             <SignIn />
                         </Route>
 
