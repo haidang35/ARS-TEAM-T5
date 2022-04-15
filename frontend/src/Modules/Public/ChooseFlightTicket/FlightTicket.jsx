@@ -1,9 +1,8 @@
 import { keys } from "@mui/system";
 import React, { Component } from "react";
+import { FilterFlightBox } from "./Components/FilterFlightBox/FilterFlightBox";
 import { SelectDateTicketBox } from "./Components/SelectDateTicketBox/SelectDateTicketBox";
 import { TicketItem } from "./Components/TicketItem/TicketItem";
-
-
 export class FlightTicket extends Component {
     constructor(props) {
         super(props);
@@ -21,23 +20,31 @@ export class FlightTicket extends Component {
                     id: 3,
                     price: 300
                 }
-                
+
             ],
         }
     }
 
-  
-   
+
+
     render() {
-        const { flightTickets} = this.state;
+        const { flightTickets } = this.state;
         return (
             <>
-            <SelectDateTicketBox />
-              {
-              flightTickets.map((item, index) => {
-                return( <TicketItem key={index} price={item.price} /> ) 
-              })  
-              }    
+                <div className="row">
+                    <div className="col-md-3">
+                        <FilterFlightBox />
+                    </div>
+                    <div className="col-md-9">
+                        <SelectDateTicketBox />
+                        {
+                            flightTickets.map((item, index) => {
+                                return (<TicketItem key={index} price={item.price} />)
+                            })
+                        }
+                    </div>
+                </div>
+
             </>
         )
     }
