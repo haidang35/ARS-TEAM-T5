@@ -19,24 +19,24 @@ export class Public extends Component {
         return (
             <>
                 <BrowserRouter>
-                    <Switch >
+                    <Switch>
                         <Route path="/flight-ticket" exact>
-                            <FlightTicket />
+                        <FlightTicket />
                         </Route>
-                        <Route path="/" exact>
+                        <Route  path="/" exact>
                             <Home />
                         </Route>
+                        <Route path="/sign-up" exact>
+                            <SignUp />
+                        </Route>
+                        <Route path="/sign-in" exact>
+                            <SignIn />
+                        </Route>
+
+
                     </Switch>
-                    <Route path="/sign-up" exact>
-                      <SignUp />
-                    </Route>
-                    <Route  path="/sign-in" exact>
-                        <SignIn />
-                    </Route>
-                    
+
                 </BrowserRouter>
-
-
 
             </>
 
