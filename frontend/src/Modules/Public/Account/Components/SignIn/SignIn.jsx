@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 
-
-
-
-
-
-
-
-export class Home extends Component {
+export class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,11 +8,9 @@ export class Home extends Component {
         }
     }
     render() {
-        return (
+        return(
             <>
-               
-
-
+            
             </>
         )
     }

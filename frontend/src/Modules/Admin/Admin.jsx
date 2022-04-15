@@ -1,17 +1,32 @@
-import React from "react";
-import { BrowserRouter, Router, Switch } from "react-router-dom";
-import { Sidebar } from "./Shared/Sidebar/Sidebar";
+import React, { Component } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Login from "./Auth/Components/Login/Login";
+import Register from "./Auth/Components/Register/Register";
+import Navbar from "./Shared/Components/Navbar/Narbar";
 
 
 
-export const Admin = () => {
+export class Admin extends Component{
+    constructor(props){
+        super(props);
+        this.state= {
 
-  return(
-    <>
-    <BrowserRouter>
-    </BrowserRouter>
-   
-    <Sidebar />
-    </>
-  )
-  }
+        }
+    }
+    render(){
+        return(
+            <>
+            <BrowserRouter>
+            <Switch>
+                <Route path="/admin-login"> 
+                    <Login/>
+                </Route>
+                <Route path="/admin-register"> 
+                    <Register/>
+                </Route>
+            </Switch>
+            </BrowserRouter>
+            </>
+        )
+    }
+}

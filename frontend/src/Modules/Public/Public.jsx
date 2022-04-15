@@ -1,22 +1,34 @@
 import React, { Component } from "react";
-import { Home } from "./Home/Home";
-import Navbar from "./Shared/Components/Navbar/Navbar";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Login from "../Admin/Auth/Components/Login/Login";
+import Register from "../Admin/Auth/Components/Register/Register";
+
 
 
 
 export class Public extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state ={
+        this.state = {
 
         }
     }
-    render(){
-        return(
+    render() {
+        return (
             <>
-            {/* <Navbar />  */}
-             <Home />
-            
+                <BrowserRouter>
+                    <Switch>
+                        <Route path="/admin-login">
+                            <Login />
+
+                        </Route>
+                        <Route path="/admin-register">
+                            <Register />
+
+                        </Route>
+                    </Switch>
+                </BrowserRouter>
+
             </>
 
         )
