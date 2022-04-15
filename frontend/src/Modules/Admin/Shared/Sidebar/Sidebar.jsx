@@ -191,6 +191,7 @@ export const Sidebar = () => {
                   {open &&
                     data.map((item) => (
                       <ListItemButton
+                      
                         key={item.label}
                         sx={{ py: 0, minHeight: 32, color: 'rgba(255,255,255,.8)' }}
                       >
