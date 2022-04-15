@@ -1,31 +1,53 @@
+import { Box } from "@mui/material";
 import React, { Component } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
 import Login from "./Auth/Components/Login/Login";
 import Register from "./Auth/Components/Register/Register";
+import { Dashboard } from "./Dashboard/Dashboard";
+import { Location } from "./Location/Location";
 import Navbar from "./Shared/Components/Navbar/Narbar";
+import { Sidebar } from "./Shared/Components/Sidebar/Sidebar";
+import "./Admin.scss"
 
 
-
-export class Admin extends Component{
-    constructor(props){
+export class Admin extends Component {
+    constructor(props) {
         super(props);
-        this.state= {
+        this.state = {
 
         }
     }
-    render(){
-        return(
+    render() {
+        return (
             <>
-            <BrowserRouter>
-            <Switch>
-                <Route path="/admin-login"> 
-                    <Login/>
-                </Route>
-                <Route path="/admin-register"> 
-                    <Register/>
-                </Route>
-            </Switch>
-            </BrowserRouter>
+                <BrowserRouter>
+                    <div id="admin">
+                        <div className="row admin-box">
+                            <div className="sidebar-admin">
+                                <Sidebar />
+                            </div>
+                            <div className="main-content-admin">
+                                <Navbar />
+                                <Box
+                                    sx={{
+                                        padding: '1rem'
+
+                                    }}
+                                >
+                                    <Switch>
+                                        <Route path="/admin/dashboard" >
+                                            <Dashboard />
+                                        </Route>
+                                        <Route path="/admin/locations">
+                                            <Location />
+                                        </Route>
+                                    </Switch>
+                                </Box>
+                            </div>
+                        </div>
+                    </div>
+
+                </BrowserRouter>
             </>
         )
     }

@@ -18,11 +18,7 @@ import People from '@mui/icons-material/People';
 import PermMedia from '@mui/icons-material/PermMedia';
 import Dns from '@mui/icons-material/Dns';
 import Public from '@mui/icons-material/Public';
-import FlightIcon from '@mui/icons-material/Flight';
-import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
 import AirlinesIcon from '@mui/icons-material/Airlines';
-import PaymentsIcon from '@mui/icons-material/Payments';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import "./Sidebar.scss";
 import Flight from "@mui/icons-material/Flight";
 import AirplaneTicket from "@mui/icons-material/AirplaneTicket";
@@ -31,14 +27,15 @@ import Notifications from "@mui/icons-material/Notifications";
 import { BrowserRouter, Link, NavLink } from "react-router-dom";
 
 const data = [
-  { icon: <People />, label: 'User' },
-  { icon: <Dns />, label: 'Booking' },
-  { icon: <AirlinesIcon />, label: 'Airline' },
-  { icon: <Public />, label: 'Location' },
-  { icon: <AirplaneTicket />, label: 'Flight Ticket' },
-  { icon: <Payments />, label: 'Payment' },
-  { icon: <Flight />, label: 'Flight' },
-  { icon: <Notifications />, label: 'Notification' },
+  { icon: <People />, label: 'Dashboard', path: '/admin/dashboard' },
+  { icon: <People />, label: 'User' , path: '/admin/dashboard'  },
+  { icon: <Dns />, label: 'Booking', path: '/admin'  },
+  { icon: <AirlinesIcon />, label: 'Airline', path: '/admin'  },
+  { icon: <Public />, label: 'Location', path: '/admin/locations' },
+  { icon: <AirplaneTicket />, label: 'Flight Ticket', path: '/admin' },
+  { icon: <Payments />, label: 'Payment', path: '/admin' },
+  { icon: <Flight />, label: 'Flight' , path: '/admin' },
+  { icon: <Notifications />, label: 'Notification', path: '/admin'},
 ];
 
 const FireNav = styled(List)({
@@ -61,9 +58,9 @@ export const Sidebar = () => {
   return (
     <>
       <div id="sidebar">
-        <Box 
-        className="form-sidebar"
-        sx={{ display: 'flex' }}>
+        <Box
+          className="form-sidebar"
+          sx={{ display: 'flex' }}>
           <ThemeProvider
             theme={createTheme({
               components: {
@@ -83,7 +80,7 @@ export const Sidebar = () => {
             <Paper elevation={0} sx={{ maxWidth: 256 }}>
               <FireNav component="nav" disablePadding>
                 <ListItemButton component="a" href="/admin">
-                  
+
                   <ListItemIcon sx={{ fontSize: 20 }}>🔥</ListItemIcon>
                   <ListItemText
                     sx={{ my: 0 }}
@@ -190,19 +187,21 @@ export const Sidebar = () => {
                   </ListItemButton>
                   {open &&
                     data.map((item) => (
-                      <ListItemButton
-                      
-                        key={item.label}
-                        sx={{ py: 0, minHeight: 32, color: 'rgba(255,255,255,.8)' }}
-                      >
-                        <ListItemIcon sx={{ color: 'inherit' }}>
-                          {item.icon}
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={item.label}
-                          primaryTypographyProps={{ fontSize: 14, fontWeight: 'medium' }}
-                        />
-                      </ListItemButton>
+                      <Link to={item.path}>
+                        <ListItemButton
+
+                          key={item.label}
+                          sx={{ py: 0, minHeight: 32, color: 'rgba(255,255,255,.8)' }}
+                        >
+                          <ListItemIcon sx={{ color: 'inherit' }}>
+                            {item.icon}
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={item.label}
+                            primaryTypographyProps={{ fontSize: 14, fontWeight: 'medium' }}
+                          />
+                        </ListItemButton>
+                      </Link>
                     ))}
                 </Box>
               </FireNav>

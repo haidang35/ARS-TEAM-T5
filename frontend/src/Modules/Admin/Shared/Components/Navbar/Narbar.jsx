@@ -43,7 +43,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
+  color: '  ',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -156,7 +156,7 @@ export default function Navbar() {
   );
 
   return (
-    <div id = "navbar">
+    <div id = "navbar-admin">
       <div className='font-Navbar'> 
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -169,17 +169,10 @@ export default function Navbar() {
           >
             Flight T5
           </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <Box 
+          sx={{ display: { xs: 'none', md: 'flex' } }}
+          >
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="error">
                 <MailIcon />
