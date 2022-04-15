@@ -1,5 +1,6 @@
 import { Public } from "./Modules/Public/Public";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Admin } from "./Modules/Admin/Admin";
 
 
 
@@ -7,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   return (
     <>
-    <Public />
+    <Admin />
     </>
   );
 }
