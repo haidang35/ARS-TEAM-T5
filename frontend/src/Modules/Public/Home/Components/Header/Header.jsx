@@ -31,18 +31,49 @@ export class Header extends Component {
         return (
             <>
                 <div id="home-header">
-                    <Navbar />
-                    <div className="wrap-container">
-                        <div className="header-content">
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <FlightSearch />
+                    <div
+                        style={{
+                            width: "100%",
+                            height: 0,
+                            position: "relative",
+                            paddingBottom: "56.250%"
+                        }}
+                        className="background-video-box"
+                    >
+                        <iframe
+                            src="https://streamable.com/e/bqjlrb?autoplay=1&nocontrols=1"
+                            frameBorder={0}
+                            width="100%"
+                            className="background-video"
+                            height="100%"
+                            allowFullScreen=""
+                            allow="autoplay"
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                position: "absolute",
+                                left: 0,
+                                top: 0,
+                                overflow: "hidden"
+                            }}
+                        />
+
+                        <div className="wrap-container">
+                            <div className="header-content">
+                                <div className="row">
+                                    <div className="col-md-10">
+                                        <FlightSearch />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
+
+
+
+
             </>
         )
     }
