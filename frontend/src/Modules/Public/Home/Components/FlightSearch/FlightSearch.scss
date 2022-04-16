@@ -1,20 +1,39 @@
 #header-left{
     padding-top: 6rem;
-    padding-left: 10rem;
  
     .depature{
         padding-top: 1rem;
+        .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+            background: #ffff;
+            border-radius: 8px;
+        }
         
     }
     .destination{
         padding-top: 1rem;
+        .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+            background: #ffff;
+            border-radius: 8px;
+        }
        
       
     }
     .date{
         padding-top: 1rem;
-       
+        .css-1u3bzj6-MuiFormControl-root-MuiTextField-root{
+            background: #ffff;
+            border-radius: 8px;
+        }
     }
+        .date-time {
+            padding-top: 1rem;
+            
+
+
+        }
+
+       
+    
     .search{
         padding-top: 1rem;
     }
