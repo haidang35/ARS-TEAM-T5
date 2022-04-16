@@ -213,6 +213,8 @@ export class FlightSearch extends Component {
                                     renderInput={(params) => <TextField {...params} />}
                                 />
                             </LocalizationProvider>
+                        </div>
+                        <div className="date">
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
                                     disabled={
