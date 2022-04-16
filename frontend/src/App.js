@@ -3,8 +3,7 @@ import { Public } from "./Modules/Public/Public";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Admin} from "./Modules/Admin/Admin";
 import Login from "./Modules/Admin/Auth/Components/Login/Login";
-import { Test } from "./Modules/Admin/Shared/Components/Test";
-
+ 
 
 
 

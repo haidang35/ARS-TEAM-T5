@@ -5,8 +5,7 @@ import SignUp from "./Account/Components/SignUp/SignUp";
 import { FlightTicket } from "./ChooseFlightTicket/FlightTicket";
 import { Home } from "./Home/Home";
 import Navbar from "./Shared/Components/Navbar/Navbar";
-import { SearchTicketBox } from "./Shared/Components/SearchTicketBox/SearchTicketBox";
-
+import "./Shared/Styles/Public.scss";
 
 
 
@@ -21,12 +20,9 @@ export class Public extends Component {
         return (
             <>
                 <BrowserRouter>
-               
+                    <div id="public">
+                        <Navbar />
 
-                    <Navbar />
-                    
-                    <div className="MuiContainer-root MuiContainer-maxWidthXl css-19r6kue-MuiContainer-root">
-                    <SearchTicketBox />
                         <Switch>
                             <Route path="/flight-ticket" exact>
                                 <FlightTicket />
@@ -44,10 +40,9 @@ export class Public extends Component {
                                 <FlightTicket />
 
                             </Route>
-
-
                         </Switch>
                     </div>
+
 
 
                 </BrowserRouter>
