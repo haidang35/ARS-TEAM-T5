@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-
-
-
-
-
-
+import { FlightSearch } from "./Components/FlightSearch/FlightSearch";
+import { Header } from "./Components/Header/Header";
 
 
 export class Home extends Component {
@@ -17,9 +13,8 @@ export class Home extends Component {
     render() {
         return (
             <>
-               
 
-
+            <Header />
             </>
         )
     }

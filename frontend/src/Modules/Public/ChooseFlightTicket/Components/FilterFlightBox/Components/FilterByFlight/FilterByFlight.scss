@@ -1,0 +1,82 @@
+@import "../../../../../../../Shared/Styles/variables";
+
+#filter-by-flight {
+    height: auto;
+    border-radius: 1rem;
+    overflow: hidden;
+    background-color: aliceblue;
+    width: 100%;
+
+    .box {
+        width: 100%;
+
+        .css-1nrlq1o-MuiFormControl-root {
+            width: 100%;
+        }
+    }
+  
+
+    .side-bar-filter {
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        text-align: center;
+        width: 100%;
+        height: 3rem;
+        border-radius: 8px;
+        background-color: $background-color;
+
+
+
+
+        .title-bar {
+            display: flex;
+            align-items: center;
+            color: #ffff;
+            background-color: $background-color;
+            justify-content: center;
+            align-items: center;
+
+            .box {
+                background-color: #ffff;
+                box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+                margin-bottom: 1rem;
+
+                .content {
+                    padding: 1.2rem;
+                    display: flex;
+
+                    .item-check {
+                        margin-bottom: 1rem;
+
+                        .radio-check {
+                            color: rgb(36, 226, 36);
+                        }
+
+                        .label-radio {
+                            font-size: 18px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .h4 {
+        border-bottom: 2px solid #c3c2c2;
+        margin-left: 5px;
+
+
+    }
+
+    .h5 {
+        text-align: center;
+    }
+    .h4-2 {
+        text-align: center;
+        color: #c3c2c2;
+      
+    }
+    .range-slider {
+        width: 100%;
+        
+    }
+}

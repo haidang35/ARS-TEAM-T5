@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Login from "../Admin/Auth/Components/Login/Login";
-import Register from "../Admin/Auth/Components/Register/Register";
-
+import { BrowserRouter, Route, Switch } from "react-router-dom"
+import SignIn from "./Account/Components/SignIn/SignIn";
+import SignUp from "./Account/Components/SignUp/SignUp";
+import { FlightTicket } from "./ChooseFlightTicket/FlightTicket";
+import { Home } from "./Home/Home";
+import Navbar from "./Shared/Components/Navbar/Navbar";
+import "./Shared/Styles/Public.scss";
 
 
 
@@ -17,16 +20,31 @@ export class Public extends Component {
         return (
             <>
                 <BrowserRouter>
-                    <Switch>
-                        <Route path="/admin-login">
-                            <Login />
+                    <div id="public">
+                        <Navbar />
 
-                        </Route>
-                        <Route path="/admin-register">
-                            <Register />
+                        <Switch>
+                            <Route path="/flight-ticket" exact>
+                                <FlightTicket />
+                            </Route>
+                            <Route path="/" exact>
+                                <Home />
+                            </Route>
+                            <Route path="/signup" exact>
+                                <SignUp />
+                            </Route>
+                            <Route path="/signin" exact>
+                                <SignIn />
+                            </Route>
+                            <Route path="/flight-tickets">
+                                <FlightTicket />
 
-                        </Route>
-                    </Switch>
+                            </Route>
+                        </Switch>
+                    </div>
+
+
+
                 </BrowserRouter>
 
             </>
