@@ -1,13 +1,12 @@
 import { Box } from "@mui/material";
 import React, { Component } from "react";
 import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
-import Login from "./Auth/Components/Login/Login";
-import Register from "./Auth/Components/Register/Register";
 import { Dashboard } from "./Dashboard/Dashboard";
 import Navbar from "./Shared/Components/Navbar/Narbar";
 import { Sidebar } from "./Shared/Components/Sidebar/Sidebar";
+import LocationTable from "./Location/Location"
 import "./Admin.scss"
-import LocationTable from "./Location/Location";
+import AirlineTable from "./Airline/Airline";
 
 
 export class Admin extends Component {
@@ -38,8 +37,11 @@ export class Admin extends Component {
                                         <Route path="/admin/dashboard" >
                                             <Dashboard />
                                         </Route>
+                                        <Route path="/admin/airlines">
+                                            <AirlineTable/>
+                                        </Route>
                                         <Route path="/admin/locations">
-                                            <LocationTable />
+                                            <LocationTable/>
                                         </Route>
                                     </Switch>
                                 </Box>
