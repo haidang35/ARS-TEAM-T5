@@ -4,10 +4,10 @@ import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
 import Login from "./Auth/Components/Login/Login";
 import Register from "./Auth/Components/Register/Register";
 import { Dashboard } from "./Dashboard/Dashboard";
-import { Location } from "./Location/Location";
 import Navbar from "./Shared/Components/Navbar/Narbar";
 import { Sidebar } from "./Shared/Components/Sidebar/Sidebar";
 import "./Admin.scss"
+import LocationTable from "./Location/Location";
 
 
 export class Admin extends Component {
@@ -39,7 +39,7 @@ export class Admin extends Component {
                                             <Dashboard />
                                         </Route>
                                         <Route path="/admin/locations">
-                                            <Location />
+                                            <LocationTable />
                                         </Route>
                                     </Switch>
                                 </Box>
