@@ -1,5 +1,7 @@
 import { keys } from "@mui/system";
 import React, { Component } from "react";
+import { SearchTicketBox } from "../Shared/Components/SearchTicketBox/SearchTicketBox";
+import { BookingStepBar } from "./Components/BookingStepBar/BookingStepBar";
 import { FilterFlightBox } from "./Components/FilterFlightBox/FilterFlightBox";
 import { SelectDateTicketBox } from "./Components/SelectDateTicketBox/SelectDateTicketBox";
 import { TicketItem } from "./Components/TicketItem/TicketItem";
@@ -31,6 +33,8 @@ export class FlightTicket extends Component {
         const { flightTickets } = this.state;
         return (
             <>
+            <SearchTicketBox />
+            <BookingStepBar />
                 <div className="row">
                     <div className="col-md-3">
                         <FilterFlightBox />
