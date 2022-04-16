@@ -76,7 +76,7 @@ export default function LocationTable() {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell align="center" colSpan={2}>
+              <TableCell align="center" colSpan={3}>
                 Country
               </TableCell>
               <TableCell align="center" colSpan={3}>
