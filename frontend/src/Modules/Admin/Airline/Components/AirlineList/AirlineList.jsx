@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,10 +12,10 @@ import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import airlineService from '../../../Shared/Services/AirlineService';
 import "./AirlineList.scss";
 import axios from "axios";
 import { Link } from '@mui/material';
+import airlineService from '../../Shared/Services/AirlineService';
 
 
 
@@ -57,7 +57,7 @@ const rows = [
 export default function AirlineList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [airlineServices, setAirlineServices] = React.useState([]);
+  const [airlineList, setAirlineList] = useState([]);
 
   useEffect(() => {
     getAirlineList();
@@ -68,9 +68,7 @@ export default function AirlineList() {
       .getAirlineList()
       .then((res) => {
         console.log('88888888888888888888888888888', res.data);
-        this.setState({
-          airlineServices: res.data,
-        });
+        setAirlineList(res.data);
       })
       .catch((err) => {
         console.log(err);

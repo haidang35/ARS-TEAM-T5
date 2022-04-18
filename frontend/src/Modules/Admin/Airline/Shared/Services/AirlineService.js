@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AUTH_TOKEN, BASE_URL_SERVER } from "../../../../Configs/server";
+import { AUTH_TOKEN, BASE_URL_SERVER } from '../../../../../Configs/server';
 
 
 const API_ENDPOINT = {
@@ -15,6 +15,7 @@ const configs = {
 };
 
 class AirlineService {
+
   getAirlineList = async () => {
     return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_AIRLINE_LIST);
   };
@@ -37,6 +38,7 @@ class AirlineService {
   createNew = async (data) => {
     return await axios.post(BASE_URL_SERVER + API_ENDPOINT.CREATE_NEW, data, configs);
   };
+
   deleteAirline = async (id) => {
     return await axios.deleteAirline(BASE_URL_SERVER + API_ENDPOINT.DELETE_Airline + id, configs);
   }
