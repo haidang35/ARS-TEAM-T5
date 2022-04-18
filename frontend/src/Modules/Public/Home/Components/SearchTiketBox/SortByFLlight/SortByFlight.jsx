@@ -24,10 +24,7 @@ export class SortByFlight extends Component {
 
                     <Box 
                     className="box"
-                        sx={{
-                            width: 300,
-                            height: 300,
-                        }}
+                      
                     >
                         
                          <FormControl>
