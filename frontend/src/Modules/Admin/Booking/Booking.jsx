@@ -46,7 +46,7 @@ const rows = [
   createData('2', 'Bamboo Airways', 'QH', 'Viet Nam', 'Cay tre',),
   createData('3', 'Vietravel Airlines', 'VU', 'Viet Nam', 'Viettravel')
 ];
-export default function AirlineTable() {
+export default function BookingTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -62,7 +62,7 @@ export default function AirlineTable() {
     <>
       <Paper sx={{ width: '100%' }}>
         <Typography variant="h4" component="div" gutterBottom>
-          Airline
+          Booking 
         </Typography>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
