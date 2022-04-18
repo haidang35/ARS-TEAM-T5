@@ -15,7 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
-  { id: 'name', label: 'Name', minWidth: 170 },
+  { id: 'userId', label: 'UserId', minWidth: 170 },
   { id: 'code', label: 'Code', minWidth: 100 },
   {
     id: 'country',

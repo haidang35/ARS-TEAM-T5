@@ -9,6 +9,7 @@ import "./Admin.scss"
 import AirlineTable from "./Airline/Airline";
 import BookingTable from "./Booking/Booking";
 import AddNewAirline from "./Airline/AddNewAirline";
+import UpdateAirline from "./Airline/UpdateAirline";
 
 
 export class Admin extends Component {
@@ -50,6 +51,9 @@ export class Admin extends Component {
                                         </Route>
                                         <Route path="/admin/addnew">
                                             <AddNewAirline/>
+                                        </Route>
+                                        <Route path="/admin/update">
+                                            <UpdateAirline/>
                                         </Route>
                                     </Switch>
                                 </Box>

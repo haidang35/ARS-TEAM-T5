@@ -12,6 +12,26 @@ import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import airlineService from '../Shared/Services/AirlineService';
+import "./Airline.scss";
+
+componentDidMount() {
+  this.getAirlineList();
+}
+
+getAirlineList = async () => {
+  await airlineService
+    .getAirlineList()
+    .then((res) => {
+      console.log(res);
+      this.setState({
+       airlineServices: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -32,7 +52,7 @@ const columns = [
     format: (value) => value.toLocaleString('en-US'),
   },
   {id: 'edit', label: 'Edit',minWidth: 80,
-  align: 'center',
+  align: 'right',
 }
   
 ];
@@ -49,6 +69,7 @@ const rows = [
 export default function AirlineTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [airlineServices, setAirlineServices] = React.useState([]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -60,6 +81,7 @@ export default function AirlineTable() {
   };
   return (
     <>
+    <div id='airline'>
       <Paper sx={{ width: '100%' }}>
         <Typography variant="h4" component="div" gutterBottom>
           Airline
@@ -101,11 +123,16 @@ export default function AirlineTable() {
                               : value}
                           </TableCell>
                         );
-                      })}
+                      })} 
+                      <EditIcon className='edit-icon'/>
+                      <DeleteIcon className='delete-icon'/>
+                     
                     </TableRow>
+                 
                   );
-                })}
+                })}     
             </TableBody>
+          
           </Table>
         </TableContainer>
         <TablePagination
@@ -118,6 +145,7 @@ export default function AirlineTable() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      </div>
     </>
 
   );

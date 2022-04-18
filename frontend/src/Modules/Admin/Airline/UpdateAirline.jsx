@@ -7,14 +7,13 @@ import Checkbox from '@mui/material/Checkbox';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import "./AddNewAirline.scss";
-import airlineService from '../Shared/Services/AirlineService';
 
 export default function AddNewAirline() {
   return (
     <React.Fragment>
         <div id='addNewAirline'>
       <Typography variant="h4" gutterBottom >
-        Add New Airline
+        Update Airline
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} >
