@@ -19,9 +19,10 @@ export class Public extends Component {
     render() {
         return (
             <>
+                <Navbar />
+
                 <BrowserRouter>
                     <div id="public">
-                        <Navbar />
 
                         <Switch>
                             <Route path="/flight-ticket" exact>

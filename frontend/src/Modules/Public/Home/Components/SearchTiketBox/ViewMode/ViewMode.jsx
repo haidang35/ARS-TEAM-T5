@@ -31,10 +31,7 @@ export class ViewMode extends Component {
 
                     <Box
                         className="box"
-                        sx={{
-                            width: 300,
-                            height: 200,
-                        }}
+                       
 
                     >
                         <FormControl>
