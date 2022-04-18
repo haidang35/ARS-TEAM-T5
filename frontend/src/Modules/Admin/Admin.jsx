@@ -6,10 +6,11 @@ import Navbar from "./Shared/Components/Navbar/Narbar";
 import { Sidebar } from "./Shared/Components/Sidebar/Sidebar";
 import LocationTable from "./Location/Location"
 import "./Admin.scss"
-import AirlineTable from "./Airline/Airline";
 import BookingTable from "./Booking/Booking";
-import AddNewAirline from "./Airline/AddNewAirline";
-import UpdateAirline from "./Airline/UpdateAirline";
+import { Airline } from "./Airline/Airline";
+import AirlineList from "./Airline/Components/AirlineList/AirlineList";
+import  AddNewAirline from "./Airline/Components/AddNewAirline/AddNewAirline";
+import  UpdateAirline  from "./Airline/Components/UpdateAirline/UpdateAirline";
 
 
 export class Admin extends Component {
@@ -41,19 +42,19 @@ export class Admin extends Component {
                                             <Dashboard />
                                         </Route>
                                         <Route path="/admin/airlines">
-                                            <AirlineTable/>
+                                            <AirlineList />
                                         </Route>
                                         <Route path="/admin/locations">
-                                            <LocationTable/>
+                                            <LocationTable />
                                         </Route>
                                         <Route path="/admin/bookings">
-                                            <BookingTable/>
+                                            <BookingTable />
                                         </Route>
-                                        <Route path="/admin/addnew">
-                                            <AddNewAirline/>
+                                        <Route path="/admin/airlines/add-new">
+                                            <AddNewAirline />
                                         </Route>
-                                        <Route path="/admin/update">
-                                            <UpdateAirline/>
+                                        <Route path="/admin/airlines/update">
+                                            <UpdateAirline />
                                         </Route>
                                     </Switch>
                                 </Box>

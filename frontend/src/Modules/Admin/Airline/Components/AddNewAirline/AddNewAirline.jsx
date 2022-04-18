@@ -7,7 +7,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import "./AddNewAirline.scss";
-import airlineService from '../Shared/Services/AirlineService';
+import airlineService from '../../../Shared/Services/AirlineService';
 
 export default function AddNewAirline() {
   return (
