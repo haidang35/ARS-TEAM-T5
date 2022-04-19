@@ -7,6 +7,8 @@ import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import FlightLandIcon from '@mui/icons-material/FlightLand';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { FlightDetails } from "../FlightDetails/FlightDetails";
+
 
 
 export class TicketItem extends Component {
@@ -14,16 +16,20 @@ export class TicketItem extends Component {
         super(props);
         this.state = {
             isShowFlightDetails: false,
+           
         }
     }
-    
-    onShowFlightTicketDetails = () => {
+
+    onShowFlightTicketDetails = (id) => {
         this.setState({
-            isShowFlightDetails: true
-        })
-    }
+            isShowFlightDetails: !this.state.isShowFlightDetails,
+        });
+    };
+
+   
 
     render() {
+        const { data } = this.props;
         return (
             <>
                 <div className="item-ticket">
@@ -58,13 +64,12 @@ export class TicketItem extends Component {
                                             </div>
 
                                             <Typography
-                                                onClick={() => this.viewFlightDetails}
+                                                onClick={() => this.onShowFlightTicketDetails(data)}
                                                 variant="h6"
                                                 className="detail"
                                             >
                                                 View details
-                                                {this.state
-                                                    .onViewDetails ? (
+                                                {this.state.isShowFlightDetails ? (
                                                     <ArrowDropUpIcon className="view-detail-icon" />
                                                 ) : (
                                                     <ArrowDropDownIcon className="view-detail-icon" />
@@ -98,15 +103,17 @@ export class TicketItem extends Component {
                                     variant="contained"
                                     color="primary"
                                 >
-                                    Choose Flight
+                                   Choose Flight
                                 </Button>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
+                {this.state.isShowFlightDetails ? (
+                    <FlightDetails key={data.id} data={data} />
+                ) : (
+                    ""
+                )}
             </>
         )
     }
