@@ -1,38 +1,35 @@
 import React, { Component } from "react";
-import Typography from '@mui/material/Typography';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import "./TicketItem.scss";
 import { Button } from "@mui/material";
 import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import FlightLandIcon from '@mui/icons-material/FlightLand';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import { FlightDetails } from "../FlightDetails/FlightDetails";
+import Typography from '@mui/material/Typography';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import "./SelectedFlight.scss";
+import { SelectedFlightDetails } from "../SelectedFlightDetails/SelectedFlightDeatails";
 
 
-
-export class TicketItem extends Component {
+export class SelectedFlight extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isShowFlightDetails: false,
-           
+            onShowSelectedFlight: false,
+
         }
     }
 
-    onShowFlightTicketDetails = (id) => {
+    onShowSelected = (id) => {
         this.setState({
-            isShowFlightDetails: !this.state.isShowFlightDetails,
+            onShowSelectedFlight: !this.state.onShowSelectedFlight,
         });
-    };
 
-   
-
+    }
     render() {
         const { data } = this.props;
         return (
             <>
-                <div className="item-ticket">
+                <div className="selected-flight">
                     <div className="row">
                         <div className="col-md-2 airline-logo-box">
                             <div >
@@ -64,12 +61,12 @@ export class TicketItem extends Component {
                                             </div>
 
                                             <Typography
-                                                onClick={() => this.onShowFlightTicketDetails(data)}
+                                                onClick={() => this.onShowSelected(data)}
                                                 variant="h6"
                                                 className="detail"
                                             >
                                                 View details
-                                                {this.state.isShowFlightDetails ? (
+                                                {this.state.onShowSelectedFlight ? (
                                                     <ArrowDropUpIcon className="view-detail-icon" />
                                                 ) : (
                                                     <ArrowDropDownIcon className="view-detail-icon" />
@@ -103,14 +100,14 @@ export class TicketItem extends Component {
                                     variant="contained"
                                     color="primary"
                                 >
-                                   Choose Flight
+                                    Change Flight
                                 </Button>
                             </div>
                         </div>
                     </div>
                 </div>
-                {this.state.isShowFlightDetails ? (
-                    <FlightDetails key={data.id} data={data} />
+                {this.state.onShowSelectedFlight ? (
+                    < SelectedFlightDetails key={data.id} data={data}/>
                 ) : (
                     ""
                 )}

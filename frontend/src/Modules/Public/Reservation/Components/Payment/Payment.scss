@@ -1,0 +1,71 @@
+@import "../../../../../Shared/Styles/variables";
+
+
+
+    .payment-method {
+        background-color: #ffff;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+
+        .title-box {
+            background-color: $background-color;
+            padding: 1rem;
+
+            .title {
+                color: white;
+                text-transform: uppercase;
+                font-size: 17px;
+            }
+        }
+
+        .content {
+            padding: 1rem;
+
+            .payment-method-item {
+                display: flex;
+                align-items: center;
+                padding: 1rem 0 1rem 0;
+                border-radius: 5px;
+                background-color: rgb(251, 251, 251);
+                cursor: pointer;
+
+                .icon-check {
+                    font-size: 25px;
+                    margin-right: 10px;
+                }
+
+                .title {
+                    font-size: 16px;
+                    text-transform: uppercase;
+                    font-weight: 500;
+                }
+            }
+
+            .active-payment-method {
+                .icon-check {
+                    background-color: $background-color;
+                    border-radius: 13px;
+                    color: #ffff;
+                }
+            }
+
+            .payment-method-item:hover {
+                background-color: rgba(236, 232, 232, 0.753);
+            }
+
+        }
+
+        .btn-box {
+            padding: 1rem;
+
+            .btn-reser {
+                float: right;
+                background-color: $background-color;
+                color: #ffff;
+                font-size: 18px;
+
+            }
+        }
+    }
+
