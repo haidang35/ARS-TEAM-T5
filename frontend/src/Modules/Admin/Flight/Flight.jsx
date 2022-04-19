@@ -60,7 +60,7 @@ const rows = [
   createData('1', 'Brazil', 'BR', '210147125', 8515767, 'VnAirline'),
 ];
 
-export default function FlightTable() {
+export default function FlightList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
