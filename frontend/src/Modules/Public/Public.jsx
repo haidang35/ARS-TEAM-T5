@@ -5,10 +5,7 @@ import { FlightTicket } from "./ChooseFlightTicket/FlightTicket";
 import { Home } from "./Home/Home";
 import "./Shared/Styles/Public.scss";
 import { SignUp } from "./Account/Components/SignUp/SignUp";
-<<<<<<< HEAD
 import { Reservation } from "./Reservation/Reservation";
-=======
->>>>>>> development
 
 
 
@@ -40,7 +37,6 @@ export class Public extends Component {
                             <Route path="/flight-tickets" exact>
                                 <FlightTicket />
                             </Route>
-<<<<<<< HEAD
                             <Route path="/reservation"  exact>
                                 <Reservation/>
                             </Route>
@@ -49,9 +45,6 @@ export class Public extends Component {
                                 
                             </Route>
                             
-=======
-                           
->>>>>>> development
                         </Switch>
                     </div>
                 </BrowserRouter>
