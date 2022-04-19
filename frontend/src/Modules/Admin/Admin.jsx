@@ -41,7 +41,7 @@ export class Admin extends Component {
                                         <Route path="/admin/dashboard" >
                                             <Dashboard />
                                         </Route>
-                                        <Route path="/admin/airlines">
+                                        <Route exact path="/admin/airlines">
                                             <AirlineList />
                                         </Route>
                                         <Route path="/admin/locations">
@@ -50,10 +50,10 @@ export class Admin extends Component {
                                         <Route path="/admin/bookings">
                                             <BookingTable />
                                         </Route>
-                                        <Route path="/admin/airlines/add-new">
+                                        <Route exact path="/admin/airlines/create">
                                             <AddNewAirline />
                                         </Route>
-                                        <Route path="/admin/airlines/update">
+                                        <Route exact path="/admin/airlines/update">
                                             <UpdateAirline />
                                         </Route>
                                     </Switch>

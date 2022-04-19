@@ -67,7 +67,6 @@ export default function AirlineList() {
     await airlineService
       .getAirlineList()
       .then((res) => {
-        console.log('88888888888888888888888888888', res.data);
         setAirlineList(res.data);
       })
       .catch((err) => {
@@ -99,7 +98,7 @@ export default function AirlineList() {
                   <TableCell align="center" colSpan={3}>
                   </TableCell>
                   <TableCell align="right" colSpan={3}>
-                    <Link to={"/admin/addnew"}>
+                    <Link to={"/admin/airlines/create"}>
                       <Button variant="contained" startIcon={< AddCircleIcon />}>
                         Add New
                       </Button>
@@ -119,23 +118,31 @@ export default function AirlineList() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
+                {airlineList
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
+                  .map((airline) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === 'number'
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          );
-                        })}
-                        <EditIcon className='edit-icon' />
-                        <DeleteIcon className='delete-icon' />
+                      <TableRow hover role="checkbox" tabIndex={-1} key={airline.code}>
+                        <TableCell>
+                          {airline.Id}
+                        </TableCell>
+                        <TableCell>
+                          {airline.Name}
+                        </TableCell>
+                        <TableCell>
+                          {airline.Code}
+                        </TableCell>
+                        <TableCell>
+                          {airline.Country}
+                        </TableCell>
+                        <TableCell>
+                          {airline.Logo}
+                        </TableCell>
+                        <TableCell>
+                          <EditIcon className='edit-icon' />
+                          <DeleteIcon className='delete-icon' />
+                        </TableCell>
+
 
                       </TableRow>
 

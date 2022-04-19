@@ -14,7 +14,7 @@ using backend.Models;
 
 namespace backend.Controllers
 {
-    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AirlinesController : ApiController
     {
         private MyDbContext db = new MyDbContext();
