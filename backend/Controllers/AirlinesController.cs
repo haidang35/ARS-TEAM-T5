@@ -90,7 +90,8 @@ namespace backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            airline.CreatedAt = DateTime.Now;
+            airline.UpdatedAt = DateTime.Now;
             db.Airlines.Add(airline);
             db.SaveChanges();
 

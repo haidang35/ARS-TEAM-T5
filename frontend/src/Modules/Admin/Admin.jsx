@@ -6,7 +6,6 @@ import Navbar from "./Shared/Components/Navbar/Narbar";
 import { Sidebar } from "./Shared/Components/Sidebar/Sidebar";
 import LocationTable from "./Location/Location"
 import "./Admin.scss"
-import BookingTable from "./Booking/Booking";
 import { Airline } from "./Airline/Airline";
 import AirlineList from "./Airline/Components/AirlineList/AirlineList";
 import  AddNewAirline from "./Airline/Components/AddNewAirline/AddNewAirline";
@@ -47,9 +46,9 @@ export class Admin extends Component {
                                         <Route path="/admin/locations">
                                             <LocationTable />
                                         </Route>
-                                        <Route path="/admin/bookings">
+                                        {/* <Route path="/admin/bookings">
                                             <BookingTable />
-                                        </Route>
+                                        </Route> */}
                                         <Route exact path="/admin/airlines/create">
                                             <AddNewAirline />
                                         </Route>
