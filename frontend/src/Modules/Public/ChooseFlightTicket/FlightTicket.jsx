@@ -16,7 +16,7 @@ export class FlightTicket extends Component {
                     price: 100
                 }, {
                     id: 2,
-                    price: 200
+                    price: 300
                 }, {
                     id: 3,
                     price: 300

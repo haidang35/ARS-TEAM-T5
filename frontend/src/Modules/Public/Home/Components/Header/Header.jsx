@@ -30,7 +30,7 @@ export class Header extends Component {
     render() {
 
         const videoBackgroundHome = document.getElementById("videoBackgroundHome");
-        if(videoBackgroundHome !== null) {
+        if (videoBackgroundHome !== null) {
             videoBackgroundHome.muted = true;
         }
         return (
@@ -68,7 +68,7 @@ export class Header extends Component {
                             <div className="header-content">
                                 <div className="row">
                                     <div className="col-md-10">
-                                        <FlightSearch />
+                                        <FlightSearch favouriteDestination={this.props.favouriteDestination}/>
                                     </div>
                                 </div>
                             </div>
