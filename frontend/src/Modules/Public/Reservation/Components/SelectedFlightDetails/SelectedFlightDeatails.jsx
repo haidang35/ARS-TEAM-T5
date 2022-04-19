@@ -13,7 +13,7 @@ export class SelectedFlightDetails extends Component {
         }
     }
     render() {
-        // let { data } = this.props;
+        let { data } = this.props;
         return (
             <>
                 <div className="selected-flight-details">
