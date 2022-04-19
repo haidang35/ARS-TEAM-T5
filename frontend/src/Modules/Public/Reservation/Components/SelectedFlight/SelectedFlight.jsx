@@ -107,7 +107,7 @@ export class SelectedFlight extends Component {
                     </div>
                 </div>
                 {this.state.onShowSelectedFlight ? (
-                    < SelectedFlightDetails key={data.id} data={data}/>
+                    <SelectedFlightDetails key={data.id} data={data} />
                 ) : (
                     ""
                 )}

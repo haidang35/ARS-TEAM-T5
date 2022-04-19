@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
 import { SearchTicketBox } from "../Shared/Components/SearchTicketBox/SearchTicketBox";
@@ -14,10 +13,12 @@ export class FlightTicket extends Component {
                 {
                     id: 1,
                     price: 100
-                }, {
+                },
+                 {
                     id: 2,
                     price: 300
-                }, {
+                },
+                 {
                     id: 3,
                     price: 300
                 },
