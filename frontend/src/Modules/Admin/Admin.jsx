@@ -1,20 +1,17 @@
 import { Box } from "@mui/material";
 import React, { Component } from "react";
 import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
-import Login from "./Auth/Components/Login/Login";
-import Register from "./Auth/Components/Register/Register";
 import { Dashboard } from "./Dashboard/Dashboard";
 import Navbar from "./Shared/Components/Navbar/Narbar";
 import { Sidebar } from "./Shared/Components/Sidebar/Sidebar";
 import "./Admin.scss"
-import LocationTable from "./Location/Location";
-import AirlineTable from "./Airline/Airline";
-import FlightTable from "./Flight/Flight";
-import FlightTicketTable from "./FlightTicket/FlightTicket";
-import FormCreateAirline from "./Airline/Create/CreateAirline";
-import FormUpdateAirline from "./Airline/Update/UpdateAirline";
+import AirlineList from "./Airline/Components/AirlineList/AirlineList";
+import LocationList from "./Location/Location";
+import FlightList from "./Flight/Flight";
+import FlightTicketList from "./FlightTicket/FlightTicket";
 import FormUpdateFlight from "./Flight/Update/UpdateFlight";
 import FormCreateFlight from "./Flight/Create/CreateFlight";
+import AddNewAirline from "./Airline/Components/AddNewAirline/AddNewAirline";
 
 
 export class Admin extends Component {
@@ -45,24 +42,22 @@ export class Admin extends Component {
                                         <Route path="/admin/dashboard" >
                                             <Dashboard />
                                         </Route>
-                                        <Route path="/admin/locations">
-                                            <LocationTable />
+                                        <Route exact path="/admin/airlines">
+                                            <AirlineList />
                                         </Route>
-                                        <Route path="/admin/airlines">
-                                            <AirlineTable />
+                                        <Route exact path="/admin/airlines/create">
+                                            <AddNewAirline />
+                                        </Route>
+                                        <Route path="/admin/locations">
+                                            <LocationList />
                                         </Route>
                                         <Route path="/admin/flights">
-                                            <FlightTable />
+                                            <FlightList />
                                         </Route>
                                         <Route path="/admin/flight-tickets">
-                                            <FlightTicketTable />
+                                            <FlightTicketList />
                                         </Route>
-                                        <Route path="/admin/airline/create-airline">
-                                            <FormCreateAirline />
-                                        </Route>
-                                        <Route path="/admin/airline/update-airline">
-                                            <FormUpdateAirline />
-                                        </Route>
+                                        
                                         <Route path="/admin/flight/update">
                                             <FormUpdateFlight />
                                         </Route>

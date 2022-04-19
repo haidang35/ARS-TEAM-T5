@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,76 +12,84 @@ import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Link } from 'react-router-dom';
+import "./AirlineList.scss";
+import axios from "axios";
+import { Link } from '@mui/material';
+import airlineService from '../../Shared/Services/AirlineService';
+
+
 
 const columns = [
-    { id: 'id', label: 'Id', minWidth: 80 },
-    { id: 'city', label: 'City', minWidth: 170 },
-    { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-    {
-      id: 'province',
-      label: 'Province',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'cityCode',
-      label: 'CityCode',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'airportName',
-      label: 'AirportName',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-  ];
-
-  function createData(id, city , code, province, cityCode, airportName) {
-    return { id, city, code, province, cityCode, airportName };
+  { id: 'id', label: 'Id', minWidth: 80 },
+  { id: 'name', label: 'Name', minWidth: 170 },
+  { id: 'code', label: 'Code', minWidth: 100 },
+  {
+    id: 'country',
+    label: 'Country',
+    minWidth: 150,
+    align: 'center',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'logo',
+    label: 'Logo',
+    minWidth: 100,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'edit', label: 'Edit', minWidth: 80,
+    align: 'right',
   }
-  
-  const rows = [
-    createData('1','India', 'IN', 'alo', 3287263,'VnAirline'),
-    createData('1','China', 'CN', '1403500365', 9596961,'VnAirline'),
-    createData('1','Italy', 'IT', '60483973', 301340,'VnAirline'),
-    createData('1','United States', 'US', '327167434', 9833520,'VnAirline'),
-    createData('1','Canada', 'CA', '37602103', 9984670,'VnAirline'),
-    createData('1','Australia', 'AU', '25475400', 7692024,'VnAirline'),
-    createData('1','Germany', 'DE', '83019200', 357578,'VnAirline'),
-    createData('1','Ireland', 'IE', '4857000', 70273,'VnAirline'),
-    createData('1','Mexico', 'MX', '126577691', 1972550,'VnAirline'),
-    createData('1','Japan', 'JP', '126317000', 377973,'VnAirline'),
-    createData('1','France', 'FR', '67022000', 640679,'VnAirline'),
-    createData('1','United Kingdom', 'GB', '67545757', 242495,'VnAirline'),
-    createData('1','Russia', 'RU', '146793744', 17098246,'VnAirline'),
-    createData('1','Nigeria', 'NG', '200962417', 923768,'VnAirline'),
-    createData('1','Brazil', 'BR', '210147125', 8515767,'VnAirline'),
-  ];
 
-export default function LocationList() {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  
-    const handleChangePage = (event, newPage) => {
-      setPage(newPage);
-    };
-  
-    const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(+event.target.value);
-      setPage(0);
-    };
-    const [locationList, setLocationList] = useState([]);
+];
+
+function createData(id, name, code, country, logo, edit) {
+  return { id, name, code, country, logo, edit };
+}
+
+const rows = [
+  createData('1', 'Vietnam Airline', 'VN', 'Viet Nam', 'Bong sen vang',),
+  createData('2', 'Bamboo Airways', 'QH', 'Viet Nam', 'Cay tre',),
+  createData('3', 'Vietravel Airlines', 'VU', 'Viet Nam', 'Viettravel')
+];
+
+export default function AirlineList() {
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [airlineList, setAirlineList] = useState([]);
+
+  useEffect(() => {
+    getAirlineList();
+  }, []);
+
+  const getAirlineList = async () => {
+    await airlineService
+      .getAirlineList()
+      .then((res) => {
+        setAirlineList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
   return (
-      <>
+    <>
       <div id='airline'>
         <Paper sx={{ width: '100%' }}>
           <Typography variant="h4" component="div" gutterBottom>
-            Location
+            Airline
           </Typography>
           <TableContainer sx={{ maxHeight: 440 }}>
             <Table stickyHeader aria-label="sticky table">
@@ -110,7 +118,7 @@ export default function LocationList() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {locationList
+                {airlineList
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((airline) => {
                     return (
@@ -155,7 +163,7 @@ export default function LocationList() {
           />
         </Paper>
       </div>
-      </>
-    
+    </>
+
   );
 }

@@ -1,5 +1,6 @@
 import { keys } from "@mui/system";
 import React, { Component } from "react";
+import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
 import { SearchTicketBox } from "../Shared/Components/SearchTicketBox/SearchTicketBox";
 import { BookingStepBar } from "./Components/BookingStepBar/BookingStepBar";
 import { FilterFlightBox } from "./Components/FilterFlightBox/FilterFlightBox";
@@ -33,21 +34,26 @@ export class FlightTicket extends Component {
         const { flightTickets } = this.state;
         return (
             <>
-            <SearchTicketBox />
-            <BookingStepBar />
-                <div className="row">
-                    <div className="col-md-3">
-                        <FilterFlightBox />
+                <NavbarV2 />
+                <div className="wrap-container">
+                    <div className="row">
+                        <SearchTicketBox />
+                        <BookingStepBar />
+                        <div className="col-md-3">
+                            <FilterFlightBox />
+                        </div>
+                        <div className="col-md-9">
+                            <SelectDateTicketBox />
+                            {
+                                flightTickets.map((item, index) => {
+                                    return (<TicketItem key={index} price={item.price} />)
+                                })
+                            }
+                        </div>
                     </div>
-                    <div className="col-md-9">
-                        <SelectDateTicketBox />
-                        {
-                            flightTickets.map((item, index) => {
-                                return (<TicketItem key={index} price={item.price} />)
-                            })
-                        }
-                    </div>
+
                 </div>
+
 
             </>
         )

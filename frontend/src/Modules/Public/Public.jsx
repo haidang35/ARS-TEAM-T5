@@ -4,7 +4,6 @@ import SignIn from "./Account/Components/SignIn/SignIn";
 import SignUp from "./Account/Components/SignUp/SignUp";
 import { FlightTicket } from "./ChooseFlightTicket/FlightTicket";
 import { Home } from "./Home/Home";
-import Navbar from "./Shared/Components/Navbar/Navbar";
 import "./Shared/Styles/Public.scss";
 
 
@@ -19,9 +18,9 @@ export class Public extends Component {
     render() {
         return (
             <>
+
                 <BrowserRouter>
                     <div id="public">
-                        <Navbar />
 
                         <Switch>
                             <Route path="/flight-ticket" exact>

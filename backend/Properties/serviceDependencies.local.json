@@ -1,10 +1,13 @@
 {
   "dependencies": {
+    "secrets1": {
+      "type": "secrets.user"
+    },
     "mssql1": {
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/flightt5dbserver/databases/flight_t5_db",
       "type": "mssql.azure",
       "connectionId": "ConnectionString",
-      "secretStore": "AzureAppSettings"
+      "secretStore": "LocalSecretsFile"
     }
   }
 }
