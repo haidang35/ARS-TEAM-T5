@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,18 +8,16 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { Link } from 'react-router-dom';
 
 const columns = [
     { id: 'id', label: 'Id', minWidth: 80 },
     { id: 'city', label: 'City', minWidth: 170 },
-    { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-    {
-      id: 'province',
-      label: 'Province',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
+    { id: 'province', label: 'Province', minWidth: 100 },
     {
       id: 'cityCode',
       label: 'CityCode',
@@ -34,10 +32,17 @@ const columns = [
       align: 'right',
       format: (value) => value.toLocaleString('en-US'),
     },
+    {
+      id: 'country',
+      label: 'Country',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
   ];
 
-  function createData(id, city , code, province, cityCode, airportName) {
-    return { id, city, code, province, cityCode, airportName };
+  function createData(id, city , code, province, cityCode, airportName, country) {
+    return { id, city, code, province, cityCode, airportName, country };
   }
   
   const rows = [
@@ -58,7 +63,7 @@ const columns = [
     createData('1','Brazil', 'BR', '210147125', 8515767,'VnAirline'),
   ];
 
-export default function LocationTable() {
+export default function LocationList() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
   
@@ -70,67 +75,89 @@ export default function LocationTable() {
       setRowsPerPage(+event.target.value);
       setPage(0);
     };
+    const [locationList, setLocationList] = useState([]);
   return (
       <>
-      <Paper sx={{ width: '100%' }}>
-      <Typography variant="h4" component="div" gutterBottom>
-        Location
-      </Typography>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center" colSpan={3}>
-                Country
-              </TableCell>
-              <TableCell align="center" colSpan={3}>
-                Details
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ top: 57, minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
+      <div id='airline'>
+        <Paper sx={{ width: '100%' }}>
+          <Typography variant="h4" component="div" gutterBottom>
+            Location
+          </Typography>
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center" colSpan={3}>
+                  </TableCell>
+                  <TableCell align="right" colSpan={3}>
+                    <Link to={"/admin/locations/create"}>
+                      <Button variant="contained" startIcon={< AddCircleIcon />}>
+                        Add New
+                      </Button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ top: 57, minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {locationList
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((location) => {
+                    return (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={location.code}>
+                        <TableCell>
+                          {location.Id}
                         </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+                        <TableCell>
+                          {location.city}
+                        </TableCell>
+                        <TableCell>
+                          {location.Code}
+                        </TableCell>
+                        <TableCell>
+                          {location.province}
+                        </TableCell>
+                        <TableCell>
+                          {location.cityCode}
+                        </TableCell>
+                        <TableCell>
+                          {location.airportName}
+                        </TableCell>
+                        <TableCell>
+                          <EditIcon className='edit-icon' />
+                          <DeleteIcon className='delete-icon' />
+                        </TableCell>
+
+
+                      </TableRow>
+
+                    );
+                  })}
+              </TableBody>
+
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+      </div>
       </>
     
   );
