@@ -7,7 +7,7 @@ import { Location } from "../Location/Location";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { dateConvert, getDateTimeNow } from "../../../../../Helpers/datetime";
+import { getDateTimeNow } from "../../../../../Helpers/datetime";
 import "./FlightSearch.scss";
 
 
@@ -344,8 +344,8 @@ export class FlightSearch extends Component {
                             </div>
                         </div>
                     </div>
+                    <Location open={open} selectLocation={this.selectLocation} onCloseDialog={this.onCloseDialog} />
                 </div>
-                <Location open={open} selectLocation={this.selectLocation} onCloseDialog={this.onCloseDialog} />
             </>
         )
     }

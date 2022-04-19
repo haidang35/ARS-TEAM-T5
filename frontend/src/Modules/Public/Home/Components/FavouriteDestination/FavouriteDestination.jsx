@@ -7,11 +7,16 @@ class FavouriteDestination extends Component {
     constructor(props) {
         super(props);
         this.state = {
+         
         };
     }
 
+   
+    
 
+   
     render() {
+      
 
 
         return (
@@ -20,7 +25,8 @@ class FavouriteDestination extends Component {
                     <div className="row">
                         <div className="col-md-6">
                             <div
-
+                               
+                                
                                 className="item-destination"
                                 style={{
                                     background:
