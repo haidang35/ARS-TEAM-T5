@@ -14,6 +14,7 @@ export class FlightDetails extends Component {
         }
     }
     render() {
+        let { data } = this.props;
         return (
             <>
                 <div className="flight-details">
@@ -154,7 +155,7 @@ export class FlightDetails extends Component {
                                     </div>
                                     <div className="col-sm-3">
                                         <Typography className="text">
-
+                                            
                                         </Typography>
                                     </div>
                                 </div>
