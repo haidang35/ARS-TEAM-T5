@@ -18,7 +18,7 @@ export class Footer extends Component {
                             <div className="col-md-12">
                                 <div className="logo-box">
                                     <Typography className="title" variant="h4">
-                                        Flight Hi
+                                        Flight T5
                                     </Typography>
                                     <Typography
                                         variant="body1"
@@ -41,7 +41,7 @@ export class Footer extends Component {
                                     className="content-1"
                                     variant="body1"
                                 >
-                                    @FlightHi 2022
+                                    @FlightT5 2022
                                 </Typography>
                                 <Typography
                                     className="content-2"
