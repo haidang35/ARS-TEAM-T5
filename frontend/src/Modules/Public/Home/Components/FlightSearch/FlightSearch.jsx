@@ -45,6 +45,18 @@ export class FlightSearch extends Component {
 
 
     }
+    
+   
+    componentWillReceiveProps = (nextProps) => {
+        let {searchData} = this.state;
+        searchData["destination"] = {
+            province: nextProps.favouriteDestination,
+        }
+
+        this.setState({
+            searchData
+        });
+    }
 
     handleChangeTripType = (ev) => {
         this.setState({

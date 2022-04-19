@@ -11,7 +11,10 @@ class FavouriteDestination extends Component {
         };
     }
 
-   
+    onSelectFavouriteDestination = (destination) => {
+        this.props.onSelectDestinationThumbnail(destination);
+
+    }
     
 
    
@@ -25,7 +28,7 @@ class FavouriteDestination extends Component {
                     <div className="row">
                         <div className="col-md-6">
                             <div
-                               
+                               onClick={ () => this.onSelectFavouriteDestination("Hanoi")} 
                                 
                                 className="item-destination"
                                 style={{
