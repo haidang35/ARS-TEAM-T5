@@ -9,6 +9,9 @@ import Button from '@mui/material/Button';
 import "./AddNewAirline.scss";
 import Form from "../../../../../Shared/Components/Form";
 import airlineService from '../../Shared/Services/AirlineService';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import { Redirect } from 'react-router-dom';
 
 class AddNewAirline extends Form {
   constructor(props) {
@@ -49,6 +52,7 @@ class AddNewAirline extends Form {
 
 
   saveNewAirline = async () => {
+
     this._validateForm();
     console.log(this.state.form);
     if (this._isFormValid()) {
@@ -73,10 +77,23 @@ class AddNewAirline extends Form {
         });
 
     }
+
   }
 
   render() {
     const { name, code, country, logo } = this.state.form;
+    const {isRedirectSuccess, content, postAirlineList, isLoading} = this.state;
+    if(isRedirectSuccess){
+      return <Redirect to={{
+        pathname: '/admin/airlines',
+        state: {
+          message: {
+            type: 'success',
+            content: 'Add new airline successful !'
+          }
+        }
+      }}/>;
+    }
     return (
       <>
         <React.Fragment>
