@@ -22,9 +22,6 @@ export class Public extends Component {
                 <BrowserRouter>
                     <div id="public">
                         <Switch>
-                            <Route path="/flight-ticket" exact>
-                                <FlightTicket />
-                            </Route>
                             <Route path="/" exact>
                                 <Home />
                             </Route>
@@ -40,11 +37,6 @@ export class Public extends Component {
                             <Route path="/reservation"  exact>
                                 <Reservation/>
                             </Route>
-                            <Route>
-                                
-                                
-                            </Route>
-                            
                         </Switch>
                     </div>
                 </BrowserRouter>
