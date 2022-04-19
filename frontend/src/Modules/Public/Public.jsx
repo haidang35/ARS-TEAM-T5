@@ -38,9 +38,9 @@ export class Public extends Component {
                             <Route path="/flight-tickets" exact>
                                 <FlightTicket />
                             </Route>
-                            <Route  path="/services" exact>
+                            {/* <Route  path="/services" exact>
                                 <Services />
-                            </Route>
+                            </Route> */}
                         </Switch>
                     </div>
 

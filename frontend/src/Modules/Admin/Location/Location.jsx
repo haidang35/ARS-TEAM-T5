@@ -17,14 +17,7 @@ import { Link } from 'react-router-dom';
 const columns = [
     { id: 'id', label: 'Id', minWidth: 80 },
     { id: 'city', label: 'City', minWidth: 170 },
-    { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-    {
-      id: 'province',
-      label: 'Province',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
+    { id: 'province', label: 'Province', minWidth: 100 },
     {
       id: 'cityCode',
       label: 'CityCode',
@@ -39,10 +32,17 @@ const columns = [
       align: 'right',
       format: (value) => value.toLocaleString('en-US'),
     },
+    {
+      id: 'country',
+      label: 'Country',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
   ];
 
-  function createData(id, city , code, province, cityCode, airportName) {
-    return { id, city, code, province, cityCode, airportName };
+  function createData(id, city , code, province, cityCode, airportName, country) {
+    return { id, city, code, province, cityCode, airportName, country };
   }
   
   const rows = [
@@ -90,7 +90,7 @@ export default function LocationList() {
                   <TableCell align="center" colSpan={3}>
                   </TableCell>
                   <TableCell align="right" colSpan={3}>
-                    <Link to={"/admin/airlines/create"}>
+                    <Link to={"/admin/locations/create"}>
                       <Button variant="contained" startIcon={< AddCircleIcon />}>
                         Add New
                       </Button>
@@ -112,23 +112,26 @@ export default function LocationList() {
               <TableBody>
                 {locationList
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((airline) => {
+                  .map((location) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={airline.code}>
+                      <TableRow hover role="checkbox" tabIndex={-1} key={location.code}>
                         <TableCell>
-                          {airline.Id}
+                          {location.Id}
                         </TableCell>
                         <TableCell>
-                          {airline.Name}
+                          {location.city}
                         </TableCell>
                         <TableCell>
-                          {airline.Code}
+                          {location.Code}
                         </TableCell>
                         <TableCell>
-                          {airline.Country}
+                          {location.province}
                         </TableCell>
                         <TableCell>
-                          {airline.Logo}
+                          {location.cityCode}
+                        </TableCell>
+                        <TableCell>
+                          {location.airportName}
                         </TableCell>
                         <TableCell>
                           <EditIcon className='edit-icon' />

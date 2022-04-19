@@ -12,6 +12,7 @@ import FlightTicketList from "./FlightTicket/FlightTicket";
 import FormUpdateFlight from "./Flight/Update/UpdateFlight";
 import FormCreateFlight from "./Flight/Create/CreateFlight";
 import AddNewAirline from "./Airline/Components/AddNewAirline/AddNewAirline";
+import AddNewLocation from "./Location/Create/AddNewLocation"
 
 
 export class Admin extends Component {
@@ -48,8 +49,11 @@ export class Admin extends Component {
                                         <Route exact path="/admin/airlines/create">
                                             <AddNewAirline />
                                         </Route>
-                                        <Route path="/admin/locations">
+                                        <Route exact path="/admin/locations">
                                             <LocationList />
+                                        </Route>
+                                        <Route exact path="/admin/locations/create">
+                                            <AddNewLocation />
                                         </Route>
                                         <Route path="/admin/flights">
                                             <FlightList />
