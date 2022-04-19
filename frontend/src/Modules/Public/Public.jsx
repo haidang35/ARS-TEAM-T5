@@ -3,8 +3,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom"
 import { SignIn } from "./Account/Components/SignIn/SignIn";
 import { FlightTicket } from "./ChooseFlightTicket/FlightTicket";
 import { Home } from "./Home/Home";
-import { Services } from "./Services/Components/Services";
-import Navbar from "./Shared/Components/Navbar/Navbar";
 import "./Shared/Styles/Public.scss";
 import { SignUp } from "./Account/Components/SignUp/SignUp";
 
@@ -20,9 +18,9 @@ export class Public extends Component {
     render() {
         return (
             <>
+
                 <BrowserRouter>
                     <div id="public">
-                        {/* <Navbar /> */}
 
                         <Switch>
                             <Route path="/flight-ticket" exact>

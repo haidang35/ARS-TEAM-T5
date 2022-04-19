@@ -18,37 +18,25 @@ const minDistance = 10;
 
 
 export default function FilterByFlight() {
-    const [value1, setValue1] = React.useState([20, 37]);
+    const [value1, setValue1] = React.useState([0, 24]);
+    const [value2, setValue2] = React.useState([0, 24]);
 
     const handleChange1 = (event, newValue, activeThumb) => {
+        console.log(newValue);
         if (!Array.isArray(newValue)) {
             return;
         }
-        if (activeThumb === 0) {
-            setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]]);
-        } else {
-            setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
-        }
+       setValue1(newValue);
     };
 
-    const [value2, setValue2] = React.useState([20, 37]);
 
     const handleChange2 = (event, newValue, activeThumb) => {
         if (!Array.isArray(newValue)) {
             return;
         }
+        setValue2(newValue);
 
-        if (newValue[1] - newValue[0] < minDistance) {
-            if (activeThumb === 0) {
-                const clamped = Math.min(newValue[0], 100 - minDistance);
-                setValue2([clamped, clamped + minDistance]);
-            } else {
-                const clamped = Math.max(newValue[1], minDistance);
-                setValue2([clamped - minDistance, clamped]);
-            }
-        } else {
-            setValue2(newValue);
-        }
+       
     };
 
     return (
@@ -100,10 +88,11 @@ export default function FilterByFlight() {
                                 valueLabelDisplay="auto"
                                 getAriaValueText={valuetext}
                                 disableSwap
+                                max={24}
                             />
-                            <h5 className="h5">00:00
+                            <h5 className="h5">{value1[0]}:00
                                 <ArrowRightAltIcon ></ArrowRightAltIcon>
-                                24:00
+                                {value1[1]}:00
                             </h5>
                             <br />
                             <h4 className="h4-2">Landing hour</h4>
@@ -115,10 +104,11 @@ export default function FilterByFlight() {
                                 valueLabelDisplay="auto"
                                 getAriaValueText={valuetext}
                                 disableSwap
+                                max={24}
                             />
-                            <h5 className="h5">00:00
+                            <h5 className="h5">{value2[0]}:00
                                 <ArrowRightAltIcon ></ArrowRightAltIcon>
-                                24:00
+                                {value2[1]}:00
                             </h5>
                         </Box>
 

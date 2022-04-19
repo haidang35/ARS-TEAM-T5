@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
 
 const columns = [
     { id: 'id', label: 'Id', minWidth: 80 },
@@ -72,11 +73,14 @@ export default function LocationTable() {
   return (
       <>
       <Paper sx={{ width: '100%' }}>
+      <Typography variant="h4" component="div" gutterBottom>
+        Location
+      </Typography>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell align="center" colSpan={2}>
+              <TableCell align="center" colSpan={3}>
                 Country
               </TableCell>
               <TableCell align="center" colSpan={3}>
