@@ -10,6 +10,9 @@ import { Airline } from "./Airline/Airline";
 import AirlineList from "./Airline/Components/AirlineList/AirlineList";
 import  AddNewAirline from "./Airline/Components/AddNewAirline/AddNewAirline";
 import  UpdateAirline  from "./Airline/Components/UpdateAirline/UpdateAirline";
+import FlightList from "./Flight/Components/FlightList/FlightList";
+import AddNewFlight from "./Flight/Components/AddNewFlight/AddNewFlight";
+
 
 
 export class Admin extends Component {
@@ -46,14 +49,18 @@ export class Admin extends Component {
                                         <Route path="/admin/locations">
                                             <LocationTable />
                                         </Route>
-                                        {/* <Route path="/admin/bookings">
-                                            <BookingTable />
-                                        </Route> */}
+                                        
                                         <Route exact path="/admin/airlines/create">
                                             <AddNewAirline />
                                         </Route>
                                         <Route exact path="/admin/airlines/update">
                                             <UpdateAirline />
+                                        </Route>
+                                        <Route exact path="/admin/flights">
+                                            <FlightList/>
+                                        </Route>
+                                        <Route exact path="/admin/flights/create">
+                                            <AddNewFlight/>
                                         </Route>
                                     </Switch>
                                 </Box>

@@ -88,10 +88,10 @@ namespace backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            ticket.CreatedAt = DateTime.Now;
+            ticket.UpdatedAt = DateTime.Now;
             db.Tickets.Add(ticket);
             db.SaveChanges();
-
             return Ok(ticket);
         }
 

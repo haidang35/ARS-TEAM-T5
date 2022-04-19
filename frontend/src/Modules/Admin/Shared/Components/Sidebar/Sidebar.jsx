@@ -34,7 +34,7 @@ const data = [
   { icon: <Public />, label: 'Location', path: '/admin/locations' },
   { icon: <AirplaneTicket />, label: 'Flight Ticket', path: '/admin' },
   { icon: <Payments />, label: 'Payment', path: '/admin' },
-  { icon: <Flight />, label: 'Flight' , path: '/admin' },
+  { icon: <Flight />, label: 'Flight' , path: '/admin/flights' },
   { icon: <Notifications />, label: 'Notification', path: '/admin'},
 ];
 
