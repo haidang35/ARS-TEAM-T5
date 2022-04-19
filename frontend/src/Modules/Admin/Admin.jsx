@@ -8,6 +8,13 @@ import Navbar from "./Shared/Components/Navbar/Narbar";
 import { Sidebar } from "./Shared/Components/Sidebar/Sidebar";
 import "./Admin.scss"
 import LocationTable from "./Location/Location";
+import AirlineTable from "./Airline/Airline";
+import FlightTable from "./Flight/Flight";
+import FlightTicketTable from "./FlightTicket/FlightTicket";
+import FormCreateAirline from "./Airline/Create/CreateAirline";
+import FormUpdateAirline from "./Airline/Update/UpdateAirline";
+import FormUpdateFlight from "./Flight/Update/UpdateFlight";
+import FormCreateFlight from "./Flight/Create/CreateFlight";
 
 
 export class Admin extends Component {
@@ -40,6 +47,27 @@ export class Admin extends Component {
                                         </Route>
                                         <Route path="/admin/locations">
                                             <LocationTable />
+                                        </Route>
+                                        <Route path="/admin/airlines">
+                                            <AirlineTable />
+                                        </Route>
+                                        <Route path="/admin/flights">
+                                            <FlightTable />
+                                        </Route>
+                                        <Route path="/admin/flight-tickets">
+                                            <FlightTicketTable />
+                                        </Route>
+                                        <Route path="/admin/airline/create-airline">
+                                            <FormCreateAirline />
+                                        </Route>
+                                        <Route path="/admin/airline/update-airline">
+                                            <FormUpdateAirline />
+                                        </Route>
+                                        <Route path="/admin/flight/update">
+                                            <FormUpdateFlight />
+                                        </Route>
+                                        <Route path="/admin/flight/create">
+                                            <FormCreateFlight />
                                         </Route>
                                     </Switch>
                                 </Box>

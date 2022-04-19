@@ -13,33 +13,117 @@ import { Link } from 'react-router-dom';
 
 const columns = [
     { id: 'id', label: 'Id', minWidth: 80 },
-    { id: 'city', label: 'City', minWidth: 170 },
-    { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
+    { id: 'flightcode', label: 'Flightcode', minWidth: 170 },
+    { id: 'departureTime', label: 'departureTime', minWidth: 100 },
     {
-      id: 'province',
-      label: 'Province',
+      id: 'arrivalTime',
+      label: 'ArrivalTime',
       minWidth: 170,
       align: 'right',
       format: (value) => value.toLocaleString('en-US'),
     },
     {
-      id: 'cityCode',
-      label: 'CityCode',
+      id: 'departureId',
+      label: 'DepartureId',
       minWidth: 170,
       align: 'right',
       format: (value) => value.toLocaleString('en-US'),
     },
     {
-      id: 'airportName',
-      label: 'AirportName',
+      id: 'destinationId',
+      label: 'DestinationId',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
+    {
+      id: 'capacity',
+      label: 'Capacity',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
+    {
+      id: 'deluxeSeats',
+      label: 'DeluxeSeats',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
+    {
+      id: 'economySeats',
+      label: 'EconomySeats',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
+    {
+      id: 'exitSeats',
+      label: 'ExitSeats',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
+    {
+      id: 'aircraft',
+      label: 'Aircraft',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
+    {
+      id: 'seatsReseved',
+      label: 'SeatsReseved',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
+    {
+      id: 'seatsAvaliable',
+      label: 'SeatsAvaliable',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
+    {
+      id: 'airlineId',
+      label: 'AirlineId',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
+    {
+      id: 'ticketId',
+      label: 'TicketId',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
+    {
+      id: 'status',
+      label: 'Status',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
+    {
+      id: 'createdAt',
+      label: 'CreatedAt',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
+    {
+      id: 'updatedAt',
+      label: 'UpdatedAt',
       minWidth: 170,
       align: 'right',
       format: (value) => value.toLocaleString('en-US'),
     },
   ];
 
-  function createData(id, city , code, province, cityCode, airportName) {
-    return { id, city, code, province, cityCode, airportName };
+  function createData(id, flightcode , departureTime, arrivalTime, departureId, destinationId, capacity, businessSeats, deluxeSeats, economySeats,exitSeats, aircraft, seatsReseved,seatsAvaliable, airlineId, ticketId, status, createdAt, updatedAt) {
+    return { id, flightcode, departureTime, arrivalTime, departureId, destinationId, capacity,businessSeats, deluxeSeats, economySeats,exitSeats, aircraft, seatsReseved,seatsAvaliable, airlineId, ticketId, status, createdAt, updatedAt};
   }
   
   const rows = [
@@ -60,7 +144,7 @@ const columns = [
     createData('1','Brazil', 'BR', '210147125', 8515767,'VnAirline'),
   ];
 
-export default function LocationTable() {
+export default function FlightTicketTable() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
   
@@ -74,14 +158,15 @@ export default function LocationTable() {
     };
   return (
       <>
-      <Stack direction="row" spacing={3} sx={{ marginLeft: 115 }}>
-          <div className="button" >
-            <Link to="/admin/airlines/update-airline"> <Button color="secondary" sx={{ border: 1 }}>Update</Button></Link>
-            <Link to="/admin/airline/create-airline"><Button variant="contained" color="success">
-              Create
-            </Button></Link>
-          </div>
-        </Stack>
+      <Stack direction="row" spacing={3} sx={{ marginLeft: 100 }}>  
+        <Link to="/admin/airlines/update-airline"> <Button color="secondary" sx={{ border: 1 }}>Update</Button></Link>
+        <Link to="/admin/airline/create-airline"><Button variant="contained" color="success">
+          Create
+        </Button></Link>
+        <Button variant="outlined" color="error">
+          Delete
+        </Button>
+      </Stack>
       <Paper sx={{ width: '100%' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
