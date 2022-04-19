@@ -14,10 +14,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import "./AirlineList.scss";
 import axios from "axios";
-import { Link } from '@mui/material';
 import airlineService from '../../Shared/Services/AirlineService';
-
-
+import { Link, useLocation } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -58,9 +58,11 @@ export default function AirlineList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [airlineList, setAirlineList] = useState([]);
+  const [msg, setMsg] = useState('');
 
   useEffect(() => {
     getAirlineList();
+    getMsg();
   }, []);
 
   const getAirlineList = async () => {
@@ -84,6 +86,20 @@ export default function AirlineList() {
     setPage(0);
   };
 
+  let location = useLocation();
+
+  const getMsg = () => {
+    if(typeof location.state !== 'undefined') {
+      let isHasMessage = false;
+       Object.keys(location.state).forEach(key => {
+         if(key === 'message') isHasMessage = true;
+       });
+       if(isHasMessage) {
+        setMsg(location.state.message);
+       }
+    }
+  }
+  
   return (
     <>
       <div id='airline'>
@@ -92,6 +108,12 @@ export default function AirlineList() {
             Airline
           </Typography>
           <TableContainer sx={{ maxHeight: 440 }}>
+            {
+              msg !== '' ? <Stack sx={{ width: '100%' }} spacing={2}>
+                <Alert severity={msg.type}>{msg.content}</Alert>
+              </Stack> : ''
+            }
+
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
