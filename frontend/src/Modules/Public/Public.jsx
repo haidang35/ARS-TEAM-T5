@@ -5,6 +5,7 @@ import { FlightTicket } from "./ChooseFlightTicket/FlightTicket";
 import { Home } from "./Home/Home";
 import "./Shared/Styles/Public.scss";
 import { SignUp } from "./Account/Components/SignUp/SignUp";
+import { Reservation } from "./Reservation/Reservation";
 
 
 
@@ -18,10 +19,8 @@ export class Public extends Component {
     render() {
         return (
             <>
-
                 <BrowserRouter>
                     <div id="public">
-
                         <Switch>
                             <Route path="/flight-ticket" exact>
                                 <FlightTicket />
@@ -38,16 +37,18 @@ export class Public extends Component {
                             <Route path="/flight-tickets" exact>
                                 <FlightTicket />
                             </Route>
-                           
+                            <Route path="/reservation"  exact>
+                                <Reservation/>
+                            </Route>
+                            <Route>
+                                
+                                
+                            </Route>
+                            
                         </Switch>
                     </div>
-
-
-
                 </BrowserRouter>
-
             </>
-
         )
     }
 }

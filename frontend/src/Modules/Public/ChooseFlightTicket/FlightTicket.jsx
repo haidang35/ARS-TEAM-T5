@@ -1,4 +1,4 @@
-import { keys } from "@mui/system";
+
 import React, { Component } from "react";
 import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
 import { SearchTicketBox } from "../Shared/Components/SearchTicketBox/SearchTicketBox";
@@ -43,15 +43,13 @@ export class FlightTicket extends Component {
                             <SelectDateTicketBox />
                             {
                                 flightTickets.map((item, index) => {
-                                    return (<TicketItem key={index} price={item.price} />)
+                                    return (<TicketItem key={index} data={item} price={item.price}/>)
                                 })
                             }
                         </div>
                     </div>
 
                 </div>
-
-
             </>
         )
     }
