@@ -174,26 +174,27 @@ export class FlightSearch extends Component {
                         }
                         label="One Way"
                     />
-                    <div className="formcheck">
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    name="roundTrip"
-                                    checked={
-                                        tripType === TRIP_TYPE.ROUNDTRIP
-                                    }
-                                    color="primary"
-                                    className="check-box"
-                                    value={TRIP_TYPE.ROUNDTRIP}
-                                    onChange={
-                                        this
-                                            .handleChangeTripType
-                                    }
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                name="roundTrip"
+                                checked={
+                                    tripType === TRIP_TYPE.ROUNDTRIP
+                                }
+                                color="primary"
+                                className="check-box"
+                                value={TRIP_TYPE.ROUNDTRIP}
+                                onChange={
+                                    this
+                                        .handleChangeTripType
+                                }
 
-                                />
-                            }
-                            label="Round trip"
-                        />
+                            />
+                        }
+                        label="Round trip"
+                    />
+                    <div className="formcheck">
+
 
 
                         <div className="depature">
