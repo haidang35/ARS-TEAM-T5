@@ -5,6 +5,8 @@ import { FlightTicket } from "./ChooseFlightTicket/FlightTicket";
 import { Home } from "./Home/Home";
 import "./Shared/Styles/Public.scss";
 import { SignUp } from "./Account/Components/SignUp/SignUp";
+import { Reservation } from "./Reservation/Reservation";
+import { BonusServices } from "./BonusServices/Components/BonusServices";
 
 
 
@@ -18,14 +20,9 @@ export class Public extends Component {
     render() {
         return (
             <>
-
                 <BrowserRouter>
                     <div id="public">
-
                         <Switch>
-                            <Route path="/flight-ticket" exact>
-                                <FlightTicket />
-                            </Route>
                             <Route path="/" exact>
                                 <Home />
                             </Route>
@@ -38,18 +35,16 @@ export class Public extends Component {
                             <Route path="/flight-tickets" exact>
                                 <FlightTicket />
                             </Route>
-                            {/* <Route  path="/services" exact>
-                                <Services />
-                            </Route> */}
+                            <Route path="/reservation"  exact>
+                                <Reservation/>
+                            </Route>
+                            <Route path="/bonusservice" exact>
+                                <BonusServices />
+                            </Route>
                         </Switch>
                     </div>
-
-
-
                 </BrowserRouter>
-
             </>
-
         )
     }
 }

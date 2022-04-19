@@ -23,7 +23,7 @@ export class SeachFlightTicket extends Component {
                 <div id="search">
                     <div>
                         <div className="content">
-                            Search flight's information
+                            Search Flight's Information
                         </div>
                         <FormControl className="flight" >
                             <RadioGroup

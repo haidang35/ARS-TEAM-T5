@@ -3,7 +3,7 @@ import { SeatFlight } from "./SeatFlight/Components/SeatFlight";
 
 
 
-export class Services extends Component {
+export class BonusServices extends Component {
     constructor(props){
         super(props);
         this.state ={

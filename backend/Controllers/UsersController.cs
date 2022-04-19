@@ -88,7 +88,8 @@ namespace backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            user.CreatedAt = DateTime.Now;
+            user.UpdatedAt = DateTime.Now;
             db.Users.Add(user);
             db.SaveChanges();
 

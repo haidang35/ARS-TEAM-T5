@@ -10,6 +10,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/Inbox';
 import { Button } from "@mui/material";
+import TextField from '@mui/material/TextField';
+
 
 
 export class Location extends Component {
@@ -19,11 +21,11 @@ export class Location extends Component {
             locations: [
                 {
                     id: 1,
-                    province: 'da nang '
+                    province: 'Đà Nẵng '
                 },
                 {
                     id: 2,
-                    province: 'ha noi '
+                    province: 'Hà Nội '
                 }
             ],
         }
@@ -47,10 +49,14 @@ export class Location extends Component {
                         onClose={this.onCloseDialog}
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description"
+                        id="location-dialog-home"
+
                     >
                         <DialogTitle className="alert-dialog-title">
                             {"Destination"}
                         </DialogTitle>
+                        <TextField id="outlined-basic" label="City,airport code" variant="outlined" />
+
                         <DialogContent>
                             <List>
                                 {

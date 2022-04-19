@@ -6,6 +6,8 @@ import Navbar from "./Shared/Components/Navbar/Narbar";
 import { Sidebar } from "./Shared/Components/Sidebar/Sidebar";
 import "./Admin.scss"
 import AirlineList from "./Airline/Components/AirlineList/AirlineList";
+import UpdateAirline  from "./Airline/Components/UpdateAirline/UpdateAirline";
+import AddNewFlight from "./Flight/Components/AddNewFlight/AddNewFlight";
 import LocationList from "./Location/Location";
 import FlightList from "./Flight/Flight";
 import FlightTicketList from "./FlightTicket/FlightTicket";
@@ -67,6 +69,12 @@ export class Admin extends Component {
                                         </Route>
                                         <Route path="/admin/flight/create">
                                             <FormCreateFlight />
+                                        </Route>
+                                        <Route exact path="/admin/flights">
+                                            <FlightList/>
+                                        </Route>
+                                        <Route exact path="/admin/flights/create">
+                                            <AddNewFlight/>
                                         </Route>
                                     </Switch>
                                 </Box>

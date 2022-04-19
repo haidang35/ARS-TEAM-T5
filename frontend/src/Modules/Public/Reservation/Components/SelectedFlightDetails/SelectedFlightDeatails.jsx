@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { Typography } from "@mui/material";
-import "./FlightDetails.scss";
 import InfoIcon from '@mui/icons-material/Info';
 import AirplanemodeInactiveIcon from '@mui/icons-material/AirplanemodeInactive';
+import { Typography } from "@mui/material";
+import "./SelectedFlightDetails.scss";
 
 
-
-export class FlightDetails extends Component {
+export class SelectedFlightDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +16,7 @@ export class FlightDetails extends Component {
         let { data } = this.props;
         return (
             <>
-                <div className="flight-details">
+                <div className="selected-flight-details">
                     <div className="flight-info">
                         <div className="title-bar">
                             <Typography className="title">
@@ -30,7 +29,7 @@ export class FlightDetails extends Component {
                                 <div className="col-md-3">
                                     <div>
                                         <AirplanemodeInactiveIcon className="logo-box" />
-                                       
+
                                     </div>
                                 </div>
                                 <div className="col-md-3">
@@ -109,19 +108,19 @@ export class FlightDetails extends Component {
 
                                         >
                                             <td>
-                                             Adult
+                                                Adult
                                             </td>
                                             <td>
-                                                2  
+                                                2
                                             </td>
                                             <td>
-                                            100.000vnd
+                                                100.000vnd
                                             </td>
                                             <td>
-                                            100.000vnd
+                                                100.000vnd
                                             </td>
                                             <td>
-                                            400.000vnd
+                                                400.000vnd
                                             </td>
                                         </tr>
 
@@ -156,7 +155,7 @@ export class FlightDetails extends Component {
                                     </div>
                                     <div className="col-sm-3">
                                         <Typography className="text">
-                                            
+
                                         </Typography>
                                     </div>
                                 </div>
