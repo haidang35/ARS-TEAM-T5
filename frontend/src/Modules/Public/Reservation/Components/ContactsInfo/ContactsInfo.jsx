@@ -44,73 +44,71 @@ export default function ContactsInfo() {
                             <div className="col-sm-4">
 
                                 <div>
-                                <FormGroup style={{ marginTop: "0.7rem" }}>
-                                    <TextField
-                                        className='vocatives'
-                                        id="outlined-select-currency"
-                                        select
-                                        label="Vocatives"
-                                        value={currency}
-                                        onChange={handleChange}
-                                    >
-                                        {currencies.map((option) => (
-                                            <MenuItem key={option.value} value={option.value}>
-                                                {option.label}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
+                                    <FormGroup style={{ marginTop: "0.7rem" }}>
+                                        <TextField
+                                            className='vocatives'
+                                            id="outlined-select-currency"
+                                            select
+                                            label="Vocatives"
+                                            value={currency}
+                                            onChange={handleChange}
+                                        >
+                                            {currencies.map((option) => (
+                                                <MenuItem key={option.value} value={option.value}>
+                                                    {option.label}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
                                     </FormGroup>
                                 </div>
                             </div>
                             <div className="col-sm-4">
-                            <FormGroup style={{ marginTop: "0.7rem" }}>
-                                <TextField
-                                    id="outlined-name"
-                                    label="Full Name"
-                                    required
-                                    className="outlined-fullname"
-                                />
-                                  </FormGroup>
-                            </div>
-                            <div className="col-sm-4">
-                            <FormGroup style={{ marginTop: "0.7rem" }}>
-                            <TextField
-                                    id="outlined-name"
-                                    label="Phone Number"
-                                    required
-                                    className="outlined-phonenumber"
-                                />
-                                 </FormGroup>
-                            </div>
-                            <div className="col-sm-4">
-                            <FormGroup style={{ marginTop: "0.7rem" }}>
-                                <TextField
-                                    id="outlined-email"
-                                    label="Email"
-                                    required
-                                    className="outlined-email"
-                                />
+                                <FormGroup style={{ marginTop: "0.7rem" }}>
+                                    <TextField
+                                        id="outlined-name"
+                                        label="Full Name"
+                                        required
+                                        className="outlined-fullname"
+                                    />
                                 </FormGroup>
                             </div>
                             <div className="col-sm-4">
                                 <FormGroup style={{ marginTop: "0.7rem" }}>
-                                <TextField
-                                    id="outlined-address"
-                                    label="Address"
-                                    required
-                                    className="outlined-address"
-                                />
+                                    <TextField
+                                        id="outlined-name"
+                                        label="Phone Number"
+                                        required
+                                        className="outlined-phonenumber"
+                                    />
                                 </FormGroup>
                             </div>
                             <div className="col-sm-4">
                                 <FormGroup style={{ marginTop: "0.7rem" }}>
-                                    <textarea
-                                        type="text"
-                                        name="note"
-                                        className="form-control"
-                                        placeholder="Note"
-
-                                    ></textarea>
+                                    <TextField
+                                        id="outlined-email"
+                                        label="Email"
+                                        required
+                                        className="outlined-email"
+                                    />
+                                </FormGroup>
+                            </div>
+                            <div className="col-sm-4">
+                                <FormGroup style={{ marginTop: "0.7rem" }}>
+                                    <TextField
+                                        id="outlined-address"
+                                        label="Address"
+                                        required
+                                        className="outlined-address"
+                                    />
+                                </FormGroup>
+                            </div>
+                            <div className="col-sm-4">
+                                <FormGroup style={{ marginTop: "0.7rem" }}>
+                                    <TextField
+                                        id="outlined-note"
+                                        label="Note"
+                                        className="outlined-note"
+                                    />
                                 </FormGroup>
                             </div>
                         </div>

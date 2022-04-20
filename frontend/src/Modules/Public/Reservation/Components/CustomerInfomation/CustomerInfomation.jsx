@@ -118,9 +118,7 @@ export default function CustomerInfomation() {
                                             name="birthday"
                                             required
                                             className="form-control"
-
                                         />
-
                                     </div>
                                     <div className="col-md-2">
                                         <TextField
@@ -146,7 +144,7 @@ export default function CustomerInfomation() {
                                         <div className="col-md-10">
                                             <select
                                                 name="checking-bag"
-                                                className="form-control form-select"
+                                                className=" form-select"
 
                                             >
 

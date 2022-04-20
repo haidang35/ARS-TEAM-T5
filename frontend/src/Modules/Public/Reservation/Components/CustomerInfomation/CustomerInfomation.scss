@@ -41,6 +41,7 @@
 
             .sub-content-title {
                 font-size: 16px;
+                width: 0rem;
             }
 
 
@@ -57,7 +58,7 @@
     }
     .outlined-fullname{
         .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root{
-            width: 18rem;
+            width: 19rem;
             height: 3rem;
         }
     }
@@ -68,5 +69,8 @@
         }
 
     }
-
+    .form-control{
+        width: 19rem;
+        height: 3rem;
+    }
 }
