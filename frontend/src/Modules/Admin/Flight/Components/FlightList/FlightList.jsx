@@ -164,17 +164,20 @@ export default function FlightList() {
                   .map((flight) => {
                     return (
                       <TableRow hover role="checkbox" tabIndex={-1} key={flight.code}>
+                        <TableCell>
+                          {flight.Id}
+                        </TableCell>
                          <TableCell>
                           {flight.FlightCode}
                         </TableCell>
                         <TableCell>
-                          {flight.Departure}
+                          {flight.Departure.City.Name}
                         </TableCell>
                         <TableCell>
-                          {flight.Destination}
+                          {flight.Destination.City.Name}
                         </TableCell>
                         <TableCell>
-                          {flight.Airline}
+                          {flight.Airline.Name}
                         </TableCell>
                         <TableCell>
                           {flight.Status}

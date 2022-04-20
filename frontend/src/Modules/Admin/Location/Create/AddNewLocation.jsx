@@ -172,18 +172,6 @@ class AddNewLocation extends Form {
                     </Select>
                   </FormControl>
                 </Box>
-                {/* <TextField
-                  error={city.err !== ''}
-                  helperText={city.err !== '' ? city.err === '*' ? 'City cannot be empty' : city.err : ''}
-                  required
-                  id="city"
-                  name="city"
-                  value={city.value}
-                  label="City"
-                  autoComplete="family-name"
-                  variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'city')}
-                /> */}
               </Grid>
               <Grid item xs={12}>
                 <TextField
