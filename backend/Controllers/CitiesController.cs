@@ -21,9 +21,14 @@ namespace backend.Controllers
         [Route("~/api/cities")]
         [HttpGet]
         [ResponseType(typeof(ICollection<City>))]
-        public IHttpActionResult GetCities()
+        public IHttpActionResult GetCities(int? provinceId)
         {
-            return Ok(db.Cities.ToList());
+            var cities = db.Cities.ToList();
+            if(provinceId != null)
+            {
+                cities = db.Cities.Where(c => c.ProvinceId == provinceId).ToList();
+            }
+            return Ok(cities);
         }
        
 
