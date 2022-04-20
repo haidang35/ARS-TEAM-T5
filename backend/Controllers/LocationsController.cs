@@ -88,7 +88,8 @@ namespace backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            location.CreatedAt = DateTime.Now;
+            location.UpdatedAt = DateTime.Now;
             db.Locations.Add(location);
             db.SaveChanges();
 
