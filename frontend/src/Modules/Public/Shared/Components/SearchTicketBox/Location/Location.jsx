@@ -36,14 +36,14 @@ export class Location extends Component {
     }
     selectLocation = (location) => {
         this.props.selectLocation(location);
-    } 
+    }
 
     render() {
         const { locations } = this.state;
         const { open } = this.props;
-        return(
+        return (
             <>
-            <div id="location">
+                <div id="location">
                     <Dialog
                         open={open}
                         onClose={this.onCloseDialog}
@@ -58,6 +58,11 @@ export class Location extends Component {
                         <TextField id="outlined-basic" label="City,airport code" variant="outlined" />
 
                         <DialogContent>
+                            <div className="choose-country">
+                                <Button variant="contained" color="primary">
+                                    Việt Nam
+                                </Button>
+                            </div>
                             <List>
                                 {
                                     locations.map((location) => {
@@ -67,7 +72,7 @@ export class Location extends Component {
                                                     <ListItemIcon>
                                                         <InboxIcon />
                                                     </ListItemIcon>
-                                                    <ListItemText primary={location.province}/>
+                                                    <ListItemText primary={location.province} />
                                                 </ListItemButton>
                                             </ListItem>
                                         )
@@ -80,7 +85,7 @@ export class Location extends Component {
                         </DialogActions>
                     </Dialog>
                 </div>
-            
+
             </>
         )
     }

@@ -28,7 +28,7 @@ class FavouriteDestination extends Component {
                     <div className="row">
                         <div className="col-md-6">
                             <div
-                               onClick={ () => this.onSelectFavouriteDestination("Hanoi")} 
+                               onClick={ () => this.onSelectFavouriteDestination("Ha noi")} 
                                 
                                 className="item-destination"
                                 style={{
@@ -47,9 +47,11 @@ class FavouriteDestination extends Component {
                                         borderTopRightRadius: 18,
                                         display: 'block',
                                         width: '100%',
-                                        height: '100%'
+                                        height: '100%',
+                                        
                                     }}
                                 />
+                                
                                 <Typography variant="h5" className="title">
 
 
