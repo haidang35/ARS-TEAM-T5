@@ -11,6 +11,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/Inbox';
+import Autocomplete from '@mui/material/Autocomplete';
+
 import "./Location.scss";
 
 
@@ -58,10 +60,13 @@ export class Location extends Component {
                             <DialogTitle className="alert-dialog-title">
                                 {"Select departure"}
                             </DialogTitle>
-                            <TextField
-                             id="outlined-basic" 
-                             label="City,airport code" 
-                             variant="outlined" />
+                            <Autocomplete
+                            className="box"
+                                disablePortal
+                                id="combo-box-demo"
+                                options={ departure }
+                                renderInput={(params) => <TextField {...params} label="City,airport code" />}
+                            />
                             <DialogContent>
                                 <div className="choose-country">
                                     <Button variant="contained" color="primary">
@@ -96,3 +101,10 @@ export class Location extends Component {
         )
     }
 }
+const departure = [
+    { label: 'Hà Nội' },
+    { label: 'Hồ Chí Minh' },
+    { label: 'Đà Lạt' },
+    { label: 'Nha Trang' },
+    { label: 'Đà Nẵng' }
+]
