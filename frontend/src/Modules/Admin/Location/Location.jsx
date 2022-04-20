@@ -78,7 +78,7 @@ export default function LocationList() {
     const [locationList, setLocationList] = useState([]);
   return (
       <>
-      <div id='airline'>
+      <div id='location'>
         <Paper sx={{ width: '100%' }}>
           <Typography variant="h4" component="div" gutterBottom>
             Location

@@ -14,7 +14,7 @@ const configs = {
   headers: { Authorization: `Bearer ${AUTH_TOKEN}` },
 };
 
-class AirlineService {
+class FlightTicketService {
 
   getFlightTicketList = async () => {
     return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_AIRLINE_LIST);
@@ -44,6 +44,6 @@ class AirlineService {
   }
 }
 
-const flightTicketService = new lightTicketService();
+const flightTicketService = new FlightTicketService()
 export default flightTicketService;
 
