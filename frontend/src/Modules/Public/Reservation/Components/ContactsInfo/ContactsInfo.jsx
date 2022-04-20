@@ -104,14 +104,11 @@ export default function ContactsInfo() {
                             </div>
                             <div className="col-sm-4">
                                 <FormGroup style={{ marginTop: "0.7rem" }}>
-                                    <textarea
-                                        type="text"
-                                        name="note"
-                                        className="form-control"
-                                        placeholder="Note"
-                                    >
-
-                                    </textarea>
+                                    <TextField
+                                        id="outlined-note"
+                                        label="Note"
+                                        className="outlined-note"
+                                    />
                                 </FormGroup>
                             </div>
                         </div>

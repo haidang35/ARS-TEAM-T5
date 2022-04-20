@@ -14,10 +14,17 @@ export class Payments extends Component {
     render() {
         return (
             <>
-                <NoticeOfBookingStatus />
-                <FlightDetailsTicket />
-                <PassengerInfomation />
-                <ContactsInfomation />
+                <div className="wrap-container">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <NoticeOfBookingStatus />
+                            <FlightDetailsTicket />
+                            <PassengerInfomation />
+                            <ContactsInfomation />
+                        </div>
+                    </div>
+                </div>
+
 
 
             </>
