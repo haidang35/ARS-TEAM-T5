@@ -25,6 +25,16 @@ namespace backend.Controllers
         {
             return Ok(db.Cities.ToList());
         }
+       
+
+        [Route("~/api/provinces/{id:int}/cities")]
+        [HttpGet]
+        [ResponseType(typeof(ICollection<City>))]
+        public IHttpActionResult GetCitiesByProvince(int id)
+        {
+            var cities = db.Cities.Where( c => c.ProvinceId == id).ToList();
+            return Ok(cities);
+        }
 
         // GET: api/Cities/5
         [Route("~/api/cities/{id:int}")]

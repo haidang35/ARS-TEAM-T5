@@ -18,13 +18,7 @@ const columns = [
     { id: 'id', label: 'Id', minWidth: 80 },
     { id: 'city', label: 'City', minWidth: 170 },
     { id: 'province', label: 'Province', minWidth: 100 },
-    {
-      id: 'cityCode',
-      label: 'CityCode',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
+    
     {
       id: 'airportName',
       label: 'AirportName',
@@ -39,10 +33,17 @@ const columns = [
       align: 'right',
       format: (value) => value.toLocaleString('en-US'),
     },
+    {
+      id: 'edit',
+      label: 'Edit',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toLocaleString('en-US'),
+    },
   ];
 
-  function createData(id, city , code, province, cityCode, airportName, country) {
-    return { id, city, code, province, cityCode, airportName, country };
+  function createData(id, city , province, airportName, country, edit) {
+    return { id, city, province, airportName, country, edit };
   }
   
   const rows = [
@@ -122,13 +123,7 @@ export default function LocationList() {
                           {location.city}
                         </TableCell>
                         <TableCell>
-                          {location.Code}
-                        </TableCell>
-                        <TableCell>
                           {location.province}
-                        </TableCell>
-                        <TableCell>
-                          {location.cityCode}
                         </TableCell>
                         <TableCell>
                           {location.airportName}

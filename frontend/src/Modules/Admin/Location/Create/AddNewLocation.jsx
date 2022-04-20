@@ -8,53 +8,72 @@ import Button from '@mui/material/Button';
 import Form from "../../../../Shared/Components/Form";
 import { Redirect } from 'react-router-dom';
 import locationsService from '../Share/Services/LocationService';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+
+
 
 class AddNewLocation extends Form {
   constructor(props) {
     super(props);
     this.state = {
       form: this._getInitFormData({
-        id: "",
-        city: "",
-        code: "",
-        province: "",
-        citycode:"",
-        airportName:"",
-        country: "",  
+        airportCode: "",
+        airportName: "",
       }),
+      cityId:"",
+      provinceId: '',
       content: "",
       isLoading: false,
       postLocationList: [],
       isRedirectSuccess: false,
+      provinceList: [],
+      cityList: [],
+
     }
+
   }
 
   componentDidMount() {
-    this.getLocationList()
+    this.getProvinceList();
+    this.getCityList();
   }
-  getLocationList = async () =>{
-    await locationsService.getLocationList().then((res) =>{
+  getCityList = async () =>{
+    await locationsService.getCityList().then((res) => {
+      console.log(res.data)
       this.setState({
-        postlocationList: res.data,
+        cityList: res.data
       });
     });
   }
 
-  saveNewLocation = async () => {
+  getProvinceList = async () => {
+    await locationsService.getProvinceList().then((res) => {
+      console.log(res.data)
+      this.setState({
+        provinceList: res.data
+      });
 
+    });
+  }
+
+  saveNewLocation = async () => {
     this._validateForm();
     console.log(this.state.form);
     if (this._isFormValid()) {
       this.setState({ isLoading: true });
       let { form, content } = this.state;
       let dataConverted = {
-        city: form.city.value,
-        code: form.code.value,
-        province: form.province.value,
-        citycode:form.citycode.value,
-        airportName:form.airportName.value,
-        country: form.country.value, 
+        cityId: form.city.value,
+        provinceId: form.province.value,
+        airportCode: form.citycode.value,
+        airportName: form.airportName.value,
       };
+
       await locationsService
         .createNew(dataConverted)
         .then((res) => {
@@ -68,15 +87,24 @@ class AddNewLocation extends Form {
         });
 
     }
+  }
 
+  handleChangeCity = (ev) => {
+    this.setState({
+      cityId: ev.target.value
+    });
+  }
+  handleChangeProvince = (ev) => {
+     this.setState({
+       provinceId: ev.target.value
+     });  
   }
   
 
- 
   render() {
-    const {id, province, citycode, airportName, code, country, city } = this.state.form;
-    const {isRedirectSuccess, content, postLocationList, isLoading} = this.state;
-    if(isRedirectSuccess){
+    const { airportCode, airportName,  } = this.state.form;
+    const { isRedirectSuccess, content, postLocationList, isLoading, provinceList, provinceId, cityId, cityList } = this.state;
+    if (isRedirectSuccess) {
       return <Redirect to={{
         pathname: '/admin/locations',
         state: {
@@ -85,7 +113,7 @@ class AddNewLocation extends Form {
             content: 'Add new airline successful !'
           }
         }
-      }}/>;
+      }} />;
     }
     return (
       <>
@@ -95,64 +123,33 @@ class AddNewLocation extends Form {
               Add New Location
             </Typography>
             <Grid container spacing={3}>
-              <Grid item xs={12} >
-                <TextField
-                error= {city.err !==''}
-                helperText={city.err !== '' ? city.err === '*' ? 'City cannot be empty': city.err : '' }
-                  required
-                  id="city"
-                  name="city"
-                  value= {city.value}
-                  label="City"
-                  autoComplete="family-name"
-                  variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'city')}
-                />
-              </Grid>
               <Grid item xs={12}>
-                <TextField
-                error= {code.err !==''}
-                helperText={code.err !== '' ? code.err === '*' ? 'Code cannot be empty': code.err : '' }
-                  required
-                  id="code"
-                  name="code"
-                  value= {code.value}
-                  label="Code"
-                  autoComplete="shipping address-line1"
-                  variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'code')}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                error= {citycode.err !==''}
-                helperText={citycode.err !== '' ? citycode.err === '*' ? 'CityCode cannot be empty': citycode.err : '' }
-                  required
-                  id="citycode"
-                  name="citycode"
-                  value= {citycode.value}
-                  label="City Code"
-                  autoComplete="shipping address-line1"
-                  variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'citycode')}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                error= {airportName.err !==''}
-                helperText={airportName.err !== '' ? airportName.err === '*' ? 'Airport name cannot be empty': airportName.err : '' }
-                  required
-                  id="airportName"
-                  name="airportName"
-                  value= {airportName.value}
-                  label="AirportName"
-                  autoComplete="shipping address-line1"
-                  variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'airportName')}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="province">Select province</InputLabel>
+                    <Select
+                      id="province"
+                      name="province"
+                      value={provinceId}
+                      label="Province"
+                      onChange={this.handleChangeProvince}
+                    >
+                      {provinceList.map((province) => {
+                        return (
+                          <MenuItem
+                            key={province.Id}
+                            value={province.Id}>
+                          
+                            {province.Name}
+                          </MenuItem>
+
+                        )
+                      })
+                      }
+                    </Select>
+                  </FormControl>
+                </Box>
+                {/* <TextField
                 error= {province.err !==''}
                 helperText={province.err !== '' ? province.err === '*' ? 'Province cannot be empty': province.err : '' }
                   required
@@ -162,24 +159,77 @@ class AddNewLocation extends Form {
                   label="Province"
                   autoComplete="shipping address-line1"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'province')}
+                  onChange={(ev) => this._setValue(ev, 'province')} */}
+                {/* /> */}
+              </Grid>
+              <Grid item xs={12} >
+              <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="city">Select city</InputLabel>
+                    <Select
+                      id="city"
+                      name="city"
+                      value={cityId}
+                      label="City"
+                      onChange={this.handleChangeCity}
+                    >
+                      {cityList.map((city) => {
+                        return (
+                          <MenuItem
+                            key={city.Id}
+                            value={city.Id}>
+                          
+                            {city.Name}
+                          </MenuItem>
+
+                        )
+                      })
+                      }
+                    </Select>
+                  </FormControl>
+                </Box>
+                {/* <TextField
+                  error={city.err !== ''}
+                  helperText={city.err !== '' ? city.err === '*' ? 'City cannot be empty' : city.err : ''}
+                  required
+                  id="city"
+                  name="city"
+                  value={city.value}
+                  label="City"
+                  autoComplete="family-name"
+                  variant="standard"
+                  onChange={(ev) => this._setValue(ev, 'city')}
+                /> */}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={airportName.err !== ''}
+                  helperText={airportName.err !== '' ? airportName.err === '*' ? ' AirportName name cannot be empty' : airportName.err : ''}
+                  required
+                  id="airportName"
+                  name="airportName"
+                  value={airportName.value}
+                  label="AirportName"
+                  autoComplete="shipping address-line1"
+                  variant="standard"
+                  onChange={(ev) => this._setValue(ev, 'airportName')}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                error= {country.err !==''}
-                helperText={country.err !== '' ? country.err === '*' ? 'Country cannot be empty': country.err : '' }
+                  error={airportCode.err !== ''}
+                  helperText={airportCode.err !== '' ? airportCode.err === '*' ? ' AirportCode name cannot be empty' : airportCode.err : ''}
                   required
-                  id="country"
-                  name="country"
-                  value= {country.value}
-                  label="country"
+                  id="airportCode"
+                  name="airportCode"
+                  value={airportCode.value}
+                  label="AirportCode"
                   autoComplete="shipping address-line1"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'country')}
+                  onChange={(ev) => this._setValue(ev, 'airportCode')}
                 />
               </Grid>
-             
+
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
