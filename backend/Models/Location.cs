@@ -14,9 +14,6 @@ namespace backend.Models
         public int CityId { get; set; }
         public virtual  City City { get; set; }
         [Required]
-        public int ProvinceId { get; set; }
-        public virtual Province Province { get; set; }
-        [Required]
         public string AirPortName { get; set; }
         [Required]
         public string AirPortCode { get; set; }

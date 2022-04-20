@@ -23,6 +23,13 @@ import { Link, useLocation } from 'react-router-dom';
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
   {
+    id: 'flightCode',
+    label: 'FlightCode',
+    minWidth: 100,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
     id: 'departure',
     label: 'Departure',
     minWidth: 150,
@@ -44,13 +51,6 @@ const columns = [
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'ticket',
-    label: 'Ticket',
-    minWidth: 100,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
     id: 'status ',
     label: 'Status',
     minWidth: 100,
@@ -64,8 +64,8 @@ const columns = [
 
 ];
 
-function createData( departure, destination, airline, ticket, status) {
-  return { departure, destination, airline, ticket, status };
+function createData( flightCode, departure, destination, airline, status) {
+  return { flightCode,departure, destination, airline,  status };
 }
 
 const rows = [
@@ -164,6 +164,9 @@ export default function FlightList() {
                   .map((flight) => {
                     return (
                       <TableRow hover role="checkbox" tabIndex={-1} key={flight.code}>
+                         <TableCell>
+                          {flight.FlightCode}
+                        </TableCell>
                         <TableCell>
                           {flight.Departure}
                         </TableCell>
@@ -172,9 +175,6 @@ export default function FlightList() {
                         </TableCell>
                         <TableCell>
                           {flight.Airline}
-                        </TableCell>
-                        <TableCell>
-                          {flight.Ticket}
                         </TableCell>
                         <TableCell>
                           {flight.Status}

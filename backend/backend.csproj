@@ -197,6 +197,10 @@
     <Compile Include="Migrations\202204140208546_Initial.designer.cs">
       <DependentUpon>202204140208546_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204201337489_UpdateCityTable.cs" />
+    <Compile Include="Migrations\202204201337489_UpdateCityTable.designer.cs">
+      <DependentUpon>202204201337489_UpdateCityTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Airline.cs" />
     <Compile Include="Models\Booking.cs" />
@@ -309,6 +313,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202204140208546_Initial.resx">
       <DependentUpon>202204140208546_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204201337489_UpdateCityTable.resx">
+      <DependentUpon>202204201337489_UpdateCityTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
