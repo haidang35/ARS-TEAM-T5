@@ -1,4 +1,4 @@
-import { Button  } from "@mui/material";
+import { Button } from "@mui/material";
 import React, { Component } from "react";
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -58,8 +58,16 @@ export class Location extends Component {
                             <DialogTitle className="alert-dialog-title">
                                 {"Select departure"}
                             </DialogTitle>
-                            <TextField id="outlined-basic" label="City,airport code" variant="outlined" />
+                            <TextField
+                             id="outlined-basic" 
+                             label="City,airport code" 
+                             variant="outlined" />
                             <DialogContent>
+                                <div className="choose-country">
+                                    <Button variant="contained" color="primary">
+                                        Việt Nam
+                                    </Button>
+                                </div>
                                 <List>
                                     {
                                         locations.map((location) => {
