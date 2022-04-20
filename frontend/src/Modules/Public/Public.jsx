@@ -6,7 +6,7 @@ import { Home } from "./Home/Home";
 import "./Shared/Styles/Public.scss";
 import { SignUp } from "./Account/Components/SignUp/SignUp";
 import { Reservation } from "./Reservation/Reservation";
-import { BonusServices } from "./BonusServices/Components/BonusServices";
+import BonusServices from "./BonusService/BonusService";
 
 
 
@@ -38,7 +38,7 @@ export class Public extends Component {
                             <Route path="/reservation"  exact>
                                 <Reservation/>
                             </Route>
-                            <Route path="/bonusservice" exact>
+                            <Route path="/bonus-service" exact>
                                 <BonusServices />
                             </Route>
                         </Switch>

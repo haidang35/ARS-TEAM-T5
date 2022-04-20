@@ -1,0 +1,18 @@
+.seat-row {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .seat-row-box {
+        position: relative;
+    }
+
+    .mark-point-row {
+        -webkit-user-select: none;
+        position: absolute;
+        font-size: 21px;
+        font-weight: 500;
+
+    }
+}
