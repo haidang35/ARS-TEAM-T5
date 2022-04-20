@@ -57,6 +57,7 @@ export class TicketPriceDetails extends Component {
                                 <div className="col-md-4">
                                     <div className="logo-airline">
                                         < LocalAirportIcon />
+                                      
                                     </div>
                                 </div>
                                 <div className="col-md-12">
@@ -67,7 +68,7 @@ export class TicketPriceDetails extends Component {
                                                     variant="h6"
                                                     className="title left-title"
                                                 >
-                                                    giá vé <br />
+                                                     giá vé <br />
                                                         Người lớn 
                                                         1 x 200 ₫
                                                 </Typography>

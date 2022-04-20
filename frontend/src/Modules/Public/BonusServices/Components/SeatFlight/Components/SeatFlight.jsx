@@ -13,7 +13,7 @@ export class SeatFlight extends Component {
         return(
             <>
             <ChooseSeatFlight />
-           <TicketPriceDetails />
+            <TicketPriceDetails />
             </>
         )
     }
