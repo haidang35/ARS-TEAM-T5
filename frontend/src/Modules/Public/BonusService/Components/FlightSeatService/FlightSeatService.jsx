@@ -6,7 +6,7 @@ class FlightSeatService extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShowService: true,
+      isShowService: false,
     };
   }
 

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Payment } from "./Components/Payment/Payment";
-import { CustomerInfomation } from "./Components/CustomerInfomation/CustomerInfomation";
 import { SelectedFlight } from "./Components/SelectedFlight/SelectedFlight";
 import ContactsInfo from "./Components/ContactsInfo/ContactsInfo";
+import CustomerInfomation from "./Components/CustomerInfomation/CustomerInfomation";
 
 export class Reservation extends Component {
     constructor(props) {
@@ -26,22 +26,23 @@ export class Reservation extends Component {
         }
     }
 
-    
+
     render() {
         const { selectedTickets } = this.state;
         return (
             <>
                 <div className="wrap-container">
                     <div className="row">
-                        <CustomerInfomation />
+                        {
+                            selectedTickets.map((item, index) => {
+                                return (<SelectedFlight key={index} data={item} price={item.price} />)
+                            })
+                        }
+                       <CustomerInfomation />
                         <ContactsInfo />
                         <Payment />
                     </div>
-                    {
-                       selectedTickets.map ((item, index) => {
-                           return (<SelectedFlight key={index} data={item}  price={item.price}/>)
-                       })
-                    }
+
                 </div>
 
             </>
