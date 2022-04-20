@@ -1,8 +1,10 @@
 #header-left {
     padding-top: 6rem;
 
+
     .depature {
         padding-top: 1rem;
+        margin-top: 30px;
 
 
         .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
@@ -17,9 +19,13 @@
         }
 
     }
+    
+
 
     .destination {
         padding-top: 1rem;
+        margin-top: 30px;
+
 
         .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
             width: 100%;
@@ -35,6 +41,11 @@
 
     .date {
         padding-top: 1rem;
+        margin-top: 30px;
+    
+        
+
+
 
         .css-1u3bzj6-MuiFormControl-root-MuiTextField-root{
             width: 100%;
@@ -47,11 +58,15 @@
 
     .date-time {
         padding-top: 1rem;
+        margin-top: 30px;
+
 
     }
 
     .search {
         padding-top: 1rem;
+        margin-top: 20px;
+
     }
 
     .title-passenger {
@@ -59,5 +74,8 @@
     }
     
 
-   
+
 }
+
+
+
