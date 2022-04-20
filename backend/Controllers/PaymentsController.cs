@@ -88,7 +88,8 @@ namespace backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            payment.CreatedAt = DateTime.Now;
+            payment.UpdatedAt = DateTime.Now;
             db.Payments.Add(payment);
             db.SaveChanges();
 

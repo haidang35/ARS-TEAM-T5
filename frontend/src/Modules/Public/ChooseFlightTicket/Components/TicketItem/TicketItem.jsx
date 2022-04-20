@@ -16,7 +16,6 @@ export class TicketItem extends Component {
         super(props);
         this.state = {
             isShowFlightDetails: false,
-           
         }
     }
 
@@ -26,7 +25,7 @@ export class TicketItem extends Component {
         });
     };
 
-   
+
 
     render() {
         const { data } = this.props;
@@ -36,7 +35,10 @@ export class TicketItem extends Component {
                     <div className="row">
                         <div className="col-md-2 airline-logo-box">
                             <div >
-                                <FlightLandIcon className="airline-logo" />
+                                <img
+                                    className="airline-logo"
+                                    src="https://static.wixstatic.com/media/9d8ed5_b328a87c44a04887ab0d35ef93991f16~mv2.png/v1/fill/w_1000,h_626,al_c,usm_0.66_1.00_0.01/9d8ed5_b328a87c44a04887ab0d35ef93991f16~mv2.png"
+                                />
                             </div>
                         </div>
                         <div className="col-md-6">
@@ -103,7 +105,7 @@ export class TicketItem extends Component {
                                     variant="contained"
                                     color="primary"
                                 >
-                                   Choose Flight
+                                    Choose Flight
                                 </Button>
                             </div>
                         </div>

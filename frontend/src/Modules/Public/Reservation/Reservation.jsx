@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import { Payment } from "./Components/Payment/Payment";
-import { ContactsInfo } from "./Components/ContactsInfo/ContactsInfo";
 import { CustomerInfomation } from "./Components/CustomerInfomation/CustomerInfomation";
 import { SelectedFlight } from "./Components/SelectedFlight/SelectedFlight";
-import { SelectedFlightDetails } from "./Components/SelectedFlightDetails/SelectedFlightDeatails";
+import ContactsInfo from "./Components/ContactsInfo/ContactsInfo";
 
 export class Reservation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected: [
+            selectedTickets: [
                 {
                     id: 2,
                     price: 1000
@@ -22,27 +21,25 @@ export class Reservation extends Component {
                     id: 4,
                     price: 4000
                 },
-            ]
+            ],
 
         }
     }
 
     
     render() {
-        const { selected } = this.state;
+        const { selectedTickets } = this.state;
         return (
             <>
                 <div className="wrap-container">
                     <div className="row">
-                        <SelectedFlight />
-                        <SelectedFlightDetails />
                         <CustomerInfomation />
                         <ContactsInfo />
                         <Payment />
                     </div>
                     {
-                       selected.map ((item, index) => {
-                           return( <selectedFlights key={index} data={item.data}  price={item.price} /> )
+                       selectedTickets.map ((item, index) => {
+                           return (<SelectedFlight key={index} data={item}  price={item.price}/>)
                        })
                     }
                 </div>

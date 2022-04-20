@@ -9,7 +9,6 @@ export class SelectedFlightDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
         }
     }
     render() {
@@ -29,7 +28,6 @@ export class SelectedFlightDetails extends Component {
                                 <div className="col-md-3">
                                     <div>
                                         <AirplanemodeInactiveIcon className="logo-box" />
-
                                     </div>
                                 </div>
                                 <div className="col-md-3">
@@ -41,10 +39,10 @@ export class SelectedFlightDetails extends Component {
                                             Airport Nội Bài
                                         </Typography>
                                         <Typography className="info-item">
-                                            Take off 21:21
+                                            Take off 24:21
                                         </Typography>
                                         <Typography className="info-item">
-                                            Date 16-04-2022
+                                            Date 19-04-2022
                                         </Typography>
                                     </div>
                                 </div>
@@ -57,26 +55,26 @@ export class SelectedFlightDetails extends Component {
                                             Airport Tân Sơn Nhất
                                         </Typography>
                                         <Typography className="info-item">
-                                            Landing 23:21
+                                            Landing 19:21
                                         </Typography>
                                         <Typography className="info-item">
-                                            Date 16-04-2022
+                                            Date 21-04-2022
                                         </Typography>
                                     </div>
                                 </div>
                                 <div className="col-md-3">
                                     <div className="list-info">
                                         <Typography className="info-item">
-                                            Flight VNA1111
+                                            Flight VNA 909
                                         </Typography>
                                         <Typography className="info-item">
                                             Class Business
                                         </Typography>
                                         <Typography className="info-item">
-                                            Ticket: BANA4040
+                                            Ticket: 12121
                                         </Typography>
                                         <Typography className="info-item">
-                                            Aircraft Boeing 747
+                                            Aircraft Boeing 010
                                         </Typography>
                                     </div>
                                 </div>
@@ -103,10 +101,7 @@ export class SelectedFlightDetails extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                        <tr
-
-                                        >
+                                        <tr>
                                             <td>
                                                 Adult
                                             </td>
@@ -114,22 +109,21 @@ export class SelectedFlightDetails extends Component {
                                                 2
                                             </td>
                                             <td>
-                                                100.000vnd
+                                                200.000vnd
                                             </td>
                                             <td>
-                                                100.000vnd
+                                                200.000vnd
                                             </td>
                                             <td>
                                                 400.000vnd
                                             </td>
                                         </tr>
-
                                         <tr>
                                             <td colSpan="4">
                                                 Total fare (VND)
                                             </td>
                                             <td>
-                                                {" "}
+                                                {"100 "}
 
                                             </td>
                                         </tr>
@@ -155,7 +149,7 @@ export class SelectedFlightDetails extends Component {
                                     </div>
                                     <div className="col-sm-3">
                                         <Typography className="text">
-
+                                            121
                                         </Typography>
                                     </div>
                                 </div>
@@ -169,7 +163,7 @@ export class SelectedFlightDetails extends Component {
                                     </div>
                                     <div className="col-sm-3">
                                         <Typography className="text">
-
+                                            123
                                         </Typography>
                                     </div>
                                 </div>
