@@ -3,10 +3,10 @@ import { AUTH_TOKEN, BASE_URL_SERVER } from "../../../../../Configs/server";
 
 const API_ENDPOINT = {
     GET_FLIGHT_LIST: "/api/flights",
-    GET_DETAILS: "api/flights/{id}",
-    UPDATE_DETAILS: "api/flights/{id}",
+    GET_DETAILS: "api/flights/",
+    UPDATE_DETAILS: "/api/flights/",
     CREATE_NEW: "/api/flights",
-    DELETE_FLIGHT: "api/flights/{id}"
+    DELETE_FLIGHT: "api/flights/"
   }
 
   const configs = {
@@ -17,7 +17,7 @@ const API_ENDPOINT = {
         return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_FLIGHT_LIST);
       };
     
-      getFlightDetail = async (id) => {
+      getFlightDetails = async (id) => {
         return await axios.get(
           BASE_URL_SERVER + API_ENDPOINT.GET_DETAILS + id,
           configs
