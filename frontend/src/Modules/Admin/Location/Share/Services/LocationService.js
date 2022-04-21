@@ -4,7 +4,7 @@ import { AUTH_TOKEN, BASE_URL_SERVER } from '../../../../../Configs/server';
 
 const API_ENDPOINT = {
   GET_LOCATION_LIST: "/api/locations",
-  GET_DETAILS: "api/locations/{id}",
+  GET_DETAILS: "api/locations/",
   UPDATE_DETAILS: "api/locations/{id}",
   CREATE_NEW: "/api/locations",
   DELETE_LOCATION: "api/locations/{id}",
@@ -23,7 +23,7 @@ class LocationService {
     return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_LOCATION_LIST);
   };
 
-  getLocationDetail = async (id) => {
+  getLocationDetails = async (id) => {
     return await axios.get(
       BASE_URL_SERVER + API_ENDPOINT.GET_DETAILS + id,
       configs

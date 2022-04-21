@@ -35,13 +35,6 @@ const columns = [
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'arrivalTime',
-    label: 'ArrivalTime',
-    minWidth: 100,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
     id: 'availableClass ',
     label: 'Available Class',
     minWidth: 100,
@@ -69,8 +62,8 @@ const columns = [
 
 ];
 
-function createData( flight,ticketType, arrivalTime, availableClass, price, status) {
-  return { flight, ticketType, arrivalTime, availableClass, price, status };
+function createData( flight,ticketType, availableClass, price, status) {
+  return { flight, ticketType, availableClass, price, status };
 }
 
 const rows = [
