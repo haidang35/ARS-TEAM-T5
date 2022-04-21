@@ -142,6 +142,9 @@ export default function LocationList() {
                           {location.AirPortName}
                         </TableCell>
                         <TableCell>
+                          {location.City.Province.Country}
+                        </TableCell>
+                        <TableCell>
                           <EditIcon className='edit-icon' />
                           <DeleteIcon className='delete-icon' />
                         </TableCell>
