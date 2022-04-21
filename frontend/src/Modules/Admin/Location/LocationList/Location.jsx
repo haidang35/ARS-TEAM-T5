@@ -12,32 +12,33 @@ import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Link } from 'react-router-dom';
-import locationsService from './Share/Services/LocationService';
+import UpdateIcon from '@mui/icons-material/Update';
+import { Link, useParams, withRouter } from 'react-router-dom';
+import locationsService from '../Share/Services/LocationService';
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
-  { id: 'city', label: 'City', minWidth: 170 },
-  { id: 'province', label: 'Province', minWidth: 100 },
+  { id: 'city', label: 'City', minWidth: 100 },
+  { id: 'province', label: 'Province', minWidth: 50 },
 
   {
     id: 'airportName',
     label: 'AirportName',
-    minWidth: 170,
+    minWidth: 100,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'country',
     label: 'Country',
-    minWidth: 170,
+    minWidth: 60,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'edit',
     label: 'Edit',
-    minWidth: 170,
+    minWidth: 100,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
@@ -69,7 +70,7 @@ export default function LocationList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [locationList, setLocationList] = useState([]);
-
+  const {id} = useParams()
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -97,7 +98,7 @@ export default function LocationList() {
           <Typography variant="h4" component="div" gutterBottom>
             Location
           </Typography>
-          <TableContainer sx={{ maxHeight: 440 }}>
+          <TableContainer sx={{ maxHeight: 400 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -116,7 +117,7 @@ export default function LocationList() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ top: 57, minWidth: column.minWidth }}
+                      style={{ top: 57, minWidth: column.minWidth, textAlign: 'left' }}
                     >
                       {column.label}
                     </TableCell>
@@ -147,6 +148,9 @@ export default function LocationList() {
                         <TableCell>
                           <EditIcon className='edit-icon' />
                           <DeleteIcon className='delete-icon' />
+                          <Link to={"/admin/locations/"+location.Id}>
+                          <UpdateIcon className='update-icon'/>
+                          </Link>
                         </TableCell>
 
 

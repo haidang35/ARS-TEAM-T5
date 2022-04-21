@@ -7,9 +7,10 @@ import { Sidebar } from "./Shared/Components/Sidebar/Sidebar";
 import "./Admin.scss"
 import AirlineList from "./Airline/Components/AirlineList/AirlineList";
 import AddNewFlight from "./Flight/Components/AddNewFlight/AddNewFlight";
-import LocationList from "./Location/Location";
+import LocationList from "./Location/LocationList/Location";
 import AddNewAirline from "./Airline/Components/AddNewAirline/AddNewAirline";
 import AddNewLocation from "./Location/Create/AddNewLocation"
+import UpdateLocation from "./Location/Update/UpdateLocation"
 import FlightList from "./Flight/Components/FlightList/FlightList";
 import AddNewFlightTicket from "./FlightTicket/Components/AddNewFlightTIcket/AddNewFlightTicket";
 import FlightTicketList from "./FlightTicket/Components/FlightTicketList/FlightTicketList";
@@ -56,13 +57,15 @@ export class Admin extends Component {
                                         <Route exact path="/admin/locations/create">
                                             <AddNewLocation />
                                         </Route>
+                                        <Route exact path="/admin/locations/:id">
+                                            <UpdateLocation />
+                                        </Route>
                                         <Route exact path="/admin/flight-tickets">
                                             <FlightTicketList/>
                                         </Route>
                                         <Route exact path="/admin/flight-tickets/create">
                                             <AddNewFlightTicket/>
                                         </Route>
-
                                         <Route exact path="/admin/flights">
                                            <FlightList />
                                         </Route>
