@@ -27,12 +27,9 @@ export class SearchTicketBox extends Component {
             children: 0,
             infants: 0,
             searchData: {
-                departure: {
-                    province: ''
-                },
-                destination: {
-                    province: ''
-                },
+                departure:'',
+               
+                destination: '',
                 departureDate: getDateTimeNow(),
                 returnDate: getDateTimeNow(),
                 tripType: TRIP_TYPE.ONEWAY,
@@ -200,12 +197,12 @@ export class SearchTicketBox extends Component {
                                 <div className="col-md-4">
                                     <TextField
                                         className="departure"
-                                        label="Departure" value={departure.province} variant="outlined" onClick={() => this.handleOpenDialog('departure')} />
+                                        label="Departure" value={departure && departure.City.Name} variant="outlined" onClick={() => this.handleOpenDialog('departure')} />
                                 </div>
                                 <div className="col-md-4">
                                     <TextField
                                         className="destination"
-                                        label="Destination" value={destination.province} variant="outlined" onClick={() => this.handleOpenDialog('destination')} />
+                                        label="Destination" value={destination && destination.City.Name} variant="outlined" onClick={() => this.handleOpenDialog('destination')} />
                                 </div>
                                 <div className="col-md-4">
                                     <div className="passenger-type" >

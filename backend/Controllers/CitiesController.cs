@@ -128,18 +128,10 @@ namespace backend.Controllers
             return Ok(city);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         private bool CityExists(int id)
         {
             return db.Cities.Count(e => e.Id == id) > 0;
         }
+
     }
 }
