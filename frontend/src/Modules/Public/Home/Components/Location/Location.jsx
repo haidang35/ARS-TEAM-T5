@@ -12,9 +12,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/Inbox';
 import Autocomplete from '@mui/material/Autocomplete';
-
 import "./Location.scss";
-import PublicService from "../../../Shared/Services/PublicService";
 import publicService from "../../../Shared/Services/PublicService";
 
 const departure = [
