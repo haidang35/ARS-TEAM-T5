@@ -70,17 +70,9 @@ class UpdateAirline extends Form {
         .then((res) => {
           console.log('success', res.data);
           // Handle redirect and show notification 
-          if(isRedirectSuccess){
-            return <Redirect to={{
-              pathname: '/admin/airlines',
-              state: {
-                message: {
-                  type: 'success',
-                  content: 'Add new airline successful !'
-                }
-              }
-            }}/>;
-          }
+        this.setState({
+          isRedirectSuccess: true,
+        })
         })
         .catch((err) => {
           console.log(err);
@@ -93,6 +85,17 @@ class UpdateAirline extends Form {
   render() {
     const { name, code, country, logo } = this.state.form;
     const { isRedirectSuccess, content, postAirlineList, isLoading } = this.state;
+    if(isRedirectSuccess){
+      return <Redirect to={{
+        pathname: '/admin/airlines',
+        state: {
+          message: {
+            type: 'success',
+            content: 'Update airline successful !'
+          }
+        }
+      }}/>;
+    }
     return (
       <>
         <React.Fragment>
