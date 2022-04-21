@@ -1,0 +1,22 @@
+.seat-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .item {
+        width: 50px;
+        height: 50px;
+        border: 3px solid rgb(238, 214, 29);
+        border-radius: 10px;
+        cursor: pointer;
+        -webkit-user-select: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+
+        .checked-icon {
+            color: #ffff;
+        }
+    }
+}

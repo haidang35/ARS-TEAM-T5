@@ -1,4 +1,4 @@
-import { Button  } from "@mui/material";
+import { Button, MenuItem } from "@mui/material";
 import React, { Component } from "react";
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -11,25 +11,36 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/Inbox';
+import Autocomplete from '@mui/material/Autocomplete';
+
 import "./Location.scss";
+import PublicService from "../../../Shared/Services/PublicService";
+import publicService from "../../../Shared/Services/PublicService";
+
+const departure = [
+    // { label: 'Hà Nội' },
+    // { label: 'Đà Nẵng' }
+]
 
 
 export class Location extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            locations: [
-                {
-                    id: 1,
-                    province: 'Đà Nẵng '
-                },
-                {
-                    id: 2,
-                    province: 'Hà Nội '
-                }
-
-            ],
+            locations: [],
         }
+    }
+
+    componentDidMount() {
+        this.getLocationsList();
+    }
+
+    getLocationsList = async () => {
+        await publicService.getLocationsList().then((res) => {
+            this.setState({
+                locations: res.data,
+            })
+        }) 
     }
 
     onCloseDialog = () => {
@@ -40,6 +51,11 @@ export class Location extends Component {
         this.props.selectLocation(location);
     }
 
+    handleChangeLocation = (ev, newValue) => {
+        this.props.selectLocation({
+            province: newValue.label
+        })
+    }
     render() {
         const { locations } = this.state;
         const { open } = this.props;
@@ -58,8 +74,36 @@ export class Location extends Component {
                             <DialogTitle className="alert-dialog-title">
                                 {"Select departure"}
                             </DialogTitle>
-                            <TextField id="outlined-basic" label="City,airport code" variant="outlined" />
+
+                            <Autocomplete
+                            className="box"
+                                disablePortal
+                                id="combo-box-demo"
+                                onChange={this.handleChangeLocation}
+                                options={ departure }
+                                renderInput={(params) => <TextField {...params} label="City,airport code" />}
+                            />
+                            {/* {locations.map((locations) => {
+                                return(
+                                        <MenuItem
+                                        key={locations.Id}
+                                        value={locations.Id}
+                                        >
+                                            {locations.City.Name}
+
+                                        </MenuItem>
+
+                                )
+
+                            })} */}
+
+
                             <DialogContent>
+                                <div className="choose-country">
+                                    <Button variant="contained" color="primary">
+                                        Việt Nam
+                                    </Button>
+                                </div>
                                 <List>
                                     {
                                         locations.map((location) => {
@@ -69,7 +113,7 @@ export class Location extends Component {
                                                         <ListItemIcon>
                                                             <InboxIcon />
                                                         </ListItemIcon>
-                                                        <ListItemText primary={location.province} />
+                                                        <ListItemText primary={location.City.Name} />
                                                     </ListItemButton>
                                                 </ListItem>
                                             )

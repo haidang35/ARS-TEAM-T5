@@ -1,123 +1,120 @@
+import * as React from 'react';
 import { FormGroup, Typography } from "@mui/material";
-import React, { Component } from "react";
 import "./ContactsInfo.scss";
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 
-export class ContactsInfo extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
 
-        }
-    }
-    render() {
-        return (
-            <>
-                <div>
-                    <div className="contact-info">
-                        <div className="title-box">
-                            <Typography variant="h4" className="title">
-                                Contact info
-                            </Typography>
-                        </div>
-                        <div className="content">
-                            <div className="row">
-                                <div className="col-sm-4">
-                                    <label className="label-info">
-                                        Vocative{" "}
-                                        <span className="required-label">*</span>
-                                    </label>
-                                    <select
-                                        name="vocative"
-                                        required
-                                        className="form-control form-select"
-                                    >
-                                        <option value={"Anh"}>Anh</option>
-                                        <option value={"Chị"}>Chị</option>
-                                        <option value={"Quý ông"}>Quý ông</option>
-                                        <option value={"Quý bà"}>Quý bà</option>
-                                    </select>
+const currencies = [
+    {
+        value: 'USD',
+        label: 'Qúy Ông',
+    },
+    {
+        value: 'EUR',
+        label: 'Qúy Bà',
+    },
+    {
+        value: 'BTC',
+        label: 'Anh',
+    },
+    {
+        value: 'JPY',
+        label: 'Chị',
+    },
+];
+
+export default function ContactsInfo() {
+    const [currency, setCurrency] = React.useState('EUR');
+
+    const handleChange = (event) => {
+        setCurrency(event.target.value);
+    };
+    return (
+        <>
+            <div>
+                <div className="contact-info">
+                    <div className="title-box">
+                        <Typography variant="h4" className="title">
+                            Contact info
+                        </Typography>
+                    </div>
+                    <div className="content">
+                        <div className="row">
+                            <div className="col-sm-4">
+
+                                <div>
+                                    <FormGroup style={{ marginTop: "0.7rem" }}>
+                                        <TextField
+                                            className='vocatives'
+                                            id="outlined-select-currency"
+                                            select
+                                            label="Vocatives"
+                                            value={currency}
+                                            onChange={handleChange}
+                                        >
+                                            {currencies.map((option) => (
+                                                <MenuItem key={option.value} value={option.value}>
+                                                    {option.label}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
+                                    </FormGroup>
                                 </div>
-                                <div className="col-sm-4">
-                                    <label className="label-info">
-                                        Full name{" "}
-                                        <span className="required-label">*</span>
-                                    </label>
-                                    <input
-                                        type="text"
+                            </div>
+                            <div className="col-sm-4">
+                                <FormGroup style={{ marginTop: "0.7rem" }}>
+                                    <TextField
+                                        id="outlined-name"
+                                        label="Full Name"
                                         required
-                                        name="nameContact"
-                                        className="form-control"
-                                        placeholder="Full name"
-
+                                        className="outlined-fullname"
                                     />
-                                </div>
-                                <div className="col-sm-4">
-                                    <label className="label-info">
-                                        Phone number{" "}
-                                        <span className="required-label">*</span>
-                                    </label>
-                                    <input
-                                        type="tel"
+                                </FormGroup>
+                            </div>
+                            <div className="col-sm-4">
+                                <FormGroup style={{ marginTop: "0.7rem" }}>
+                                    <TextField
+                                        id="outlined-name"
+                                        label="Phone Number"
                                         required
-                                        name="phone"
-                                        className="form-control"
-                                        placeholder="Phone number"
-
+                                        className="outlined-phonenumber"
                                     />
-
-                                </div>
-                                <div className="col-sm-4">
-                                    <FormGroup style={{ marginTop: "0.7rem" }}>
-                                        <label className="label-info">
-                                            Email{" "}
-                                            <span className="required-label">
-                                                *
-                                            </span>
-                                        </label>
-
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            required
-                                            className="form-control"
-                                            placeholder="Email"
-
-                                        />
-
-                                    </FormGroup>
-                                </div>
-                                <div className="col-sm-4">
-                                    <FormGroup style={{ marginTop: "0.7rem" }}>
-                                        <label className="label-info">
-                                            Address{" "}
-                                        </label>
-
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="Address"
-                                            name="address"
-
-                                        />
-                                    </FormGroup>
-                                </div>
-                                <div className="col-sm-4">
-                                    <FormGroup style={{ marginTop: "0.7rem" }}>
-                                        <label className="label-info">Note </label>
-                                        <textarea
-                                            type="text"
-                                            name="note"
-                                            className="form-control"
-                                            placeholder="Note"
-
-                                        ></textarea>
-                                    </FormGroup>
-                                </div>
+                                </FormGroup>
+                            </div>
+                            <div className="col-sm-4">
+                                <FormGroup style={{ marginTop: "0.7rem" }}>
+                                    <TextField
+                                        id="outlined-email"
+                                        label="Email"
+                                        required
+                                        className="outlined-email"
+                                    />
+                                </FormGroup>
+                            </div>
+                            <div className="col-sm-4">
+                                <FormGroup style={{ marginTop: "0.7rem" }}>
+                                    <TextField
+                                        id="outlined-address"
+                                        label="Address"
+                                        required
+                                        className="outlined-address"
+                                    />
+                                </FormGroup>
+                            </div>
+                            <div className="col-sm-4">
+                                <FormGroup style={{ marginTop: "0.7rem" }}>
+                                    <TextField
+                                        id="outlined-note"
+                                        label="Note"
+                                        className="outlined-note"
+                                    />
+                                </FormGroup>
                             </div>
                         </div>
                     </div>
                 </div>
-            </>
-        )
-    }
+            </div>
+        </>
+    );
 }

@@ -11,8 +11,9 @@ import LocationList from "./Location/Location";
 import AddNewAirline from "./Airline/Components/AddNewAirline/AddNewAirline";
 import AddNewLocation from "./Location/Create/AddNewLocation"
 import FlightList from "./Flight/Components/FlightList/FlightList";
-import FlightTicketList from "./FlightTicket/FlightTicket";
-import AddNewFlightTicket from "./FlightTicket/Create/AddNewFlightTicket";
+import AddNewFlightTicket from "./FlightTicket/Components/AddNewFlightTIcket/AddNewFlightTicket";
+import FlightTicketList from "./FlightTicket/Components/FlightTicketList/FlightTicketList";
+
 
 
 export class Admin extends Component {
@@ -55,6 +56,13 @@ export class Admin extends Component {
                                         <Route exact path="/admin/locations/create">
                                             <AddNewLocation />
                                         </Route>
+                                        <Route exact path="/admin/flight-tickets">
+                                            <FlightTicketList/>
+                                        </Route>
+                                        <Route exact path="/admin/flight-tickets/create">
+                                            <AddNewFlightTicket/>
+                                        </Route>
+
                                         <Route exact path="/admin/flights">
                                            <FlightList />
                                         </Route>

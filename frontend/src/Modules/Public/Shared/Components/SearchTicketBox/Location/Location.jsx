@@ -11,39 +11,57 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/Inbox';
 import { Button } from "@mui/material";
 import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import publicService from "../../../Services/PublicService";
 
+const departure = [
+    { label: 'Hà Nội' },
+    { label: 'Hồ Chí Minh' },
+    { label: 'Đà Lạt' },
+    { label: 'Nha Trang' },
+    { label: 'Đà Nẵng' }
+]
 
 
 export class Location extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            locations: [
-                {
-                    id: 1,
-                    province: 'Đà Nẵng '
-                },
-                {
-                    id: 2,
-                    province: 'Hà Nội '
-                }
-            ],
+            locations: [],
         }
     }
+
+    componentDidMount() {
+        this.getLocationsList();
+    }
+
+    getLocationsList = async () => {
+        await publicService.getLocationsList().then((res) => {
+            this.setState({
+                locations: res.data,
+            })
+        }) 
+    }
+
     onCloseDialog = () => {
         this.props.onCloseDialog();
 
     }
     selectLocation = (location) => {
         this.props.selectLocation(location);
-    } 
+    }
 
+    handleChangeLocation = (ev, newValue) => {
+        this.props.selectLocation({
+            province: newValue.label
+        })
+    }
     render() {
         const { locations } = this.state;
         const { open } = this.props;
-        return(
+        return (
             <>
-            <div id="location">
+                <div id="location">
                     <Dialog
                         open={open}
                         onClose={this.onCloseDialog}
@@ -55,9 +73,21 @@ export class Location extends Component {
                         <DialogTitle className="alert-dialog-title">
                             {"Destination"}
                         </DialogTitle>
-                        <TextField id="outlined-basic" label="City,airport code" variant="outlined" />
+                        <Autocomplete
+                             className="box"
+                             disablePortal
+                             id="combo-box-demo"
+                             onChange={this.handleChangeLocation}
+                             options={ departure }
+                             renderInput={(params) => <TextField {...params} label="City,airport code" />}
+                        />
 
                         <DialogContent>
+                            <div className="choose-country">
+                                <Button variant="contained" color="primary">
+                                    Việt Nam
+                                </Button>
+                            </div>
                             <List>
                                 {
                                     locations.map((location) => {
@@ -67,7 +97,7 @@ export class Location extends Component {
                                                     <ListItemIcon>
                                                         <InboxIcon />
                                                     </ListItemIcon>
-                                                    <ListItemText primary={location.province}/>
+                                                    <ListItemText primary={location.City.Name} />
                                                 </ListItemButton>
                                             </ListItem>
                                         )
@@ -80,7 +110,7 @@ export class Location extends Component {
                         </DialogActions>
                     </Dialog>
                 </div>
-            
+
             </>
         )
     }

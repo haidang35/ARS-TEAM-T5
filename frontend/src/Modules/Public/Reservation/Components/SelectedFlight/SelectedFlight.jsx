@@ -14,14 +14,13 @@ export class SelectedFlight extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            onShowSelectedFlight: false,
-
+            isShowTicketDetails: false,
         }
     }
 
-    onShowSelected = (id) => {
+    onShowTicket = (id) => {
         this.setState({
-            onShowSelectedFlight: !this.state.onShowSelectedFlight,
+            isShowTicketDetails: !this.state.isShowTicketDetails,
         });
 
     }
@@ -33,7 +32,10 @@ export class SelectedFlight extends Component {
                     <div className="row">
                         <div className="col-md-2 airline-logo-box">
                             <div >
-                                <FlightLandIcon className="airline-logo" />
+                                <img
+                                    className="airline-logo"
+                                    src="https://static.wixstatic.com/media/9d8ed5_b328a87c44a04887ab0d35ef93991f16~mv2.png/v1/fill/w_1000,h_626,al_c,usm_0.66_1.00_0.01/9d8ed5_b328a87c44a04887ab0d35ef93991f16~mv2.png"
+                                />
                             </div>
                         </div>
                         <div className="col-md-6">
@@ -42,17 +44,17 @@ export class SelectedFlight extends Component {
                                     <div className="col-sm-4">
                                         <div className="destination">
                                             <Typography className="city">
-                                                ha noi
+                                                Đà Nẵng
                                             </Typography>
                                             <Typography className="time">
-                                                15:17
+                                                24 : 00
                                             </Typography>
                                         </div>
                                     </div>
                                     <div className="col-sm-4">
                                         <div className="info">
                                             <Typography className="flight-name">
-                                                T5
+                                                Boing 000
                                             </Typography>
                                             <div className="icon-flight-box">
                                                 <LocationOnIcon className="location-icon" />
@@ -61,12 +63,12 @@ export class SelectedFlight extends Component {
                                             </div>
 
                                             <Typography
-                                                onClick={() => this.onShowSelected(data)}
+                                                onClick={() => this.onShowTicket(data)}
                                                 variant="h6"
                                                 className="detail"
                                             >
                                                 View details
-                                                {this.state.onShowSelectedFlight ? (
+                                                {this.state.isShowTicketDetails ? (
                                                     <ArrowDropUpIcon className="view-detail-icon" />
                                                 ) : (
                                                     <ArrowDropDownIcon className="view-detail-icon" />
@@ -77,10 +79,10 @@ export class SelectedFlight extends Component {
                                     <div className="col-sm-4">
                                         <div className="destination">
                                             <Typography className="city">
-                                                ha noi
+                                                Hải Phòng
                                             </Typography>
                                             <Typography className="time">
-                                                24:00
+                                                21:00
                                             </Typography>
                                         </div>
                                     </div>
@@ -94,7 +96,7 @@ export class SelectedFlight extends Component {
                                 </Typography>
                                 <Button
                                     onClick={() =>
-                                        this.onChooseFlight
+                                        this.onChangeFlight
                                     }
                                     className="btn-choose"
                                     variant="contained"

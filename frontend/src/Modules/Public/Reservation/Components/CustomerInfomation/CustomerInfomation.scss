@@ -41,11 +41,36 @@
 
             .sub-content-title {
                 font-size: 16px;
+                width: 0rem;
             }
 
 
         }
 
 
+    }
+    .genger{
+        .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root{
+            width: 12rem;
+            height: 3rem;
+        }
+      
+    }
+    .outlined-fullname{
+        .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root{
+            width: 19rem;
+            height: 3rem;
+        }
+    }
+    .identity-number{
+        .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root{
+            width: 12rem;
+            height: 3rem;
+        }
+
+    }
+    .form-control{
+        width: 19rem;
+        height: 3rem;
     }
 }

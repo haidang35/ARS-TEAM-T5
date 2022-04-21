@@ -104,10 +104,7 @@ export class FlightDetails extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                        <tr
-
-                                        >
+                                        <tr>
                                             <td>
                                              Adult
                                             </td>
@@ -124,14 +121,12 @@ export class FlightDetails extends Component {
                                             400.000vnd
                                             </td>
                                         </tr>
-
                                         <tr>
                                             <td colSpan="4">
                                                 Total fare (VND)
                                             </td>
                                             <td>
-                                                {" "}
-
+                                                {"200 "}
                                             </td>
                                         </tr>
                                     </tbody>
