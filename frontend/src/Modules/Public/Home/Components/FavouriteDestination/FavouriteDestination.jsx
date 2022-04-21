@@ -28,7 +28,7 @@ class FavouriteDestination extends Component {
                     <div className="row">
                         <div className="col-md-6">
                             <div
-                               onClick={ () => this.onSelectFavouriteDestination("Ha noi")} 
+                               onClick={ () => this.onSelectFavouriteDestination("Hanoi")} 
                                 
                                 className="item-destination"
                                 style={{
