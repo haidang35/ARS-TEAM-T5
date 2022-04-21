@@ -10,7 +10,7 @@ const API_ENDPOINT = {
   DELETE_LOCATION: "api/locations/{id}",
   GET_PROVINCE_LIST: "/api/provinces",
   GET_CITY_LIST: "/api/cities",
-  
+
 }
 
 const configs = {
@@ -45,12 +45,18 @@ class LocationService {
   deleteLocation = async (id) => {
     return await axios.delete(BASE_URL_SERVER + API_ENDPOINT.DELETE_LOCATION + id, configs);
   }
+
   getProvinceList = async () => {
     return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_PROVINCE_LIST);
   };
+
   getCityList = async () => {
     return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_CITY_LIST);
   };
+
+  getCitiesByProvince = async (provinceId) => {
+    return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_CITY_LIST + `?provinceId=${provinceId}`);
+  }
 }
 
 const locationsService = new LocationService();
