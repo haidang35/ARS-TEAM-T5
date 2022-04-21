@@ -119,6 +119,8 @@ namespace backend.Controllers
             return db.Tickets.Count(e => e.Id == id) > 0;
         }
         
+
+        [Route("~/api/tickets/search")]
         [HttpGet]
         [ResponseType(typeof(ICollection<Ticket>))]
         public IHttpActionResult SearchFlightTicket(SearchFlightTicket searchData)
