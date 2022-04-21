@@ -129,7 +129,7 @@ export default function FlightTicketList() {
       <div id='flightticket'>
         <Paper sx={{ width: '100%' }}>
           <Typography variant="h4" component="div" gutterBottom>
-            Flight
+            Flight Ticket
           </Typography>
           <TableContainer sx={{ maxHeight: 440 }}>
             {
@@ -169,20 +169,20 @@ export default function FlightTicketList() {
                   .map((flightticket) => {
                     return (
                       <TableRow hover role="checkbox" tabIndex={-1} key={flightticket.code}>
-                        {/* <TableCell>
+                        <TableCell>
                           {flightticket.Id}
                         </TableCell>
                          <TableCell>
-                          {flightticket.FlightCode}
+                          {flightticket.Flight.FlightCode}
                         </TableCell>
                         <TableCell>
-                          {flightticket.Departure.City.Name}
+                          {flightticket.TicketType}
                         </TableCell>
                         <TableCell>
-                          {flightticket.Destination.City.Name}
+                          {flightticket.AvailableClass}
                         </TableCell>
                         <TableCell>
-                          {flightticket.Airline.Name}
+                          {flightticket.Price}
                         </TableCell>
                         <TableCell>
                           {flightticket.Status}
@@ -190,7 +190,7 @@ export default function FlightTicketList() {
                         <TableCell>
                           <EditIcon className='edit-icon' />
                           <DeleteIcon className='delete-icon' />
-                        </TableCell> */}
+                        </TableCell>
 
 
                       </TableRow>

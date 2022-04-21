@@ -146,7 +146,7 @@ class AddNewFlightTicket extends Form {
     const { isRedirectSuccess, content, flightticketList,ticketTypeList,  flightId,  availableClass } = this.state;
     if (isRedirectSuccess) {
       return <Redirect to={{
-        pathname: '/admin/flights',
+        pathname: '/admin/flight-tickets',
         state: {
           message: {
             type: 'success',
