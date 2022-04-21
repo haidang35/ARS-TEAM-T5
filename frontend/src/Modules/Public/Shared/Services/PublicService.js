@@ -21,7 +21,7 @@ class PublicService {
     }
     
     getFlightTickets = async (searchData) => {
-        return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_FLIGHT_TICKETS,searchData);
+        return await axios.post(BASE_URL_SERVER + API_ENDPOINT.GET_FLIGHT_TICKETS, searchData);
     }
 }
 

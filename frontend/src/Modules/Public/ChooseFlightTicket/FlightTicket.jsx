@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
 import { SearchTicketBox } from "../Shared/Components/SearchTicketBox/SearchTicketBox";
 import publicService from "../Shared/Services/PublicService";
@@ -9,7 +10,7 @@ import { TicketItem } from "./Components/TicketItem/TicketItem";
 
 
 
-export class FlightTicket extends Component {
+class FlightTicket extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -24,31 +25,23 @@ export class FlightTicket extends Component {
 
     }
 
-    getFlightTicketList = () => {
+    getFlightTicketList = async () => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const searchData = {
-            departureId: urlParams.get(""),
-            destinationid: urlParams.get("")
+            departureId: urlParams.get("departure"),
+            destinationid: urlParams.get("destination")
         }
-
-
-        getFlightTickets = async (searchData) => {
-
-            await publicService.getFlightTickets().then((res) => {
-                this.setState({
-                    flightTickets : res.data,
-                })
-
-            
+        await publicService.getFlightTickets(searchData).then((res) => {
+            this.setState({
+                flightTickets : res.data,
             })
-
-        }
+        })
     }
 
     render() {
         const { flightTickets } = this.state;
-
+        const { passengers } = this.props.location.state;
         return (
             <>
                 <NavbarV2 />
@@ -63,7 +56,7 @@ export class FlightTicket extends Component {
                             <SelectDateTicketBox />
                             {
                                 flightTickets.map((item, index) => {
-                                    return (<TicketItem key={index} data={item} price={item.price} />)
+                                    return (<TicketItem key={index} data={item} passengers={passengers}/>)
                                 })
                             }
                         </div>
@@ -74,3 +67,5 @@ export class FlightTicket extends Component {
         )
     }
 }
+
+export default withRouter(FlightTicket);
