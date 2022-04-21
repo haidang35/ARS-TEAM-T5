@@ -20,10 +20,10 @@ class FlightTicket extends Component {
         }
     }
 
-    componentDidMount() {
-        this.getFlightTicketList();
+//     componentDidMount() {
+//         this.getFlightTicketList();
 
-    }
+//     }
 
     getFlightTicketList = async () => {
         const queryString = window.location.search;

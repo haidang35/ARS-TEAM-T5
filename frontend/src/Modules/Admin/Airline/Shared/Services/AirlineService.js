@@ -30,7 +30,6 @@ class AirlineService {
     return await axios.put(
       BASE_URL_SERVER + API_ENDPOINT.UPDATE_DETAILS + id,
       data,
-      configs
     );
   };
 

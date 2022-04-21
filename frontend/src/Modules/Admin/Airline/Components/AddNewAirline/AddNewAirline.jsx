@@ -67,7 +67,6 @@ class AddNewAirline extends Form {
       await airlineService
         .createNew(dataConverted)
         .then((res) => {
-          console.log(res.data);
           this.setState({
             isRedirectSuccess: true,
           });
