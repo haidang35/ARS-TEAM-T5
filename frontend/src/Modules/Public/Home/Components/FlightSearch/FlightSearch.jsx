@@ -9,6 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { getDateTimeNow } from "../../../../../Helpers/datetime";
 import "./FlightSearch.scss";
+import { Redirect } from "react-router-dom";
 
 
 
@@ -26,29 +27,25 @@ export class FlightSearch extends Component {
             children: 0,
             infants: 0,
             searchData: {
-                departure: {
-                    province: ''
-                },
-                destination: {
-                    province: ''
-                },
+                departure: '',
+                destination: '',
                 departureDate: getDateTimeNow(),
                 returnDate: getDateTimeNow(),
                 tripType: TRIP_TYPE.ONEWAY,
             },
 
-
             openLocationDialog: false,
             locationType: "",
+            isRedirect: false
 
         }
 
 
     }
-    
-   
+
+
     componentWillReceiveProps = (nextProps) => {
-        let {searchData} = this.state;
+        let { searchData } = this.state;
         searchData["destination"] = {
             province: nextProps.favouriteDestination,
         }
@@ -97,6 +94,12 @@ export class FlightSearch extends Component {
         searchData['departureDate'] = newValue;
         this.setState({
             searchData
+        })
+    }
+
+    onSearchFlight = () => {
+        this.setState({
+            isRedirect: true
         })
     }
 
@@ -160,8 +163,17 @@ export class FlightSearch extends Component {
 
 
     render() {
-        const { open, locations } = this.state;
+        const { open, locations, isRedirect, children, infants, adults } = this.state;
         const { departure, destination, departureDate, returnDate, tripType } = this.state.searchData;
+
+        if (isRedirect) {
+            return <Redirect to={{
+                pathname: 'flight-ticket',
+                search: `?tripType=${tripType}&departure=${departure.Id}&destination=${destination.Id}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&infants=${infants}`,
+                
+            }} />
+        }
+
         return (
             <>
                 <div id="header-left">
@@ -206,10 +218,10 @@ export class FlightSearch extends Component {
                     />
                     <div className="formcheck">
                         <div className="depature">
-                            <TextField label="Departure" value={departure.province} variant="outlined" onClick={() => this.handleOpenDialog('departure')} />
+                            <TextField label="Departure" value={departure && departure.City.Name} variant="outlined" onClick={() => this.handleOpenDialog('departure')} />
                         </div>
                         <div className="destination">
-                            <TextField label="Destination" value={destination.province} variant="outlined" onClick={() => this.handleOpenDialog('destination')} />
+                            <TextField label="Destination" value={destination && destination.City.Name} variant="outlined" onClick={() => this.handleOpenDialog('destination')} />
                         </div>
                         <div className="date">
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -343,6 +355,7 @@ export class FlightSearch extends Component {
                             </div>
                             <div className="search">
                                 <Button
+                                    onClick={this.onSearchFlight}
                                     variant="contained"
                                     className="btn-search-form"
                                     startIcon={<Search />}
