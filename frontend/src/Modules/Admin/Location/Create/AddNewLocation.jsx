@@ -6,7 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Form from "../../../../Shared/Components/Form";
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import locationsService from '../Share/Services/LocationService';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -220,4 +220,4 @@ class AddNewLocation extends Form {
 
 }
 
-export default AddNewLocation;
+export default withRouter(AddNewLocation);

@@ -4,10 +4,10 @@ import { AUTH_TOKEN, BASE_URL_SERVER } from '../../../../../Configs/server';
 
 const API_ENDPOINT = {
   GET_LOCATION_LIST: "/api/locations",
-  GET_DETAILS: "api/locations/",
-  UPDATE_DETAILS: "api/locations/{id}",
+  GET_DETAILS: "/api/locations/",
+  UPDATE_DETAILS: "/api/locations/",
   CREATE_NEW: "/api/locations",
-  DELETE_LOCATION: "api/locations/{id}",
+  DELETE_LOCATION: "/api/locations/",
   GET_PROVINCE_LIST: "/api/provinces",
   GET_CITY_LIST: "/api/cities",
 
