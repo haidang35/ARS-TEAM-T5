@@ -8,7 +8,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import FlightLandIcon from '@mui/icons-material/FlightLand';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { FlightDetails } from "../FlightDetails/FlightDetails";
-
+import { getTime } from "../../../../../Helpers/datetime";
 
 
 export class TicketItem extends Component {
@@ -28,7 +28,7 @@ export class TicketItem extends Component {
 
 
     render() {
-        const { data } = this.props;
+        const { data, passengers } = this.props;
         return (
             <>
                 <div className="item-ticket">
@@ -47,17 +47,20 @@ export class TicketItem extends Component {
                                     <div className="col-sm-4">
                                         <div className="destination">
                                             <Typography className="city">
-                                                ha noi
+                                                {data.Flight.Departure.City.Name}
                                             </Typography>
                                             <Typography className="time">
-                                                15:17
+                                                {getTime(
+                                                    data.Flight
+                                                        .DepartureTime
+                                                )}
                                             </Typography>
                                         </div>
                                     </div>
                                     <div className="col-sm-4">
                                         <div className="info">
                                             <Typography className="flight-name">
-                                                T5
+                                                {data.Flight.Airline.Code}
                                             </Typography>
                                             <div className="icon-flight-box">
                                                 <LocationOnIcon className="location-icon" />
@@ -82,10 +85,13 @@ export class TicketItem extends Component {
                                     <div className="col-sm-4">
                                         <div className="destination">
                                             <Typography className="city">
-                                                ha noi
+                                                {data.Flight.Destination.City.Name}
                                             </Typography>
                                             <Typography className="time">
-                                                24:00
+                                            {getTime(
+                                                    data.Flight
+                                                        .ArrivalTime
+                                                )}
                                             </Typography>
                                         </div>
                                     </div>
@@ -95,7 +101,7 @@ export class TicketItem extends Component {
                         <div className="col-md-4">
                             <div className="flight-choose">
                                 <Typography className="price">
-                                    {this.props.price} USD
+                                    {data.Price} USD
                                 </Typography>
                                 <Button
                                     onClick={() =>
@@ -112,7 +118,7 @@ export class TicketItem extends Component {
                     </div>
                 </div>
                 {this.state.isShowFlightDetails ? (
-                    <FlightDetails key={data.id} data={data} />
+                    <FlightDetails key={data.id} data={data} passengers={passengers}/>
                 ) : (
                     ""
                 )}
