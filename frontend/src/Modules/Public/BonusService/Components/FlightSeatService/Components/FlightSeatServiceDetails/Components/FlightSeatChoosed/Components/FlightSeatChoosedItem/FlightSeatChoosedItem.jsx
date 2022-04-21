@@ -110,5 +110,4 @@ class FlightSeatChoosedItem extends Component {
     );
   }
 }
-
 export default FlightSeatChoosedItem;

@@ -108,7 +108,7 @@ export class SelectedFlight extends Component {
                         </div>
                     </div>
                 </div>
-                {this.state.onShowSelectedFlight ? (
+                {this.state.isShowTicketDetails ? (
                     <SelectedFlightDetails key={data.id} data={data} />
                 ) : (
                     ""

@@ -13,14 +13,7 @@ export class Reservation extends Component {
                     id: 2,
                     price: 1000
                 },
-                {
-                    id: 3,
-                    price: 3000
-                },
-                {
-                    id: 4,
-                    price: 4000
-                },
+               
             ],
 
         }

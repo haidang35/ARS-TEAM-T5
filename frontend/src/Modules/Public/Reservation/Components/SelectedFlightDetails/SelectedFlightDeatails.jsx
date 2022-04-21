@@ -27,7 +27,7 @@ export class SelectedFlightDetails extends Component {
                             <div className="row">
                                 <div className="col-md-3">
                                     <div>
-                                        <AirplanemodeInactiveIcon className="logo-box" />
+                                    <AirplanemodeInactiveIcon className="logo-box" />
                                     </div>
                                 </div>
                                 <div className="col-md-3">
