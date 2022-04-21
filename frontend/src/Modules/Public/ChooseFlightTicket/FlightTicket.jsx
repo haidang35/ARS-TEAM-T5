@@ -1,36 +1,55 @@
 import React, { Component } from "react";
 import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
 import { SearchTicketBox } from "../Shared/Components/SearchTicketBox/SearchTicketBox";
+import publicService from "../Shared/Services/PublicService";
 import { BookingStepBar } from "./Components/BookingStepBar/BookingStepBar";
 import { FilterFlightBox } from "./Components/FilterFlightBox/FilterFlightBox";
 import { FlightAmination } from "./Components/FlightAnimation/FlightAmination";
 import { SelectDateTicketBox } from "./Components/SelectDateTicketBox/SelectDateTicketBox";
 import { TicketItem } from "./Components/TicketItem/TicketItem";
+
+
+
 export class FlightTicket extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            flightTickets: [
-                {
-                    id: 1,
-                    price: 100
-                },
-                 {
-                    id: 2,
-                    price: 300
-                },
-                 {
-                    id: 3,
-                    price: 300
-                },
-            ],
+            flightTickets: [],
+            departureId: '',
+            destinationid: ''
         }
     }
 
+    componentDidMount() {
+        this.getFlightTicketList();
 
+    }
+
+    getFlightTicketList = () => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const searchData = {
+            departureId: urlParams.get(""),
+            destinationid: urlParams.get("")
+        }
+
+
+        getFlightTickets = async (searchData) => {
+
+            await publicService.getFlightTickets().then((res) => {
+                this.setState({
+                    flightTickets : res.data,
+                })
+
+            
+            })
+
+        }
+    }
 
     render() {
         const { flightTickets } = this.state;
+
         return (
             <>
                 <NavbarV2 />
@@ -47,7 +66,7 @@ export class FlightTicket extends Component {
                           
                             {
                                 flightTickets.map((item, index) => {
-                                    return (<TicketItem key={index} data={item} price={item.price}/>)
+                                    return (<TicketItem key={index} data={item} price={item.price} />)
                                 })
                             }
                         </div>

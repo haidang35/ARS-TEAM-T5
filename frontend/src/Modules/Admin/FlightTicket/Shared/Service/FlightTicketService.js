@@ -3,21 +3,21 @@ import { AUTH_TOKEN, BASE_URL_SERVER } from '../../../../../Configs/server';
 
 
 const API_ENDPOINT = {
-  GET_FlightTicket_LIST: "/api/flightTicket",
-  GET_DETAILS: "api/flight-Ticket/{id}",
-  UPDATE_DETAILS: "api/flight-Ticket/{id}",
-  CREATE_NEW: "/api/flight-Ticket",
-  DELETE_FlightTicket: "api/flight-Ticket/{id}"
+  GET_FLIGHT_TICKET_LIST: "/api/tickets",
+  GET_DETAILS: "api/tickets/{id}",
+  UPDATE_DETAILS: "api/tickets/{id}",
+  CREATE_NEW: "/api/tickets",
+  DELETE_FLIGHT_TICKET: "api/tickets/{id}"
 }
 
 const configs = {
   headers: { Authorization: `Bearer ${AUTH_TOKEN}` },
 };
 
-class AirlineService {
+class FlightTicketService {
 
   getFlightTicketList = async () => {
-    return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_AIRLINE_LIST);
+    return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_FLIGHT_TICKET_LIST);
   };
 
   getFlightTicketDetail = async (id) => {
@@ -40,10 +40,10 @@ class AirlineService {
   };
 
   deleteFlightTicket = async (id) => {
-    return await axios.deleteAirline(BASE_URL_SERVER + API_ENDPOINT.DELETE_Airline + id, configs);
+    return await axios.delete(BASE_URL_SERVER + API_ENDPOINT.DELETE_FLIGHT_TICKET + id, configs);
   }
 }
 
-const flightTicketService = new lightTicketService();
+const flightTicketService = new FlightTicketService();
 export default flightTicketService;
 

@@ -4,6 +4,7 @@ import { AUTH_TOKEN, BASE_URL_SERVER } from "../../../../Configs/server";
 const API_ENDPOINT = {
 
     GET_LOCATIONS_LIST: "/api/locations",
+    GET_FLIGHT_TICKETS: '/api/tickets/search',
 
 }
 
@@ -18,8 +19,13 @@ class PublicService {
     getLocationsList = async () => {
         return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_LOCATIONS_LIST);
     }
+    
+    getFlightTickets = async (searchData) => {
+        return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_FLIGHT_TICKETS,searchData);
+    }
 }
 
+    
 
 
 
