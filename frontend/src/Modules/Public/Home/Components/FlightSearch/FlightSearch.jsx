@@ -205,9 +205,6 @@ export class FlightSearch extends Component {
                         label="Round trip"
                     />
                     <div className="formcheck">
-
-
-
                         <div className="depature">
                             <TextField label="Departure" value={departure.province} variant="outlined" onClick={() => this.handleOpenDialog('departure')} />
                         </div>
