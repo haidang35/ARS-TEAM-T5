@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -130,6 +131,8 @@ namespace backend.Controllers
                 return BadRequest();
             }
             var flights = new List<Flight>();
+            Debug.WriteLine("Departure Id", searchData.DepartureId);
+            Debug.WriteLine("Destination Id", searchData.DestinationId);
             if(searchData.DepartureDate == null)
             {
                 flights = db.Flights.Where(f => f.DepartureId == searchData.DepartureId
