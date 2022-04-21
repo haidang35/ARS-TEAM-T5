@@ -7,10 +7,7 @@
     background-color: aliceblue;
     width: 19rem;
     margin-top: 35px;
-
-
-
-
+    
 
     .side-bar-filter {
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -21,7 +18,7 @@
         background-color: $background-color;
         justify-content: center;
         align-items: center;
-
+        
         .sort-flights {
             box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
             margin-bottom: 1rem;
@@ -32,8 +29,7 @@
             color: #ffff;
             padding: 1rem;
             background-color: black;
-
-
+         
 
                 .box {
                     background-color: #ffff;
@@ -44,6 +40,7 @@
                 .radio-buttons {
                     text-align: center;
                     border-radius: 50px;
+                    
                 }
 
             }
@@ -63,11 +60,9 @@
 
             .label-radio {
                 font-size: 18px;
+             
             }
         }
-
-
-
     }
 
 }

@@ -18,8 +18,7 @@ import PublicService from "../../../Shared/Services/PublicService";
 import publicService from "../../../Shared/Services/PublicService";
 
 const departure = [
-    // { label: 'Hà Nội' },
-    // { label: 'Đà Nẵng' }
+ 
 ]
 
 

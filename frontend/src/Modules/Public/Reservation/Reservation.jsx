@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Payment } from "./Components/Payment/Payment";
 import { SelectedFlight } from "./Components/SelectedFlight/SelectedFlight";
-import ContactsInfo from "./Components/ContactsInfo/ContactsInfo";
 import CustomerInfomation from "./Components/CustomerInfomation/CustomerInfomation";
+import ContactsInfo from "./Components/ContactsInfo/ContactsInfo";
 
 export class Reservation extends Component {
     constructor(props) {
@@ -32,7 +32,7 @@ export class Reservation extends Component {
                             })
                         }
                        <CustomerInfomation />
-                        <ContactsInfo />
+                       <ContactsInfo />
                         <Payment />
                     </div>
 
