@@ -30,15 +30,15 @@ namespace backend.Models
         public int DestinationId { get; set; }
         [ForeignKey("DestinationId")]
         public virtual Location Destination { get; set; }
-        public string Capacity { get; set; }
+        public int Capacity { get; set; }
         [Required]
-        public string BusinessSeats { get; set; }
+        public int BusinessSeats { get; set; }
         [Required]
-        public string DeluxeSeats { get; set; }
+        public int DeluxeSeats { get; set; }
         [Required]
-        public string EconomySeats { get; set; }
+        public int EconomySeats { get; set; }
         [Required]
-        public string ExitSeats { get; set; }
+        public int ExitSeats { get; set; }
         [Required]
         public string Aircraft { get; set; }
         [Required]
