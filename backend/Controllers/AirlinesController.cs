@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using backend.Data;
+using backend.Dtos;
 using backend.Models;
 
 namespace backend.Controllers
@@ -47,18 +48,18 @@ namespace backend.Controllers
         [Route("~/api/airlines/{id:int}")]
         [HttpPut]
         [ResponseType(typeof(Airline))]
-        public IHttpActionResult PutAirline(int id, Airline airline)
+        public IHttpActionResult PutAirline(int id, UpdateAirline updateAirline)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != airline.Id)
+            var airline = db.Airlines.Find(id);
+            if(airline == null)
             {
                 return BadRequest();
             }
-
+            airline.UpdatedAt = DateTime.Now;
             db.Entry(airline).State = EntityState.Modified;
 
             try

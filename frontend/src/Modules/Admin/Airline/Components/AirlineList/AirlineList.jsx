@@ -18,6 +18,7 @@ import airlineService from '../../Shared/Services/AirlineService';
 import { Link, useLocation } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -27,19 +28,19 @@ const columns = [
     id: 'country',
     label: 'Country',
     minWidth: 150,
-    align: 'center',
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'logo',
     label: 'Logo',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'edit', label: 'Edit', minWidth: 80,
-    align: 'right',
+    align: 'left',
   }
 
 ];
@@ -89,17 +90,17 @@ export default function AirlineList() {
   let location = useLocation();
 
   const getMsg = () => {
-    if(typeof location.state !== 'undefined') {
+    if (typeof location.state !== 'undefined') {
       let isHasMessage = false;
-       Object.keys(location.state).forEach(key => {
-         if(key === 'message') isHasMessage = true;
-       });
-       if(isHasMessage) {
+      Object.keys(location.state).forEach(key => {
+        if (key === 'message') isHasMessage = true;
+      });
+      if (isHasMessage) {
         setMsg(location.state.message);
-       }
+      }
     }
   }
-  
+
   return (
     <>
       <div id='airline'>
@@ -144,7 +145,7 @@ export default function AirlineList() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((airline) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={airline.code}>
+                      <TableRow hover role="checkbox" tabIndex={-1} key={airline.Id}>
                         <TableCell>
                           {airline.Id}
                         </TableCell>
@@ -161,8 +162,14 @@ export default function AirlineList() {
                           {airline.Logo}
                         </TableCell>
                         <TableCell>
-                          <EditIcon className='edit-icon' />
-                          <DeleteIcon className='delete-icon' />
+                          <Link to={`/admin/airlines/${airline.Id}`}>
+                            <IconButton aria-label="edit-icon">
+                              <EditIcon />
+                            </IconButton>
+                          </Link>
+                          <IconButton aria-label="delete">
+                            <DeleteIcon />
+                          </IconButton>
                         </TableCell>
 
 

@@ -4,10 +4,10 @@ import { AUTH_TOKEN, BASE_URL_SERVER } from '../../../../../Configs/server';
 
 const API_ENDPOINT = {
   GET_AIRLINE_LIST: "/api/airlines",
-  GET_DETAILS: "api/airlines/{id}",
-  UPDATE_DETAILS: "api/airlines/{id}",
+  GET_DETAILS: "/api/airlines/",
+  UPDATE_DETAILS: "/api/airlines/",
   CREATE_NEW: "/api/airlines",
-  DELETE_Airline: "api/airlines/{id}"
+  DELETE_Airline: "/api/airlines/"
 }
 
 const configs = {
@@ -20,10 +20,9 @@ class AirlineService {
     return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_AIRLINE_LIST);
   };
 
-  getAirlineDetail = async (id) => {
+  getAirlineDetails = async (id) => {
     return await axios.get(
-      BASE_URL_SERVER + API_ENDPOINT.GET_DETAILS + id,
-      configs
+      BASE_URL_SERVER + API_ENDPOINT.GET_DETAILS + id
     );
   };
 
@@ -31,7 +30,6 @@ class AirlineService {
     return await axios.put(
       BASE_URL_SERVER + API_ENDPOINT.UPDATE_DETAILS + id,
       data,
-      configs
     );
   };
 

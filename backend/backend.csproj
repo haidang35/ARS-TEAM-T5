@@ -191,6 +191,7 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Data\MyDbContext.cs" />
     <Compile Include="Dtos\SearchFlightTicket.cs" />
+    <Compile Include="Dtos\UpdateAirline.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -209,6 +210,10 @@
     <Compile Include="Migrations\202204210434029_UpdateTicketTable.cs" />
     <Compile Include="Migrations\202204210434029_UpdateTicketTable.designer.cs">
       <DependentUpon>202204210434029_UpdateTicketTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204210831305_UpdateTicket.cs" />
+    <Compile Include="Migrations\202204210831305_UpdateTicket.designer.cs">
+      <DependentUpon>202204210831305_UpdateTicket.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Airline.cs" />
@@ -331,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204210434029_UpdateTicketTable.resx">
       <DependentUpon>202204210434029_UpdateTicketTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204210831305_UpdateTicket.resx">
+      <DependentUpon>202204210831305_UpdateTicket.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

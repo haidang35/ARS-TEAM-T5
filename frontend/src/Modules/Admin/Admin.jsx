@@ -14,6 +14,7 @@ import UpdateLocation from "./Location/Update/UpdateLocation"
 import FlightList from "./Flight/Components/FlightList/FlightList";
 import AddNewFlightTicket from "./FlightTicket/Components/AddNewFlightTIcket/AddNewFlightTicket";
 import FlightTicketList from "./FlightTicket/Components/FlightTicketList/FlightTicketList";
+import UpdateFlight from "./Flight/Components/Update Flight/UpdateFlight";
 
 
 
@@ -51,6 +52,9 @@ export class Admin extends Component {
                                         <Route exact path="/admin/airlines/create">
                                             <AddNewAirline />
                                         </Route>
+                                        <Route exact path="/admin/airlines/:id">
+                                            <UpdateAirline/>
+                                        </Route>
                                         <Route exact path="/admin/locations">
                                             <LocationList />
                                         </Route>
@@ -75,8 +79,8 @@ export class Admin extends Component {
                                         <Route exact path="/admin/flights/create">
                                             <AddNewFlight/>
                                         </Route>
-                                        <Route exact path="/admin/flight-ticket/create">
-                                            <AddNewFlightTicket />
+                                        <Route exact path = "/admin/flights/:id">
+                                            <UpdateFlight/>
                                         </Route>
                                     </Switch>
                                 </Box>

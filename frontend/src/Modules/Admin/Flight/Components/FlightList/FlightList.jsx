@@ -15,10 +15,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import "./FlightList.scss";
 import axios from "axios";
 import flightService from '../../Shared/Services/FlightService';
-
+import IconButton from '@mui/material/IconButton';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import { Link, useLocation } from 'react-router-dom';
+
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -183,11 +184,15 @@ export default function FlightList() {
                           {flight.Status}
                         </TableCell>
                         <TableCell>
-                          <EditIcon className='edit-icon' />
-                          <DeleteIcon className='delete-icon' />
+                        <Link to={`/admin/flights/${flight.Id}`}>
+                            <IconButton aria-label="edit-icon">
+                              <EditIcon />
+                            </IconButton>
+                          </Link>
+                          <IconButton aria-label="delete">
+                            <DeleteIcon />
+                          </IconButton>
                         </TableCell>
-
-
                       </TableRow>
 
                     );

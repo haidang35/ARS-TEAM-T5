@@ -23,7 +23,7 @@ class LocationService {
     return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_LOCATION_LIST);
   };
 
-  getLocationDetail = async (id) => {
+  getLocationDetails = async (id) => {
     return await axios.get(
       BASE_URL_SERVER + API_ENDPOINT.GET_DETAILS + id,
       configs

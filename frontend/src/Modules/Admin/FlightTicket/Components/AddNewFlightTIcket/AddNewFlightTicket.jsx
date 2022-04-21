@@ -30,15 +30,14 @@ class AddNewFlightTicket extends Form {
     super(props);
     this.state = {
       form: this._getInitFormData({
-        arrivalTime: getDateTimeNow(),
         carbinBag: "",
-        checkbinBag: "",
+        checkinBag: "",
         price: "",
         tax: "",
-        businessSeatsFee: "",
-        deluxeSeatsFee: "",
-        economySeatsFee: "",
-        exitSeatsFee: "",
+        businessSeatFee: "",
+        deluxeSeatFee: "",
+        economySeatFee: "",
+        exitSeatFee: "",
         status: "",
         ticketType: "",
 
@@ -94,17 +93,16 @@ class AddNewFlightTicket extends Form {
       let dataConverted = {
         FlightId: flightId,
         TicketType: form.ticketType.value,
-        ArrivalTime: form.arrivalTime.value,
         AvailableClass: availableClass,
         CarbinBag: form.carbinBag.value,
-        CheckinBag: form.checkbinBag.value,
+        CheckinBag: form.checkinBag.value,
         Status: form.status.value,
         Price: form.price.value,
         Tax: form.tax.value,
-        BusinessSeatFee: form.businessSeatsFee.value,
-        DeluxeSeatFee: form.deluxeSeatsFee.value,
-        EconomySeatFee: form.economySeatsFee.value,
-        ExitSeatFee: form.exitSeatsFee.value,
+        BusinessSeatFee: form.businessSeatFee.value,
+        DeluxeSeatFee: form.deluxeSeatFee.value,
+        EconomySeatFee: form.economySeatFee.value,
+        ExitSeatFee: form.exitSeatFee.value,
 
       };
       console.log('1222222222222222222222', dataConverted)
@@ -141,8 +139,8 @@ class AddNewFlightTicket extends Form {
   }
   
   render() {
-    const {  arrivalTime, carbinBag, checkbinBag, status, price, tax, ticketType,
-      businessSeatsFee, economySeatsFee, deluxeSeatsFee, exitSeatsFee, } = this.state.form;
+    const { carbinBag, checkinBag, status, price, tax, ticketType,
+      businessSeatFee, economySeatFee, deluxeSeatFee, exitSeatFee, } = this.state.form;
     const { isRedirectSuccess, content, flightticketList,ticketTypeList,  flightId,  availableClass } = this.state;
     if (isRedirectSuccess) {
       return <Redirect to={{
@@ -219,25 +217,6 @@ class AddNewFlightTicket extends Form {
                   </FormControl>
                 </Box>
               </Grid>
-
-              <Grid item xs={6}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <Stack spacing={3}>
-                    <TextField
-                      id="arrivaltime"
-                      label="ArrivalTime"
-                      name="arrivalTime"
-                      type="datetime-local"
-                      defaultValue="2017-05-24T10:30"
-                      sx={{ width: 250 }}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      onChange={(ev) => this._setValue(ev, 'arrivalTime')}
-                    />
-                  </Stack>
-                </LocalizationProvider>
-              </Grid>
               <Grid item xs={6}>
                 <TextField
                   error={ticketType.err !== ''}
@@ -268,16 +247,16 @@ class AddNewFlightTicket extends Form {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  error={checkbinBag.err !== ''}
-                  helperText={checkbinBag.err !== '' ? checkbinBag.err === '*' ? 'CheckbinBag cannot be empty' : checkbinBag.err : ''}
+                  error={checkinBag.err !== ''}
+                  helperText={checkinBag.err !== '' ? checkinBag.err === '*' ? 'CheckinBag cannot be empty' : checkinBag.err : ''}
                   required
-                  id="checkbinBag"
-                  name="checkbinBag"
-                  value={checkbinBag.value}
-                  label="CheckbinBag"
+                  id="checkinBag"
+                  name="checkinBag"
+                  value={checkinBag.value}
+                  label="CheckinBag"
                   autoComplete="shipping address-line1"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'checkbinBag')}
+                  onChange={(ev) => this._setValue(ev, 'checkinBag')}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -324,58 +303,58 @@ class AddNewFlightTicket extends Form {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  error={businessSeatsFee.err !== ''}
-                  helperText={businessSeatsFee.err !== '' ? businessSeatsFee.err === '*' ? 'BusinessSeatsFee cannot be empty' : businessSeatsFee.err : ''}
+                  error={businessSeatFee.err !== ''}
+                  helperText={businessSeatFee.err !== '' ? businessSeatFee.err === '*' ? 'BusinessSeatFee cannot be empty' : businessSeatFee.err : ''}
                   required
-                  id="businessSeatsFee"
-                  name="businessSeatsFee"
-                  value={businessSeatsFee.value}
-                  label="BusinessSeatsFee"
+                  id="businessSeatFee"
+                  name="businessSeatFee"
+                  value={businessSeatFee.value}
+                  label="BusinessSeatFee"
                   autoComplete="shipping address-line1"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'businessSeatsFee')}
+                  onChange={(ev) => this._setValue(ev, 'businessSeatFee')}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  error={deluxeSeatsFee.err !== ''}
-                  helperText={deluxeSeatsFee.err !== '' ? deluxeSeatsFee.err === '*' ? 'DeluxeSeatsFee cannot be empty' : deluxeSeatsFee.err : ''}
+                  error={deluxeSeatFee.err !== ''}
+                  helperText={deluxeSeatFee.err !== '' ? deluxeSeatFee.err === '*' ? 'DeluxeSeatFee cannot be empty' : deluxeSeatFee.err : ''}
                   required
                   id="deluxeSeatsFee"
                   name="deluxeSeatsFee"
-                  value={deluxeSeatsFee.value}
+                  value={deluxeSeatFee.value}
                   label="DeluxeSeatsFee"
                   autoComplete="shipping address-line1"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'deluxeSeatsFee')}
+                  onChange={(ev) => this._setValue(ev, 'deluxeSeatFee')}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  error={economySeatsFee.err !== ''}
-                  helperText={economySeatsFee.err !== '' ? economySeatsFee.err === '*' ? 'EconomySeatsFee cannot be empty' : economySeatsFee.err : ''}
+                  error={economySeatFee.err !== ''}
+                  helperText={economySeatFee.err !== '' ? economySeatFee.err === '*' ? 'EconomySeatFee cannot be empty' : economySeatFee.err : ''}
                   required
-                  id="economySeatsFee"
-                  name="economySeatsFee"
-                  value={economySeatsFee.value}
-                  label="EconomySeatsFee"
+                  id="economySeatFee"
+                  name="economySeatFee"
+                  value={economySeatFee.value}
+                  label="EconomySeatFee"
                   autoComplete="shipping address-line1"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'economySeatsFee')}
+                  onChange={(ev) => this._setValue(ev, 'economySeatFee')}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  error={exitSeatsFee.err !== ''}
-                  helperText={exitSeatsFee.err !== '' ? exitSeatsFee.err === '*' ? 'ExitSeatsFee cannot be empty' : exitSeatsFee.err : ''}
+                  error={exitSeatFee.err !== ''}
+                  helperText={exitSeatFee.err !== '' ? exitSeatFee.err === '*' ? 'ExitSeatFee cannot be empty' : exitSeatFee.err : ''}
                   required
-                  id="exitSeatsFee"
-                  name="exitSeatsFee"
-                  value={exitSeatsFee.value}
+                  id="exitSeatFee"
+                  name="exitSeatFee"
+                  value={exitSeatFee.value}
                   label="ExitSeatsFee"
                   autoComplete="shipping address-line1"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'exitSeatsFee')}
+                  onChange={(ev) => this._setValue(ev, 'exitSeatFee')}
                 />
               </Grid>
               <Grid item xs={12}>

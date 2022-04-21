@@ -169,7 +169,26 @@ export class FlightSearch extends Component {
         if (isRedirect) {
             return <Redirect to={{
                 pathname: 'flight-ticket',
-                search: `?tripType=${tripType}&departure=${departure.Id}&destination=${destination.Id}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&infants=${infants}`,
+                search: `?tripType=${tripType}&departure=${departure.Id}&destination=${destination.Id}&departureDate=${departureDate}`,
+                state: {
+                    passengers: [
+                        {
+                            id: 1,
+                            passengerType: 'adults',
+                            quantity: adults
+                        },
+                        {
+                            id: 2,
+                            passengerType: 'children',
+                            quantity: children
+                        },
+                        {
+                            id: 3,
+                            passengerType: 'infants',
+                            quantity: infants
+                        }
+                    ]
+                }
                 
             }} />
         }
