@@ -122,7 +122,7 @@ namespace backend.Controllers
         
 
         [Route("~/api/tickets/search")]
-        [HttpGet]
+        [HttpPost]
         [ResponseType(typeof(ICollection<Ticket>))]
         public IHttpActionResult SearchFlightTicket(SearchFlightTicket searchData)
         {
@@ -131,9 +131,7 @@ namespace backend.Controllers
                 return BadRequest();
             }
             var flights = new List<Flight>();
-            Debug.WriteLine("Departure Id", searchData.DepartureId);
-            Debug.WriteLine("Destination Id", searchData.DestinationId);
-            if(searchData.DepartureDate == null)
+            if(searchData.DepartureDate == DateTime.MinValue)
             {
                 flights = db.Flights.Where(f => f.DepartureId == searchData.DepartureId
                                        && f.DestinationId == searchData.DestinationId
