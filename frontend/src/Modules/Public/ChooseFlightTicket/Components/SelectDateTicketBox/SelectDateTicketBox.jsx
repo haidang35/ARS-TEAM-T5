@@ -21,21 +21,29 @@ export class SelectDateTicketBox extends Component {
     }
 
     componentDidMount = () => {
-        const departureDate = new Date();
-        const ticketList = [];
+        // const departureDate = this.props.departureDateTime;
+        // const ticketList = this.props.flightTicketList;
+        // this.getDaysOfWeek(departureDate, ticketList);
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        const departureDate = nextProps.departureDateTime;
+        const ticketList = nextProps.flightTicketList;
         this.getDaysOfWeek(departureDate, ticketList);
     }
 
     compareDate = (departureDate, date) => {
         let depaDate = new Date(departureDate);
         let newDate = new Date(date);
-        if (
-            depaDate.getDate() == newDate.getDate() &&
-            newDate.getMonth() == depaDate.getMonth() &&
-            depaDate.getFullYear() == newDate.getFullYear()
-        )
-            return true;
-        return false;
+        // if (
+        //     depaDate.getDate() == newDate.getDate() &&
+        //     newDate.getMonth() == depaDate.getMonth() &&
+        //     depaDate.getFullYear() == newDate.getFullYear()
+        // )
+        //     return true;
+        // return false;
+
+        return depaDate.getDate() == newDate.getDate() &&  newDate.getMonth() == depaDate.getMonth() && depaDate.getFullYear() == newDate.getFullYear();
     };
 
     handleChangeDepartureDate = (data) => {
@@ -44,38 +52,43 @@ export class SelectDateTicketBox extends Component {
         //     this.state.flightList,
         //     this.state.flightListOrg
         // );
-        const ticketList = [];
-        this.getDaysOfWeek(data.date, ticketList);
+        // const ticketList = [];
+        // this.getDaysOfWeek(data.date, ticketList);
        
     };
 
-    getDaysOfWeek = (departureDate, flightList) => {
+    getDaysOfWeek = (departureDate, ticketList) => {
+        //TODO:  departureDate = 2022-04-22 
         let current = new Date(departureDate);
-        let flightOnWeek = new Array();
+        //TODO: current = Fri Apr 22 2022 09:44:00 GMT+0700 (Giờ Đông Dương);
+        let flightOnWeek = new Array(); // = []
         current.setDate(current.getDate() - 3);
+        //TODO: current = Tue Apr 19 2022 09:44:00 GMT+0700 (Giờ Đông Dương);
         for (let i = 0; i < 7; i++) {
+            //TODO: i = 0; i < 7 => 0, 1, 2, 3, 4, 5, 6
             let data = {
                 id: i,
                 date: new Date(current),
-                priceTicket: this.getPriceFlightTicket(
-                    flightList,
+                ticketPrice: this.getPriceFlightTicket(
+                    ticketList,
                     new Date(current)
                 ),
             };
             flightOnWeek.push(data);
             current.setDate(current.getDate() + 1);
         }
+        console.log("🚀 ~ file: SelectDateTicketBox.jsx ~ line 78 ~ SelectDateTicketBox ~ flightOnWeek", flightOnWeek)
         this.setState({
             listDate: flightOnWeek,
         });
     };
 
-    getPriceFlightTicket(flightList, date) {
-        for (let i = 0; i < flightList.length; i++) {
+    getPriceFlightTicket(ticketList, date) {
+        for (let i = 0; i < ticketList.length; i++) {
             if (
-                this.compareDate(flightList[i].flight.departure_datetime, date)
+                this.compareDate(ticketList[i].Flight.DepartureTime, date)
             ) {
-                let ticketPrice = flightList[i].total_price;
+                let ticketPrice = ticketList[i].Price;
                 return ticketPrice;
             }
         }
@@ -84,6 +97,7 @@ export class SelectDateTicketBox extends Component {
 
     render() {
         const { listDate, departureDate, flightList } = this.state;
+        const { departure, destination, departureDateTime, flightTicketList } = this.props;
         return (
             <>
                 <div id="select-ticket-box">
@@ -92,24 +106,24 @@ export class SelectDateTicketBox extends Component {
                         <div className="content">
                             <div className="top-content">
                                 <Typography className="location-title">
-                                    Hà Nội, Việt Nam (HAN)
+                                    {`${departure.City.Name}, ${departure.City.Province.Country} (${departure.AirPortCode})`}
                                 </Typography>
                                 <ArrowRightAltIcon className="icon-arrow" />
                                 <Typography className="location-title">
-                                    Phú Quốc, Vietnam (PQP)
+                                {`${destination.City.Name}, ${destination.City.Province.Country} (${destination.AirPortCode})`}
                                 </Typography>
                             </div>
                             <Typography className="departure-time">
-                                Thur , 14-04-2022
+                                { getDayOfWeek(departureDateTime) } , {dateConvert(departureDateTime)}
                             </Typography>
                         </div>
                     </div>
                     <div className="bottom-content-bar">
                         <div className="row">
-                            {listDate.map((item) => {
+                            {listDate.map((item, index) => {
                                 return (
                                     <div
-                                        key={item.id}
+                                        key={index}
                                         onClick={() =>
                                             this.handleChangeDepartureDate(item)
                                         }
@@ -129,9 +143,9 @@ export class SelectDateTicketBox extends Component {
                                         {getDayOfWeek(item.date)}
                                         </span>
                                         <span className="item-price">
-                                        {item.priceTicket !== "-"
+                                        {item.ticketPrice !== "-"
                                                 ? formatCurrencyToVND(
-                                                      item.priceTicket
+                                                      item.ticketPrice
                                                   )
                                                 : "-"}
                                         </span>

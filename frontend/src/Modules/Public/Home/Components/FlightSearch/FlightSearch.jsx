@@ -10,6 +10,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { getDateTimeNow } from "../../../../../Helpers/datetime";
 import "./FlightSearch.scss";
 import { Redirect } from "react-router-dom";
+import { getDate } from "../../../../../Helpers/datetime";
 
 
 
@@ -91,7 +92,7 @@ export class FlightSearch extends Component {
 
     handleDepartureDate = (newValue) => {
         let { searchData } = this.state;
-        searchData['departureDate'] = newValue;
+        searchData['departureDate'] = getDate(newValue);
         this.setState({
             searchData
         })
@@ -187,7 +188,9 @@ export class FlightSearch extends Component {
                             passengerType: 'infants',
                             quantity: infants
                         }
-                    ]
+                    ],
+                    departure,
+                    destination
                 }
                 
             }} />
