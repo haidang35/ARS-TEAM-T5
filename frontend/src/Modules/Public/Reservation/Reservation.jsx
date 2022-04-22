@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Payment } from "./Components/Payment/Payment";
 import { SelectedFlight } from "./Components/SelectedFlight/SelectedFlight";
-import ContactsInfo from "./Components/ContactsInfo/ContactsInfo";
 import CustomerInfomation from "./Components/CustomerInfomation/CustomerInfomation";
 import { withRouter } from "react-router-dom";
-import  NavbarV2  from "../Shared/Components/NavbarV2/NavbarV2";
+import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
 import { BookingStepBar } from "../ChooseFlightTicket/Components/BookingStepBar/BookingStepBar";
+import { ContactsInfo } from "./Components/ContactsInfo/ContactsInfo";
 
 class Reservation extends Component {
     constructor(props) {
@@ -46,8 +46,8 @@ class Reservation extends Component {
                         <BookingStepBar />
                         <SelectedFlight flightTicket={flightTicket} />
                         <CustomerInfomation passengers={passengers} isContinue={isContinue} />
-                        <ContactsInfo />
-                        <Payment onContinute={this.onContinute}/>
+                     <ContactsInfo isContinue={isContinue} />
+                        <Payment onContinute={this.onContinute} />
                     </div>
 
                 </div>

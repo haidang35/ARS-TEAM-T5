@@ -1,8 +1,10 @@
 import { MenuItem, TextField, Typography } from "@mui/material";
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { REGEX_TEL } from "../../../../../Configs/validation";
 import Form from "../../../../../Shared/Components/Form";
 import "./CustomerInfomation.scss";
+import { getDate } from "../../../../../Helpers/datetime";
 
 const genger = [
   {
@@ -26,7 +28,7 @@ class CustomerInfomation extends Form {
     };
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => { };
 
   componentWillReceiveProps = (nextProps) => {
     const { passengers, isContinue } = nextProps;
@@ -49,8 +51,8 @@ class CustomerInfomation extends Form {
       });
     }
 
-    if(isContinue) {
-        this.onContinue();
+    if (isContinue) {
+      this.onContinue();
     }
   };
 
@@ -69,12 +71,17 @@ class CustomerInfomation extends Form {
         type: psg.passengerType,
       };
       form[`psg_${index}_${"birthday"}`] = {
-        value: "",
+        value: getDate(new Date()),
         err: "",
         type: psg.passengerType,
       };
       form[`psg_${index}_${"identityNumber"}`] = {
         value: "",
+        err: "",
+        type: psg.passengerType,
+      };
+      form[`psg_${index}_${"checkinBag"}`] = {
+        value: 5,
         err: "",
         type: psg.passengerType,
       };
@@ -85,10 +92,10 @@ class CustomerInfomation extends Form {
   };
 
   onContinue = () => {
-        this._validateForm();
-        if(this._isFormValid()) {
-            //TODO Passing data valid to Reservation Component
-        }
+    this._validateForm();
+    if (this._isFormValid()) {
+      //TODO Passing data valid to Reservation Component
+    }
   }
 
   render() {
@@ -137,11 +144,13 @@ class CustomerInfomation extends Form {
             </div>
             <div className="list-sub-content">
               <div className="sub-content">
-                {passengersConverted.map((psg, index) => {
+                {passengersConverted.map((psg, i) => {
+                  let index = i;
+                  ++index;
                   return (
                     <div
                       className="row"
-                      key={++index}
+                      key={i}
                       style={{ marginTop: "1rem" }}
                     >
                       <div className="col-md-2">
@@ -153,7 +162,7 @@ class CustomerInfomation extends Form {
                         </Typography>
                       </div>
                       <div className="col-md-2">
-                        <TextField
+                        {/* <TextField
                           className="genger"
                           id="outlined-select-currency"
                           select
@@ -173,7 +182,27 @@ class CustomerInfomation extends Form {
                               {option.label}
                             </MenuItem>
                           ))}
-                        </TextField>
+                        </TextField> */}
+                        <select className="form-select"
+                          required
+                          name={`psg_${index}_gender`}
+                          value={
+                            form[`psg_${index}_gender`] &&
+                            form[`psg_${index}_gender`]["value"]
+                          }
+                          onChange={(ev) =>
+                            this._setValue(ev, `psg_${index}_gender`)
+                          }
+
+                        >
+                          <option value={''}>Select Gender</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
+                        <p className="text-danger">{
+                          form[`psg_${index}_gender`] &&
+                            form[`psg_${index}_gender`]["err"] === "*" ? "Gender cannot be empty" : form[`psg_${index}_gender`]["err"]
+                        }</p>
                       </div>
                       <div className="col-md-3">
                         <TextField
@@ -190,14 +219,21 @@ class CustomerInfomation extends Form {
                           onChange={(ev) =>
                             this._setValue(ev, `psg_${index}_fullname`)
                           }
+                          helperText={form[`psg_${index}_fullname`] && form[`psg_${index}_fullname`]['err'] === "*" ? "Fullname cannot be empty" : form[`psg_${index}_fullname`]['err']}
                         />
                       </div>
                       <div className="col-md-3">
                         <input
                           type="date"
-                          name="birthday"
                           required
                           className="form-control"
+                          name={`psg_${index}_birthday`}
+                          value={
+                            form[`psg_${index}_birthday`] &&
+                            form[`psg_${index}_birthday`]["value"]
+                          }
+                          onChange={(ev) => this._setValue(ev, `psg_${index}_birthday`)}
+                          error={form[`psg_${index}_birthday`] && form[`psg_${index}_birthday`]['err'] !== ""}
                         />
                       </div>
                       <div className="col-md-2">
@@ -205,7 +241,16 @@ class CustomerInfomation extends Form {
                           id="Identity number"
                           label="Identity number"
                           required
+                          property={{ pattern: REGEX_TEL }}
                           className="identity-number"
+                          name={`psg_${index}_identityNumber`}
+                          value={
+                            form[`psg_${index}_identityNumber`] &&
+                            form[`psg_${index}_identityNumber`]["value"]
+                          }
+                          onChange={(ev) => this._setValue(ev, `psg_${index}_identityNumber`)}
+                          error={form[`psg_${index}_identityNumber`] && form[`psg_${index}_identityNumber`]['err'] !== ""}
+                          helperText={form[`psg_${index}_identityNumber`] && form[`psg_${index}_identityNumber`]['err'] === "*" ? "IdentityNumber cannot be empty" : form[`psg_${index}_fullname`]['err']}
                         />
                       </div>
                       <div className="col-md-12">
@@ -221,12 +266,18 @@ class CustomerInfomation extends Form {
                             </div>
                             <div className="col-md-10">
                               <select
-                                name="checkin-bag"
+                                name={`psg_${index}_checkinBag`}
                                 className=" form-select"
+                                value={
+                                  form[`psg_${index}_checkinBag`] &&
+                                  form[`psg_${index}_checkinBag`]["value"]
+                                }
+                                onChange={(ev) => this._setValue(ev, `psg_${index}_checkinBag`)}
+
                               >
                                 <option value={""}>Select Checkin Bag</option>
+                                <option value={5}>5kg</option>
                                 <option value={7}>7kg</option>
-                                <option value={20}>20kg</option>
                               </select>
                             </div>
                           </div>
