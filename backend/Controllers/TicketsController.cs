@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
@@ -140,8 +141,9 @@ namespace backend.Controllers
             {
                 flights = db.Flights.Where(f => f.DepartureId == searchData.DepartureId
                                        && f.DestinationId == searchData.DestinationId
-                                       && this.compareDate(f.DepartureTime, searchData.DepartureDate)
-                                       ).ToList();
+                                       )
+                    .Where(f => EntityFunctions.TruncateTime(f.DepartureTime) == EntityFunctions.TruncateTime(searchData.DepartureDate) )
+                    .ToList();
             }
            
             var tickets = new List<Ticket>();
