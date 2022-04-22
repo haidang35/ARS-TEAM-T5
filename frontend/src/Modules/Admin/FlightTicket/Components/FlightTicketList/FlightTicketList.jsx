@@ -17,6 +17,7 @@ import flightTicketService from '../../Shared/Service/FlightTicketService';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import { Link, useLocation } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -181,8 +182,14 @@ export default function FlightTicketList() {
                           {flightticket.Status}
                         </TableCell>
                         <TableCell>
-                          <EditIcon className='edit-icon' />
-                          <DeleteIcon className='delete-icon' />
+                        <Link to={`/admin/flighttickets/${flightticket.Id}`}>
+                            <IconButton aria-label="edit-icon">
+                              <EditIcon />
+                            </IconButton>
+                          </Link>
+                          <IconButton aria-label="delete">
+                            <DeleteIcon />
+                          </IconButton>
                         </TableCell>
 
 
