@@ -140,7 +140,7 @@ namespace backend.Controllers
             {
                 flights = db.Flights.Where(f => f.DepartureId == searchData.DepartureId
                                        && f.DestinationId == searchData.DestinationId
-                                       && DateTime.Compare(f.DepartureTime, searchData.DepartureDate) == 0
+                                       && this.compareDate(f.DepartureTime, searchData.DepartureDate)
                                        ).ToList();
             }
            
@@ -154,6 +154,11 @@ namespace backend.Controllers
                 }
             }
             return Ok(tickets);
+        }
+
+        public bool compareDate(DateTime date1, DateTime date2)
+        {
+            return date1.Date == date2.Date && date1.Month == date2.Month && date1.Year == date2.Year;
         }
     }
 }
