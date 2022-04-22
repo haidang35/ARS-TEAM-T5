@@ -63,7 +63,7 @@ class UpdateFlight extends Form {
       this.setState({
         departureId: res.data.DepartureId,
         destinationId: res.data.DestinationId,
-        airlineId: res.data.AirlineId
+        airlineId: res.data.AirlineId,
       });
       this._fillForm({
         flightCode: res.data.FlightCode,
@@ -78,15 +78,16 @@ class UpdateFlight extends Form {
         seatsReseved: res.data.SeatsReseved,
         seatsAvaliable: res.data.SeatsAvaliable,
         departureId: res.data.DepartureId,
-        status: res.data.Status
+        status: res.data.Status,
       });
     });
-  }
+  };
   saveUpdateFlight = async () => {
     this._validateForm();
-    if(this._isFormValid()){
-      const {id} = this.props.match.params;
-      const { form, isRedirectSuccess, departureId, destinationId, airlineId  } = this.state;
+    if (this._isFormValid()) {
+      const { id } = this.props.match.params;
+      const { form, isRedirectSuccess, departureId, destinationId, airlineId } =
+        this.state;
       const dataConverted = {
         FlightCode: form.flightCode.value,
         DepartureTime: form.departureTime.value,
@@ -104,10 +105,18 @@ class UpdateFlight extends Form {
         SeatsAvaliable: form.seatsAvaliable.value,
         Status: form.status.value,
       };
-      await
+      await flightService
+        .updateDetails(id, dataConverted)
+        .then((res) => {
+          this.setState({
+            isRedirectSuccess: true,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-
-  }
+  };
   getAirlineList = async () => {
     await airlineService.getAirlineList().then((res) => {
       this.setState({
@@ -167,7 +176,7 @@ class UpdateFlight extends Form {
       seatsAvaliable,
       status,
     } = this.state.form;
-    console.log('statussssss', status);
+    console.log("statussssss", status);
     const {
       isRedirectSuccess,
       content,
@@ -187,7 +196,7 @@ class UpdateFlight extends Form {
             state: {
               message: {
                 type: "success",
-                content: "Add new airline successful !",
+                content: "Update Flight successful !",
               },
             },
           }}
@@ -199,7 +208,7 @@ class UpdateFlight extends Form {
         <React.Fragment>
           <div id="addNewFlight">
             <Typography variant="h4" gutterBottom>
-              Add New Flight
+              Update Flight
             </Typography>
             <Grid container spacing={3}>
               <Grid item xs={12}>
