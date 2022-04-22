@@ -1,18 +1,18 @@
-import * as React from 'react';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+import * as React from "react";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 import Form from "../../../../../Shared/Components/Form";
-import airlineService from '../../Shared/Services/AirlineService';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-import { Redirect, withRouter } from 'react-router-dom';
-import flightService from '../../../Flight/Shared/Services/FlightService';
-import { id } from 'date-fns/locale';
+import airlineService from "../../Shared/Services/AirlineService";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import { Redirect, withRouter } from "react-router-dom";
+import flightService from "../../../Flight/Shared/Services/FlightService";
+import { id } from "date-fns/locale";
 
 class UpdateAirline extends Form {
   constructor(props) {
@@ -28,7 +28,7 @@ class UpdateAirline extends Form {
       isLoading: false,
       postAirlineList: [],
       isRedirectSuccess: false,
-    }
+    };
   }
 
   componentDidMount() {
@@ -40,74 +40,81 @@ class UpdateAirline extends Form {
     let { form } = this.state;
     form.logo.value = file;
     this.setState({ form });
-  }
+  };
 
   getAirlineDetails = async () => {
     const { id } = this.props.match.params;
-    await airlineService.getAirlineDetails(id)
-      .then((res) => {
-        this._fillForm({
-          name: res.data.Name,
-          code: res.data.Code,
-          country: res.data.Country,
-          logo: res.data.Logo
-        });
+    await airlineService.getAirlineDetails(id).then((res) => {
+      this._fillForm({
+        name: res.data.Name,
+        code: res.data.Code,
+        country: res.data.Country,
+        logo: res.data.Logo,
       });
-  }
+    });
+  };
 
   saveUpdateAirline = async () => {
     this._validateForm();
-    if(this._isFormValid()) {
+    if (this._isFormValid()) {
       const { id } = this.props.match.params;
       const { form, isRedirectSuccess } = this.state;
       const dataConverted = {
         Name: form.name.value,
         Code: form.code.value,
         Country: form.country.value,
-        Logo: form.country.value
-      }
-      await airlineService.updateDetails(id, dataConverted)
+        Logo: form.country.value,
+      };
+      await airlineService
+        .updateDetails(id, dataConverted)
         .then((res) => {
-          console.log('success', res.data);
-          // Handle redirect and show notification 
-        this.setState({
-          isRedirectSuccess: true,
-        })
+          this.setState({
+            isRedirectSuccess: true,
+          });
         })
         .catch((err) => {
           console.log(err);
-        })
+        });
     }
-  }
-
-
+  };
 
   render() {
     const { name, code, country, logo } = this.state.form;
-    const { isRedirectSuccess, content, postAirlineList, isLoading } = this.state;
-    if(isRedirectSuccess){
-      return <Redirect to={{
-        pathname: '/admin/airlines',
-        state: {
-          message: {
-            type: 'success',
-            content: 'Update airline successful !'
-          }
-        }
-      }}/>;
+    const { isRedirectSuccess, content, postAirlineList, isLoading } =
+      this.state;
+    if (isRedirectSuccess) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/admin/airlines",
+            state: {
+              message: {
+                type: "success",
+                content: "Update airline successful !",
+              },
+            },
+          }}
+        />
+      );
     }
     return (
       <>
         <React.Fragment>
-          <div id='addNewAirline'>
-            <Typography variant="h4" gutterBottom >
+          <div id="addNewAirline">
+            <Typography variant="h4" gutterBottom>
               Update Airline
             </Typography>
             <Grid container spacing={3}>
-              <Grid item xs={12} >
+              <Grid item xs={12}>
                 <TextField
-                  error={name.err !== ''}
-                  helperText={name.err !== '' ? name.err === '*' ? 'Name cannot be empty' : name.err : ''}
+                  error={name.err !== ""}
+                  helperText={
+                    name.err !== ""
+                      ? name.err === "*"
+                        ? "Name cannot be empty"
+                        : name.err
+                      : ""
+                  }
                   required
                   id="name"
                   name="name"
@@ -115,13 +122,19 @@ class UpdateAirline extends Form {
                   label="Name"
                   autoComplete="given-name"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'name')}
+                  onChange={(ev) => this._setValue(ev, "name")}
                 />
               </Grid>
-              <Grid item xs={12} >
+              <Grid item xs={12}>
                 <TextField
-                  error={code.err !== ''}
-                  helperText={code.err !== '' ? code.err === '*' ? 'Code cannot be empty' : code.err : ''}
+                  error={code.err !== ""}
+                  helperText={
+                    code.err !== ""
+                      ? code.err === "*"
+                        ? "Code cannot be empty"
+                        : code.err
+                      : ""
+                  }
                   required
                   id="code"
                   name="code"
@@ -129,13 +142,19 @@ class UpdateAirline extends Form {
                   label="Code"
                   autoComplete="family-name"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'code')}
+                  onChange={(ev) => this._setValue(ev, "code")}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  error={country.err !== ''}
-                  helperText={country.err !== '' ? country.err === '*' ? 'Country cannot be empty' : country.err : ''}
+                  error={country.err !== ""}
+                  helperText={
+                    country.err !== ""
+                      ? country.err === "*"
+                        ? "Country cannot be empty"
+                        : country.err
+                      : ""
+                  }
                   required
                   id="country"
                   name="country"
@@ -143,18 +162,26 @@ class UpdateAirline extends Form {
                   label="Country"
                   autoComplete="shipping address-line1"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'country')}
+                  onChange={(ev) => this._setValue(ev, "country")}
                 />
               </Grid>
 
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
+                  control={
+                    <Checkbox
+                      color="secondary"
+                      name="saveAddress"
+                      value="yes"
+                    />
+                  }
                   label="Use this address for payment details"
                 />
               </Grid>
-              <div id='submit'>
-                <Button variant="contained" onClick={this.saveUpdateAirline} >Update</Button>
+              <div id="submit">
+                <Button variant="contained" onClick={this.saveUpdateAirline}>
+                  Update
+                </Button>
               </div>
             </Grid>
           </div>
@@ -162,7 +189,6 @@ class UpdateAirline extends Form {
       </>
     );
   }
-
 }
 
 export default withRouter(UpdateAirline);

@@ -3,10 +3,10 @@ import { AUTH_TOKEN, BASE_URL_SERVER } from "../../../../../Configs/server";
 
 const API_ENDPOINT = {
     GET_FLIGHT_LIST: "/api/flights",
-    GET_DETAILS: "api/flights/",
+    GET_DETAILS: "/api/flights/",
     UPDATE_DETAILS: "/api/flights/",
     CREATE_NEW: "/api/flights",
-    DELETE_FLIGHT: "api/flights/"
+    DELETE_FLIGHT: "/api/flights/"
   }
 
   const configs = {
