@@ -19,6 +19,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
+import DeleteAirline from '../DeleteAirline/DeleteAirline';
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -167,9 +168,7 @@ export default function AirlineList() {
                               <EditIcon />
                             </IconButton>
                           </Link>
-                          <IconButton aria-label="delete">
-                            <DeleteIcon />
-                          </IconButton>
+                          <DeleteAirline  />
                         </TableCell>
 
 

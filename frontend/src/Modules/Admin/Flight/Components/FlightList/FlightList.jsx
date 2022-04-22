@@ -189,9 +189,11 @@ export default function FlightList() {
                               <EditIcon />
                             </IconButton>
                           </Link>
+                          <Link to={`/admin/flights/${flight.Id}`}>
                           <IconButton aria-label="delete">
                             <DeleteIcon />
                           </IconButton>
+                          </Link>
                         </TableCell>
                       </TableRow>
 

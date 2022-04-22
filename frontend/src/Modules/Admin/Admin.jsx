@@ -16,6 +16,7 @@ import AddNewFlightTicket from "./FlightTicket/Components/AddNewFlightTIcket/Add
 import FlightTicketList from "./FlightTicket/Components/FlightTicketList/FlightTicketList";
 import UpdateFlight from "./Flight/Components/Update Flight/UpdateFlight";
 import UpdateAirline from "./Airline/Components/UpdateAirline/UpdateAirline";
+import UpdateFlightTicket from "./FlightTicket/Components/UpdateFlightTicket/UpdateFlightTicket";
 
 
 
@@ -76,6 +77,9 @@ export class Admin extends Component {
                                         </Route>
                                         <Route exact path="/admin/flight-tickets">
                                             <FlightTicketList />
+                                        </Route>
+                                        <Route exact path = "/admin/flighttickets/:id">
+                                            <UpdateFlightTicket/>
                                         </Route>
                                         <Route exact path="/admin/flights/create">
                                             <AddNewFlight/>

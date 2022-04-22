@@ -18,6 +18,7 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import { Link, useLocation } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
+import DeleteFlightTicket from '../DeleteFlightTicket/DeleteFlightTicket';
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -118,6 +119,28 @@ export default function FlightTicketList() {
     }
   }
 
+  const onDeleteFlightTicket = async (flightTicket) => {
+    await flightTicketService.deleteFlightTicket(flightTicket.Id)
+    .then((res) => {
+        console.log('success', res.data);
+        //Handle when success
+        getFlightTicketList();
+        setMsg({
+          type: 'success',
+          content: `Delete flight ticket ${flightTicket.Flight.FlightCode} successful !`
+        });
+       
+    })
+    .catch((err) => {
+        console.log(err);
+        //Handle when catching error
+        setMsg({
+          type: 'error',
+          content: `Delete flight ticket ${flightTicket.Flight.FlightCode} failed !`
+        });
+    })
+  }
+
   return (
     <>
       <div id='flightticket'>
@@ -187,9 +210,7 @@ export default function FlightTicketList() {
                               <EditIcon />
                             </IconButton>
                           </Link>
-                          <IconButton aria-label="delete">
-                            <DeleteIcon />
-                          </IconButton>
+                          <DeleteFlightTicket flightTicket={flightticket} onDeleteFlightTicket={onDeleteFlightTicket}/>
                         </TableCell>
 
 
