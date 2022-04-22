@@ -104,7 +104,6 @@ class UpdateFlight extends Form {
         SeatsAvaliable: form.seatsAvaliable.value,
         Status: form.status.value,
       };
-      await
     }
 
   }

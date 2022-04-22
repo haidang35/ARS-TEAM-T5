@@ -4,7 +4,7 @@ import { SignIn } from "./Account/Components/SignIn/SignIn";
 import { Home } from "./Home/Home";
 import "./Shared/Styles/Public.scss";
 import { SignUp } from "./Account/Components/SignUp/SignUp";
-import { Reservation } from "./Reservation/Reservation";
+import  Reservation  from "./Reservation/Reservation";
 import BonusServices from "./BonusService/BonusService";
 import { Payments } from "./Payment/Payments";
 import FlightTicket  from "./ChooseFlightTicket/FlightTicket";

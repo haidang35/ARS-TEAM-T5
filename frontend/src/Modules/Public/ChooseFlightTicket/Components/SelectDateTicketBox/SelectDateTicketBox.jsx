@@ -8,25 +8,40 @@ import {
     getDayOfWeek,
 } from "../../../../../Helpers/datetime";
 import {formatCurrencyToVND} from "../../../../../Helpers/currency";
+import publicService from "../../../Shared/Services/PublicService";
 
 export class SelectDateTicketBox extends Component {
     constructor(props) {
         super(props);
         this.state = {
             listDate: [],
-            flightList: [],
+            flightTicketList: [],
             flightListOrg: [],
             departureDate: "",
         }
     }
 
     componentDidMount = () => {
+        this.getFlightTicketList();
+    }
+
+    getFlightTicketList =  async () => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const searchData = {
+          departureId: urlParams.get("departure"),
+          destinationid: urlParams.get("destination"),
+        };
+        await publicService.getFlightTickets(searchData).then((res) => {
+            console.log("🚀 ~ file: SelectDateTicketBox.jsx ~ line 36 ~ SelectDateTicketBox ~ awaitpublicService.getFlightTickets ~ res", res.data)
+            this.getDaysOfWeek(this.props.departureDateTime, res.data);
+        });
     }
 
     componentWillReceiveProps = (nextProps) => {
-        const departureDate = nextProps.departureDateTime;
-        const ticketList = nextProps.flightTicketList;
-        this.getDaysOfWeek(departureDate, ticketList);
+        // const departureDate = nextProps.departureDateTime;
+        // const ticketList = nextProps.flightTicketList;
+        // this.getDaysOfWeek(departureDate, ticketList);
     }
 
     compareDate = (departureDate, date) => {
@@ -67,7 +82,6 @@ export class SelectDateTicketBox extends Component {
             flightOnWeek.push(data);
             current.setDate(current.getDate() + 1);
         }
-        console.log("🚀 ~ file: SelectDateTicketBox.jsx ~ line 78 ~ SelectDateTicketBox ~ flightOnWeek", flightOnWeek)
         this.setState({
             listDate: flightOnWeek,
         });
@@ -86,8 +100,8 @@ export class SelectDateTicketBox extends Component {
     }
 
     render() {
-        const { listDate, departureDate, flightList } = this.state;
-        const { departure, destination, departureDateTime, flightTicketList } = this.props;
+        const { listDate, departureDate, flightTicketList } = this.state;
+        const { departure, destination, departureDateTime } = this.props;
         return (
             <>
                 <div id="select-ticket-box">
