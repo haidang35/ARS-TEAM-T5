@@ -17,7 +17,6 @@ export class FilterFlightBox extends Component {
                 <SortByFlight />
                 <ViewMode />
                 <FilterByFlight />
-                <CheckoutStepBar />
             </>
         )
     }
