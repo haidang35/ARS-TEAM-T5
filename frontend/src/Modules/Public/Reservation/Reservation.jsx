@@ -4,6 +4,8 @@ import { SelectedFlight } from "./Components/SelectedFlight/SelectedFlight";
 import ContactsInfo from "./Components/ContactsInfo/ContactsInfo";
 import CustomerInfomation from "./Components/CustomerInfomation/CustomerInfomation";
 import { withRouter } from "react-router-dom";
+import  NavbarV2  from "../Shared/Components/NavbarV2/NavbarV2";
+import { BookingStepBar } from "../ChooseFlightTicket/Components/BookingStepBar/BookingStepBar";
 
 class Reservation extends Component {
     constructor(props) {
@@ -37,8 +39,11 @@ class Reservation extends Component {
         const { flightTicket, passengers, isContinue } = this.state;
         return (
             <>
+                <NavbarV2 />
+
                 <div className="wrap-container">
                     <div className="row">
+                        <BookingStepBar />
                         <SelectedFlight flightTicket={flightTicket} />
                         <CustomerInfomation passengers={passengers} isContinue={isContinue} />
                         <ContactsInfo />
