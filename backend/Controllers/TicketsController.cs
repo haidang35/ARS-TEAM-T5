@@ -47,18 +47,18 @@ namespace backend.Controllers
         [Route("~/api/tickets/{id:int}")]
         [HttpPut]
         [ResponseType(typeof(Ticket))]
-        public IHttpActionResult PutTicket(int id, Ticket ticket)
+        public IHttpActionResult PutTicket(int id, UpdateTicket updateTicket)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != ticket.Id)
+            var ticket = db.Tickets.Find(id);
+            if(ticket == null)
             {
                 return BadRequest();
             }
-
+            ticket.UpdatedAt = DateTime.Now;
             db.Entry(ticket).State = EntityState.Modified;
 
             try

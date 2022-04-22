@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using backend.Data;
+using backend.Dtos;
 using backend.Models;
 
 namespace backend.Controllers
@@ -45,18 +46,17 @@ namespace backend.Controllers
         [Route("~/api/flights/{id:int}")]
         [HttpPut]
         [ResponseType(typeof(Flight))]
-        public IHttpActionResult PutFlight(int id, Flight flight)
+        public IHttpActionResult PutFlight(int id, UpdateFlight updateFlight)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != flight.Id)
-            {
+            var flight = db.Flights.Find(id);
+            if(flight == null){
                 return BadRequest();
             }
-
+            flight.UpdatedAt = DateTime.Now;
             db.Entry(flight).State = EntityState.Modified;
 
             try
