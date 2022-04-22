@@ -3,44 +3,51 @@ import { Payment } from "./Components/Payment/Payment";
 import { SelectedFlight } from "./Components/SelectedFlight/SelectedFlight";
 import ContactsInfo from "./Components/ContactsInfo/ContactsInfo";
 import CustomerInfomation from "./Components/CustomerInfomation/CustomerInfomation";
+import { withRouter } from "react-router-dom";
+import  NavbarV2  from "../Shared/Components/NavbarV2/NavbarV2";
+import { BookingStepBar } from "../ChooseFlightTicket/Components/BookingStepBar/BookingStepBar";
 
-export class Reservation extends Component {
+class Reservation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedTickets: [
-                {
-                    id: 2,
-                    price: 1000
-                },
-                {
-                    id: 3,
-                    price: 3000
-                },
-                {
-                    id: 4,
-                    price: 4000
-                },
-            ],
-
+            flightTicket: '',
+            passengers: '',
+            isContinue: false
         }
     }
 
+    componentDidMount = () => {
+        this.getChoosedFlightTicket();
+    }
+
+    getChoosedFlightTicket = () => {
+        const { flightTicket, passengers } = this.props.location.state;
+        this.setState({
+            flightTicket,
+            passengers
+        });
+    }
+
+    onContinute = () => {
+        this.setState({
+            isContinue: true
+        })
+    }
 
     render() {
-        const { selectedTickets } = this.state;
+        const { flightTicket, passengers, isContinue } = this.state;
         return (
             <>
+                <NavbarV2 />
+
                 <div className="wrap-container">
                     <div className="row">
-                        {
-                            selectedTickets.map((item, index) => {
-                                return (<SelectedFlight key={index} data={item} price={item.price} />)
-                            })
-                        }
-                       <CustomerInfomation />
+                        <BookingStepBar />
+                        <SelectedFlight flightTicket={flightTicket} />
+                        <CustomerInfomation passengers={passengers} isContinue={isContinue} />
                         <ContactsInfo />
-                        <Payment />
+                        <Payment onContinute={this.onContinute}/>
                     </div>
 
                 </div>
@@ -49,3 +56,5 @@ export class Reservation extends Component {
         )
     }
 }
+
+export default withRouter(Reservation);

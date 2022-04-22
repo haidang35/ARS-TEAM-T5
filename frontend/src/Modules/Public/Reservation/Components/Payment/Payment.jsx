@@ -60,6 +60,7 @@ export class Payment extends Component {
                                 className="btn-reser"
                                 variant="outlined"
                                 color="primary"
+                                onClick={() => this.props.onContinute()}
                             >
                                 Continue
                             </Button>

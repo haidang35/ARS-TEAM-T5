@@ -25,7 +25,7 @@ export class SelectedFlight extends Component {
 
     }
     render() {
-        const { data } = this.props;
+        const { flightTicket } = this.props;
         return (
             <>
                 <div className="selected-flight">
@@ -63,7 +63,7 @@ export class SelectedFlight extends Component {
                                             </div>
 
                                             <Typography
-                                                onClick={() => this.onShowTicket(data)}
+                                                onClick={() => this.onShowTicket(flightTicket)}
                                                 variant="h6"
                                                 className="detail"
                                             >
@@ -108,8 +108,8 @@ export class SelectedFlight extends Component {
                         </div>
                     </div>
                 </div>
-                {this.state.onShowSelectedFlight ? (
-                    <SelectedFlightDetails key={data.id} data={data} />
+                {this.state.isShowTicketDetails ? (
+                    <SelectedFlightDetails flightTicket={flightTicket} />
                 ) : (
                     ""
                 )}
