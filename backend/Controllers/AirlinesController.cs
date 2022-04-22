@@ -59,6 +59,10 @@ namespace backend.Controllers
             {
                 return BadRequest();
             }
+            airline.Name = updateAirline.Name;
+            airline.Code = updateAirline.Code;
+            airline.Country = updateAirline.Country;
+            airline.Logo = updateAirline.Logo;
             airline.UpdatedAt = DateTime.Now;
             db.Entry(airline).State = EntityState.Modified;
 

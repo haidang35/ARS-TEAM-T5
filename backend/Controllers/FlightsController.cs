@@ -56,6 +56,21 @@ namespace backend.Controllers
             if(flight == null){
                 return BadRequest();
             }
+            flight.FlightCode = updateFlight.FlightCode;
+            flight.DepartureTime = updateFlight.DepartureTime;
+            flight.ArrivalTime = updateFlight.ArrivalTime;
+            flight.Capacity = updateFlight.Capacity;
+            flight.BusinessSeats = updateFlight.BusinessSeats;
+            flight.EconomySeats = updateFlight.EconomySeats;
+            flight.DeluxeSeats = updateFlight.DeluxeSeats;
+            flight.ExitSeats = updateFlight.ExitSeats;
+            flight.Aircraft = updateFlight.Aircraft;
+            flight.SeatsReseved = updateFlight.SeatsReseved;
+            flight.SeatsAvaliable = updateFlight.SeatsAvaliable;
+            flight.DepartureId = updateFlight.DepartureId;
+            flight.DestinationId = updateFlight.DestinationId;
+            flight.AirlineId = updateFlight.AirlineId;
+            flight.Status = updateFlight.Status;
             flight.UpdatedAt = DateTime.Now;
             db.Entry(flight).State = EntityState.Modified;
 

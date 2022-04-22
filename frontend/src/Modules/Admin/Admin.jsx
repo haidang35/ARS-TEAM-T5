@@ -15,6 +15,7 @@ import FlightList from "./Flight/Components/FlightList/FlightList";
 import AddNewFlightTicket from "./FlightTicket/Components/AddNewFlightTIcket/AddNewFlightTicket";
 import FlightTicketList from "./FlightTicket/Components/FlightTicketList/FlightTicketList";
 import UpdateFlight from "./Flight/Components/Update Flight/UpdateFlight";
+import UpdateAirline from "./Airline/Components/UpdateAirline/UpdateAirline";
 
 
 
