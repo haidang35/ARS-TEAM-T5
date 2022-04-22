@@ -21,9 +21,24 @@ namespace backend.Controllers
         [Route("~/api/cities")]
         [HttpGet]
         [ResponseType(typeof(ICollection<City>))]
-        public IHttpActionResult GetCities()
+        public IHttpActionResult GetCities(int? provinceId)
         {
-            return Ok(db.Cities.ToList());
+            var cities = db.Cities.ToList();
+            if(provinceId != null)
+            {
+                cities = db.Cities.Where(c => c.ProvinceId == provinceId).ToList();
+            }
+            return Ok(cities);
+        }
+       
+
+        [Route("~/api/provinces/{id:int}/cities")]
+        [HttpGet]
+        [ResponseType(typeof(ICollection<City>))]
+        public IHttpActionResult GetCitiesByProvince(int id)
+        {
+            var cities = db.Cities.Where( c => c.ProvinceId == id).ToList();
+            return Ok(cities);
         }
 
         // GET: api/Cities/5
@@ -113,18 +128,10 @@ namespace backend.Controllers
             return Ok(city);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         private bool CityExists(int id)
         {
             return db.Cities.Count(e => e.Id == id) > 0;
         }
+
     }
 }

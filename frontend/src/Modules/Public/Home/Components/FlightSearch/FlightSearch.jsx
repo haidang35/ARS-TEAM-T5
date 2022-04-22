@@ -234,7 +234,6 @@ export class FlightSearch extends Component {
                                     this
                                         .handleChangeTripType
                                 }
-
                             />
                         }
                         label="Round trip"

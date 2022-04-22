@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,78 +12,93 @@ import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Link } from 'react-router-dom';
+import UpdateIcon from '@mui/icons-material/Update';
+import { Link, useParams, withRouter } from 'react-router-dom';
+import locationsService from '../Share/Services/LocationService';
 
 const columns = [
-    { id: 'id', label: 'Id', minWidth: 80 },
-    { id: 'city', label: 'City', minWidth: 170 },
-    { id: 'province', label: 'Province', minWidth: 100 },
-    {
-      id: 'cityCode',
-      label: 'CityCode',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'airportName',
-      label: 'AirportName',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'country',
-      label: 'Country',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-  ];
+  { id: 'id', label: 'Id', minWidth: 80 },
+  { id: 'city', label: 'City', minWidth: 100 },
+  { id: 'province', label: 'Province', minWidth: 50 },
 
-  function createData(id, city , code, province, cityCode, airportName, country) {
-    return { id, city, code, province, cityCode, airportName, country };
-  }
-  
-  const rows = [
-    createData('1','India', 'IN', 'alo', 3287263,'VnAirline'),
-    createData('1','China', 'CN', '1403500365', 9596961,'VnAirline'),
-    createData('1','Italy', 'IT', '60483973', 301340,'VnAirline'),
-    createData('1','United States', 'US', '327167434', 9833520,'VnAirline'),
-    createData('1','Canada', 'CA', '37602103', 9984670,'VnAirline'),
-    createData('1','Australia', 'AU', '25475400', 7692024,'VnAirline'),
-    createData('1','Germany', 'DE', '83019200', 357578,'VnAirline'),
-    createData('1','Ireland', 'IE', '4857000', 70273,'VnAirline'),
-    createData('1','Mexico', 'MX', '126577691', 1972550,'VnAirline'),
-    createData('1','Japan', 'JP', '126317000', 377973,'VnAirline'),
-    createData('1','France', 'FR', '67022000', 640679,'VnAirline'),
-    createData('1','United Kingdom', 'GB', '67545757', 242495,'VnAirline'),
-    createData('1','Russia', 'RU', '146793744', 17098246,'VnAirline'),
-    createData('1','Nigeria', 'NG', '200962417', 923768,'VnAirline'),
-    createData('1','Brazil', 'BR', '210147125', 8515767,'VnAirline'),
-  ];
+  {
+    id: 'airportName',
+    label: 'AirportName',
+    minWidth: 100,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'country',
+    label: 'Country',
+    minWidth: 60,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'edit',
+    label: 'Edit',
+    minWidth: 100,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+];
+
+function createData(id, city, province, airportName, country, edit) {
+  return { id, city, province, airportName, country, edit };
+}
+
+const rows = [
+  createData('1', 'India', 'IN', 'alo', 3287263, 'VnAirline'),
+  createData('1', 'China', 'CN', '1403500365', 9596961, 'VnAirline'),
+  createData('1', 'Italy', 'IT', '60483973', 301340, 'VnAirline'),
+  createData('1', 'United States', 'US', '327167434', 9833520, 'VnAirline'),
+  createData('1', 'Canada', 'CA', '37602103', 9984670, 'VnAirline'),
+  createData('1', 'Australia', 'AU', '25475400', 7692024, 'VnAirline'),
+  createData('1', 'Germany', 'DE', '83019200', 357578, 'VnAirline'),
+  createData('1', 'Ireland', 'IE', '4857000', 70273, 'VnAirline'),
+  createData('1', 'Mexico', 'MX', '126577691', 1972550, 'VnAirline'),
+  createData('1', 'Japan', 'JP', '126317000', 377973, 'VnAirline'),
+  createData('1', 'France', 'FR', '67022000', 640679, 'VnAirline'),
+  createData('1', 'United Kingdom', 'GB', '67545757', 242495, 'VnAirline'),
+  createData('1', 'Russia', 'RU', '146793744', 17098246, 'VnAirline'),
+  createData('1', 'Nigeria', 'NG', '200962417', 923768, 'VnAirline'),
+  createData('1', 'Brazil', 'BR', '210147125', 8515767, 'VnAirline'),
+];
 
 export default function LocationList() {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  
-    const handleChangePage = (event, newPage) => {
-      setPage(newPage);
-    };
-  
-    const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(+event.target.value);
-      setPage(0);
-    };
-    const [locationList, setLocationList] = useState([]);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [locationList, setLocationList] = useState([]);
+  const {id} = useParams()
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  useEffect(() => {
+    getLocationList();
+  }, []);
+
+  const getLocationList = async () => {
+    await locationsService.getLocationList()
+      .then((res) => {
+        setLocationList(res.data);
+      })
+  }
+
   return (
       <>
-      <div id='airline'>
+      <div id='location'>
         <Paper sx={{ width: '100%' }}>
           <Typography variant="h4" component="div" gutterBottom>
             Location
           </Typography>
-          <TableContainer sx={{ maxHeight: 440 }}>
+          <TableContainer sx={{ maxHeight: 400 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -102,7 +117,7 @@ export default function LocationList() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ top: 57, minWidth: column.minWidth }}
+                      style={{ top: 57, minWidth: column.minWidth, textAlign: 'left' }}
                     >
                       {column.label}
                     </TableCell>
@@ -119,23 +134,23 @@ export default function LocationList() {
                           {location.Id}
                         </TableCell>
                         <TableCell>
-                          {location.city}
+                          {location.City.Name}
                         </TableCell>
                         <TableCell>
-                          {location.Code}
+                          {location.City.Province.Name}
                         </TableCell>
                         <TableCell>
-                          {location.province}
+                          {location.AirPortName}
                         </TableCell>
                         <TableCell>
-                          {location.cityCode}
-                        </TableCell>
-                        <TableCell>
-                          {location.airportName}
+                          {location.City.Province.Country}
                         </TableCell>
                         <TableCell>
                           <EditIcon className='edit-icon' />
                           <DeleteIcon className='delete-icon' />
+                          <Link to={"/admin/locations/"+location.Id}>
+                          <UpdateIcon className='update-icon'/>
+                          </Link>
                         </TableCell>
 
 
@@ -158,7 +173,7 @@ export default function LocationList() {
           />
         </Paper>
       </div>
-      </>
-    
+    </>
+
   );
 }

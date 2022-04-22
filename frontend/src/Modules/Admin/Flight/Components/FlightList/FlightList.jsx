@@ -15,13 +15,21 @@ import EditIcon from '@mui/icons-material/Edit';
 import "./FlightList.scss";
 import axios from "axios";
 import flightService from '../../Shared/Services/FlightService';
-
+import IconButton from '@mui/material/IconButton';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import { Link, useLocation } from 'react-router-dom';
 
+
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
+  {
+    id: 'flightCode',
+    label: 'FlightCode',
+    minWidth: 100,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  },
   {
     id: 'departure',
     label: 'Departure',
@@ -44,13 +52,6 @@ const columns = [
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'ticket',
-    label: 'Ticket',
-    minWidth: 100,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
     id: 'status ',
     label: 'Status',
     minWidth: 100,
@@ -64,8 +65,8 @@ const columns = [
 
 ];
 
-function createData( departure, destination, airline, ticket, status) {
-  return { departure, destination, airline, ticket, status };
+function createData( flightCode, departure, destination, airline, status) {
+  return { flightCode,departure, destination, airline,  status };
 }
 
 const rows = [
@@ -121,7 +122,7 @@ export default function FlightList() {
 
   return (
     <>
-      <div id='airline'>
+      <div id='Flight'>
         <Paper sx={{ width: '100%' }}>
           <Typography variant="h4" component="div" gutterBottom>
             Flight
@@ -165,26 +166,33 @@ export default function FlightList() {
                     return (
                       <TableRow hover role="checkbox" tabIndex={-1} key={flight.code}>
                         <TableCell>
-                          {flight.Departure}
+                          {flight.Id}
+                        </TableCell>
+                         <TableCell>
+                          {flight.FlightCode}
                         </TableCell>
                         <TableCell>
-                          {flight.Destination}
+                          {flight.Departure.City.Name}
                         </TableCell>
                         <TableCell>
-                          {flight.Airline}
+                          {flight.Destination.City.Name}
                         </TableCell>
                         <TableCell>
-                          {flight.Ticket}
+                          {flight.Airline.Name}
                         </TableCell>
                         <TableCell>
                           {flight.Status}
                         </TableCell>
                         <TableCell>
-                          <EditIcon className='edit-icon' />
-                          <DeleteIcon className='delete-icon' />
+                        <Link to={`/admin/flights/${flight.Id}`}>
+                            <IconButton aria-label="edit-icon">
+                              <EditIcon />
+                            </IconButton>
+                          </Link>
+                          <IconButton aria-label="delete">
+                            <DeleteIcon />
+                          </IconButton>
                         </TableCell>
-
-
                       </TableRow>
 
                     );

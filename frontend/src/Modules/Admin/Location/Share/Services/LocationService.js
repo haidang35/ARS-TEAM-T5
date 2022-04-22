@@ -4,10 +4,13 @@ import { AUTH_TOKEN, BASE_URL_SERVER } from '../../../../../Configs/server';
 
 const API_ENDPOINT = {
   GET_LOCATION_LIST: "/api/locations",
-  GET_DETAILS: "api/locations/{id}",
-  UPDATE_DETAILS: "api/locations/{id}",
+  GET_DETAILS: "/api/locations/",
+  UPDATE_DETAILS: "/api/locations/",
   CREATE_NEW: "/api/locations",
-  DELETE_LOCATION: "api/locations/{id}"
+  DELETE_LOCATION: "/api/locations/",
+  GET_PROVINCE_LIST: "/api/provinces",
+  GET_CITY_LIST: "/api/cities",
+
 }
 
 const configs = {
@@ -20,7 +23,7 @@ class LocationService {
     return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_LOCATION_LIST);
   };
 
-  getLocationDetail = async (id) => {
+  getLocationDetails = async (id) => {
     return await axios.get(
       BASE_URL_SERVER + API_ENDPOINT.GET_DETAILS + id,
       configs
@@ -40,7 +43,19 @@ class LocationService {
   };
 
   deleteLocation = async (id) => {
-    return await axios.deleteAirline(BASE_URL_SERVER + API_ENDPOINT.DELETE_LOCATION + id, configs);
+    return await axios.delete(BASE_URL_SERVER + API_ENDPOINT.DELETE_LOCATION + id, configs);
+  }
+
+  getProvinceList = async () => {
+    return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_PROVINCE_LIST);
+  };
+
+  getCityList = async () => {
+    return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_CITY_LIST);
+  };
+
+  getCitiesByProvince = async (provinceId) => {
+    return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_CITY_LIST + `?provinceId=${provinceId}`);
   }
 }
 

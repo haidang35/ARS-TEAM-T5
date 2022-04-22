@@ -190,12 +190,30 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Data\MyDbContext.cs" />
+    <Compile Include="Dtos\SearchFlightTicket.cs" />
+    <Compile Include="Dtos\UpdateAirline.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202204140208546_Initial.cs" />
     <Compile Include="Migrations\202204140208546_Initial.designer.cs">
       <DependentUpon>202204140208546_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204201337489_UpdateCityTable.cs" />
+    <Compile Include="Migrations\202204201337489_UpdateCityTable.designer.cs">
+      <DependentUpon>202204201337489_UpdateCityTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204201540101_UpdateFlightTable.cs" />
+    <Compile Include="Migrations\202204201540101_UpdateFlightTable.designer.cs">
+      <DependentUpon>202204201540101_UpdateFlightTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204210434029_UpdateTicketTable.cs" />
+    <Compile Include="Migrations\202204210434029_UpdateTicketTable.designer.cs">
+      <DependentUpon>202204210434029_UpdateTicketTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204210831305_UpdateTicket.cs" />
+    <Compile Include="Migrations\202204210831305_UpdateTicket.designer.cs">
+      <DependentUpon>202204210831305_UpdateTicket.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Airline.cs" />
@@ -309,6 +327,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202204140208546_Initial.resx">
       <DependentUpon>202204140208546_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204201337489_UpdateCityTable.resx">
+      <DependentUpon>202204201337489_UpdateCityTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204201540101_UpdateFlightTable.resx">
+      <DependentUpon>202204201540101_UpdateFlightTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204210434029_UpdateTicketTable.resx">
+      <DependentUpon>202204210434029_UpdateTicketTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204210831305_UpdateTicket.resx">
+      <DependentUpon>202204210831305_UpdateTicket.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

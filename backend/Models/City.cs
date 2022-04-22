@@ -14,5 +14,8 @@ namespace backend.Models
         public string Name { get; set; }
         [Required]
         public string CityCode { get; set; }
+        [Required]
+        public int ProvinceId { get; set; }
+        public virtual Province Province { get; set; }
     }
 }

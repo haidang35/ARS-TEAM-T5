@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using backend.Data;
+using backend.Dtos;
 using backend.Models;
 
 namespace backend.Controllers
@@ -45,18 +47,18 @@ namespace backend.Controllers
         [Route("~/api/tickets/{id:int}")]
         [HttpPut]
         [ResponseType(typeof(Ticket))]
-        public IHttpActionResult PutTicket(int id, Ticket ticket)
+        public IHttpActionResult PutTicket(int id, UpdateTicket updateTicket)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != ticket.Id)
+            var ticket = db.Tickets.Find(id);
+            if(ticket == null)
             {
                 return BadRequest();
             }
-
+            ticket.UpdatedAt = DateTime.Now;
             db.Entry(ticket).State = EntityState.Modified;
 
             try
@@ -113,18 +115,45 @@ namespace backend.Controllers
             return Ok(ticket);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         private bool TicketExists(int id)
         {
             return db.Tickets.Count(e => e.Id == id) > 0;
+        }
+        
+
+        [Route("~/api/tickets/search")]
+        [HttpPost]
+        [ResponseType(typeof(ICollection<Ticket>))]
+        public IHttpActionResult SearchFlightTicket(SearchFlightTicket searchData)
+        {
+            if(! ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var flights = new List<Flight>();
+            if(searchData.DepartureDate == DateTime.MinValue)
+            {
+                flights = db.Flights.Where(f => f.DepartureId == searchData.DepartureId
+                                       && f.DestinationId == searchData.DestinationId
+                                       ).ToList();
+            }else
+            {
+                flights = db.Flights.Where(f => f.DepartureId == searchData.DepartureId
+                                       && f.DestinationId == searchData.DestinationId
+                                       && DateTime.Compare(f.DepartureTime, searchData.DepartureDate) == 0
+                                       ).ToList();
+            }
+           
+            var tickets = new List<Ticket>();
+            foreach(var flight in flights)
+            {
+                var flightTickets = db.Tickets.Where(t => t.FlightId == flight.Id).ToList();
+                foreach(var ticket in flightTickets)
+                {
+                    tickets.Add(ticket);
+                }
+            }
+            return Ok(tickets);
         }
     }
 }
