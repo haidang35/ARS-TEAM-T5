@@ -3,7 +3,11 @@ import React, { Component } from "react";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import "./Payment.scss";
 
-
+export const PAYMENT_METHODS = {
+    PAY_IN_OFFICE: 1,
+    BANK_TRANSFER: 2,
+    INTERNATIONAL_PAYMENT_GATEWAY: 3
+}
 export class Payment extends Component {
     constructor(props) {
         super(props);
@@ -11,15 +15,18 @@ export class Payment extends Component {
             paymentMethods: [
                 {
                     id: 1,
-                    name: 'Pay at the office'
+                    name: 'Pay at the office',
+                    type: PAYMENT_METHODS.PAY_IN_OFFICE
                 },
                 {
                     id: 2,
-                    name: 'Free reservation and payment via bank transfer'
+                    name: 'Free reservation and payment via bank transfer',
+                    type: PAYMENT_METHODS.BANK_TRANSFER
                 },
                 {
                     id: 3,
-                    name: 'International Paypal online payment gateway'
+                    name: 'International Paypal online payment gateway',
+                    type: PAYMENT_METHODS.INTERNATIONAL_PAYMENT_GATEWAY
                 },
             ],
             choosedPaymentMethod: ''
@@ -37,7 +44,6 @@ export class Payment extends Component {
     }
     render() {
         const { paymentMethods, choosedPaymentMethod } = this.state;
-        console.log('payment', choosedPaymentMethod);
         return (
             <>
                 <div >
