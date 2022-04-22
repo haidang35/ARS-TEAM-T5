@@ -122,7 +122,7 @@ export default function FlightList() {
 
   return (
     <>
-      <div id='airline'>
+      <div id='Flight'>
         <Paper sx={{ width: '100%' }}>
           <Typography variant="h4" component="div" gutterBottom>
             Flight
