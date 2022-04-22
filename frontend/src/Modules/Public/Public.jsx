@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom"
-import SignIn from "./Account/Components/SignIn/SignIn";
-import SignUp from "./Account/Components/SignUp/SignUp";
-import { FlightTicket } from "./ChooseFlightTicket/FlightTicket";
+import { SignIn } from "./Account/Components/SignIn/SignIn";
 import { Home } from "./Home/Home";
-import Navbar from "./Shared/Components/Navbar/Navbar";
 import "./Shared/Styles/Public.scss";
+import { SignUp } from "./Account/Components/SignUp/SignUp";
+import  Reservation  from "./Reservation/Reservation";
+import BonusServices from "./BonusService/BonusService";
+import { Payments } from "./Payment/Payments";
+import FlightTicket  from "./ChooseFlightTicket/FlightTicket";
 
 
 
@@ -21,34 +23,33 @@ export class Public extends Component {
             <>
                 <BrowserRouter>
                     <div id="public">
-                        <Navbar />
-
                         <Switch>
-                            <Route path="/flight-ticket" exact>
-                                <FlightTicket />
-                            </Route>
                             <Route path="/" exact>
                                 <Home />
                             </Route>
                             <Route path="/signup" exact>
-                                <SignUp />
+                               <SignUp />
                             </Route>
                             <Route path="/signin" exact>
                                 <SignIn />
                             </Route>
-                            <Route path="/flight-tickets">
+                            <Route path="/flight-ticket" exact>
                                 <FlightTicket />
+                            </Route>
 
+                            <Route path="/reservation"  exact>
+                                <Reservation/>
+                            </Route>
+                            <Route path="/bonus-service" exact>
+                                <BonusServices />
+                            </Route>
+                            <Route path="/payments" exact>
+                               <Payments />
                             </Route>
                         </Switch>
                     </div>
-
-
-
                 </BrowserRouter>
-
             </>
-
         )
     }
 }

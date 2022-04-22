@@ -1,6 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import React from "react";
 import { Component } from "react";
+import { formatCurrencyToVND } from "../../../../../Helpers/currency";
 import "./CheckoutStepBar.scss";    
 class CheckoutStepBar extends Component {
     constructor(props) {
@@ -9,7 +10,7 @@ class CheckoutStepBar extends Component {
     }
 
     render() {
-        const { intoMoney, step } = this.props;
+        const { totalMoney, step } = this.props;
         return (
             <div>
                 <div className="checkout-step-bar">
@@ -24,13 +25,14 @@ class CheckoutStepBar extends Component {
                                     Go back
                                 </Button>
                             </div>
-                            {intoMoney > 0 ? (
+                            {totalMoney > 0 ? (
                                 <div className="col-md-6">
                                     <div className="booking-price-total">
                                         <Typography
                                             className="price-total"
                                             variant="h6"
                                         >
+                                            {formatCurrencyToVND(totalMoney)}
                                         </Typography>
                                         <Typography
                                             className="price-info"

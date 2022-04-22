@@ -1,0 +1,76 @@
+@import "../../../../../Shared/Styles/variables";
+
+.customer-info {
+    background-color: #ffff;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin-bottom: 2rem;
+
+    .title-box {
+        background-color: $background-color;
+        padding: 1rem;
+
+        .title {
+            color: white;
+            text-transform: uppercase;
+            font-size: 17px;
+        }
+    }
+
+    .content {
+        width: 100%;
+        padding: 1rem;
+
+        .list-sub-title {
+            .sub-title {
+                font-size: 17px;
+            }
+        }
+
+        .list-sub-content {
+            .sub-content {
+                margin-top: 1.7rem;
+                border-bottom: 1px solid rgb(230, 230, 230);
+                padding-bottom: 1rem;
+
+                .baggage-info {
+                    margin-top: 1rem;
+                }
+            }
+
+
+
+            .sub-content-title {
+                font-size: 16px;
+                width: 0rem;
+            }
+
+
+        }
+
+
+    }
+    .genger{
+        .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root{
+            width: 12rem;
+            height: 3rem;
+        }
+      
+    }
+    .outlined-fullname{
+        .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root{
+            width: 19rem;
+            height: 3rem;
+        }
+    }
+    .identity-number{
+        .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root{
+            width: 12rem;
+            height: 3rem;
+        }
+
+    }
+    .form-control{
+        width: 19rem;
+        height: 3rem;
+    }
+}

@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using backend.Data;
+using backend.Dtos;
 using backend.Models;
 
 namespace backend.Controllers
@@ -45,18 +46,32 @@ namespace backend.Controllers
         [Route("~/api/flights/{id:int}")]
         [HttpPut]
         [ResponseType(typeof(Flight))]
-        public IHttpActionResult PutFlight(int id, Flight flight)
+        public IHttpActionResult PutFlight(int id, UpdateFlight updateFlight)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != flight.Id)
-            {
+            var flight = db.Flights.Find(id);
+            if(flight == null){
                 return BadRequest();
             }
-
+            flight.FlightCode = updateFlight.FlightCode;
+            flight.DepartureTime = updateFlight.DepartureTime;
+            flight.ArrivalTime = updateFlight.ArrivalTime;
+            flight.Capacity = updateFlight.Capacity;
+            flight.BusinessSeats = updateFlight.BusinessSeats;
+            flight.EconomySeats = updateFlight.EconomySeats;
+            flight.DeluxeSeats = updateFlight.DeluxeSeats;
+            flight.ExitSeats = updateFlight.ExitSeats;
+            flight.Aircraft = updateFlight.Aircraft;
+            flight.SeatsReseved = updateFlight.SeatsReseved;
+            flight.SeatsAvaliable = updateFlight.SeatsAvaliable;
+            flight.DepartureId = updateFlight.DepartureId;
+            flight.DestinationId = updateFlight.DestinationId;
+            flight.AirlineId = updateFlight.AirlineId;
+            flight.Status = updateFlight.Status;
+            flight.UpdatedAt = DateTime.Now;
             db.Entry(flight).State = EntityState.Modified;
 
             try
@@ -88,7 +103,8 @@ namespace backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            flight.CreatedAt = DateTime.Now;
+            flight.UpdatedAt = DateTime.Now;
             db.Flights.Add(flight);
             db.SaveChanges();
 

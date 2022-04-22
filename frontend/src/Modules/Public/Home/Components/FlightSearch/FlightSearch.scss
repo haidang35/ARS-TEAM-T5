@@ -1,26 +1,81 @@
-#header-left{
+#header-left {
     padding-top: 6rem;
- 
-    .depature{
+
+
+    .depature {
         padding-top: 1rem;
+        margin-top: 30px;
+
+
+        .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+            width: 100%;
+
+            .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+                background: #ffff;
+                border-radius: 8px;
+
+
+            }
+        }
+
+    }
+    
+
+
+    .destination {
+        padding-top: 1rem;
+        margin-top: 30px;
+
+
+        .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+            width: 100%;
+        }
+
+        .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+            background: #ffff;
+            border-radius: 8px;
+        }
+
+
+    }
+
+    .date {
+        padding-top: 1rem;
+        margin-top: 30px;
+    
         
+
+
+
+        .css-1u3bzj6-MuiFormControl-root-MuiTextField-root{
+            width: 100%;
+        }
+        .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+            background: #ffff;
+            border-radius: 8px;
+        }
     }
-    .destination{
+
+    .date-time {
         padding-top: 1rem;
-       
-      
+        margin-top: 30px;
+
+
     }
-    .date{
+
+    .search {
         padding-top: 1rem;
-       
+        margin-top: 20px;
+
     }
-    .search{
-        padding-top: 1rem;
-    }
-    .title-passenger{
+
+    .title-passenger {
         color: white;
     }
     
-    
+
 
 }
+
+
+

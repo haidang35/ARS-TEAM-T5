@@ -19,10 +19,9 @@ namespace backend.Models
         public int FlightId { get; set; }
         public virtual  Flight Flight { get; set; }
         [Required]
-        public TicketStatus TicketType { get; set; }
-        public DateTime ArrivalTime { get; set; }
+        public string TicketType { get; set; }
         [Required]
-        public int AvailableClass { get; set; }
+        public string AvailableClass { get; set; }
         [Required]
         public int CarbinBag { get; set; }
         [Required]

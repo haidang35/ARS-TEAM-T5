@@ -88,7 +88,8 @@ namespace backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            bookingTicket.CreatedAt = DateTime.Now;
+            bookingTicket.UpdatedAt = DateTime.Now;
             db.BookingTickets.Add(bookingTicket);
                 db.SaveChanges();
 

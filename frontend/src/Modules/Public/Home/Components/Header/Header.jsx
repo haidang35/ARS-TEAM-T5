@@ -28,6 +28,11 @@ export class Header extends Component {
     };
 
     render() {
+
+        const videoBackgroundHome = document.getElementById("videoBackgroundHome");
+        if (videoBackgroundHome !== null) {
+            videoBackgroundHome.muted = true;
+        }
         return (
             <>
                 <div id="home-header">
@@ -41,6 +46,7 @@ export class Header extends Component {
                         className="background-video-box"
                     >
                         <iframe
+                            id="videoBackgroundHome"
                             src="https://streamable.com/e/bqjlrb?autoplay=1&nocontrols=1"
                             frameBorder={0}
                             width="100%"
@@ -62,7 +68,7 @@ export class Header extends Component {
                             <div className="header-content">
                                 <div className="row">
                                     <div className="col-md-10">
-                                        <FlightSearch />
+                                        <FlightSearch favouriteDestination={this.props.favouriteDestination}/>
                                     </div>
                                 </div>
                             </div>

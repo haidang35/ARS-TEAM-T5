@@ -26,6 +26,7 @@ namespace backend.Controllers
             return Ok(db.Provinces.ToList());
         }
 
+
         // GET: api/Provinces/5
         [Route("~/api/provinces/{id:int}")]
         [HttpGet]
@@ -40,6 +41,7 @@ namespace backend.Controllers
 
             return Ok(province);
         }
+
 
         // PUT: api/Provinces/5
         [Route("~/api/provinces/{id:int}")]

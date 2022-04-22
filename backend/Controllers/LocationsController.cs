@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using backend.Data;
+using backend.Dtos;
 using backend.Models;
 
 namespace backend.Controllers
@@ -45,18 +46,18 @@ namespace backend.Controllers
         [Route("~/api/locations/{id:int}")]
         [HttpPut]
         [ResponseType(typeof(Location))]
-        public IHttpActionResult PutLocation(int id, Location location)
+        public IHttpActionResult PutLocation(int id, UpdateLocation updateLocation)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != location.Id)
+            var location = db.Locations.Find(id);
+            if(location == null)
             {
                 return BadRequest();
             }
-
+            location.UpdatedAt = DateTime.Now;
             db.Entry(location).State = EntityState.Modified;
 
             try
@@ -88,7 +89,8 @@ namespace backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            location.CreatedAt = DateTime.Now;
+            location.UpdatedAt = DateTime.Now;
             db.Locations.Add(location);
             db.SaveChanges();
 

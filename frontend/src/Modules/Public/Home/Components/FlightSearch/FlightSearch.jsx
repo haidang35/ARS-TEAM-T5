@@ -7,8 +7,10 @@ import { Location } from "../Location/Location";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { dateConvert, getDateTimeNow } from "../../../../../Helpers/datetime";
+import { getDateTimeNow } from "../../../../../Helpers/datetime";
 import "./FlightSearch.scss";
+import { Redirect } from "react-router-dom";
+import { getDate } from "../../../../../Helpers/datetime";
 
 
 
@@ -26,24 +28,32 @@ export class FlightSearch extends Component {
             children: 0,
             infants: 0,
             searchData: {
-                departure: {
-                    province: ''
-                },
-                destination: {
-                    province: ''
-                },
+                departure: '',
+                destination: '',
                 departureDate: getDateTimeNow(),
                 returnDate: getDateTimeNow(),
                 tripType: TRIP_TYPE.ONEWAY,
             },
 
-
             openLocationDialog: false,
             locationType: "",
+            isRedirect: false
 
         }
 
 
+    }
+
+
+    componentWillReceiveProps = (nextProps) => {
+        let { searchData } = this.state;
+        searchData["destination"] = {
+            province: nextProps.favouriteDestination,
+        }
+
+        this.setState({
+            searchData
+        });
     }
 
     handleChangeTripType = (ev) => {
@@ -82,9 +92,15 @@ export class FlightSearch extends Component {
 
     handleDepartureDate = (newValue) => {
         let { searchData } = this.state;
-        searchData['departureDate'] = newValue;
+        searchData['departureDate'] = getDate(newValue);
         this.setState({
             searchData
+        })
+    }
+
+    onSearchFlight = () => {
+        this.setState({
+            isRedirect: true
         })
     }
 
@@ -148,8 +164,38 @@ export class FlightSearch extends Component {
 
 
     render() {
-        const { open, locations } = this.state;
+        const { open, locations, isRedirect, children, infants, adults } = this.state;
         const { departure, destination, departureDate, returnDate, tripType } = this.state.searchData;
+
+        if (isRedirect) {
+            return <Redirect to={{
+                pathname: 'flight-ticket',
+                search: `?tripType=${tripType}&departure=${departure.Id}&destination=${destination.Id}&departureDate=${departureDate}`,
+                state: {
+                    passengers: [
+                        {
+                            id: 1,
+                            passengerType: 'adults',
+                            quantity: adults
+                        },
+                        {
+                            id: 2,
+                            passengerType: 'children',
+                            quantity: children
+                        },
+                        {
+                            id: 3,
+                            passengerType: 'infants',
+                            quantity: infants
+                        }
+                    ],
+                    departure,
+                    destination
+                }
+                
+            }} />
+        }
+
         return (
             <>
                 <div id="header-left">
@@ -174,33 +220,33 @@ export class FlightSearch extends Component {
                         }
                         label="One Way"
                     />
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                name="roundTrip"
+                                checked={
+                                    tripType === TRIP_TYPE.ROUNDTRIP
+                                }
+                                color="primary"
+                                className="check-box"
+                                value={TRIP_TYPE.ROUNDTRIP}
+                                onChange={
+                                    this
+                                        .handleChangeTripType
+                                }
+                            />
+                        }
+                        label="Round trip"
+                    />
                     <div className="formcheck">
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    name="roundTrip"
-                                    checked={
-                                        tripType === TRIP_TYPE.ROUNDTRIP
-                                    }
-                                    color="primary"
-                                    className="check-box"
-                                    value={TRIP_TYPE.ROUNDTRIP}
-                                    onChange={
-                                        this
-                                            .handleChangeTripType
-                                    }
 
-                                />
-                            }
-                            label="Round trip"
-                        />
 
 
                         <div className="depature">
-                            <TextField label="Departure" value={departure.province} variant="outlined" onClick={() => this.handleOpenDialog('departure')} />
+                            <TextField label="Departure" value={departure && departure.City.Name} variant="outlined" onClick={() => this.handleOpenDialog('departure')} />
                         </div>
                         <div className="destination">
-                            <TextField label="Destination" value={destination.province} variant="outlined" onClick={() => this.handleOpenDialog('destination')} />
+                            <TextField label="Destination" value={destination && destination.City.Name} variant="outlined" onClick={() => this.handleOpenDialog('destination')} />
                         </div>
                         <div className="date">
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -213,6 +259,8 @@ export class FlightSearch extends Component {
                                     renderInput={(params) => <TextField {...params} />}
                                 />
                             </LocalizationProvider>
+                        </div>
+                        <div className="date">
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
                                     disabled={
@@ -332,6 +380,7 @@ export class FlightSearch extends Component {
                             </div>
                             <div className="search">
                                 <Button
+                                    onClick={this.onSearchFlight}
                                     variant="contained"
                                     className="btn-search-form"
                                     startIcon={<Search />}
@@ -341,8 +390,8 @@ export class FlightSearch extends Component {
                             </div>
                         </div>
                     </div>
+                    <Location open={open} selectLocation={this.selectLocation} onCloseDialog={this.onCloseDialog} />
                 </div>
-                <Location open={open} selectLocation={this.selectLocation} onCloseDialog={this.onCloseDialog} />
             </>
         )
     }
