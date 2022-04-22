@@ -30,7 +30,7 @@ export class SignUp extends Form {
                 phoneNumber: "",
 
             }),
-          
+
 
         }
     }
@@ -54,13 +54,13 @@ export class SignUp extends Form {
         }
     };
 
-   
+
 
 
     render() {
         const { lastName, firstName, email, password, confirmPassword, phoneNumber } = this.state.form;
         const theme = createTheme();
-      
+
         return (
             <>
                 <ThemeProvider theme={theme}>
@@ -84,6 +84,7 @@ export class SignUp extends Form {
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
+                                            error
                                             autoComplete="given-name"
                                             name="firstName"
                                             required

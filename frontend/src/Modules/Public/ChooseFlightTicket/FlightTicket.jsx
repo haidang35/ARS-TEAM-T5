@@ -34,7 +34,7 @@ export class FlightTicket extends Component {
         }
 
 
-        getFlightTickets = async (searchData) => {
+       getFlightTickets = async (searchData) => {
 
             await publicService.getFlightTickets().then((res) => {
                 this.setState({
