@@ -192,6 +192,9 @@
     <Compile Include="Data\MyDbContext.cs" />
     <Compile Include="Dtos\SearchFlightTicket.cs" />
     <Compile Include="Dtos\UpdateAirline.cs" />
+    <Compile Include="Dtos\UpdateFlight.cs" />
+    <Compile Include="Dtos\UpdateLocation.cs" />
+    <Compile Include="Dtos\UpdateTicket.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -214,6 +217,10 @@
     <Compile Include="Migrations\202204210831305_UpdateTicket.cs" />
     <Compile Include="Migrations\202204210831305_UpdateTicket.designer.cs">
       <DependentUpon>202204210831305_UpdateTicket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204220215188_UpdateTicketDto.cs" />
+    <Compile Include="Migrations\202204220215188_UpdateTicketDto.designer.cs">
+      <DependentUpon>202204220215188_UpdateTicketDto.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Airline.cs" />
@@ -339,6 +346,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204210831305_UpdateTicket.resx">
       <DependentUpon>202204210831305_UpdateTicket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204220215188_UpdateTicketDto.resx">
+      <DependentUpon>202204220215188_UpdateTicketDto.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
