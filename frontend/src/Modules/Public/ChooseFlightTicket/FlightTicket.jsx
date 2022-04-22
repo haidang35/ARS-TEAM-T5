@@ -47,10 +47,9 @@ class FlightTicket extends Component {
   };
 
   handleDepartureDate = (departureDate) => {
-    console.log(
-      "🚀 ~ file: FlightTicket.jsx ~ line 52 ~ FlightTicket ~ departureDate",
+    this.setState({
       departureDate
-    );
+    });
   };
 
   render() {

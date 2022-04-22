@@ -21,9 +21,6 @@ export class SelectDateTicketBox extends Component {
     }
 
     componentDidMount = () => {
-        // const departureDate = this.props.departureDateTime;
-        // const ticketList = this.props.flightTicketList;
-        // this.getDaysOfWeek(departureDate, ticketList);
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -47,14 +44,7 @@ export class SelectDateTicketBox extends Component {
     };
 
     handleChangeDepartureDate = (data) => {
-        // this.props.onChangeDepartureDate(
-        //     data,
-        //     this.state.flightList,
-        //     this.state.flightListOrg
-        // );
-        // const ticketList = [];
-        // this.getDaysOfWeek(data.date, ticketList);
-       
+        this.props.handleDepartureDate(data.date);
     };
 
     getDaysOfWeek = (departureDate, ticketList) => {
