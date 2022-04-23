@@ -5,6 +5,11 @@ import { Component } from "react";
 import LocalAirportIcon from "@mui/icons-material/LocalAirport";
 import AlarmIcon from "@mui/icons-material/Alarm";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import {
+  getTime,
+  dateConvert,
+} from "../../../../../../../../../Helpers/datetime";
+import { formatCurrencyToVND } from "../../../../../../../../../Helpers/currency";
 
 class FlightSeatServiceTicketPrice extends Component {
   constructor(props) {
@@ -13,6 +18,8 @@ class FlightSeatServiceTicketPrice extends Component {
   }
 
   render() {
+    const { flightTicket, passengerNumbers, totalSeatFee } = this.props;
+    let totalMoney = 0;
     return (
       <>
         <div id="flight-seat-service-ticket-price">
@@ -20,7 +27,7 @@ class FlightSeatServiceTicketPrice extends Component {
             <div className="ticket-details">
               <div className="title-box">
                 <Typography variant="h4" className="title">
-                  Chi tiết giá vé
+                  Ticket Details
                 </Typography>
               </div>
               <div className="content">
@@ -28,17 +35,19 @@ class FlightSeatServiceTicketPrice extends Component {
                   <div className="col-md-8">
                     <div className="flight-time">
                       <Typography variant="body1" className="destination">
-                        Hà nội
+                        {flightTicket.Flight.Departure.City.Name}
                       </Typography>
                       <ArrowRightAltIcon className="icon-arrow" />
                       <Typography variant="body1" className="destination">
-                        Hồ Chí Minh
+                        {flightTicket.Flight.Destination.City.Name}
                       </Typography>
                     </div>
                     <div className="flight-time">
                       <AlarmIcon className="icon-clock" />
                       <Typography variant="body1" className="time">
-                        00:00 21-04-2022
+                        {`${getTime(
+                          flightTicket.Flight.DepartureTime
+                        )} ${dateConvert(flightTicket.Flight.DepartureTime)}`}
                       </Typography>
                     </div>
                   </div>
@@ -52,8 +61,7 @@ class FlightSeatServiceTicketPrice extends Component {
                       <div className="row">
                         <div className="col-md-6">
                           <Typography variant="h6" className="title left-title">
-                            giá vé <br />
-                            Người lớn 1 x 200 ₫
+                            Price
                           </Typography>
                         </div>
                         <div className="col-md-6">
@@ -61,16 +69,58 @@ class FlightSeatServiceTicketPrice extends Component {
                             variant="h6"
                             className="title total-title"
                           >
-                            Tổng
+                            Total
                           </Typography>
                         </div>
                         <div className="passenger-list-price">
+                          {passengerNumbers.map((psg, index) => {
+                            if (psg.quantity > 0) {
+                              totalMoney +=
+                                psg.quantity * flightTicket.Price +
+                                flightTicket.Tax;
+                              return (
+                                <div className="row" key={index}>
+                                  <div className="col-sm-4">
+                                    <Typography
+                                      variant="body1"
+                                      className="content-line"
+                                    >
+                                      {psg.passengerType}
+                                    </Typography>
+                                  </div>
+                                  <div className="col-sm-4">
+                                    <Typography
+                                      variant="body1"
+                                      className="content-line"
+                                    >
+                                      {`${psg.quantity} x ${formatCurrencyToVND(
+                                        flightTicket.Price
+                                      )}`}
+                                    </Typography>
+                                  </div>
+                                  <div className="col-sm-4">
+                                    <Typography
+                                      variant="body1"
+                                      className="content-line right"
+                                    >
+                                      {formatCurrencyToVND(
+                                        psg.quantity * flightTicket.Price +
+                                          flightTicket.Tax
+                                      )}
+                                    </Typography>
+                                  </div>
+                                </div>
+                              );
+                            }
+                          })}
                           <div className="row">
                             <div className="col-sm-4">
                               <Typography
                                 variant="body1"
                                 className="content-line"
-                              ></Typography>
+                              >
+                                Total Seat Fee
+                              </Typography>
                             </div>
                             <div className="col-sm-4">
                               <Typography
@@ -82,13 +132,15 @@ class FlightSeatServiceTicketPrice extends Component {
                               <Typography
                                 variant="body1"
                                 className="content-line right"
-                              ></Typography>
+                              >
+                                {formatCurrencyToVND(totalSeatFee)}
+                              </Typography>
                             </div>
                           </div>
                           <div className="row">
                             <div className="col-md-6">
                               <Typography variant="h4" className="total-price">
-                                Tổng chi phí
+                                Total Money
                               </Typography>
                             </div>
                             <div className="col-md-6">
@@ -96,7 +148,7 @@ class FlightSeatServiceTicketPrice extends Component {
                                 variant="h4"
                                 className="total-price right"
                               >
-                                200 VND
+                                {formatCurrencyToVND(totalMoney + totalSeatFee)}
                               </Typography>
                             </div>
                           </div>

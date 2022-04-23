@@ -6,6 +6,7 @@ import "./FlightSeatChoosedItem.scss";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import CheckIcon from "@mui/icons-material/Check";
 import AirlineSeatReclineNormalIcon from "@mui/icons-material/AirlineSeatReclineNormal";
+import { formatCurrencyToVND } from "../../../../../../../../../../../Helpers/currency";
 
 class FlightSeatChoosedItem extends Component {
   constructor(props) {
@@ -37,10 +38,10 @@ class FlightSeatChoosedItem extends Component {
                   variant="span"
                   component="div"
                 >
-                  {passenger.name}
+                  {passenger.fullName}
                 </Typography>
 
-                {passenger.seat.seatCode === "" ? (
+                {passenger.seatInfo.seatCode === "" ? (
                   <Grid container spacing={2}>
                     <Grid item xs={10}>
                       <Typography
@@ -73,7 +74,7 @@ class FlightSeatChoosedItem extends Component {
                 )}
               </div>
               <div className="col-md-6">
-                {passenger.seat.seatCode !== "" ? (
+                {passenger.seatInfo.seatCode !== "" ? (
                   <div className="flight-seat-active">
                     <Grid container className="info">
                       <Grid item xs={3}>
@@ -85,14 +86,14 @@ class FlightSeatChoosedItem extends Component {
                           component="div"
                           className="seat-info"
                         >
-                          {passenger.seat.seatCode}
+                          {passenger.seatInfo.seatCode}
                         </Typography>
                         <Typography
                           variant="span"
                           component="div"
                           className="seat-info"
                         >
-                          +{passenger.seat.fee}
+                          + {formatCurrencyToVND(passenger.seatInfo.fee)}
                         </Typography>
                       </Grid>
                     </Grid>
