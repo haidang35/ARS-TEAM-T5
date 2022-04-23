@@ -12,14 +12,11 @@ import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import "./AirlineList.scss";
 import axios from "axios";
-import airlineService from '../../Shared/Services/AirlineService';
 import { Link, useLocation } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
-import DeleteAirline from '../DeleteAirline/DeleteAirline';
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -79,14 +76,14 @@ export default function UserList() {
 //   };
 
 
-//   const handleChangePage = (event, newPage) => {
-//     setPage(newPage);
-//   };
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
-//   const handleChangeRowsPerPage = (event) => {
-//     setRowsPerPage(+event.target.value);
-//     setPage(0);
-//   };
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
 //   let location = useLocation();
 
@@ -128,7 +125,7 @@ export default function UserList() {
       <div id='airline'>
         <Paper sx={{ width: '100%' }}>
           <Typography variant="h4" component="div" gutterBottom>
-            Airline
+            User
           </Typography>
           <TableContainer sx={{ maxHeight: 440 }}>
             {
@@ -143,7 +140,7 @@ export default function UserList() {
                   <TableCell align="center" colSpan={3}>
                   </TableCell>
                   <TableCell align="right" colSpan={3}>
-                    <Link to={"/admin/airlines/create"}>
+                    <Link to={"/admin/users/create"}>
                       <Button variant="contained" startIcon={< AddCircleIcon />}>
                         Add New
                       </Button>

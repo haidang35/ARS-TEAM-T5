@@ -18,6 +18,7 @@ import AddNewLocation from "./Location/Components/AddNewLocation/AddNewLocation"
 import LocationList from "./Location/Components/LocationList/LocationList";
 import UpdateLocation from "./Location/Components/UpdateLocation/UpdateLocation";
 import AddNewUser from "./User/Components/AddNewUser/AddNewUser";
+import UserList from "./User/Components/UserList/UserList";
 
 
 
@@ -86,7 +87,7 @@ export class Admin extends Component {
                                             <UpdateFlight/>
                                         </Route>
                                         <Route exact path="/admin/users">
-                                           
+                                           <UserList/>
                                         </Route>
                                         <Route exact path="/admin/users/create">
                                            <AddNewUser/>
