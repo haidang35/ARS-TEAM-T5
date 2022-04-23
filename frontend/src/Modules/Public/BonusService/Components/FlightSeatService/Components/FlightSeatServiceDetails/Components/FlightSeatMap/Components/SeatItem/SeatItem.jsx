@@ -4,11 +4,11 @@ import "./SeatItem.scss";
 import PriceCheckIcon from "@mui/icons-material/PriceCheck";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import LockIcon from "@mui/icons-material/Lock";
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 class SeatItem extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   onChooseSeat = (seat) => {
@@ -23,12 +23,20 @@ class SeatItem extends Component {
       seatSelected,
       passengers,
       reservedSeats,
+      lockedSeats,
     } = this.props;
     const seatCode = rowNumber + seat.letterCode;
     let isSelected = false;
+    let isChoosingSeat = false;
     let isLocked = false;
     reservedSeats.forEach((reservedSeat) => {
-      if (reservedSeat.seatCode === rowNumber + seat.letterCode) {
+      if (reservedSeat.seatCode === seatCode) {
+        isChoosingSeat = true;
+      }
+    });
+
+    lockedSeats.forEach((lockedSeat) => {
+      if (lockedSeat.SeatFlightCode === seatCode) {
         isLocked = true;
       }
     });
@@ -43,18 +51,23 @@ class SeatItem extends Component {
         <div
           className="seat-item"
           onClick={
-            !isLocked ? () => this.onChooseSeat(seat) : this.preventClick
+            !isChoosingSeat && !isLocked
+              ? () => this.onChooseSeat(seat)
+              : this.preventClick
           }
         >
           <div
             className="item"
             style={{
               border: `3px solid ${seatType.COLOR}`,
-              backgroundColor: isSelected || isLocked ? seatType.COLOR : "",
+              backgroundColor:
+                isSelected || isChoosingSeat || isLocked ? seatType.COLOR : "",
             }}
           >
             {isLocked ? (
               <LockIcon className="checked-icon" />
+            ) : isChoosingSeat ? (
+              <HourglassEmptyIcon className="checked-icon" />
             ) : isSelected ? (
               <VerifiedUserIcon className="checked-icon" />
             ) : (

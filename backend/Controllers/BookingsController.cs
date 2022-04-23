@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using backend.Data;
+using backend.Dtos;
 using backend.Models;
 
 namespace backend.Controllers
@@ -126,6 +127,67 @@ namespace backend.Controllers
         private bool BookingExists(int id)
         {
             return db.Bookings.Count(e => e.Id == id) > 0;
+        }
+
+        [Route("~/api/public/booking")]
+        [HttpPost]
+        [ResponseType(typeof(Booking))]
+        public IHttpActionResult UserBooking(UserBooking userBooking)
+        {
+            if(! ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var ticket = db.Tickets.Find(userBooking.TicketId);
+            if(ticket == null)
+            {
+                return BadRequest("Ticket not found");
+            }
+            Random rdm = new Random();
+            var booking = new Booking()
+            {
+                Status = BookingStatus.Pending,
+                BookingCode = $"{ticket.Flight.FlightCode}_BOOKING{rdm.Next()}",
+                ContactName = userBooking.ContactName,
+                ContactPhone = userBooking.ContactPhone,
+                ContactEmail = userBooking.ContactEmail,
+                ContactAddress = userBooking.ContactAddress,
+                Note = userBooking.Note,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+            };
+            if(userBooking.UserId != null)
+            {
+                booking.UserId = userBooking.UserId;
+            }
+            db.Bookings.Add(booking);
+            foreach(var bookingTicket in userBooking.BookingTickets)
+            {
+                var bookTicket = new BookingTicket()
+                {
+                    TicketId = userBooking.TicketId,
+                    BookingId = booking.Id,
+                    SeatFlightCode = bookingTicket.SeatFlightCode,
+                    PassengerName = bookingTicket.PassengerName,
+                    PassengerGender = bookingTicket.PassengerGender,
+                    PassengerIdentityNumber = bookingTicket.PassengerIdentityNumber,
+                    PassengerPhone = bookingTicket.PassengerPhone,
+                    SeatFlightFee = bookingTicket.SeatFlightFee,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+                db.BookingTickets.Add(bookTicket);
+            }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Save to database failed");
+            }
+            return Ok(booking);
+
         }
     }
 }

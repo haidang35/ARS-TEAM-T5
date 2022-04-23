@@ -48,7 +48,7 @@ class SeatRow extends Component {
 
   render() {
     const { seatItems } = this.state;
-    const { rowNumber, seatInfo, seatRowType, passengers, reservedSeats } = this.props;
+    const { rowNumber, seatInfo, seatRowType, passengers, reservedSeats, lockedSeats } = this.props;
     return (
       <>
         <div className="seat-row">
@@ -63,6 +63,7 @@ class SeatRow extends Component {
                     seatType={seatRowType}
                     passengers={passengers}
                     reservedSeats={reservedSeats}
+                    lockedSeats={lockedSeats}
                   />
                 </Grid>
               );

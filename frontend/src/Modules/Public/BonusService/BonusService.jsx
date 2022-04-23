@@ -1,12 +1,26 @@
 import React from "react";
 import { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
 import FlightSeatService from "./Components/FlightSeatService/FlightSeatService";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 import { dbFirebase } from "../../../Configs/firebase";
 import CheckoutStepBar from "../Shared/Components/CheckoutStepBar/CheckoutStepBar";
+import publicService from "../Shared/Services/PublicService";
 
+export const GENDER = {
+  MALE: 1,
+  FEMALE: 2,
+};
+
+export const checkGender = (gender = "") => {
+  switch (gender) {
+    case "Male":
+      return GENDER.MALE;
+    case "Female":
+      return GENDER.FEMALE;
+  }
+};
 class BonusServices extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +30,9 @@ class BonusServices extends Component {
       passengers: "",
       reservedSeats: [],
       totalMoney: 0,
-      totalSeatFee: 0
+      totalSeatFee: 0,
+      isRedirect: false,
+      lockedSeats: []
     };
   }
 
@@ -37,47 +53,57 @@ class BonusServices extends Component {
     });
     this.getReservedFlightSeats(flightTicket.Flight.FlightCode);
     this.calcTotalMoney(flightTicket, passengers);
+    this.getLockedSeats(flightTicket);
   };
 
   calcTotalMoney = (flightTicket = {}, passengers = []) => {
     let { totalMoney } = this.state;
     passengers.forEach((psg) => {
-        if(psg.quantity > 0) {
-            totalMoney += psg.quantity * flightTicket.Price + flightTicket.Tax;
-        }
-    })
+      if (psg.quantity > 0) {
+        totalMoney += psg.quantity * flightTicket.Price + flightTicket.Tax;
+      }
+    });
     this.setState({ totalMoney });
-  }
+  };
 
   getReservedFlightSeats = (flightCode) => {
     const flightSeatRef = ref(dbFirebase, `flights/${flightCode}`);
     onValue(flightSeatRef, (snapshot) => {
-      if(snapshot.val() !== null) {
+      if (snapshot.val() !== null) {
         this.setState({
-            reservedSeats: snapshot.val().reservedSeats
-        })
+          reservedSeats: snapshot.val().reservedSeats,
+        });
       }
     });
   };
 
+  getLockedSeats = async (flightTicket) => {
+    await publicService.getLockedFlightSeats(flightTicket.FlightId)
+      .then((res) => {
+        this.setState({
+          lockedSeats: res.data
+        })
+      })
+  }
+
   onSelectSeatFlight = (seatInfo, choosedPassengerId) => {
     let { reservationData, flightTicket, reservedSeats } = this.state;
-    let oldSeatCode = '';
+    let oldSeatCode = "";
     let totalSeatFee = 0;
     reservationData.passengers.forEach((psg) => {
       if (psg.id === choosedPassengerId) {
-        oldSeatCode = psg['seatInfo'].seatCode;
+        oldSeatCode = psg["seatInfo"].seatCode;
         psg["seatInfo"] = seatInfo;
       }
-      totalSeatFee += psg['seatInfo']['fee'];
+      totalSeatFee += psg["seatInfo"]["fee"];
     });
     let isSeatExist = false;
     reservedSeats.forEach((seat, index) => {
       if (seat.seatCode === seatInfo.seatCode) {
         isSeatExist = true;
       }
-      if(seat.seatCode === oldSeatCode) {
-        reservedSeats.splice(index, 1)
+      if (seat.seatCode === oldSeatCode) {
+        reservedSeats.splice(index, 1);
       }
     });
     if (!isSeatExist) {
@@ -89,14 +115,63 @@ class BonusServices extends Component {
     this.setState({ reservationData, totalSeatFee });
   };
 
-  onContinue = () => {
-    const { reservationData } = this.state;
-    console.log("🚀 ~ file: BonusService.jsx ~ line 94 ~ BonusServices ~ reservationData", reservationData)
-    
-  }
+  onContinue = async () => {
+    const { reservationData, flightTicket } = this.state;
+    console.log(
+      "🚀 ~ file: BonusService.jsx ~ line 94 ~ BonusServices ~ reservationData",
+      reservationData
+    );
+    const bookingTicketsPsg = [];
+    reservationData.passengers.forEach((psg) => {
+      bookingTicketsPsg.push({
+        SeatFlightCode: psg.seatInfo.seatCode,
+        SeatFlightFee: psg.seatInfo.fee,
+        PassengerName: psg.fullName,
+        PassengerGender: checkGender(psg.gender),
+        PassengerPhone: "0357888999",
+        PassengerIdentityNumber: psg.identityNumber,
+      });
+    });
+    const dataConvert = {
+      TicketId: flightTicket.Id,
+      ContactName: reservationData.contactInfo.contactName,
+      ContactPhone: reservationData.contactInfo.phone,
+      ContactEmail: reservationData.contactInfo.email,
+      ContactAddress: reservationData.contactInfo.address,
+      Note: reservationData.contactInfo.note,
+      BookingTickets: bookingTicketsPsg,
+    };
+    await publicService
+      .bookingTicket(dataConvert)
+      .then((res) => {
+        this.setState({
+          isRedirect: true,
+        });
+      })
+      .catch((err) => {
+        console.log(
+          "🚀 ~ file: BonusService.jsx ~ line 101 ~ BonusServices ~ onContinue= ~ err",
+          err
+        );
+      });
+  };
 
   render() {
-    let { reservationData, flightTicket, passengers, reservedSeats, totalMoney, totalSeatFee } = this.state;
+    let {
+      reservationData,
+      flightTicket,
+      passengers,
+      reservedSeats,
+      totalMoney,
+      totalSeatFee,
+      isRedirect,
+      lockedSeats
+    } = this.state;
+    if(isRedirect) {
+      return <Redirect to={{
+        pathname: '/payment',
+      }}/>
+    }
     return (
       <>
         <NavbarV2 />
@@ -110,11 +185,15 @@ class BonusServices extends Component {
                 onSelectSeatFlight={this.onSelectSeatFlight}
                 reservedSeats={reservedSeats}
                 totalSeatFee={totalSeatFee}
+                lockedSeats={lockedSeats}
               />
             </div>
           </div>
         </div>
-        <CheckoutStepBar totalMoney={totalMoney + totalSeatFee} onContinue={this.onContinue}/>
+        <CheckoutStepBar
+          totalMoney={totalMoney + totalSeatFee}
+          onContinue={this.onContinue}
+        />
       </>
     );
   }
