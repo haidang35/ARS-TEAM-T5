@@ -17,6 +17,7 @@ import UpdateFlightTicket from "./FlightTicket/Components/UpdateFlightTicket/Upd
 import AddNewLocation from "./Location/Components/AddNewLocation/AddNewLocation";
 import LocationList from "./Location/Components/LocationList/LocationList";
 import UpdateLocation from "./Location/Components/UpdateLocation/UpdateLocation";
+import AddNewUser from "./User/Components/AddNewUser/AddNewUser";
 
 
 
@@ -67,19 +68,16 @@ export class Admin extends Component {
                                             <UpdateLocation/>
                                         </Route>
                                         <Route exact path="/admin/flight-tickets">
-                                            <FlightTicketList/>
+                                            <FlightTicketList />
                                         </Route>
                                         <Route exact path="/admin/flight-tickets/create">
                                             <AddNewFlightTicket/>
                                         </Route>
-                                        <Route exact path="/admin/flights">
-                                           <FlightList />
-                                        </Route>
-                                        <Route exact path="/admin/flight-tickets">
-                                            <FlightTicketList />
-                                        </Route>
                                         <Route exact path = "/admin/flightTickets/:id">
                                             <UpdateFlightTicket/>
+                                        </Route>
+                                        <Route exact path="/admin/flights">
+                                           <FlightList />
                                         </Route>
                                         <Route exact path="/admin/flights/create">
                                             <AddNewFlight/>
@@ -87,6 +85,18 @@ export class Admin extends Component {
                                         <Route exact path = "/admin/flights/:id">
                                             <UpdateFlight/>
                                         </Route>
+                                        <Route exact path="/admin/users">
+                                           
+                                        </Route>
+                                        <Route exact path="/admin/users/create">
+                                           <AddNewUser/>
+                                        </Route>
+                                        <Route exact path = "/admin/users/:id">
+                                           
+                                        </Route>
+                                       
+                                       
+                                       
                                     </Switch>
                                 </Box>
                             </div>
