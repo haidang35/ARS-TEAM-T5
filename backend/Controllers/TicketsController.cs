@@ -59,6 +59,18 @@ namespace backend.Controllers
             {
                 return BadRequest();
             }
+            ticket.FlightId = updateTicket.FlightId;
+            ticket.TicketType = updateTicket.TicketType;
+            ticket.AvailableClass = updateTicket.AvailableClass;
+            ticket.CarbinBag = updateTicket.CarbinBag;
+            ticket.CheckinBag = updateTicket.CheckinBag;
+            ticket.Status = updateTicket.Status;
+            ticket.Price = updateTicket.Price;
+            ticket.Tax = updateTicket.Tax;
+            ticket.BusinessSeatFee = updateTicket.BusinessSeatFee;
+            ticket.DeluxeSeatFee = ticket.DeluxeSeatFee;
+            ticket.EconomySeatFee = ticket.EconomySeatFee;
+            ticket.ExitSeatFee = ticket.ExitSeatFee;
             ticket.UpdatedAt = DateTime.Now;
             db.Entry(ticket).State = EntityState.Modified;
 

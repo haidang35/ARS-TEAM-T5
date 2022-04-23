@@ -20,7 +20,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import airlineService from "../../../Airline/Shared/Services/AirlineService";
-import locationsService from "../../../Location/Share/Services/LocationService";
+import locationsService from "../../../Location/Shared/Services/LocationService";
 
 class UpdateFlight extends Form {
   constructor(props) {
@@ -239,7 +239,7 @@ class UpdateFlight extends Form {
                       name="departureTime"
                       label="DepartureTime"
                       type="datetime-local"
-                      defaultValue="2017-05-24T10:30"
+                      value={departureTime.value}
                       sx={{ width: 250 }}
                       InputLabelProps={{
                         shrink: true,
@@ -257,7 +257,7 @@ class UpdateFlight extends Form {
                       label="ArrivalTime"
                       name="arrivalTime"
                       type="datetime-local"
-                      defaultValue="2017-05-24T10:30"
+                      value={arrivalTime.value}
                       sx={{ width: 250 }}
                       InputLabelProps={{
                         shrink: true,

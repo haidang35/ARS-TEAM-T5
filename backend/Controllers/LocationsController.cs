@@ -57,6 +57,9 @@ namespace backend.Controllers
             {
                 return BadRequest();
             }
+            location.CityId = updateLocation.CityId;
+            location.AirPortName = updateLocation.AirPortName;
+            location.AirPortCode = updateLocation.AirPortCode;
             location.UpdatedAt = DateTime.Now;
             db.Entry(location).State = EntityState.Modified;
 
