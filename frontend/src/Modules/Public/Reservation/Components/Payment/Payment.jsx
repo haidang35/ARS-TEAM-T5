@@ -1,17 +1,49 @@
-import { Typography , Button } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import React, { Component } from "react";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import "./Payment.scss";
 
-
+export const PAYMENT_METHODS = {
+    PAY_IN_OFFICE: 1,
+    BANK_TRANSFER: 2,
+    INTERNATIONAL_PAYMENT_GATEWAY: 3
+}
 export class Payment extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            paymentMethods: [
+                {
+                    id: 1,
+                    name: 'Pay at the office',
+                    type: PAYMENT_METHODS.PAY_IN_OFFICE
+                },
+                {
+                    id: 2,
+                    name: 'Free reservation and payment via bank transfer',
+                    type: PAYMENT_METHODS.BANK_TRANSFER
+                },
+                {
+                    id: 3,
+                    name: 'International Paypal online payment gateway',
+                    type: PAYMENT_METHODS.INTERNATIONAL_PAYMENT_GATEWAY
+                },
+            ],
+            choosedPaymentMethod: ''
         }
     }
+
+    handlePaymentMethod = (paymentMethod) => {
+        this.setState({
+            choosedPaymentMethod: paymentMethod
+        })
+    }
+
+    onContinue = () => {
+        this.props.onContinute(this.state.choosedPaymentMethod);
+    }
     render() {
+        const { paymentMethods, choosedPaymentMethod } = this.state;
         return (
             <>
                 <div >
@@ -22,31 +54,20 @@ export class Payment extends Component {
                             </Typography>
                         </div>
                         <div className="content">
-                            <div
-                            >
-                                <CheckCircleOutlineIcon className="icon-check" />
-                                <Typography className="title" variant="h5">
-                                    Pay at the office
-                                </Typography>
-                            </div>
-                            <div
-                            >
-                                <CheckCircleOutlineIcon className="icon-check" />
-                                <Typography className="title" variant="h5">
-                                    Free reservation and payment via bank transfer
-                                </Typography>
-                            </div>
-                            <div
-                            >
-                                <CheckCircleOutlineIcon className="icon-check" />
-                                <Typography
-                                    className="title"
-                                    variant="h5"
-                                    style={{ marginRight: "2rem" }}
+                            {
+                                paymentMethods.map((method, index) => <div key={index}
+                                    onClick={() => this.handlePaymentMethod(method)}
                                 >
-                                    International Paypal online payment gateway{" "}
-                                </Typography>
-                            </div>
+                                    <CheckCircleOutlineIcon className="icon-check" style={{
+                                        color: choosedPaymentMethod.id === method.id ? 'green' : ''
+                                    }} />
+                                    <Typography className="title" variant="h5">
+                                        {method.name}
+                                    </Typography>
+                                </div>)
+                            }
+
+
                         </div>
                         <div className="btn-box">
                             <Button
@@ -60,7 +81,7 @@ export class Payment extends Component {
                                 className="btn-reser"
                                 variant="outlined"
                                 color="primary"
-                                onClick={() => this.props.onContinute()}
+                                onClick={this.onContinue}
                             >
                                 Continue
                             </Button>
