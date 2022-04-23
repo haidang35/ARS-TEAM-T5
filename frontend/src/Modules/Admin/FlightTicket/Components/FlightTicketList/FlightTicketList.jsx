@@ -183,34 +183,34 @@ export default function FlightTicketList() {
               <TableBody>
                 {FlightTicketList
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((flightticket) => {
+                  .map((flightTicket) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={flightticket.code}>
+                      <TableRow hover role="checkbox" tabIndex={-1} key={flightTicket.code}>
                         <TableCell>
-                          {flightticket.Id}
+                          {flightTicket.Id}
                         </TableCell>
                          <TableCell>
-                          {flightticket.Flight.FlightCode}
+                          {flightTicket.Flight.FlightCode}
                         </TableCell>
                         <TableCell>
-                          {flightticket.TicketType}
+                          {flightTicket.TicketType}
                         </TableCell>
                         <TableCell>
-                          {flightticket.AvailableClass}
+                          {flightTicket.AvailableClass}
                         </TableCell>
                         <TableCell>
-                          {flightticket.Price}
+                          {flightTicket.Price}
                         </TableCell>
                         <TableCell>
-                          {flightticket.Status}
+                          {flightTicket.Status}
                         </TableCell>
                         <TableCell>
-                        <Link to={`/admin/flighttickets/${flightticket.Id}`}>
+                        <Link to={`/admin/flightTickets/${flightTicket.Id}`}>
                             <IconButton aria-label="edit-icon">
                               <EditIcon />
                             </IconButton>
                           </Link>
-                          <DeleteFlightTicket flightTicket={flightticket} onDeleteFlightTicket={onDeleteFlightTicket}/>
+                          <DeleteFlightTicket flightTicket={flightTicket} onDeleteFlightTicket={onDeleteFlightTicket}/>
                         </TableCell>
 
 

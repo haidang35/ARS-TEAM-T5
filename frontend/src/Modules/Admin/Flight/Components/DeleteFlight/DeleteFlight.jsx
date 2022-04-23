@@ -7,9 +7,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-import airlineService from "../../Shared/Services/AirlineService";
+import flightService from "../../Shared/Services/FlightService";
+import { Redirect } from "react-router-dom";
 
-export default function DeleteAirline({airline, onDeleteAirline}) {
+export default function DeleteFlight({ flight, onDeleteFlight }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -20,8 +21,9 @@ export default function DeleteAirline({airline, onDeleteAirline}) {
     setOpen(false);
     
   };
-  const deleteAirline = async () => {
-    onDeleteAirline(airline);
+
+  const deleteFlight = async () => {
+    onDeleteFlight(flight);
     handleClose();
   }
 
@@ -37,16 +39,16 @@ export default function DeleteAirline({airline, onDeleteAirline}) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          <p>{`Delete flight airline ${airline.Name} ?`}</p>
+          <p>{`Delete flight  ${flight.FlightCode} ?`}</p>
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete this airline {airline.Name} ?
+          Are you sure you want to delete this flight {flight.FlightCode} ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button variant="outlined" color="error" onClick={handleClose}>Disagree</Button>
-          <Button variant="outlined"  onClick={deleteAirline} autoFocus>
+          <Button variant="outlined"  onClick={deleteFlight} autoFocus>
             Agree
           </Button>
         </DialogActions>

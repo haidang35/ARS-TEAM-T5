@@ -101,6 +101,27 @@ export default function AirlineList() {
       }
     }
   }
+  const onDeleteAirline = async (airline) => {
+    await  airlineService.deleteAirline(airline.Id)
+    .then((res) => {
+        console.log('success', res.data);
+        //Handle when success
+        getAirlineList();
+        setMsg({
+          type: 'success',
+          content: `Delete airline  ${airline.Name} successful !`
+        });
+       
+    })
+    .catch((err) => {
+        console.log(err);
+        //Handle when catching error
+        setMsg({
+          type: 'error',
+          content: `Delete airline ${airline.Name} failed !`
+        });
+    })
+  }
 
   return (
     <>
@@ -168,7 +189,7 @@ export default function AirlineList() {
                               <EditIcon />
                             </IconButton>
                           </Link>
-                          <DeleteAirline  />
+                          <DeleteAirline airline={airline} onDeleteAirline={onDeleteAirline} />
                         </TableCell>
 
 

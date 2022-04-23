@@ -38,7 +38,7 @@ class AirlineService {
   };
 
   deleteAirline = async (id) => {
-    return await axios.deleteAirline(BASE_URL_SERVER + API_ENDPOINT.DELETE_Airline + id, configs);
+    return await axios.delete(BASE_URL_SERVER + API_ENDPOINT.DELETE_Airline + id, configs);
   }
 }
 
