@@ -148,7 +148,7 @@ class AddNewFlightTicket extends Form {
         state: {
           message: {
             type: 'success',
-            content: 'Add new airline successful !'
+            content: 'Add new flight ticket successful !'
           }
         }
       }} />;
