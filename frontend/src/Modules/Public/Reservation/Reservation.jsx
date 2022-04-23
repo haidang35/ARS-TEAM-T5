@@ -39,7 +39,6 @@ class Reservation extends Component {
     await this.checkPropertiesNotNull(this.passengers);
     await this.checkPropertiesNotNull(this.contactInfo);
     if(this.passengers !== "" && this.contactInfo !== "" && paymentMethod !== '') {
-        console.log("🚀 ~ file: Reservation.jsx ~ line 42 ~ Reservation ~ onContinute= ~ paymentMethod", paymentMethod)
     }
   };
 
