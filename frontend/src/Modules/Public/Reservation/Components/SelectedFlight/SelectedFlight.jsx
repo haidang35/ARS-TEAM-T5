@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Button } from "@mui/material";
 import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import FlightLandIcon from '@mui/icons-material/FlightLand';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Typography from '@mui/material/Typography';
 import LocationOnIcon from '@mui/icons-material/LocationOn';

@@ -33,7 +33,6 @@ export class ContactsInfo extends Form {
 
     onReservation = () => {
         this._validateForm();
-        console.log('form', this.state.form);
         if (this._isFormValid()) {
             const { form } = this.state;
             const data = {

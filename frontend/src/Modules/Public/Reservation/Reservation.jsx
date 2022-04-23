@@ -37,6 +37,7 @@ class Reservation extends Component {
 
     render() {
         const { flightTicket, passengers, isContinue } = this.state;
+        
         return (
             <>
                 <NavbarV2 />
@@ -44,9 +45,9 @@ class Reservation extends Component {
                 <div className="wrap-container">
                     <div className="row">
                         <BookingStepBar />
-                        <SelectedFlight flightTicket={flightTicket} />
+                        <SelectedFlight  flightTicket={flightTicket} />
                         <CustomerInfomation passengers={passengers} isContinue={isContinue} />
-                     <ContactsInfo isContinue={isContinue} />
+                        <ContactsInfo isContinue={isContinue} />
                         <Payment onContinute={this.onContinute} />
                     </div>
 
