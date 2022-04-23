@@ -36,13 +36,14 @@ export class ContactsInfo extends Form {
         if (this._isFormValid()) {
             const { form } = this.state;
             const data = {
-                contact_name: form.nameContact.value,
+                contactName: form.nameContact.value,
                 phone: form.phone.value,
                 email: form.email.value,
                 vocative: form.vocative.value,
                 address: form.address.value,
                 note: form.note.value,
             };
+            this.props.handleContactInfo(data);
         }
     };
 

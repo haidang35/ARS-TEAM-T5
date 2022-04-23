@@ -19,6 +19,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
+import DeleteAirline from '../DeleteAirline/DeleteAirline';
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -100,6 +101,27 @@ export default function AirlineList() {
       }
     }
   }
+  const onDeleteAirline = async (airline) => {
+    await  airlineService.deleteAirline(airline.Id)
+    .then((res) => {
+        console.log('success', res.data);
+        //Handle when success
+        getAirlineList();
+        setMsg({
+          type: 'success',
+          content: `Delete airline  ${airline.Name} successful !`
+        });
+       
+    })
+    .catch((err) => {
+        console.log(err);
+        //Handle when catching error
+        setMsg({
+          type: 'error',
+          content: `Delete airline ${airline.Name} failed !`
+        });
+    })
+  }
 
   return (
     <>
@@ -167,9 +189,7 @@ export default function AirlineList() {
                               <EditIcon />
                             </IconButton>
                           </Link>
-                          <IconButton aria-label="delete">
-                            <DeleteIcon />
-                          </IconButton>
+                          <DeleteAirline airline={airline} onDeleteAirline={onDeleteAirline} />
                         </TableCell>
 
 

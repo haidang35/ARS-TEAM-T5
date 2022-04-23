@@ -94,16 +94,29 @@ class CustomerInfomation extends Form {
   onContinue = () => {
     this._validateForm();
     if (this._isFormValid()) {
+      const { form, passengersConverted } = this.state;
+      let data = [];
+      passengersConverted.forEach((psg, index) => {
+        let position = index;
+        ++position;
+        const psgDataItem = {
+          id: index,
+          passengerType: psg.passengerType,
+          fullName: form[`psg_${position}_fullname`].value,
+          gender: form[`psg_${position}_gender`].value,
+          birthday: form[`psg_${position}_birthday`].value,
+          identityNumber: form[`psg_${position}_identityNumber`].value,
+          checkinBag: form[`psg_${position}_checkinBag`].value
+        }
+        data.push(psgDataItem);
+      })
       //TODO Passing data valid to Reservation Component
+      this.props.handleCustomerInfomation(data);
     }
   }
 
   render() {
     const { currency, passengersConverted, form } = this.state;
-    console.log(
-      "🚀 ~ file: CustomerInfomation.jsx ~ line 63 ~ CustomerInfomation ~ render ~ form",
-      form
-    );
     return (
       <>
         <div className="customer-info">

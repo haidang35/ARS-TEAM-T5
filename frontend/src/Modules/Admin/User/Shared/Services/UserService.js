@@ -3,24 +3,24 @@ import { AUTH_TOKEN, BASE_URL_SERVER } from '../../../../../Configs/server';
 
 
 const API_ENDPOINT = {
-  GET_AIRLINE_LIST: "/api/airlines",
-  GET_DETAILS: "/api/airlines/",
-  UPDATE_DETAILS: "/api/airlines/",
-  CREATE_NEW: "/api/airlines",
-  DELETE_Airline: "/api/airlines/"
+  GET_USER_LIST: "/api/users",
+  GET_DETAILS: "/api/users/",
+  UPDATE_DETAILS: "/api/users/",
+  CREATE_NEW: "/api/users",
+  DELETE_USER: "/api/users/"
 }
 
 const configs = {
   headers: { Authorization: `Bearer ${AUTH_TOKEN}` },
 };
 
-class AirlineService {
+class UserService {
 
-  getAirlineList = async () => {
-    return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_AIRLINE_LIST);
+  getUserList = async () => {
+    return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_USER_LIST);
   };
 
-  getAirlineDetails = async (id) => {
+  getUserDetails = async (id) => {
     return await axios.get(
       BASE_URL_SERVER + API_ENDPOINT.GET_DETAILS + id
     );
@@ -37,11 +37,10 @@ class AirlineService {
     return await axios.post(BASE_URL_SERVER + API_ENDPOINT.CREATE_NEW, data, configs);
   };
 
-  deleteAirline = async (id) => {
-    return await axios.delete(BASE_URL_SERVER + API_ENDPOINT.DELETE_Airline + id, configs);
+  deleteUser = async (id) => {
+    return await axios.delete(BASE_URL_SERVER + API_ENDPOINT.DELETE_USER + id, configs);
   }
 }
 
-const airlineService = new AirlineService();
-export default airlineService;
-
+const userService = new UserService();
+export default userService;
