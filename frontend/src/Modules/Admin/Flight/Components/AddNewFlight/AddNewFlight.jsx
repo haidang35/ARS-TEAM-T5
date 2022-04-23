@@ -15,7 +15,7 @@ import { Redirect } from 'react-router-dom';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { getDateTimeNow } from "../../../../../Helpers/datetime";
-import locationsService from '../../../Location/Share/Services/LocationService';
+import locationsService from '../../../Location/Shared/Services/LocationService';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -33,8 +33,8 @@ class AddNewFlight extends Form {
     this.state = {
       form: this._getInitFormData({
         flightCode: "",
-        departureTime: getDateTimeNow(),
-        arrivalTime: getDateTimeNow(),
+        departureTime:"",
+        arrivalTime: "",
         capacity: "",
         businessSeats: "",
         deluxeSeats: "",
@@ -197,7 +197,7 @@ class AddNewFlight extends Form {
                       name="departureTime"
                       label="DepartureTime"
                       type="datetime-local"
-                      defaultValue="2017-05-24T10:30"
+                      value={departureTime.value}
                       sx={{ width: 250 }}
                       InputLabelProps={{
                         shrink: true,
@@ -215,7 +215,7 @@ class AddNewFlight extends Form {
                       label="ArrivalTime"
                       name="arrivalTime"
                       type="datetime-local"
-                      defaultValue="2017-05-24T10:30"
+                        value={arrivalTime.value}
                       sx={{ width: 250 }}
                       InputLabelProps={{
                         shrink: true,

@@ -5,9 +5,9 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-import Form from "../../../../Shared/Components/Form";
+import Form from "../../../../../Shared/Components/Form";
 import { Redirect, withRouter } from 'react-router-dom';
-import locationsService from '../Share/Services/LocationService';
+import locationsService from '../../Shared/Services/LocationService';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -18,7 +18,7 @@ import axios from 'axios';
 
 
 
-class AddNewLocation extends Form {
+class UpdateLocation extends Form {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,6 +34,7 @@ class AddNewLocation extends Form {
       isRedirectSuccess: false,
       provinceList: [],
       cityList: [],
+      
 
     }
 
@@ -41,6 +42,7 @@ class AddNewLocation extends Form {
 
   componentDidMount() {
     this.getProvinceList();
+    this.getLocationDetails();
   }
 
   getProvinceList = async () => {
@@ -53,9 +55,31 @@ class AddNewLocation extends Form {
     });
   }
 
-  saveNewLocation = async () => {
+  getLocationDetails = async () => {
+    const {id} = this.props.match.params;
+    await locationsService.getLocationDetails(id).then(async (res) => {
+      this.setState({
+        
+        cityId: res.data.CityId,
+        provinceId: res.data.City.ProvinceId
+      });
+      await locationsService.getCitiesByProvince(res.data.City.ProvinceId)
+        .then((res) => {
+          this.setState({
+            cityList: res.data
+          })
+        });
+      this._fillForm({
+        airportName: res.data.AirPortName,
+        airportCode: res.data.AirPortCode,
+      })
+    })
+  }
+
+  saveUpdateLocation = async () => {
     this._validateForm();
     if (this._isFormValid()) {
+       const {id} = this.props.match.params;
       this.setState({ isLoading: true });
       let { form, content, cityId, provinceId } = this.state;
       let dataConverted = {
@@ -65,7 +89,7 @@ class AddNewLocation extends Form {
       };
 
       await locationsService
-        .createNew(dataConverted)
+        .updateDetails(id,dataConverted)
         .then((res) => {
           this.setState({
             isRedirectSuccess: true,
@@ -106,7 +130,7 @@ class AddNewLocation extends Form {
         state: {
           message: {
             type: 'success',
-            content: 'Add new airline successful !'
+            content: 'Update location successful !'
           }
         }
       }} />;
@@ -116,7 +140,7 @@ class AddNewLocation extends Form {
         <React.Fragment>
           <div id='addNewLocation'>
             <Typography variant="h4" gutterBottom >
-              Add New Location
+              Update Location
             </Typography>
             <Grid container spacing={3}>
               <Grid item xs={12}>
@@ -209,7 +233,7 @@ class AddNewLocation extends Form {
                 />
               </Grid>
               <div id='submit'>
-                <Button variant="contained" onClick={this.saveNewLocation} >Submit</Button>
+                <Button variant="contained" onClick={this.saveUpdateLocation} >Submit</Button>
               </div>
             </Grid>
           </div>
@@ -220,4 +244,4 @@ class AddNewLocation extends Form {
 
 }
 
-export default withRouter(AddNewLocation);
+export default withRouter(UpdateLocation);

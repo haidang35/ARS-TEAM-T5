@@ -13,8 +13,13 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import UpdateIcon from '@mui/icons-material/Update';
-import { Link, useParams, withRouter } from 'react-router-dom';
-import locationsService from '../Share/Services/LocationService';
+import { Link, useLocation, useParams, withRouter } from 'react-router-dom';
+import locationsService from '../../Shared/Services/LocationService';
+import IconButton from '@mui/material/IconButton';
+import DeleteLocation from '../DeleteLocation/DeleteLocation';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -69,8 +74,14 @@ const rows = [
 export default function LocationList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [locationList, setLocationList] = useState([]);
-  const {id} = useParams()
+  const [locationList, setLocationList] = useState([]); 
+  const [msg, setMsg] = useState('');
+
+  useEffect(() => {
+    getLocationList();
+    getMsg();
+  }, []);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -79,16 +90,45 @@ export default function LocationList() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  useEffect(() => {
-    getLocationList();
-  }, []);
+  let location = useLocation();
+  const getMsg = () => {
+    if (typeof location.state !== 'undefined') {
+      let isHasMessage = false;
+      Object.keys(location.state).forEach(key => {
+        if (key === 'message') isHasMessage = true;
+      });
+      if (isHasMessage) {
+        setMsg(location.state.message);
+      }
+    }
+  }
 
   const getLocationList = async () => {
     await locationsService.getLocationList()
       .then((res) => {
         setLocationList(res.data);
       })
+  }
+  const onDeleteLocation = async (location) => {
+    await locationsService.deleteLocation(location.Id)
+    .then((res) => {
+        console.log('success', res.data);
+        //Handle when success
+        getLocationList();
+        setMsg({
+          type: 'success',
+          content: `Delete  location ${location.City.Province.Name} successful !`
+        });
+       
+    })
+    .catch((err) => {
+        console.log(err);
+        //Handle when catching error
+        setMsg({
+          type: 'error',
+          content: `Delete location ${location.City.Province.Name} failed !`
+        });
+    })
   }
 
   return (
@@ -99,6 +139,11 @@ export default function LocationList() {
             Location
           </Typography>
           <TableContainer sx={{ maxHeight: 400 }}>
+          {
+              msg !== '' ? <Stack sx={{ width: '100%' }} spacing={2}>
+                <Alert severity={msg.type}>{msg.content}</Alert>
+              </Stack> : ''
+            }
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -146,11 +191,13 @@ export default function LocationList() {
                           {location.City.Province.Country}
                         </TableCell>
                         <TableCell>
-                          <EditIcon className='edit-icon' />
-                          <DeleteIcon className='delete-icon' />
+                          
                           <Link to={"/admin/locations/"+location.Id}>
-                          <UpdateIcon className='update-icon'/>
+                          <IconButton aria-label="edit-icon">
+                              <EditIcon />
+                            </IconButton>
                           </Link>
+                          <DeleteLocation  location={location} onDeleteLocation={onDeleteLocation}/>
                         </TableCell>
 
 

@@ -18,6 +18,7 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import { Link, useLocation } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
+import DeleteFlightTicket from '../DeleteFlightTicket/DeleteFlightTicket';
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -118,6 +119,28 @@ export default function FlightTicketList() {
     }
   }
 
+  const onDeleteFlightTicket = async (flightTicket) => {
+    await flightTicketService.deleteFlightTicket(flightTicket.Id)
+    .then((res) => {
+        console.log('success', res.data);
+        //Handle when success
+        getFlightTicketList();
+        setMsg({
+          type: 'success',
+          content: `Delete flight ticket ${flightTicket.Flight.FlightCode} successful !`
+        });
+       
+    })
+    .catch((err) => {
+        console.log(err);
+        //Handle when catching error
+        setMsg({
+          type: 'error',
+          content: `Delete flight ticket ${flightTicket.Flight.FlightCode} failed !`
+        });
+    })
+  }
+
   return (
     <>
       <div id='flightticket'>
@@ -160,36 +183,34 @@ export default function FlightTicketList() {
               <TableBody>
                 {FlightTicketList
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((flightticket) => {
+                  .map((flightTicket) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={flightticket.code}>
+                      <TableRow hover role="checkbox" tabIndex={-1} key={flightTicket.code}>
                         <TableCell>
-                          {flightticket.Id}
+                          {flightTicket.Id}
                         </TableCell>
                          <TableCell>
-                          {flightticket.Flight.FlightCode}
+                          {flightTicket.Flight.FlightCode}
                         </TableCell>
                         <TableCell>
-                          {flightticket.TicketType}
+                          {flightTicket.TicketType}
                         </TableCell>
                         <TableCell>
-                          {flightticket.AvailableClass}
+                          {flightTicket.AvailableClass}
                         </TableCell>
                         <TableCell>
-                          {flightticket.Price}
+                          {flightTicket.Price}
                         </TableCell>
                         <TableCell>
-                          {flightticket.Status}
+                          {flightTicket.Status}
                         </TableCell>
                         <TableCell>
-                        <Link to={`/admin/flighttickets/${flightticket.Id}`}>
+                        <Link to={`/admin/flightTickets/${flightTicket.Id}`}>
                             <IconButton aria-label="edit-icon">
                               <EditIcon />
                             </IconButton>
                           </Link>
-                          <IconButton aria-label="delete">
-                            <DeleteIcon />
-                          </IconButton>
+                          <DeleteFlightTicket flightTicket={flightTicket} onDeleteFlightTicket={onDeleteFlightTicket}/>
                         </TableCell>
 
 

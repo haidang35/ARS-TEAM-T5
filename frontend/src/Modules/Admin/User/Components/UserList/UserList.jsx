@@ -12,62 +12,42 @@ import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import "./FlightList.scss";
+import "./AirlineList.scss";
 import axios from "axios";
-import flightService from '../../Shared/Services/FlightService';
-import IconButton from '@mui/material/IconButton';
+import airlineService from '../../Shared/Services/AirlineService';
+import { Link, useLocation } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import { Link, useLocation } from 'react-router-dom';
-import DeleteFlight from '../DeleteFlight/DeleteFlight';
-
+import IconButton from '@mui/material/IconButton';
+import DeleteAirline from '../DeleteAirline/DeleteAirline';
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
+  { id: 'name', label: 'Name', minWidth: 170 },
+  { id: 'code', label: 'Code', minWidth: 100 },
   {
-    id: 'flightCode',
-    label: 'FlightCode',
-    minWidth: 100,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'departure',
-    label: 'Departure',
+    id: 'country',
+    label: 'Country',
     minWidth: 150,
-    align: 'center',
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'destination',
-    label: 'Destination',
+    id: 'logo',
+    label: 'Logo',
     minWidth: 100,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'airline ',
-    label: 'Airline',
-    minWidth: 100,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'status ',
-    label: 'Status',
-    minWidth: 100,
-    align: 'right',
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'edit', label: 'Edit', minWidth: 80,
-    align: 'right',
+    align: 'left',
   }
 
 ];
 
-function createData( flightCode, departure, destination, airline, status) {
-  return { flightCode,departure, destination, airline,  status };
+function createData(id, name, code, country, logo, edit) {
+  return { id, name, code, country, logo, edit };
 }
 
 const rows = [
@@ -76,78 +56,79 @@ const rows = [
   createData('3', 'Vietravel Airlines', 'VU', 'Viet Nam', 'Viettravel')
 ];
 
-export default function FlightList() {
+export default function UserList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [FlightList, setFlightList] = useState([]);
+  const [airlineList, setAirlineList] = useState([]);
   const [msg, setMsg] = useState('');
 
-  useEffect(() => {
-    getFlightList();
-    getMsg();
-  }, []);
+//   useEffect(() => {
+//     getAirlineList();
+//     getMsg();
+//   }, []);
 
-  const getFlightList = async () => {
-    await flightService
-      .getFlightList()
-      .then((res) => {
-        setFlightList(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+//   const getAirlineList = async () => {
+//     await airlineService
+//       .getAirlineList()
+//       .then((res) => {
+//         setAirlineList(res.data);
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   };
 
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+//   const handleChangePage = (event, newPage) => {
+//     setPage(newPage);
+//   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+//   const handleChangeRowsPerPage = (event) => {
+//     setRowsPerPage(+event.target.value);
+//     setPage(0);
+//   };
 
-  let location = useLocation();
-  const getMsg = () => {
-    if (typeof location.state !== 'undefined') {
-      let isHasMessage = false;
-      Object.keys(location.state).forEach(key => {
-        if (key === 'message') isHasMessage = true;
-      });
-      if (isHasMessage) {
-        setMsg(location.state.message);
-      }
-    }
-  }
-  const onDeleteFlight = async (flight) => {
-    await flightService.deleteFlight(flight.Id)
-    .then((res) => {
-        console.log('success', res.data);
-        //Handle when success
-        getFlightList();
-        setMsg({
-          type: 'success',
-          content: `Delete flight  ${flight.FlightCode} successful !`
-        });
+//   let location = useLocation();
+
+//   const getMsg = () => {
+//     if (typeof location.state !== 'undefined') {
+//       let isHasMessage = false;
+//       Object.keys(location.state).forEach(key => {
+//         if (key === 'message') isHasMessage = true;
+//       });
+//       if (isHasMessage) {
+//         setMsg(location.state.message);
+//       }
+//     }
+//   }
+//   const onDeleteAirline = async (airline) => {
+//     await  airlineService.deleteAirline(airline.Id)
+//     .then((res) => {
+//         console.log('success', res.data);
+//         //Handle when success
+//         getAirlineList();
+//         setMsg({
+//           type: 'success',
+//           content: `Delete airline  ${airline.Name} successful !`
+//         });
        
-    })
-    .catch((err) => {
-        console.log(err);
-        //Handle when catching error
-        setMsg({
-          type: 'error',
-          content: `Delete flight  ${flight.FlightCode} failed !`
-        });
-    })
-  }
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//         //Handle when catching error
+//         setMsg({
+//           type: 'error',
+//           content: `Delete airline ${airline.Name} failed !`
+//         });
+//     })
+//   }
 
   return (
     <>
-      <div id='Flight'>
+      <div id='airline'>
         <Paper sx={{ width: '100%' }}>
           <Typography variant="h4" component="div" gutterBottom>
-            Flight
+            Airline
           </Typography>
           <TableContainer sx={{ maxHeight: 440 }}>
             {
@@ -161,8 +142,8 @@ export default function FlightList() {
                 <TableRow>
                   <TableCell align="center" colSpan={3}>
                   </TableCell>
-                  <TableCell align="right" colSpan={12}>
-                    <Link to={"/admin/flights/create"}>
+                  <TableCell align="right" colSpan={3}>
+                    <Link to={"/admin/airlines/create"}>
                       <Button variant="contained" startIcon={< AddCircleIcon />}>
                         Add New
                       </Button>
@@ -182,37 +163,36 @@ export default function FlightList() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {FlightList
+                {airlineList
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((flight) => {
+                  .map((airline) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={flight.code}>
-                        <TableCell>
-                          {flight.Id}
-                        </TableCell>
-                         <TableCell>
-                          {flight.FlightCode}
+                      <TableRow hover role="checkbox" tabIndex={-1} key={airline.Id}>
+                        {/* <TableCell>
+                          {airline.Id}
                         </TableCell>
                         <TableCell>
-                          {flight.Departure.City.Name}
+                          {airline.Name}
                         </TableCell>
                         <TableCell>
-                          {flight.Destination.City.Name}
+                          {airline.Code}
                         </TableCell>
                         <TableCell>
-                          {flight.Airline.Name}
+                          {airline.Country}
                         </TableCell>
                         <TableCell>
-                          {flight.Status}
+                          {airline.Logo}
                         </TableCell>
                         <TableCell>
-                        <Link to={`/admin/flights/${flight.Id}`}>
+                          <Link to={`/admin/airlines/${airline.Id}`}>
                             <IconButton aria-label="edit-icon">
                               <EditIcon />
                             </IconButton>
                           </Link>
-                          <DeleteFlight  flight={flight} onDeleteFlight={onDeleteFlight}/>
-                        </TableCell>
+                          <DeleteAirline airline={airline} onDeleteAirline={onDeleteAirline} />
+                        </TableCell> */}
+
+
                       </TableRow>
 
                     );
