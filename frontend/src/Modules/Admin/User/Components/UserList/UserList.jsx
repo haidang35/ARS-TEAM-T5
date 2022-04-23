@@ -17,21 +17,23 @@ import { Link, useLocation } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
+import userService from '../../Shared/Services/UserService';
+import DeleteUser from '../DeleteUser/DeleteUser';
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
   { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'Code', minWidth: 100 },
+  { id: 'phoneNumber', label: 'PhoneNumber', minWidth: 100 },
   {
-    id: 'country',
-    label: 'Country',
+    id: 'email',
+    label: 'Email',
     minWidth: 150,
     align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'logo',
-    label: 'Logo',
+    id: 'address',
+    label: 'Address',
     minWidth: 100,
     align: 'left',
     format: (value) => value.toLocaleString('en-US'),
@@ -43,8 +45,8 @@ const columns = [
 
 ];
 
-function createData(id, name, code, country, logo, edit) {
-  return { id, name, code, country, logo, edit };
+function createData(id, name, phoneNumber, email, address, edit) {
+  return { id, name, phoneNumber, email, address,  edit };
 }
 
 const rows = [
@@ -56,24 +58,24 @@ const rows = [
 export default function UserList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [airlineList, setAirlineList] = useState([]);
+  const [userList, setUserList] = useState([]);
   const [msg, setMsg] = useState('');
 
-//   useEffect(() => {
-//     getAirlineList();
-//     getMsg();
-//   }, []);
+  useEffect(() => {
+    getUserList();
+    getMsg();
+  }, []);
 
-//   const getAirlineList = async () => {
-//     await airlineService
-//       .getAirlineList()
-//       .then((res) => {
-//         setAirlineList(res.data);
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
+  const getUserList = async () => {
+    await userService
+     .getUserList()
+     .then((res) => {
+        setUserList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
 
   const handleChangePage = (event, newPage) => {
@@ -85,40 +87,40 @@ export default function UserList() {
     setPage(0);
   };
 
-//   let location = useLocation();
+  let location = useLocation();
 
-//   const getMsg = () => {
-//     if (typeof location.state !== 'undefined') {
-//       let isHasMessage = false;
-//       Object.keys(location.state).forEach(key => {
-//         if (key === 'message') isHasMessage = true;
-//       });
-//       if (isHasMessage) {
-//         setMsg(location.state.message);
-//       }
-//     }
-//   }
-//   const onDeleteAirline = async (airline) => {
-//     await  airlineService.deleteAirline(airline.Id)
-//     .then((res) => {
-//         console.log('success', res.data);
-//         //Handle when success
-//         getAirlineList();
-//         setMsg({
-//           type: 'success',
-//           content: `Delete airline  ${airline.Name} successful !`
-//         });
+  const getMsg = () => {
+    if (typeof location.state !== 'undefined') {
+      let isHasMessage = false;
+      Object.keys(location.state).forEach(key => {
+        if (key === 'message') isHasMessage = true;
+      });
+      if (isHasMessage) {
+        setMsg(location.state.message);
+      }
+    }
+  }
+  const onDeleteUser = async (user) => {
+    await  userService.deleteUser(user.Id)
+    .then((res) => {
+        console.log('success', res.data);
+        //Handle when success
+        getUserList();
+        setMsg({
+          type: 'success',
+          content: `Delete user  ${user.Name} successful !`
+        });
        
-//     })
-//     .catch((err) => {
-//         console.log(err);
-//         //Handle when catching error
-//         setMsg({
-//           type: 'error',
-//           content: `Delete airline ${airline.Name} failed !`
-//         });
-//     })
-//   }
+    })
+    .catch((err) => {
+        console.log(err);
+        //Handle when catching error
+        setMsg({
+          type: 'error',
+          content: `Delete user ${user.Name} failed !`
+        });
+    })
+  }
 
   return (
     <>
@@ -160,34 +162,34 @@ export default function UserList() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {airlineList
+                {userList
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((airline) => {
+                  .map((user) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={airline.Id}>
-                        {/* <TableCell>
-                          {airline.Id}
+                      <TableRow hover role="checkbox" tabIndex={-1} key={user.Id}>
+                        <TableCell>
+                          {user.Id}
                         </TableCell>
                         <TableCell>
-                          {airline.Name}
+                          {user.Name}
                         </TableCell>
                         <TableCell>
-                          {airline.Code}
+                          {user.PhoneNumber}
                         </TableCell>
                         <TableCell>
-                          {airline.Country}
+                          {user.Email}
                         </TableCell>
                         <TableCell>
-                          {airline.Logo}
+                          {user.Address}
                         </TableCell>
                         <TableCell>
-                          <Link to={`/admin/airlines/${airline.Id}`}>
+                          <Link to={`/admin/users/${user.Id}`}>
                             <IconButton aria-label="edit-icon">
                               <EditIcon />
                             </IconButton>
                           </Link>
-                          <DeleteAirline airline={airline} onDeleteAirline={onDeleteAirline} />
-                        </TableCell> */}
+                          <DeleteUser user={user} onDeleteUser={onDeleteUser} />
+                        </TableCell>
 
 
                       </TableRow>

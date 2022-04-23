@@ -195,6 +195,7 @@
     <Compile Include="Dtos\UpdateFlight.cs" />
     <Compile Include="Dtos\UpdateLocation.cs" />
     <Compile Include="Dtos\UpdateTicket.cs" />
+    <Compile Include="Dtos\UpdateUser.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
