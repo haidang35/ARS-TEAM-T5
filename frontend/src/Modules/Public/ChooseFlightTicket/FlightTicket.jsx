@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, withRouter } from "react-router-dom";
+import Reservation from "../Reservation/Reservation";
 import CheckoutStepBar from "../Shared/Components/CheckoutStepBar/CheckoutStepBar";
 import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
 import { SearchTicketBox } from "../Shared/Components/SearchTicketBox/SearchTicketBox";

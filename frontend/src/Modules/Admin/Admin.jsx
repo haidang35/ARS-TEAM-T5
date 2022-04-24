@@ -111,7 +111,6 @@ export class Admin extends Component {
                             </div>
                         </div>
                     </div>
-
                 </BrowserRouter>
             </>
         )
