@@ -32,7 +32,8 @@ class BonusServices extends Component {
       totalMoney: 0,
       totalSeatFee: 0,
       isRedirect: false,
-      lockedSeats: []
+      lockedSeats: [],
+      bookingData: ''
     };
   }
 
@@ -117,10 +118,6 @@ class BonusServices extends Component {
 
   onContinue = async () => {
     const { reservationData, flightTicket } = this.state;
-    console.log(
-      "🚀 ~ file: BonusService.jsx ~ line 94 ~ BonusServices ~ reservationData",
-      reservationData
-    );
     const bookingTicketsPsg = [];
     reservationData.passengers.forEach((psg) => {
       bookingTicketsPsg.push({
@@ -146,6 +143,7 @@ class BonusServices extends Component {
       .then((res) => {
         this.setState({
           isRedirect: true,
+          bookingData: res.data
         });
       })
       .catch((err) => {
@@ -165,11 +163,15 @@ class BonusServices extends Component {
       totalMoney,
       totalSeatFee,
       isRedirect,
-      lockedSeats
+      lockedSeats,
+      bookingData
     } = this.state;
     if(isRedirect) {
       return <Redirect to={{
         pathname: '/payment',
+        state: {
+          bookingData
+        }
       }}/>
     }
     return (
