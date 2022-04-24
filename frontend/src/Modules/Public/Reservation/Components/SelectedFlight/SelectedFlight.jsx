@@ -25,7 +25,7 @@ export class SelectedFlight extends Component {
 
     }
     render() {
-        const { flightTicket  } = this.props;
+        const { flightTicket, data } = this.props;
         return (
             <>
                 <div className="selected-flight">

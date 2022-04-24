@@ -129,14 +129,29 @@ namespace backend.Controllers
             return Ok(flight);
         }
 
-        protected override void Dispose(bool disposing)
+        [Route("~/api/flights/{id:int}/reserved")]
+        [HttpGet]
+        [ResponseType(typeof(ICollection<BookingTicket>))]
+        public IHttpActionResult GetReservedBookingTicket(int id)
         {
-            if (disposing)
+            var flight = db.Flights.Find(id);
+            if(flight == null)
             {
-                db.Dispose();
+                return BadRequest("Flight not found");
             }
-            base.Dispose(disposing);
+            var reservedBookingTicket = new List<BookingTicket>();
+            var tickets = db.Tickets.Where(t => t.FlightId == flight.Id).ToList();
+            foreach(var ticket in tickets)
+            {
+                var bookingTickets = db.BookingTickets.Where(bt => bt.TicketId == ticket.Id).ToList();
+                foreach(var bookingTicket in bookingTickets)
+                {
+                    reservedBookingTicket.Add(bookingTicket);
+                }
+            }
+            return Ok(reservedBookingTicket);
         }
+
 
         private bool FlightExists(int id)
         {

@@ -6,6 +6,12 @@ using System.Web;
 
 namespace backend.Models
 {
+    public enum PassengerGender{
+        Male = 1,
+        Female = 2,
+        Other = 3
+    }
+
     public class BookingTicket
     {
         [Key]
@@ -21,7 +27,9 @@ namespace backend.Models
         [Required]
         public string PassengerName { get; set; }
         [Required]
-        public string SeatFlightFree { get; set; }
+        public PassengerGender PassengerGender { get; set; }
+        [Required]
+        public double SeatFlightFee { get; set; }
         [Required]
         public string PassengerPhone { get; set; }
         [Required]

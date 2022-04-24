@@ -43,7 +43,7 @@ export class Public extends Component {
                             <Route path="/bonus-service" exact>
                                 <BonusServices />
                             </Route>
-                            <Route path="/payments" exact>
+                            <Route path="/payment" exact>
                                <Payments />
                             </Route>
                         </Switch>
