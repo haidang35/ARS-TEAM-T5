@@ -19,6 +19,9 @@ import LocationList from "./Location/Components/LocationList/LocationList";
 import UpdateLocation from "./Location/Components/UpdateLocation/UpdateLocation";
 import AddNewUser from "./User/Components/AddNewUser/AddNewUser";
 import UserList from "./User/Components/UserList/UserList";
+import UpdateUser from "./User/Components/UpdateUser/UpdateUser";
+import BookingList from "./Booking/Components/BookingList/BookingList";
+import UpdateBooking from "./Booking/Components/UpdateBooking/UpdateBooking";
 
 
 
@@ -93,7 +96,16 @@ export class Admin extends Component {
                                            <AddNewUser/>
                                         </Route>
                                         <Route exact path = "/admin/users/:id">
+                                           <UpdateUser/>
                                         </Route>
+                                        <Route exact path="/admin/bookings">
+                                           <BookingList/>
+                                        </Route>
+                                        <Route exact path = "/admin/bookings/:id">
+                                           <UpdateBooking/>
+                                        </Route>
+                                       
+                                       
                                     </Switch>
                                 </Box>
                             </div>

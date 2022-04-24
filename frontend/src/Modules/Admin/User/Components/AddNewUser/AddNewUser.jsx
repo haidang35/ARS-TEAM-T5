@@ -10,6 +10,7 @@ import Form from "../../../../../Shared/Components/Form";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { Redirect } from 'react-router-dom';
+import userService from '../../Shared/Services/UserService';
 
 class AddNewUser extends Form {
   constructor(props) {
@@ -25,63 +26,54 @@ class AddNewUser extends Form {
       }),
       content: "",
       isLoading: false,
-      postAirlineList: [],
       isRedirectSuccess: false,
     }
   }
-//   componentDidMount() {
-//     console.log(this.state.form);
-//     this.getAirlineList();
-//   }
+  componentDidMount() {
+  }
 
-//   handleChangeFile =(event) => {
-//     const file =event.target.files[0];
-//     let {form} =this.state;
-//     form.logo.value = file;
-//     this.setState({form});
-//   }
-
-//   getAirlineList = async () =>{
-//     await airlineService.getAirlineList().then((res) =>{
-//       this.setState({
-//         postAirlineList: res.data,
-
-//       });
-//     });
-//   }
+  handleChangeFile =(event) => {
+    const file =event.target.files[0];
+    let {form} =this.state;
+    form.logo.value = file;
+    this.setState({form});
+  }
 
 
-//   saveNewAirline = async () => {
+  saveNewUser = async () => {
 
-//     this._validateForm();
-//     console.log(this.state.form);
-//     if (this._isFormValid()) {
-//       this.setState({ isLoading: true });
-//       let { form, content } = this.state;
-//       let dataConverted = {
-//         Name: form.name.value,
-//         Code: form.code.value,
-//         Country: form.country.value,
-//         Logo: "airline.png",
-//       };
-//       await airlineService
-//         .createNew(dataConverted)
-//         .then((res) => {
-//           this.setState({
-//             isRedirectSuccess: true,
-//           });
-//         })
-//         .catch((err) => {
-//           console.log(err);
-//         });
+    this._validateForm();
+    console.log(this.state.form);
+    if (this._isFormValid()) {
+      this.setState({ isLoading: true });
+      let { form, content } = this.state;
+      let dataConverted = {
+        Name: form.name.value,
+        Vocative: form.vocative.value,
+        PhoneNumber: form.phoneNumber.value,
+        Email: form.email.value,
+        Password: form.password.value,
+        Address: form.address.value,
 
-//     }
+      };
+      await userService
+        .createNew(dataConverted)
+        .then((res) => {
+          this.setState({
+            isRedirectSuccess: true,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-//   }
+    }
+
+  }
 
   render() {
     const { name, vocative, phoneNumber, email, password, address } = this.state.form;
-    const {isRedirectSuccess, content, postAirlineList, isLoading} = this.state;
+    const {isRedirectSuccess, content, isLoading} = this.state;
     if(isRedirectSuccess){
       return <Redirect to={{
         pathname: '/admin/users',
@@ -117,18 +109,19 @@ class AddNewUser extends Form {
               </Grid>
               <Grid item xs={12} >
                 <TextField
-                error= {vocative.err !==''}
-                helperText={vocative.err !== '' ? vocative.err === '*' ? 'Vocative cannot be empty': vocative.err : '' }
+                  error={vocative.err !== ''}
+                  helperText={vocative.err !== '' ? vocative.err === '*' ? 'Vocative cannot be empty' : vocative.err : ''}
                   required
-                  id=" vocative"
-                  name=" vocative"
-                  value= { vocative.value}
-                  label=" Vocative"
-                  autoComplete="family-name"
+                  id="vocative"
+                  name="vocative"
+                  value={vocative.value}
+                  label="Vocative"
+                  autoComplete="given-name"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, ' vocative')}
+                  onChange={(ev) => this._setValue(ev, 'vocative')}
                 />
               </Grid>
+             
               <Grid item xs={12}>
                 <TextField
                 error= {phoneNumber.err !==''}
@@ -194,7 +187,7 @@ class AddNewUser extends Form {
                 />
               </Grid>
               <div id='submit'>
-                <Button variant="contained" onClick={this.saveNewAirline} >Submit</Button>
+                <Button variant="contained" onClick={this.saveNewUser} >Submit</Button>
               </div>
             </Grid>
           </div>
