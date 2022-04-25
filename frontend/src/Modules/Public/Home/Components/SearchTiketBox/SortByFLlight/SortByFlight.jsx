@@ -20,46 +20,36 @@ export class SortByFlight extends Component {
         return (
             <>
                 <div id="sort-by-flight">
-                    
-
-                    <Box 
-                    className="box"
-                      
+                    <Box
+                        className="box"
                     >
-                        
-                         <FormControl>
-                             <div className="side-bar-filter">
-                                 <div className="title-bar">
-                        <FormLabel
-                         className="radio-buttons">Sort By Flight</FormLabel>
-                         
-                         </div>
-                         </div>
-                         <div className="content">
-                             <div className="radio-check">
-                                 <div className="item-check">
-                        <RadioGroup
-                            aria-labelledby="radio-buttons"
-                            defaultValue="female"
-                            name="radio-buttons-group"
-                        >
-                            <FormControlLabel value="Flight price" control={<Radio />} label="Flight price (From low to high)" />
-                            <FormControlLabel value="Flight price low" control={<Radio />} label="Flight price (From high to low)" />
-                            <FormControlLabel value="Depart hour" control={<Radio />} label="Depart hour" />
-                            <FormControlLabel value="flight" control={<Radio />} label="Flight time" />
-                            
-
-                        </RadioGroup>
-                        </div>
-                        </div>
-                        </div>
-                    </FormControl>
-                    
+                        <FormControl>
+                            <div className="side-bar-filter">
+                                <div className="title-bar">
+                                    <FormLabel
+                                        className="radio-buttons">Sort By Flight</FormLabel>
+                                </div>
+                            </div>
+                            <div className="content">
+                                <div className="radio-check">
+                                    <div className="item-check">
+                                        <RadioGroup
+                                            aria-labelledby="radio-buttons"
+                                            defaultValue="female"
+                                            name="radio-buttons-group"
+                                        >
+                                            <FormControlLabel value="Flight price" control={<Radio />} label="Flight price (From low to high)" />
+                                            <FormControlLabel value="Flight price low" control={<Radio />} label="Flight price (From high to low)" />
+                                            <FormControlLabel value="Depart hour" control={<Radio />} label="Depart hour" />
+                                            <FormControlLabel value="flight" control={<Radio />} label="Flight time" />
+                                        </RadioGroup>
+                                    </div>
+                                </div>
+                            </div>
+                        </FormControl>
                     </Box>
-                   
                 </div>
                 <ViewMode />
-
             </>
         )
     }

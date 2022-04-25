@@ -92,6 +92,7 @@ class Reservation extends Component {
           <div className="row">
             <BookingStepBar step={2} />
             {/* <SelectedFlight   flightTicket={flightTicket} /> */}
+          
             <CustomerInfomation
               passengers={passengers}
               isContinue={isContinue}

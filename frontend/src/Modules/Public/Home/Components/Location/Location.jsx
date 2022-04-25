@@ -10,14 +10,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/Inbox';
 import Autocomplete from '@mui/material/Autocomplete';
 import "./Location.scss";
 import publicService from "../../../Shared/Services/PublicService";
+import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
 
 const departure = [
-    // { label: 'Hà Nội' },
-    // { label: 'Đà Nẵng' }
+  
 ]
 
 
@@ -38,7 +37,7 @@ export class Location extends Component {
             this.setState({
                 locations: res.data,
             })
-        }) 
+        })
     }
 
     onCloseDialog = () => {
@@ -68,34 +67,18 @@ export class Location extends Component {
                             aria-describedby="alert-dialog-description"
                             id="location-dialog-home"
                         >
-
                             <DialogTitle className="alert-dialog-title">
-                                {"Select departure"}
+                                {"Select "}
                             </DialogTitle>
 
                             <Autocomplete
-                            className="box"
+                                className="box"
                                 disablePortal
-                                id="combo-box-demo"
                                 onChange={this.handleChangeLocation}
-                                options={ departure }
-                                renderInput={(params) => <TextField {...params} label="City,airport code" />}
+                                options={departure}
+                                renderInput={(params) =>
+                                <TextField {...params} label="City,airport code" />}
                             />
-                            {/* {locations.map((locations) => {
-                                return(
-                                        <MenuItem
-                                        key={locations.Id}
-                                        value={locations.Id}
-                                        >
-                                            {locations.City.Name}
-
-                                        </MenuItem>
-
-                                )
-
-                            })} */}
-
-
                             <DialogContent>
                                 <div className="choose-country">
                                     <Button variant="contained" color="primary">
@@ -109,7 +92,7 @@ export class Location extends Component {
                                                 <ListItem disablePadding key={location.id} onClick={() => this.selectLocation(location)}>
                                                     <ListItemButton>
                                                         <ListItemIcon>
-                                                            <InboxIcon />
+                                                        <AirplaneTicketIcon />
                                                         </ListItemIcon>
                                                         <ListItemText primary={location.City.Name} />
                                                     </ListItemButton>

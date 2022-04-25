@@ -27,7 +27,6 @@ export class Home extends Component {
         return (
             <>
             <Navbar />
-
             <Header favouriteDestination={favouriteDestination} />
             <SeachFlightTicket  />
             <FavouriteDestination onSelectDestinationThumbnail={this.onSelectDestinationThumbnail} />

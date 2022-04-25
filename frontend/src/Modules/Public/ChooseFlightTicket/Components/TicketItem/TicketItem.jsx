@@ -63,7 +63,7 @@ export class TicketItem extends Component {
                   <div className="col-sm-4">
                     <div className="info">
                       <Typography className="flight-name">
-                        {data.Flight.Airline.Code}
+                        {data.Flight.FlightCode}
                       </Typography>
                       <div className="icon-flight-box">
                         <LocationOnIcon className="location-icon" />
@@ -100,7 +100,7 @@ export class TicketItem extends Component {
             </div>
             <div className="col-md-4">
               <div className="flight-choose">
-                <Typography className="price">{data.Price} USD</Typography>
+                <Typography className="price">{data.Price} VND</Typography>
                 {isChoosed ? (
                   <Button
                     onClick={() => this.onChooseFlight(data, "cancel")}
