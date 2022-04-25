@@ -72,13 +72,14 @@ class Payments extends Component {
   onPayWithPayPal = async (payment) => {
     const { bookingId } = this.state;
     const paymentData = {
-      BookingId: bookingId,
-      PaymentMethod: PAYMENT_METHODS.INTERNATIONAL_PAYMENT_GATEWAY,
-      Amount: payment.purchase_units[0].amount.value,
-    };
-    await publicService.paymentBooking(paymentData).then((res) => {
-      this.checkBookingDetails();
-    });
+        BookingId: bookingId,
+        PaymentMethod: PAYMENT_METHODS.INTERNATIONAL_PAYMENT_GATEWAY,
+        Amount: payment.purchase_units[0].amount.value
+    }
+    await publicService.paymentBooking(paymentData)
+        .then((res) => {
+            this.checkBookingDetails();
+    })
   };
 
   convertCurrency = async (totalMoney) => {
