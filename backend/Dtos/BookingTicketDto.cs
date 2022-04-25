@@ -16,8 +16,9 @@ namespace backend.Dtos
         [Required]
         public string PassengerName { get; set; }
         [Required]
-        public PassengerGender PassengerGender { get; set; }
+        public DateTime PassengerBirthday { get; set; }
         [Required]
+        public PassengerGender PassengerGender { get; set; }
         public string PassengerPhone { get; set; }
         [Required]
         public string PassengerIdentityNumber { get; set; }

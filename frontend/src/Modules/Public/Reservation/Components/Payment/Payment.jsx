@@ -4,10 +4,10 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import "./Payment.scss";
 
 export const PAYMENT_METHODS = {
-    PAY_IN_OFFICE: 1,
-    BANK_TRANSFER: 2,
-    INTERNATIONAL_PAYMENT_GATEWAY: 3
-}
+    INTERNATIONAL_PAYMENT_GATEWAY: 1,
+    BANKING_TRANSFER: 2,
+    PAY_IN_OFFICE: 3,
+  };
 export class Payment extends Component {
     constructor(props) {
         super(props);
@@ -21,7 +21,7 @@ export class Payment extends Component {
                 {
                     id: 2,
                     name: 'Free reservation and payment via bank transfer',
-                    type: PAYMENT_METHODS.BANK_TRANSFER
+                    type: PAYMENT_METHODS.BANKING_TRANSFER
                 },
                 {
                     id: 3,
