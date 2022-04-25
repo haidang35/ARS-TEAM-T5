@@ -18,7 +18,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import bookingService from "../../Shared/Service/BookingService";
 
-class UpdateBooking extends Form {
+class BookingDEtails extends Form {
   constructor(props) {
     super(props);
     this.state = {
@@ -145,7 +145,7 @@ class UpdateBooking extends Form {
         <React.Fragment>
           <div id="addNewAirline">
             <Typography variant="h4" gutterBottom>
-              Update Booking
+              View Booking Details
             </Typography>
             <Grid container spacing={3}>
               <Grid item xs={12}>
@@ -308,7 +308,7 @@ class UpdateBooking extends Form {
               </Grid>
               <div id="submit">
                 <Button variant="contained" onClick={this.saveUpdateBooking}>
-                  Update
+                  Back to list
                 </Button>
               </div>
             </Grid>
@@ -319,4 +319,4 @@ class UpdateBooking extends Form {
   }
 }
 
-export default withRouter(UpdateBooking);
+export default withRouter(BookingDEtails);

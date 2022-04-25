@@ -46,18 +46,25 @@ namespace backend.Controllers
         [Route("~/api/bookings/{id:int}")]
         [HttpPut]
         [ResponseType(typeof(Booking))]
-        public IHttpActionResult PutBooking(int id, Booking booking)
+        public IHttpActionResult PutBooking(int id, UpdateBooking updatebooking)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != booking.Id)
+            var booking = db.Bookings.Find(id);
+            if(booking == null)
             {
                 return BadRequest();
             }
-
+            booking.BookingCode = updatebooking.BookingCode;
+            booking.ContactName = updatebooking.ContactName;
+            booking.ContactPhone = updatebooking.ContactPhone;
+            booking.ContactEmail = updatebooking.ContactEmail;
+            booking.ContactAddress = updatebooking.ContactAddress;
+            booking.Status = updatebooking.Status;
+            booking.Note = updatebooking.Note;
+            booking.UpdatedAt = DateTime.Now;
             db.Entry(booking).State = EntityState.Modified;
 
             try
@@ -72,7 +79,7 @@ namespace backend.Controllers
                 }
                 else
                 {
-                    throw;
+                    throw;  
                 }
             }
 
