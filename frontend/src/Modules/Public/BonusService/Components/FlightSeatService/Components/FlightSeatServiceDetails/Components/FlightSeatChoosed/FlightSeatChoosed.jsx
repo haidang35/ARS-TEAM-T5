@@ -21,6 +21,7 @@ class FlightSeatChoosed extends Component {
                 passenger={psg}
                 onSelectPassenger={this.props.onSelectPassenger}
                 choosedPassengerId={this.props.choosedPassengerId}
+                checkExpiresReserveSeat={this.props.checkExpiresReserveSeat}
               />
             );
           })}

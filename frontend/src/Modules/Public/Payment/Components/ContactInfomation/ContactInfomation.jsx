@@ -10,6 +10,7 @@ export class ContactsInfomation extends Component {
         }
     }
     render() {
+        const { bookingData } = this.props;
         return (
             <>
                 <div>
@@ -30,7 +31,7 @@ export class ContactsInfomation extends Component {
                                             Full name:
                                         </Typography>
                                         <Typography className="content-item">
-                                            name
+                                            { bookingData && bookingData.ContactName }
                                         </Typography>
                                     </div>
 
@@ -42,7 +43,8 @@ export class ContactsInfomation extends Component {
                                             Phone number:
                                         </Typography>
                                         <Typography className="content-item">
-                                        03888999JQK
+                                        { bookingData && bookingData.ContactPhone }
+
                                         </Typography>
                                     </div>
                                 </div>
@@ -55,7 +57,8 @@ export class ContactsInfomation extends Component {
                                             Email:
                                         </Typography>
                                         <Typography className="content-item">
-                                            ARS@gmail.com
+                                        { bookingData && bookingData.ContactEmail }
+
                                         </Typography>
                                     </div>
                                     <div className="item-contact">
@@ -66,7 +69,8 @@ export class ContactsInfomation extends Component {
                                             Special requirements :
                                         </Typography>
                                         <Typography className="content-item">
-                                          123
+                                        { bookingData && bookingData.Note || 'None'}
+
                                         </Typography>
                                     </div>
                                 </div>
@@ -79,7 +83,8 @@ export class ContactsInfomation extends Component {
                                             Address
                                         </Typography>
                                         <Typography className="content-item">
-                                           HA NOI
+                                        { bookingData && bookingData.ContactAddress }
+
                                         </Typography>
                                     </div>
                                 </div>

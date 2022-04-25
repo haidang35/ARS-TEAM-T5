@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using backend.Data;
+using backend.Dtos;
 using backend.Models;
 
 namespace backend.Controllers
@@ -39,6 +40,45 @@ namespace backend.Controllers
             }
 
             return Ok(payment);
+        }
+
+        [Route("~/api/payments/booking")]
+        [HttpPost]
+        [ResponseType(typeof(Payment))]
+        public IHttpActionResult PaymentBooking(PaymentDto paymentDto)
+        {
+            if(! ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var booking = db.Bookings.Find(paymentDto.BookingId);
+            if(booking == null)
+            {
+                return BadRequest("Booking not found");
+            }
+            var payment = new Payment();
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    payment.BookingId = paymentDto.BookingId;
+                    payment.Amount = paymentDto.Amount;
+                    payment.PaymentMethod = paymentDto.PaymentMethod;
+                    payment.CreatedAt = DateTime.Now;
+                    payment.UpdatedAt = DateTime.Now;
+                    db.Payments.Add(payment);
+                    booking.Status = BookingStatus.Paid;
+                    db.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return BadRequest("Payment failed");
+                }
+            }
+            return Ok(payment);
+               
         }
 
         // PUT: api/Payments/5
@@ -114,14 +154,7 @@ namespace backend.Controllers
             return Ok(payment);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        
 
         private bool PaymentExists(int id)
         {

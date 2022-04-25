@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace backend.Data
+namespace backend.Dtos
 {
-    public class DBContext
+    public class PaymentBooking
     {
+
     }
 }

@@ -46,18 +46,25 @@ namespace backend.Controllers
         [Route("~/api/bookings/{id:int}")]
         [HttpPut]
         [ResponseType(typeof(Booking))]
-        public IHttpActionResult PutBooking(int id, Booking booking)
+        public IHttpActionResult PutBooking(int id, UpdateBooking updatebooking)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != booking.Id)
+            var booking = db.Bookings.Find(id);
+            if(booking == null)
             {
                 return BadRequest();
             }
-
+            booking.BookingCode = updatebooking.BookingCode;
+            booking.ContactName = updatebooking.ContactName;
+            booking.ContactPhone = updatebooking.ContactPhone;
+            booking.ContactEmail = updatebooking.ContactEmail;
+            booking.ContactAddress = updatebooking.ContactAddress;
+            booking.Status = updatebooking.Status;
+            booking.Note = updatebooking.Note;
+            booking.UpdatedAt = DateTime.Now;
             db.Entry(booking).State = EntityState.Modified;
 
             try
@@ -72,7 +79,7 @@ namespace backend.Controllers
                 }
                 else
                 {
-                    throw;
+                    throw;  
                 }
             }
 
@@ -152,6 +159,7 @@ namespace backend.Controllers
                 ContactPhone = userBooking.ContactPhone,
                 ContactEmail = userBooking.ContactEmail,
                 ContactAddress = userBooking.ContactAddress,
+                PaymentMethod = userBooking.PaymentMethod,
                 Note = userBooking.Note,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
@@ -173,6 +181,7 @@ namespace backend.Controllers
                     PassengerIdentityNumber = bookingTicket.PassengerIdentityNumber,
                     PassengerPhone = bookingTicket.PassengerPhone,
                     SeatFlightFee = bookingTicket.SeatFlightFee,
+                    PassengerBirthday = bookingTicket.PassengerBirthday,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 };
@@ -188,6 +197,44 @@ namespace backend.Controllers
             }
             return Ok(booking);
 
+        }
+
+        [Route("~/api/bookings/{code}")]
+        [HttpGet]
+        [ResponseType(typeof(BookingDto))]
+        public IHttpActionResult getBookingDetails(string code)
+        {
+            var booking = db.Bookings.Where(b => b.BookingCode == code).FirstOrDefault();
+            if(booking == null)
+            {
+                return BadRequest("Booking not found");
+            }
+            var bookingTickets = db.BookingTickets.Where(bt => bt.BookingId == booking.Id).ToList();
+            double totalMoney = 0;
+            double totalSeatFee = 0;
+            foreach(var bookingTicket in bookingTickets)
+            {
+                totalSeatFee += bookingTicket.SeatFlightFee;
+                totalMoney += bookingTicket.Ticket.Price + bookingTicket.Ticket.Tax + bookingTicket.SeatFlightFee;
+            }
+            var bookingDto = new BookingDto()
+            {
+                BookingCode = booking.BookingCode,
+                ContactName = booking.ContactName,
+                ContactPhone = booking.ContactPhone,
+                ContactEmail = booking.ContactEmail,
+                ContactAddress = booking.ContactAddress,
+                Note = booking.Note,
+                CreatedAt = booking.CreatedAt,
+                UpdatedAt = booking.UpdatedAt,
+                BookingTickets = bookingTickets,
+                User = booking.User,
+                TotalMoney = totalMoney,
+                TotalSeatFee = totalSeatFee,
+                Status = booking.Status,
+                PaymentMethod = booking.PaymentMethod,
+            };
+            return Ok(bookingDto);
         }
     }
 }
