@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
@@ -47,18 +48,30 @@ namespace backend.Controllers
         [Route("~/api/tickets/{id:int}")]
         [HttpPut]
         [ResponseType(typeof(Ticket))]
-        public IHttpActionResult PutTicket(int id, Ticket ticket)
+        public IHttpActionResult PutTicket(int id, UpdateTicket updateTicket)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != ticket.Id)
+            var ticket = db.Tickets.Find(id);
+            if(ticket == null)
             {
                 return BadRequest();
             }
-
+            ticket.FlightId = updateTicket.FlightId;
+            ticket.TicketType = updateTicket.TicketType;
+            ticket.AvailableClass = updateTicket.AvailableClass;
+            ticket.CarbinBag = updateTicket.CarbinBag;
+            ticket.CheckinBag = updateTicket.CheckinBag;
+            ticket.Status = updateTicket.Status;
+            ticket.Price = updateTicket.Price;
+            ticket.Tax = updateTicket.Tax;
+            ticket.BusinessSeatFee = updateTicket.BusinessSeatFee;
+            ticket.DeluxeSeatFee = ticket.DeluxeSeatFee;
+            ticket.EconomySeatFee = ticket.EconomySeatFee;
+            ticket.ExitSeatFee = ticket.ExitSeatFee;
+            ticket.UpdatedAt = DateTime.Now;
             db.Entry(ticket).State = EntityState.Modified;
 
             try
@@ -140,8 +153,9 @@ namespace backend.Controllers
             {
                 flights = db.Flights.Where(f => f.DepartureId == searchData.DepartureId
                                        && f.DestinationId == searchData.DestinationId
-                                       && DateTime.Compare(f.DepartureTime, searchData.DepartureDate) == 0
-                                       ).ToList();
+                                       )
+                    .Where(f => EntityFunctions.TruncateTime(f.DepartureTime) == EntityFunctions.TruncateTime(searchData.DepartureDate) )
+                    .ToList();
             }
            
             var tickets = new List<Ticket>();
@@ -154,6 +168,11 @@ namespace backend.Controllers
                 }
             }
             return Ok(tickets);
+        }
+
+        public bool compareDate(DateTime date1, DateTime date2)
+        {
+            return date1.Date == date2.Date && date1.Month == date2.Month && date1.Year == date2.Year;
         }
     }
 }

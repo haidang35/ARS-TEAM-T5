@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using backend.Data;
+using backend.Dtos;
 using backend.Models;
 
 namespace backend.Controllers
@@ -126,6 +127,107 @@ namespace backend.Controllers
         private bool BookingExists(int id)
         {
             return db.Bookings.Count(e => e.Id == id) > 0;
+        }
+
+        [Route("~/api/public/booking")]
+        [HttpPost]
+        [ResponseType(typeof(Booking))]
+        public IHttpActionResult UserBooking(UserBooking userBooking)
+        {
+            if(! ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var ticket = db.Tickets.Find(userBooking.TicketId);
+            if(ticket == null)
+            {
+                return BadRequest("Ticket not found");
+            }
+            Random rdm = new Random();
+            var booking = new Booking()
+            {
+                Status = BookingStatus.Pending,
+                BookingCode = $"{ticket.Flight.FlightCode}_BOOKING{rdm.Next()}",
+                ContactName = userBooking.ContactName,
+                ContactPhone = userBooking.ContactPhone,
+                ContactEmail = userBooking.ContactEmail,
+                ContactAddress = userBooking.ContactAddress,
+                PaymentMethod = userBooking.PaymentMethod,
+                Note = userBooking.Note,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+            };
+            if(userBooking.UserId != null)
+            {
+                booking.UserId = userBooking.UserId;
+            }
+            db.Bookings.Add(booking);
+            foreach(var bookingTicket in userBooking.BookingTickets)
+            {
+                var bookTicket = new BookingTicket()
+                {
+                    TicketId = userBooking.TicketId,
+                    BookingId = booking.Id,
+                    SeatFlightCode = bookingTicket.SeatFlightCode,
+                    PassengerName = bookingTicket.PassengerName,
+                    PassengerGender = bookingTicket.PassengerGender,
+                    PassengerIdentityNumber = bookingTicket.PassengerIdentityNumber,
+                    PassengerPhone = bookingTicket.PassengerPhone,
+                    SeatFlightFee = bookingTicket.SeatFlightFee,
+                    PassengerBirthday = bookingTicket.PassengerBirthday,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+                db.BookingTickets.Add(bookTicket);
+            }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Save to database failed");
+            }
+            return Ok(booking);
+
+        }
+
+        [Route("~/api/bookings/{code}")]
+        [HttpGet]
+        [ResponseType(typeof(BookingDto))]
+        public IHttpActionResult getBookingDetails(string code)
+        {
+            var booking = db.Bookings.Where(b => b.BookingCode == code).FirstOrDefault();
+            if(booking == null)
+            {
+                return BadRequest("Booking not found");
+            }
+            var bookingTickets = db.BookingTickets.Where(bt => bt.BookingId == booking.Id).ToList();
+            double totalMoney = 0;
+            double totalSeatFee = 0;
+            foreach(var bookingTicket in bookingTickets)
+            {
+                totalSeatFee += bookingTicket.SeatFlightFee;
+                totalMoney += bookingTicket.Ticket.Price + bookingTicket.Ticket.Tax + bookingTicket.SeatFlightFee;
+            }
+            var bookingDto = new BookingDto()
+            {
+                BookingCode = booking.BookingCode,
+                ContactName = booking.ContactName,
+                ContactPhone = booking.ContactPhone,
+                ContactEmail = booking.ContactEmail,
+                ContactAddress = booking.ContactAddress,
+                Note = booking.Note,
+                CreatedAt = booking.CreatedAt,
+                UpdatedAt = booking.UpdatedAt,
+                BookingTickets = bookingTickets,
+                User = booking.User,
+                TotalMoney = totalMoney,
+                TotalSeatFee = totalSeatFee,
+                Status = booking.Status,
+                PaymentMethod = booking.PaymentMethod,
+            };
+            return Ok(bookingDto);
         }
     }
 }

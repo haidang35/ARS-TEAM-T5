@@ -50,15 +50,17 @@ class FlightSeatMap extends Component {
 
   render() {
     const { capacity } = this.state;
+    const { reservedSeats, flightTicket, lockedSeats, ipAddress } = this.props;
     let seatRows = [];
     for (let i = 0; i < capacity / 6; i++) {
       let rowNumber = i;
       seatRows.push({
         id: i,
         rowNumber: ++rowNumber,
-        fee: 10000,
+        fee: 0,
       });
     }
+    
     return (
       <>
         <div id="flight-seat-map">
@@ -71,6 +73,12 @@ class FlightSeatMap extends Component {
           <Box sx={{ flexGrow: 1 }}>
             {seatRows.map((row, index) => {
               let seatRowType = this.checkSeatRowType(row.rowNumber);
+              let seatFee = 0;
+              if(seatRowType === SEAT_TYPE.BUSINESS) seatFee = flightTicket.BusinessSeatFee;
+              if(seatRowType === SEAT_TYPE.DELUXE) seatFee = flightTicket.DeluxeSeatFee;
+              if(seatRowType === SEAT_TYPE.ECONOMY) seatFee = flightTicket.EconomySeatFee;
+              if(seatRowType === SEAT_TYPE.EXIT) seatFee = flightTicket.ExitSeatFee;
+              row['fee'] = seatFee;
               return (
                 <SeatRow
                   key={index}
@@ -79,6 +87,9 @@ class FlightSeatMap extends Component {
                   onSelectSeatFlight={this.props.onSelectSeatFlight}
                   seatRowType={seatRowType}
                   passengers={this.props.passengers}
+                  reservedSeats={reservedSeats}
+                  lockedSeats={lockedSeats}
+                  ipAddress={ipAddress}
                 />
               );
             })}

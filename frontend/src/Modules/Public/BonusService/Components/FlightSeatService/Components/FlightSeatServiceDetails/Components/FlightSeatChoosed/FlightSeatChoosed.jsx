@@ -14,12 +14,14 @@ class FlightSeatChoosed extends Component {
     return (
       <>
         <div id="flight-seat-choosed">
-          {passengers.map((psg) => {
+          {passengers.map((psg, index) => {
             return (
               <FlightSeatChoosedItem
+                key={index}
                 passenger={psg}
                 onSelectPassenger={this.props.onSelectPassenger}
                 choosedPassengerId={this.props.choosedPassengerId}
+                checkExpiresReserveSeat={this.props.checkExpiresReserveSeat}
               />
             );
           })}

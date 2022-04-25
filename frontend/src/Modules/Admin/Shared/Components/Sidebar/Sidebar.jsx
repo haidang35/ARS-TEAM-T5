@@ -28,7 +28,7 @@ import { BrowserRouter, Link, NavLink } from "react-router-dom";
 
 const data = [
   { icon: <People />, label: 'Dashboard', path: '/admin/dashboard' },
-  { icon: <People />, label: 'User' , path: '/admin/dashboard'  },
+  { icon: <People />, label: 'User' , path: '/admin/users'  },
   { icon: <Dns />, label: 'Booking', path: '/admin/bookings'  },
   { icon: <AirlinesIcon />, label: 'Airline', path: '/admin/airlines'  },
   { icon: <Public />, label: 'Location', path: '/admin/locations' },

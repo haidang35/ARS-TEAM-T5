@@ -7,15 +7,21 @@ import { Sidebar } from "./Shared/Components/Sidebar/Sidebar";
 import "./Admin.scss"
 import AirlineList from "./Airline/Components/AirlineList/AirlineList";
 import AddNewFlight from "./Flight/Components/AddNewFlight/AddNewFlight";
-import LocationList from "./Location/LocationList/Location";
 import AddNewAirline from "./Airline/Components/AddNewAirline/AddNewAirline";
-import AddNewLocation from "./Location/Create/AddNewLocation"
-import UpdateLocation from "./Location/Update/UpdateLocation"
 import FlightList from "./Flight/Components/FlightList/FlightList";
 import AddNewFlightTicket from "./FlightTicket/Components/AddNewFlightTIcket/AddNewFlightTicket";
 import FlightTicketList from "./FlightTicket/Components/FlightTicketList/FlightTicketList";
 import UpdateFlight from "./Flight/Components/Update Flight/UpdateFlight";
 import UpdateAirline from "./Airline/Components/UpdateAirline/UpdateAirline";
+import UpdateFlightTicket from "./FlightTicket/Components/UpdateFlightTicket/UpdateFlightTicket";
+import AddNewLocation from "./Location/Components/AddNewLocation/AddNewLocation";
+import LocationList from "./Location/Components/LocationList/LocationList";
+import UpdateLocation from "./Location/Components/UpdateLocation/UpdateLocation";
+import AddNewUser from "./User/Components/AddNewUser/AddNewUser";
+import UserList from "./User/Components/UserList/UserList";
+import UpdateUser from "./User/Components/UpdateUser/UpdateUser";
+import BookingList from "./Booking/Components/BookingList/BookingList";
+import UpdateBooking from "./Booking/Components/UpdateBooking/UpdateBooking";
 
 
 
@@ -57,25 +63,25 @@ export class Admin extends Component {
                                             <UpdateAirline />
                                         </Route>
                                         <Route exact path="/admin/locations">
-                                            <LocationList />
+                                            <LocationList/>
                                         </Route>
                                         <Route exact path="/admin/locations/create">
-                                            <AddNewLocation />
+                                            <AddNewLocation/>
                                         </Route>
                                         <Route exact path="/admin/locations/:id">
-                                            <UpdateLocation />
+                                            <UpdateLocation/>
                                         </Route>
                                         <Route exact path="/admin/flight-tickets">
-                                            <FlightTicketList/>
+                                            <FlightTicketList />
                                         </Route>
                                         <Route exact path="/admin/flight-tickets/create">
                                             <AddNewFlightTicket/>
                                         </Route>
+                                        <Route exact path = "/admin/flightTickets/:id">
+                                            <UpdateFlightTicket/>
+                                        </Route>
                                         <Route exact path="/admin/flights">
                                            <FlightList />
-                                        </Route>
-                                        <Route exact path="/admin/flight-tickets">
-                                            <FlightTicketList />
                                         </Route>
                                         <Route exact path="/admin/flights/create">
                                             <AddNewFlight/>
@@ -83,12 +89,28 @@ export class Admin extends Component {
                                         <Route exact path = "/admin/flights/:id">
                                             <UpdateFlight/>
                                         </Route>
+                                        <Route exact path="/admin/users">
+                                           <UserList/>
+                                        </Route>
+                                        <Route exact path="/admin/users/create">
+                                           <AddNewUser/>
+                                        </Route>
+                                        <Route exact path = "/admin/users/:id">
+                                           <UpdateUser/>
+                                        </Route>
+                                        <Route exact path="/admin/bookings">
+                                           <BookingList/>
+                                        </Route>
+                                        <Route exact path = "/admin/bookings/:id">
+                                           <UpdateBooking/>
+                                        </Route>
+                                       
+                                       
                                     </Switch>
                                 </Box>
                             </div>
                         </div>
                     </div>
-
                 </BrowserRouter>
             </>
         )

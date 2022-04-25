@@ -14,36 +14,12 @@ class FlightSeatServiceDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      passengers: [
-        {
-          id: 1,
-          name: "Nguyen Van A",
-          seat: {
-            seatCode: "",
-            fee: 0,
-          },
-        },
-        {
-          id: 2,
-          name: "Nguyen Van B",
-          seat: {
-            seatCode: "",
-            fee: 0,
-          },
-        },
-      ],
       choosedPassengerId: 0,
     };
   }
 
   onSelectSeatFlight = (seat) => {
-    let { passengers, choosedPassengerId } = this.state;
-    passengers.forEach((psg) => {
-      if (psg.id === choosedPassengerId) {
-        psg["seat"] = seat;
-      }
-    });
-    this.setState({ passengers });
+    this.props.onSelectSeatFlight(seat, this.state.choosedPassengerId);
   };
 
   onSelectPassenger = (passenger) => {
@@ -53,23 +29,34 @@ class FlightSeatServiceDetails extends Component {
   };
 
   render() {
-    const { passengers, choosedPassengerId } = this.state;
+    const {  choosedPassengerId } = this.state;
+    const { reservationData, flightTicket, passengerNumbers, reservedSeats, totalSeatFee, lockedSeats, ipAddress } = this.props;
     return (
       <>
         <div id="flight-seat-service-details">
           <div className="row">
             <div className="col-md-3">
-              <FlightSeatServiceTicketPrice />
+              <FlightSeatServiceTicketPrice
+                flightTicket={flightTicket}
+                passengerNumbers={passengerNumbers}
+                passengersInfo={reservationData.passengers}
+                totalSeatFee={totalSeatFee}
+              />
               <FlightSeatChoosed
-                passengers={passengers}
+                passengers={reservationData.passengers}
                 choosedPassengerId={choosedPassengerId}
                 onSelectPassenger={this.onSelectPassenger}
+                checkExpiresReserveSeat={this.props.checkExpiresReserveSeat}
               />
             </div>
             <div className="col-md-8">
               <FlightSeatMap
                 onSelectSeatFlight={this.onSelectSeatFlight}
-                passengers={passengers}
+                passengers={reservationData.passengers}
+                reservedSeats={reservedSeats}
+                flightTicket={flightTicket}
+                lockedSeats={lockedSeats}
+                ipAddress={ipAddress}
               />
             </div>
           </div>

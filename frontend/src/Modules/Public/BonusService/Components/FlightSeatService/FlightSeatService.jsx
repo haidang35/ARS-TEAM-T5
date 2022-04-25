@@ -12,16 +12,31 @@ class FlightSeatService extends Component {
 
   onSelectService = () => {
     this.setState({
-      isShowService: !this.state.isShowService
+      isShowService: !this.state.isShowService,
     });
-  }
+  };
 
   render() {
     const { isShowService } = this.state;
+    const { reservationData, flightTicket, passengers, reservedSeats, totalSeatFee, lockedSeats, ipAddress } = this.props;
     return (
       <>
         <ChooseSeatFlight onSelectService={this.onSelectService} />
-        {isShowService ? <FlightSeatServiceDetails /> : ""}
+        {isShowService ? (
+          <FlightSeatServiceDetails
+            reservationData={reservationData}
+            flightTicket={flightTicket}
+            passengerNumbers={passengers}
+            onSelectSeatFlight={this.props.onSelectSeatFlight}
+            reservedSeats={reservedSeats}
+            totalSeatFee={totalSeatFee}
+            lockedSeats={lockedSeats}
+            ipAddress={ipAddress}
+            checkExpiresReserveSeat={this.props.checkExpiresReserveSeat}
+          />
+        ) : (
+          ""
+        )}
       </>
     );
   }

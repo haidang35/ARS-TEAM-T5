@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using backend.Data;
+using backend.Dtos;
 using backend.Models;
 
 namespace backend.Controllers
@@ -45,17 +46,25 @@ namespace backend.Controllers
         [Route("~/api/users/{id:int}")]
         [HttpPut]
         [ResponseType(typeof(User))]
-        public IHttpActionResult PutUser(int id, User user)
+        public IHttpActionResult PutUser(int id, UpdateUser updateUser)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != user.Id)
+            var user = db.Users.Find(id);
+            if(user == null)
             {
                 return BadRequest();
             }
+            user.Name = updateUser.Name;
+            user.Vocative = updateUser.Vocative;
+            user.PhoneNumber = updateUser.PhoneNumber;
+            user.Email = updateUser.Email;
+            user.Password = updateUser.Password;
+            user.Address = updateUser.Address;
+            user.UpdatedAt = DateTime.Now;
 
             db.Entry(user).State = EntityState.Modified;
 
