@@ -9,6 +9,7 @@ import { BookingStepBar } from "./Components/BookingStepBar/BookingStepBar";
 import { FilterFlightBox } from "./Components/FilterFlightBox/FilterFlightBox";
 import { SelectDateTicketBox } from "./Components/SelectDateTicketBox/SelectDateTicketBox";
 import { TicketItem } from "./Components/TicketItem/TicketItem";
+import { FlightAmination } from "./Components/FlightAmination/FlightAmination";
 
 class FlightTicket extends Component {
   constructor(props) {
@@ -134,8 +135,10 @@ class FlightTicket extends Component {
                     passengers={passengers}
                     onChooseFlightTicket={this.onChooseFlightTicket}
                   />
+                  
                 );
               })}
+                <FlightAmination />
             </div>
           </div>
         </div>

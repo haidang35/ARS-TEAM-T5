@@ -4,10 +4,11 @@ import { SignIn } from "./Account/Components/SignIn/SignIn";
 import { Home } from "./Home/Home";
 import "./Shared/Styles/Public.scss";
 import { SignUp } from "./Account/Components/SignUp/SignUp";
-import  Reservation  from "./Reservation/Reservation";
+import Reservation from "./Reservation/Reservation";
 import BonusServices from "./BonusService/BonusService";
-import  Payments  from "./Payment/Payments";
-import FlightTicket  from "./ChooseFlightTicket/FlightTicket";
+import Payments from "./Payment/Payments";
+import FlightTicket from "./ChooseFlightTicket/FlightTicket";
+import { Profile } from "./Profile/Profile";
 
 
 
@@ -28,7 +29,7 @@ export class Public extends Component {
                                 <Home />
                             </Route>
                             <Route path="/signup" exact>
-                               <SignUp />
+                                <SignUp />
                             </Route>
                             <Route path="/signin" exact>
                                 <SignIn />
@@ -37,14 +38,17 @@ export class Public extends Component {
                                 <FlightTicket />
                             </Route>
 
-                            <Route path="/reservation"  exact>
-                                <Reservation/>
+                            <Route path="/reservation" exact>
+                                <Reservation />
                             </Route>
                             <Route path="/bonus-service" exact>
                                 <BonusServices />
                             </Route>
                             <Route path="/payment" exact>
-                               <Payments />
+                                <Payments />
+                            </Route>
+                            <Route path="/profile" exact >
+                                <Profile />
                             </Route>
                         </Switch>
                     </div>
