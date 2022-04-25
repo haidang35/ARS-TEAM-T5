@@ -78,10 +78,9 @@ class UpdateLocation extends Form {
     };
 
     onUpdateLocation = async () => {
-        const { id } = this.props.match.params;
         this._validateForm();
         if (this._isFormValid()) {
-            this.setState({ isLoading: true });
+            const { id } = this.props.match.params;
             const { form } = this.state;
             const dataConverted = {
                 AirportCode: form.airportCode.value,
@@ -92,7 +91,7 @@ class UpdateLocation extends Form {
             await locationsService
                 .updateDetails(id, dataConverted)
                 .then((res) => {
-                   console.log(res.data);
+                   console.log("Oke",res.data);
                 })
                 .catch((err) => {
                     console.log(err);
