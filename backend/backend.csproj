@@ -196,6 +196,7 @@
     <Compile Include="Dtos\PaymentDto.cs" />
     <Compile Include="Dtos\SearchFlightTicket.cs" />
     <Compile Include="Dtos\UpdateAirline.cs" />
+    <Compile Include="Dtos\UpdateBooking.cs" />
     <Compile Include="Dtos\UpdateFlight.cs" />
     <Compile Include="Dtos\UpdateLocation.cs" />
     <Compile Include="Dtos\UpdateTicket.cs" />
