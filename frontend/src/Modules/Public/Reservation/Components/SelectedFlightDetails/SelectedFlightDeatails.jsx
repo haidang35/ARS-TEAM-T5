@@ -3,7 +3,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import AirplanemodeInactiveIcon from '@mui/icons-material/AirplanemodeInactive';
 import { Typography } from "@mui/material";
 import "./SelectedFlightDetails.scss";
-
+import { getTime, getDate } from "../../../../../Helpers/datetime";
 
 export class SelectedFlightDetails extends Component {
     constructor(props) {
@@ -12,7 +12,7 @@ export class SelectedFlightDetails extends Component {
         }
     }
     render() {
-        let { data } = this.props;
+        let { flightTicket } = this.props;
         return (
             <>
                 <div className="selected-flight-details">
@@ -33,48 +33,61 @@ export class SelectedFlightDetails extends Component {
                                 <div className="col-md-3">
                                     <div className="list-info">
                                         <Typography className="info-item">
-                                            Hà Nội (HAN)
+                                            {flightTicket.Flight.Departure.City.Name}
+                                            ({flightTicket.Flight.Departure.AirPortCode})
                                         </Typography>
                                         <Typography className="info-item">
-                                            Airport Nội Bài
+                                            Airport: {flightTicket.Flight.Departure.AirPortName}
                                         </Typography>
                                         <Typography className="info-item">
-                                            Take off 24:21
+                                            Take off : {getTime(
+                                                flightTicket.Flight
+                                                    .DepartureTime
+                                            )}
                                         </Typography>
                                         <Typography className="info-item">
-                                            Date 19-04-2022
-                                        </Typography>
-                                    </div>
-                                </div>
-                                <div className="col-md-3">
-                                    <div className="list-info">
-                                        <Typography className="info-item">
-                                            Hồ Chí Minh (SGN)
-                                        </Typography>
-                                        <Typography className="info-item">
-                                            Airport Tân Sơn Nhất
-                                        </Typography>
-                                        <Typography className="info-item">
-                                            Landing 19:21
-                                        </Typography>
-                                        <Typography className="info-item">
-                                            Date 21-04-2022
+                                            Date: {getDate(
+                                                flightTicket.Flight.CreatedAt
+                                            )}
                                         </Typography>
                                     </div>
                                 </div>
                                 <div className="col-md-3">
                                     <div className="list-info">
                                         <Typography className="info-item">
-                                            Flight VNA 909
+                                            {flightTicket.Flight.Destination.City.Province.Name}
+                                            ({flightTicket.Flight.Destination.AirPortCode})
+
                                         </Typography>
                                         <Typography className="info-item">
-                                            Class Business
+                                        Airport : {flightTicket.Flight.Destination.AirPortName}
                                         </Typography>
                                         <Typography className="info-item">
-                                            Ticket: 12121
+                                        Landing :  {getTime(
+                                                flightTicket.Flight
+                                                    .ArrivalTime
+                                            )}
                                         </Typography>
                                         <Typography className="info-item">
-                                            Aircraft Boeing 010
+                                        Date :  {getDate(
+                                                flightTicket.Flight.UpdatedAt
+                                            )}
+                                        </Typography>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="list-info">
+                                        <Typography className="info-item">
+                                        Flight :   {flightTicket.Flight.Airline.Code}
+                                        </Typography>
+                                        <Typography className="info-item">
+                                        Available Class: {flightTicket.AvailableClass}
+                                        </Typography>
+                                        <Typography className="info-item">
+                                        Ticket: {flightTicket.TicketType}
+                                        </Typography>
+                                        <Typography className="info-item">
+                                        Aircraft :  {flightTicket.Flight.Aircraft}
                                         </Typography>
                                     </div>
                                 </div>

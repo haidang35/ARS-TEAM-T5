@@ -50,7 +50,7 @@ class FlightSeatMap extends Component {
 
   render() {
     const { capacity } = this.state;
-    const { reservedSeats, flightTicket, lockedSeats } = this.props;
+    const { reservedSeats, flightTicket, lockedSeats, ipAddress } = this.props;
     let seatRows = [];
     for (let i = 0; i < capacity / 6; i++) {
       let rowNumber = i;
@@ -89,6 +89,7 @@ class FlightSeatMap extends Component {
                   passengers={this.props.passengers}
                   reservedSeats={reservedSeats}
                   lockedSeats={lockedSeats}
+                  ipAddress={ipAddress}
                 />
               );
             })}

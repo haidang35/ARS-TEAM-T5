@@ -30,7 +30,7 @@ class FlightSeatServiceDetails extends Component {
 
   render() {
     const {  choosedPassengerId } = this.state;
-    const { reservationData, flightTicket, passengerNumbers, reservedSeats, totalSeatFee, lockedSeats } = this.props;
+    const { reservationData, flightTicket, passengerNumbers, reservedSeats, totalSeatFee, lockedSeats, ipAddress } = this.props;
     return (
       <>
         <div id="flight-seat-service-details">
@@ -55,6 +55,7 @@ class FlightSeatServiceDetails extends Component {
                 reservedSeats={reservedSeats}
                 flightTicket={flightTicket}
                 lockedSeats={lockedSeats}
+                ipAddress={ipAddress}
               />
             </div>
           </div>

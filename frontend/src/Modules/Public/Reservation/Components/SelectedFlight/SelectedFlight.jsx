@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { Button } from "@mui/material";
 import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import FlightLandIcon from '@mui/icons-material/FlightLand';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Typography from '@mui/material/Typography';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import "./SelectedFlight.scss";
 import { SelectedFlightDetails } from "../SelectedFlightDetails/SelectedFlightDeatails";
+import { getTime } from "../../../../../Helpers/datetime";
 
 
 export class SelectedFlight extends Component {
@@ -44,17 +44,17 @@ export class SelectedFlight extends Component {
                                     <div className="col-sm-4">
                                         <div className="destination">
                                             <Typography className="city">
-                                                Đà Nẵng
+                                            {flightTicket.Flight.Departure.City.Name}
                                             </Typography>
                                             <Typography className="time">
-                                                24 : 00
+                                            {getTime(flightTicket.Flight.DepartureTime)}
                                             </Typography>
                                         </div>
                                     </div>
                                     <div className="col-sm-4">
                                         <div className="info">
                                             <Typography className="flight-name">
-                                                Boing 000
+                                            {flightTicket.Flight.Airline.Code}
                                             </Typography>
                                             <div className="icon-flight-box">
                                                 <LocationOnIcon className="location-icon" />
@@ -79,10 +79,10 @@ export class SelectedFlight extends Component {
                                     <div className="col-sm-4">
                                         <div className="destination">
                                             <Typography className="city">
-                                                Hải Phòng
+                                            {flightTicket.Flight.Destination.City.Name}
                                             </Typography>
                                             <Typography className="time">
-                                                21:00
+                                            {getTime(flightTicket.Flight.ArrivalTime)}
                                             </Typography>
                                         </div>
                                     </div>
@@ -109,7 +109,7 @@ export class SelectedFlight extends Component {
                     </div>
                 </div>
                 {this.state.isShowTicketDetails ? (
-                    <SelectedFlightDetails flightTicket={flightTicket} />
+                    <SelectedFlightDetails  flightTicket={flightTicket} />
                 ) : (
                     ""
                 )}

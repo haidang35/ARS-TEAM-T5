@@ -5,15 +5,15 @@ import ConnectingAirportsIcon from "@mui/icons-material/ConnectingAirports";
 import BabyChangingStationIcon from "@mui/icons-material/BabyChangingStation";
 import AirlineSeatReclineNormalIcon from "@mui/icons-material/AirlineSeatReclineNormal";
 import { getTime } from "../../../../../Helpers/datetime";
+import { BOOKING_STATUS } from "../../Payments";
 export class NoticeOfBookingStatus extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isPaidSuccess: false,
     };
   }
   render() {
-    const { bookingData, isPaidSuccess } = this.props;
+    const { bookingData } = this.props;
     const bookingDate = new Date(bookingData.CreatedAt);
     const expirePaymentTime =  bookingDate.setHours(bookingDate.getHours() + 1);
     return (
@@ -43,7 +43,7 @@ export class NoticeOfBookingStatus extends Component {
                     {bookingData && bookingData.BookingCode}
                   </span>
                 </Typography>
-                {isPaidSuccess ? (
+                {bookingData && bookingData.Status === BOOKING_STATUS.PAID ? (
                   <Typography variant="h6" className="notice-payment-success">
                     You have successfully paid
                   </Typography>

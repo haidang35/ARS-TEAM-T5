@@ -24,14 +24,16 @@ class SeatItem extends Component {
       passengers,
       reservedSeats,
       lockedSeats,
+      ipAddress
     } = this.props;
     const seatCode = rowNumber + seat.letterCode;
     let isSelected = false;
-    let isChoosingSeat = false;
+    let isLockingSeat = false;
     let isLocked = false;
+    const customerCode = localStorage.getItem('_flight_t5_ctm_code');
     reservedSeats.forEach((reservedSeat) => {
-      if (reservedSeat.seatCode === seatCode) {
-        isChoosingSeat = true;
+      if (reservedSeat.seatCode === seatCode && reservedSeat.customerCode !== customerCode) {
+        isLockingSeat = true;
       }
     });
 
@@ -51,7 +53,7 @@ class SeatItem extends Component {
         <div
           className="seat-item"
           onClick={
-            !isChoosingSeat && !isLocked
+            !isLockingSeat && !isLocked
               ? () => this.onChooseSeat(seat)
               : this.preventClick
           }
@@ -61,12 +63,12 @@ class SeatItem extends Component {
             style={{
               border: `3px solid ${seatType.COLOR}`,
               backgroundColor:
-                isSelected || isChoosingSeat || isLocked ? seatType.COLOR : "",
+                isSelected || isLockingSeat || isLocked ? seatType.COLOR : "",
             }}
           >
             {isLocked ? (
               <LockIcon className="checked-icon" />
-            ) : isChoosingSeat ? (
+            ) : isLockingSeat ? (
               <HourglassEmptyIcon className="checked-icon" />
             ) : isSelected ? (
               <VerifiedUserIcon className="checked-icon" />
