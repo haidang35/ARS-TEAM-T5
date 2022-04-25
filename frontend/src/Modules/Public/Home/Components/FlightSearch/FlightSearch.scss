@@ -19,8 +19,14 @@
         }
 
     }
-    
 
+    .oneway {
+        color: #ffff;
+    }
+
+    .roundtrip {
+        color: #ffff;
+    }
 
     .destination {
         padding-top: 1rem;
@@ -42,14 +48,15 @@
     .date {
         padding-top: 1rem;
         margin-top: 30px;
-    
-        
 
 
 
-        .css-1u3bzj6-MuiFormControl-root-MuiTextField-root{
+
+
+        .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
             width: 100%;
         }
+
         .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
             background: #ffff;
             border-radius: 8px;
@@ -72,10 +79,7 @@
     .title-passenger {
         color: white;
     }
-    
+
 
 
 }
-
-
-

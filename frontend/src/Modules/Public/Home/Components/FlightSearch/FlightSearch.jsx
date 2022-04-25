@@ -202,7 +202,7 @@ export class FlightSearch extends Component {
                     <Typography variant="h1" className="title">
                         WHERE WOULD YOU LIKE TO GO ?
                     </Typography>
-                    <FormControlLabel
+                    <FormControlLabel 
                         control={
                             <Checkbox
                                 name="oneWay"
@@ -218,7 +218,7 @@ export class FlightSearch extends Component {
                                 }
                             />
                         }
-                        label="One Way"
+                        label="One Way" className="oneway"
                     />
                     <FormControlLabel
                         control={
@@ -236,12 +236,9 @@ export class FlightSearch extends Component {
                                 }
                             />
                         }
-                        label="Round trip"
+                        label="Round trip" className="roundtrip"
                     />
                     <div className="formcheck">
-
-
-
                         <div className="depature">
                             <TextField label="Departure" value={departure && departure.City.Name} variant="outlined" onClick={() => this.handleOpenDialog('departure')} />
                         </div>
@@ -251,7 +248,6 @@ export class FlightSearch extends Component {
                         <div className="date">
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
-
                                     label="Departure Date"
                                     value={departureDate}
                                     inputFormat="dd/MM/yyyy"
