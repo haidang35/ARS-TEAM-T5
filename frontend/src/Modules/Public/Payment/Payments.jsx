@@ -78,7 +78,7 @@ class Payments extends Component {
     await publicService.paymentBooking(paymentData)
         .then((res) => {
             this.checkBookingDetails();
-        })
+    })
   };
 
   convertCurrency = async (totalMoney) => {
