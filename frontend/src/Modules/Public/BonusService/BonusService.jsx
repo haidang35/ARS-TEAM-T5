@@ -28,11 +28,13 @@ class BonusServices extends Component {
       reservationData: "",
       flightTicket: "",
       passengers: "",
-      reservedSeats: [],
+      lockingSeats: [],
       totalMoney: 0,
       totalSeatFee: 0,
       isRedirect: false,
-      lockedSeats: []
+      lockedSeats: [],
+      bookingData: "",
+      ipAddress: "",
     };
   }
 
@@ -54,7 +56,23 @@ class BonusServices extends Component {
     this.getReservedFlightSeats(flightTicket.Flight.FlightCode);
     this.calcTotalMoney(flightTicket, passengers);
     this.getLockedSeats(flightTicket);
+    this.getIpAddress();
+    this.generateCustomerCode();
   };
+
+  getIpAddress = async () => {
+    await publicService.getIpAdressInfo().then((res) => {
+      this.setState({
+        ipAddress: res.data.IPv4,
+      });
+    });
+  };
+
+  generateCustomerCode = () => {
+    let expires = new Date();
+    expires.setMinutes(expires.getMinutes() + 5);
+    localStorage.setItem('_flight_t5_ctm_code', Math.floor(Math.random() * 1000000));
+  }
 
   calcTotalMoney = (flightTicket = {}, passengers = []) => {
     let { totalMoney } = this.state;
@@ -67,29 +85,35 @@ class BonusServices extends Component {
   };
 
   getReservedFlightSeats = (flightCode) => {
-    const flightSeatRef = ref(dbFirebase, `flights/${flightCode}`);
+    const flightSeatRef = ref(dbFirebase, `flights/${flightCode}/lockingSeats`);
     onValue(flightSeatRef, (snapshot) => {
-      if (snapshot.val() !== null) {
-        this.setState({
-          reservedSeats: snapshot.val().reservedSeats,
-        });
-      }
+      let lockingSeats = [];
+      snapshot.forEach((snapshotChild) => {
+        let dataChild = snapshotChild.val();
+        dataChild['key'] = snapshotChild.key;
+        lockingSeats.push(dataChild)
+      });
+      this.setState({
+        lockingSeats,
+      });
     });
   };
 
   getLockedSeats = async (flightTicket) => {
-    await publicService.getLockedFlightSeats(flightTicket.FlightId)
+    await publicService
+      .getLockedFlightSeats(flightTicket.FlightId)
       .then((res) => {
         this.setState({
-          lockedSeats: res.data
-        })
-      })
-  }
+          lockedSeats: res.data,
+        });
+      });
+  };
 
   onSelectSeatFlight = (seatInfo, choosedPassengerId) => {
-    let { reservationData, flightTicket, reservedSeats } = this.state;
+    let { reservationData, flightTicket, lockingSeats, ipAddress } = this.state;
     let oldSeatCode = "";
     let totalSeatFee = 0;
+    const customerCode = localStorage.getItem('_flight_t5_ctm_code');
     reservationData.passengers.forEach((psg) => {
       if (psg.id === choosedPassengerId) {
         oldSeatCode = psg["seatInfo"].seatCode;
@@ -98,18 +122,20 @@ class BonusServices extends Component {
       totalSeatFee += psg["seatInfo"]["fee"];
     });
     let isSeatExist = false;
-    reservedSeats.forEach((seat, index) => {
+    lockingSeats.forEach((seat, index) => {
       if (seat.seatCode === seatInfo.seatCode) {
         isSeatExist = true;
       }
       if (seat.seatCode === oldSeatCode) {
-        reservedSeats.splice(index, 1);
+        lockingSeats.splice(index, 1);
       }
     });
     if (!isSeatExist) {
-      reservedSeats.push(seatInfo);
+      seatInfo["ipAddress"] = ipAddress;
+      seatInfo["customerCode"] = customerCode;
+      lockingSeats.push(seatInfo);
       set(ref(dbFirebase, `flights/${flightTicket.Flight.FlightCode}`), {
-        reservedSeats,
+        lockingSeats,
       });
     }
     this.setState({ reservationData, totalSeatFee });
@@ -117,10 +143,6 @@ class BonusServices extends Component {
 
   onContinue = async () => {
     const { reservationData, flightTicket } = this.state;
-    console.log(
-      "🚀 ~ file: BonusService.jsx ~ line 94 ~ BonusServices ~ reservationData",
-      reservationData
-    );
     const bookingTicketsPsg = [];
     reservationData.passengers.forEach((psg) => {
       bookingTicketsPsg.push({
@@ -128,7 +150,7 @@ class BonusServices extends Component {
         SeatFlightFee: psg.seatInfo.fee,
         PassengerName: psg.fullName,
         PassengerGender: checkGender(psg.gender),
-        PassengerPhone: "0357888999",
+        PassengerBirthday: psg.birthday,
         PassengerIdentityNumber: psg.identityNumber,
       });
     });
@@ -140,12 +162,14 @@ class BonusServices extends Component {
       ContactAddress: reservationData.contactInfo.address,
       Note: reservationData.contactInfo.note,
       BookingTickets: bookingTicketsPsg,
+      PaymentMethod: reservationData.paymentMethod.type,
     };
     await publicService
       .bookingTicket(dataConvert)
       .then((res) => {
         this.setState({
           isRedirect: true,
+          bookingData: res.data,
         });
       })
       .catch((err) => {
@@ -161,16 +185,26 @@ class BonusServices extends Component {
       reservationData,
       flightTicket,
       passengers,
-      reservedSeats,
+      lockingSeats,
       totalMoney,
       totalSeatFee,
       isRedirect,
-      lockedSeats
+      lockedSeats,
+      bookingData,
+      ipAddress
     } = this.state;
-    if(isRedirect) {
-      return <Redirect to={{
-        pathname: '/payment',
-      }}/>
+    if (isRedirect) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/payment",
+            state: {
+              bookingData,
+              totalMoney,
+            },
+          }}
+        />
+      );
     }
     return (
       <>
@@ -183,9 +217,10 @@ class BonusServices extends Component {
                 flightTicket={flightTicket}
                 passengers={passengers}
                 onSelectSeatFlight={this.onSelectSeatFlight}
-                reservedSeats={reservedSeats}
+                reservedSeats={lockingSeats}
                 totalSeatFee={totalSeatFee}
                 lockedSeats={lockedSeats}
+                ipAddress={ipAddress}
               />
             </div>
           </div>

@@ -6,7 +6,7 @@ import "./Shared/Styles/Public.scss";
 import { SignUp } from "./Account/Components/SignUp/SignUp";
 import  Reservation  from "./Reservation/Reservation";
 import BonusServices from "./BonusService/BonusService";
-import { Payments } from "./Payment/Payments";
+import  Payments  from "./Payment/Payments";
 import FlightTicket  from "./ChooseFlightTicket/FlightTicket";
 
 

@@ -27,10 +27,11 @@ namespace backend.Models
         [Required]
         public string PassengerName { get; set; }
         [Required]
+        public DateTime PassengerBirthday { get; set; }
+        [Required]
         public PassengerGender PassengerGender { get; set; }
         [Required]
         public double SeatFlightFee { get; set; }
-        [Required]
         public string PassengerPhone { get; set; }
         [Required]
         public string PassengerIdentityNumber { get; set; }

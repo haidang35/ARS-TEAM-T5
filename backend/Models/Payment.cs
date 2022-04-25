@@ -11,12 +11,19 @@ namespace backend.Models
         Active = 1,
         Deactive = 0
     }
+
+    public enum PaymentMethod
+    {
+        Paypal = 1,
+        BankingTransfer = 2,
+        PayAtOffice = 3
+    }
     public class Payment
     {
         [Key]
         public int Id { get; set; }
         [Required]
-        public string PaymentMethod { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
         [Required]
         public int BookingId { get; set; }
         public virtual Booking Booking { get; set; }

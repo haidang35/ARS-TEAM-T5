@@ -8,7 +8,7 @@ namespace backend.Models
 {
     public enum BookingStatus
     {
-        Active = 1,
+        Paid = 1,
         Cancelled = 0,
         Pending = 2,
     }
@@ -36,6 +36,8 @@ namespace backend.Models
         public string ContactEmail { get; set; }
         public string ContactAddress { get; set; }
         public string Note { get; set; }
+        [Required]
+        public PaymentMethod PaymentMethod { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
