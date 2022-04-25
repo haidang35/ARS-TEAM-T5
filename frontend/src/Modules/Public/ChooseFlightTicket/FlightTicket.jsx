@@ -115,7 +115,7 @@ class FlightTicket extends Component {
         <div className="wrap-container">
           <div className="row">
             <SearchTicketBox />
-            <BookingStepBar />
+            <BookingStepBar step={1}/>
             <div className="col-md-3">
               <FilterFlightBox />
             </div>
