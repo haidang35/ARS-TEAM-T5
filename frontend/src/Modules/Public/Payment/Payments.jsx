@@ -10,8 +10,7 @@ import { NoticeOfBookingStatus } from "./Components/NoticeOfBookingStatus/Notice
 import { PassengerInfomation } from "./Components/PassengerInfomation/PassengerInfomation";
 import { PaymentNoticeBox } from "./Components/PaymentNoticeBox/PaymentNoticeBox";
 import PayPalPayment from "./Components/PaypalPayment/PayPalPayment";
-import CheckoutStepBar from "../Shared/Components/CheckoutStepBar/CheckoutStepBar";
-
+import { BookingStepBar } from "../ChooseFlightTicket/Components/BookingStepBar/BookingStepBar"; 
 export const BOOKING_STATUS = {
   PAID: 1,
   CANCELLED: 0,
@@ -115,9 +114,10 @@ class Payments extends Component {
         <NavbarV2 />
         <SearchTicketBox />
         <div className="wrap-container">
+        <BookingStepBar step={4}/>
+
           <div className="row">
             <div className="col-md-12">
-              <CheckoutStepBar />
               <NoticeOfBookingStatus bookingData={bookingData} />
               {bookingData.Status === BOOKING_STATUS.PENDING ? (
                 bookingData.PaymentMethod ===
