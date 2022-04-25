@@ -9,6 +9,8 @@ import BonusServices from "./BonusService/BonusService";
 import Payments from "./Payment/Payments";
 import FlightTicket from "./ChooseFlightTicket/FlightTicket";
 import { Profile } from "./Profile/Profile";
+import { CustomerProfile } from "./Profile/Components/CustomerProfile/CustomerProfile";
+import { BookingHistory } from "./Profile/Components/BookingHistory/BookingHistory";
 
 
 
@@ -49,6 +51,12 @@ export class Public extends Component {
                             </Route>
                             <Route path="/profile" exact >
                                 <Profile />
+                            </Route>
+                            <Route path="/customerprofile">
+                                <CustomerProfile />
+                            </Route>
+                            <Route path="/booking">
+                                <BookingHistory />
                             </Route>
                         </Switch>
                     </div>

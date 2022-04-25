@@ -15,9 +15,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import { style } from '@mui/system';
 import { InputBase } from '@mui/material';
 import "./NavbarV2.scss";
+import { Link } from 'react-router-dom';
 
 const pages = ['Flight Ticket', 'Reservation', 'Bonus service','Payment'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account',  'Logout'];
 
 
 const NavbarV2 = () => {
@@ -71,15 +72,16 @@ const NavbarV2 = () => {
         <div className="wrap-container">
           <Container maxWidth="xl">
             <Toolbar disableGutters>
+              <Link to="/">
               <Typography
                 variant="h6"
                 noWrap
                 component="div"
                 sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
               >
-
-                 FlightT5 
+                FLIGHT T5
               </Typography>
+              </Link>
 
               <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                 <IconButton

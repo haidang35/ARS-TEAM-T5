@@ -1,4 +1,6 @@
+import { Button } from "@mui/material";
 import React, { Component } from "react";
+import "./BookingHistory.scss";
 
 export class BookingHistory extends Component {
     constructor(props) {
@@ -33,24 +35,23 @@ export class BookingHistory extends Component {
                                         <tbody>
                                             <tr>
                                                 <td className="text-bold-500">
-                                                   111
+                                                    111
                                                 </td>
                                                 <td className="text-bold-500">
-                                                   111
+                                                    111
                                                 </td>
                                                 <td className="text-bold-500">
-                                                   111
+                                                    111
                                                 </td>
                                                 <td className="text-bold-500">
-                                                 111
+                                                    111
                                                 </td>
                                                 <td className="text-bold-500">
-                                                  121
+                                                    121
                                                 </td>
                                                 <td>
-                                                   122
+                                                    122
                                                 </td>
-
                                                 <td>
                                                     <div className="btn-box-control">
                                                         {/* <Link
@@ -60,25 +61,11 @@ export class BookingHistory extends Component {
                                                                 state: item,
                                                             }}
                                                         > */}
-                                                            <button className="btn btn-primary">
-                                                                View
-                                                                details
-                                                            </button>
-                                                        {/* </Link> */}
-                                                        <button
-                                                            className="btn btn-danger"
-                                                            style={{
-                                                                marginTop:
-                                                                    "1rem",
-                                                            }}
-                                                          
-                                                        >
-                                                            Cancel
-                                                           
-                                                        </button>
-                                                    </div>
+                                                        <Button variant="contained">View Details</Button>
 
-                                                    
+                                                        {/* </Link> */}
+                                                        <Button variant="outlined" color="error" >Cancel</Button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>

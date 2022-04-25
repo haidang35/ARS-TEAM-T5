@@ -2,7 +2,7 @@
 
 .flight-seat-choosed-item {
     width: 100%;
-    height: 90px;
+    height: 115px;
     border-radius: 15px;
     padding: 10px;
     -webkit-user-select: none;
@@ -10,6 +10,7 @@
     margin-bottom: 2rem;
     background-color: #ffff;
     box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+    
 
     .passenger-active {
         border: 3px solid $background-color;

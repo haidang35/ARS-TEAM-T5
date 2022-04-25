@@ -1,0 +1,10 @@
+@import "../../../../../Shared/Styles/variables";
+
+.user-booking-list {
+    .btn-box-control {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+    }
+}

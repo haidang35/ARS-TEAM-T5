@@ -17,7 +17,7 @@ const initialOptions = {
     "ELj49ADjRNyqvsZCTizrALH374nWJFJ5qELL0NU6AbD72SaHLB4b6WfHix-V6Lubr_SMfYQj4wFjfKrp",
 };
 
-const PayPalPayment = ({ totalMoney }) => {
+const PayPalPayment = ({ totalMoney, onPayWithPayPal }) => {
   const [totalMoneyConverted, setTotalMoneyConverted] = useState(0);
 
   useEffect( () => {
@@ -55,7 +55,6 @@ const PayPalPayment = ({ totalMoney }) => {
           >
             <PayPalButtons
               forceReRender={[totalMoneyConverted]}
-              fundingSource={undefined}
               createOrder={(data, actions) => {
                 return actions.order.create({
                   purchase_units: [
@@ -69,9 +68,11 @@ const PayPalPayment = ({ totalMoney }) => {
               }}
               onApprove={(data, actions) => {
                 return actions.order.capture().then((details) => {
-                  const name = details.payer.name.given_name;
-                  this.props.onPayWithPayPal(details);
+                  onPayWithPayPal(details);
                 });
+              }}
+              onError={() => {
+                alert('Payment failed !')
               }}
             />
           </PayPalScriptProvider>

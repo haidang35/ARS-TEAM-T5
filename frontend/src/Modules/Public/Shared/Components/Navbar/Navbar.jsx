@@ -17,8 +17,8 @@ import { InputBase } from '@mui/material';
 import "./Navbar.scss";
 
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Flight Ticket', 'Reservation', 'Bonus service', 'Payment'];
+const settings = ['Profile', 'Account',  'Logout'];
 
 
 const Navbar = () => {
@@ -78,7 +78,7 @@ const Navbar = () => {
                 component="div"
                 sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
               >
-                LOGO
+                FLIGTH T5
               </Typography>
 
               <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

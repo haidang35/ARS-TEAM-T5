@@ -141,8 +141,9 @@ class FlightTicket extends Component {
                 <FlightAmination />
             </div>
           </div>
+          <CheckoutStepBar totalMoney={totalMoney} onContinue={this.onContinue} />
         </div>
-        <CheckoutStepBar totalMoney={totalMoney} onContinue={this.onContinue} />
+      
       </>
     );
   }
