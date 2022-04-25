@@ -10,6 +10,7 @@ import { NoticeOfBookingStatus } from "./Components/NoticeOfBookingStatus/Notice
 import { PassengerInfomation } from "./Components/PassengerInfomation/PassengerInfomation";
 import { PaymentNoticeBox } from "./Components/PaymentNoticeBox/PaymentNoticeBox";
 import PayPalPayment from "./Components/PaypalPayment/PayPalPayment";
+import CheckoutStepBar from "../Shared/Components/CheckoutStepBar/CheckoutStepBar";
 
 export const BOOKING_STATUS = {
   PAID: 1,
@@ -25,7 +26,7 @@ class Payments extends Component {
       isRedirect: false,
       totalMoneyConverted: 0,
       callApiConvertCurrency: false,
-      bookingId: '',
+      bookingId: "",
     };
   }
 
@@ -69,7 +70,7 @@ class Payments extends Component {
   };
 
   onPayWithPayPal = async (payment) => {
-    const {bookingId} = this.state;
+    const { bookingId } = this.state;
     const paymentData = {
         BookingId: bookingId,
         PaymentMethod: PAYMENT_METHODS.INTERNATIONAL_PAYMENT_GATEWAY,
@@ -116,6 +117,7 @@ class Payments extends Component {
         <div className="wrap-container">
           <div className="row">
             <div className="col-md-12">
+              <CheckoutStepBar />
               <NoticeOfBookingStatus bookingData={bookingData} />
               {bookingData.Status === BOOKING_STATUS.PENDING ? (
                 bookingData.PaymentMethod ===
