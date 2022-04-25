@@ -11,11 +11,11 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { Redirect, withRouter } from "react-router-dom";
 import { id } from "date-fns/locale";
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import bookingService from "../../Shared/Service/BookingService";
 
 class UpdateBooking extends Form {
@@ -46,17 +46,32 @@ class UpdateBooking extends Form {
           type: "DeActive",
         },
       ],
+      paymentMethodList: [
+        {
+          key: 1,
+          type: "Paypal",
+        },
+        {
+          key: 0,
+          type: "Visa",
+        },
+      ],
     };
   }
 
   componentDidMount() {
     this.getBookingeDetails();
   }
+  handleChangePaymentMethod = (ev) => {
+    this.setState({
+      paymentMethod: ev.target.value,
+    });
+  }
   handleChangeStatus = (ev) => {
     this.setState({
       status: ev.target.value,
-    })
-  }
+    });
+  };
 
   handleChangeFile = (event) => {
     const file = event.target.files[0];
@@ -118,12 +133,12 @@ class UpdateBooking extends Form {
     const {
       isRedirectSuccess,
       content,
-      postAirlineList,
       isLoading,
       userId,
       status,
       paymentMethod,
-      bookingStatus
+      bookingStatus,
+      paymentMethodList,
     } = this.state;
     if (isRedirectSuccess) {
       return (
@@ -261,10 +276,7 @@ class UpdateBooking extends Form {
                     >
                       {bookingStatus.map((status) => {
                         return (
-                          <MenuItem
-                            key={status.key}
-                            value={status.type}
-                          >
+                          <MenuItem key={status.key} value={status.type}>
                             {status.type}
                           </MenuItem>
                         );
@@ -273,25 +285,27 @@ class UpdateBooking extends Form {
                   </FormControl>
                 </Box>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={paymentMethod.err !== ""}
-                  helperText={
-                    paymentMethod.err !== ""
-                      ? paymentMethod.err === "*"
-                        ? "paymentMethod cannot be empty"
-                        : paymentMethod.err
-                      : ""
-                  }
-                  required
-                  id="paymentMethod"
-                  name="paymentMethod"
-                  value={paymentMethod.value}
-                  label="PaymentMethod"
-                  autoComplete="shipping address-line1"
-                  variant="standard"
-                  onChange={(ev) => this._setValue(ev, "paymentMethod")}
-                />
+              <Grid item xs={6}>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="paymentMethod">Select Payment Method</InputLabel>
+                    <Select
+                      id="paymentMethod"
+                      name="paymentMethod"
+                      value={paymentMethod}
+                      label="PaymentMethod"
+                      onChange={this.handleChangePaymentMethod}
+                    >
+                      {paymentMethodList.map((paymentMethod) => {
+                        return (
+                          <MenuItem key={paymentMethod.key} value={paymentMethod.type}>
+                            {paymentMethod.type}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </Box>
               </Grid>
 
               <Grid item xs={12}>
