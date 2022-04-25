@@ -7,6 +7,7 @@ import { getDatabase, ref, set, onValue } from "firebase/database";
 import { dbFirebase } from "../../../Configs/firebase";
 import CheckoutStepBar from "../Shared/Components/CheckoutStepBar/CheckoutStepBar";
 import publicService from "../Shared/Services/PublicService";
+import { BookingStepBar } from "../ChooseFlightTicket/Components/BookingStepBar/BookingStepBar";
 
 export const GENDER = {
   MALE: 1,
@@ -235,6 +236,7 @@ class BonusServices extends Component {
       <>
         <NavbarV2 />
         <div className="wrap-container">
+          <BookingStepBar step={3}/>
           <div className="row">
             <div className="col-md-12">
               <FlightSeatService
