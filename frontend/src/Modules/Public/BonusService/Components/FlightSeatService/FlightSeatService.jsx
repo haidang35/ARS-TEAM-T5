@@ -32,6 +32,7 @@ class FlightSeatService extends Component {
             totalSeatFee={totalSeatFee}
             lockedSeats={lockedSeats}
             ipAddress={ipAddress}
+            checkExpiresReserveSeat={this.props.checkExpiresReserveSeat}
           />
         ) : (
           ""

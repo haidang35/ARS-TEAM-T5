@@ -71,8 +71,11 @@ class BonusServices extends Component {
   generateCustomerCode = () => {
     let expires = new Date();
     expires.setMinutes(expires.getMinutes() + 5);
-    localStorage.setItem('_flight_t5_ctm_code', Math.floor(Math.random() * 1000000));
-  }
+    localStorage.setItem(
+      "_flight_t5_ctm_code",
+      Math.floor(Math.random() * 1000000)
+    );
+  };
 
   calcTotalMoney = (flightTicket = {}, passengers = []) => {
     let { totalMoney } = this.state;
@@ -90,8 +93,8 @@ class BonusServices extends Component {
       let lockingSeats = [];
       snapshot.forEach((snapshotChild) => {
         let dataChild = snapshotChild.val();
-        dataChild['key'] = snapshotChild.key;
-        lockingSeats.push(dataChild)
+        dataChild["key"] = snapshotChild.key;
+        lockingSeats.push(dataChild);
       });
       this.setState({
         lockingSeats,
@@ -113,7 +116,7 @@ class BonusServices extends Component {
     let { reservationData, flightTicket, lockingSeats, ipAddress } = this.state;
     let oldSeatCode = "";
     let totalSeatFee = 0;
-    const customerCode = localStorage.getItem('_flight_t5_ctm_code');
+    const customerCode = localStorage.getItem("_flight_t5_ctm_code");
     reservationData.passengers.forEach((psg) => {
       if (psg.id === choosedPassengerId) {
         oldSeatCode = psg["seatInfo"].seatCode;
@@ -130,9 +133,13 @@ class BonusServices extends Component {
         lockingSeats.splice(index, 1);
       }
     });
+
     if (!isSeatExist) {
       seatInfo["ipAddress"] = ipAddress;
       seatInfo["customerCode"] = customerCode;
+      let expires = new Date();
+      expires.setMinutes(expires.getMinutes() + 5);
+      seatInfo["expires"] = expires.toJSON();
       lockingSeats.push(seatInfo);
       set(ref(dbFirebase, `flights/${flightTicket.Flight.FlightCode}`), {
         lockingSeats,
@@ -180,6 +187,24 @@ class BonusServices extends Component {
       });
   };
 
+  checkExpiresReserveSeat = (seatCode) => {
+     let { lockingSeats, flightTicket, reservationData } = this.state;
+     lockingSeats.forEach((seat, index) => {
+       if(seat.seatCode === seatCode) {
+          lockingSeats.splice(index, 1);
+       }
+     });
+     set(ref(dbFirebase, `flights/${flightTicket.Flight.FlightCode}`), {
+      lockingSeats,
+    });
+    reservationData.passengers.forEach((psg) => {
+      if(psg.seatInfo.seatCode == seatCode) {
+        psg.seatInfo.seatCode = '';
+      }
+    })
+    this.setState({ reservationData })
+  };
+
   render() {
     let {
       reservationData,
@@ -191,7 +216,7 @@ class BonusServices extends Component {
       isRedirect,
       lockedSeats,
       bookingData,
-      ipAddress
+      ipAddress,
     } = this.state;
     if (isRedirect) {
       return (
@@ -221,6 +246,7 @@ class BonusServices extends Component {
                 totalSeatFee={totalSeatFee}
                 lockedSeats={lockedSeats}
                 ipAddress={ipAddress}
+                checkExpiresReserveSeat={this.checkExpiresReserveSeat}
               />
             </div>
           </div>

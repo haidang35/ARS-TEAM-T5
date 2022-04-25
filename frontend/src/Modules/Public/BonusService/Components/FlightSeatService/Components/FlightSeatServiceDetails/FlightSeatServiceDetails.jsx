@@ -46,6 +46,7 @@ class FlightSeatServiceDetails extends Component {
                 passengers={reservationData.passengers}
                 choosedPassengerId={choosedPassengerId}
                 onSelectPassenger={this.onSelectPassenger}
+                checkExpiresReserveSeat={this.props.checkExpiresReserveSeat}
               />
             </div>
             <div className="col-md-8">
