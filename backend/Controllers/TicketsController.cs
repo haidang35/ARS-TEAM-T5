@@ -147,14 +147,16 @@ namespace backend.Controllers
             if(searchData.DepartureDate == DateTime.MinValue)
             {
                 flights = db.Flights.Where(f => f.DepartureId == searchData.DepartureId
-                                       && f.DestinationId == searchData.DestinationId
-                                       ).ToList();
+                                       && f.DestinationId == searchData.DestinationId)
+                                       .Where(f => f.DepartureTime > DateTime.Now)
+                                       .ToList();
             }else
             {
                 flights = db.Flights.Where(f => f.DepartureId == searchData.DepartureId
                                        && f.DestinationId == searchData.DestinationId
                                        )
                     .Where(f => EntityFunctions.TruncateTime(f.DepartureTime) == EntityFunctions.TruncateTime(searchData.DepartureDate) )
+                    .Where(f => f.DepartureTime > DateTime.Now)
                     .ToList();
             }
            
