@@ -3,7 +3,7 @@ import { AUTH_TOKEN, BASE_URL_SERVER } from '../../../../../Configs/server';
 
 
 const API_ENDPOINT = {
-  GET_BOOKING_TICKET_LIST: "/api/bookingTickets",
+  GET_BOOKING_TICKET_LIST: "/api/bookingtickets",
   GET_DETAILS: "/api/bookingTickets/",
   UPDATE_DETAILS: "/api/bookingTickets/",
   CREATE_NEW: "/api/bookingTickets",
@@ -16,8 +16,10 @@ const configs = {
 
 class BookingTicketService {
 
-  getBookingTicketList = async () => {
-    return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_BOOKING_TICKET_LIST);
+  getBookingTicketList = async (params) => {
+    return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_BOOKING_TICKET_LIST, {
+      params
+    });
   };
 
   getBookingTicketDetails = async (id) => {

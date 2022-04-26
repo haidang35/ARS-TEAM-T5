@@ -13,36 +13,27 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from "axios";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
-import PreviewIcon from '@mui/icons-material/Preview';
-import bookingService from '../../Shared/Service/BookingService';
+import bookingTicket from '../../Shared/Services/BookingTicket';
 
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
-  { id: 'userId', label: 'User', minWidth: 100 },
-  { id: 'bookingCode', label: 'BookingCode', minWidth: 100 },
-  
+  { id: 'seatFlightCode', label: 'SeatFlightCode', minWidth: 170 },
+  { id: 'passengerName', label: 'PassengerName', minWidth: 100 },
   {
-    id: 'contactPhone',
-    label: 'ContactPhone',
-    minWidth: 100,
+    id: 'passengerPhone',
+    label: 'PassengerPhone',
+    minWidth: 150,
     align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'status',
-    label: 'Status',
-    minWidth: 100,
-    align: 'left',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'createdAt',
-    label: 'CreatedAt',
+    id: 'seatFlightFee',
+    label: 'SeatFlightFee',
     minWidth: 100,
     align: 'left',
     format: (value) => value.toLocaleString('en-US'),
@@ -54,8 +45,8 @@ const columns = [
 
 ];
 
-function createData(id, userId, bookingCode,  contactPhone, status, createdAt, edit) {
-  return { id, userId, bookingCode,contactPhone, status, createdAt, edit };
+function createData(id, seatFlightCode, passengerName, passengerPhone, seatFlightFee ,edit) {
+  return {id, seatFlightCode, passengerName,passengerPhone, seatFlightFee ,edit };
 }
 
 const rows = [
@@ -64,23 +55,28 @@ const rows = [
   createData('3', 'Vietravel Airlines', 'VU', 'Viet Nam', 'Viettravel')
 ];
 
-export default function BookingList() {
+export default function BookingTicketDetails() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [bookingList, setBookingList] = useState([]);
-  const [bookingTicket, setBookingTicket] = useState([]);
+  const [bookingTicketList, setBookingTicketList] = useState([]);
   const [msg, setMsg] = useState('');
-
+  const { id } = useParams()
+  
   useEffect(() => {
-    getBookingList();
-    getMsg();
+     
+    getBookingTicketList();
+    // getMsg();
   }, []);
 
-  const getBookingList = async () => {
-    await bookingService
-      .getBookingList()
+  const getBookingTicketList = async () => {
+    const params = {
+        bookingId: id
+    }
+    await bookingTicket
+      .getBookingTicketList(params)
       .then((res) => {
-        setBookingList(res.data);
+        setBookingTicketList(res.data);
+        console.log("🚀 ~ file: BookingTicketDetails.jsx ~ line 79 ~ .then ~ res.data", res.data)
       })
       .catch((err) => {
         console.log(err);
@@ -97,26 +93,47 @@ export default function BookingList() {
     setPage(0);
   };
 
-  let location = useLocation();
+//   let location = useLocation();
 
-  const getMsg = () => {
-    if (typeof location.state !== 'undefined') {
-      let isHasMessage = false;
-      Object.keys(location.state).forEach(key => {
-        if (key === 'message') isHasMessage = true;
-      });
-      if (isHasMessage) {
-        setMsg(location.state.message);
-      }
-    }
-  }
+//   const getMsg = () => {
+//     if (typeof location.state !== 'undefined') {
+//       let isHasMessage = false;
+//       Object.keys(location.state).forEach(key => {
+//         if (key === 'message') isHasMessage = true;
+//       });
+//       if (isHasMessage) {
+//         setMsg(location.state.message);
+//       }
+//     }
+//   }
+//   const onDeleteAirline = async (airline) => {
+//     await  airlineService.deleteAirline(airline.Id)
+//     .then((res) => {
+//         console.log('success', res.data);
+//         //Handle when success
+//         getAirlineList();
+//         setMsg({
+//           type: 'success',
+//           content: `Delete airline  ${airline.Name} successful !`
+//         });
+       
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//         //Handle when catching error
+//         setMsg({
+//           type: 'error',
+//           content: `Delete airline ${airline.Name} failed !`
+//         });
+//     })
+//   }
 
   return (
     <>
       <div id='airline'>
         <Paper sx={{ width: '100%' }}>
           <Typography variant="h4" component="div" gutterBottom>
-            Booking
+            Booking Ticket
           </Typography>
           <TableContainer sx={{ maxHeight: 440 }}>
             {
@@ -130,11 +147,13 @@ export default function BookingList() {
                 <TableRow>
                   <TableCell align="center" colSpan={3}>
                   </TableCell>
-                  <TableCell align="right" colSpan={4}>
-                  View 
+                  <TableCell align="right" colSpan={3}>
+                      <Button variant="contained" startIcon={< AddCircleIcon />}>
+                        Add New
+                      </Button>
                   </TableCell>
                 </TableRow>
-                <TableRow >
+                <TableRow>
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
@@ -147,41 +166,36 @@ export default function BookingList() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {bookingList
+                {bookingTicketList
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((booking) => {
+                  .map((bookinTicket) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={booking.Id}>
+                      <TableRow hover role="checkbox" tabIndex={-1} key={bookinTicket.Id}>
                         <TableCell>
-                          {booking.Id}
+                          {bookinTicket.Id}
                         </TableCell>
                         <TableCell>
-                          {booking.ContactName }  
+                          {bookinTicket.SeatFlightCode}
                         </TableCell>
                         <TableCell>
-                          {booking.BookingCode}
+                          {bookinTicket.PassengerName}
                         </TableCell>
                         <TableCell>
-                          {booking.ContactPhone}
+                          {bookinTicket.PassengerPhone}
                         </TableCell>
                         <TableCell>
-                          {booking.Status === 1 ? 'Deactive' :'Active'}
+                          {bookinTicket.SeatFlightFee}
                         </TableCell>
                         <TableCell>
-                          {booking.CreatedAt}
-                        </TableCell>
-                        <TableCell>
-                          <Link to={`/admin/bookings/details/${booking.Id}`}>
-                            <IconButton aria-label="edit-icon">
-                              <PreviewIcon/>
-                            </IconButton>
-                            <Link to={`/admin/bookings/${booking.Id}`}>
+                          {/* <Link to={`/admin/airlines/${airline.Id}`}>
                             <IconButton aria-label="edit-icon">
                               <EditIcon />
                             </IconButton>
                           </Link>
-                          </Link>
+                          <DeleteAirline airline={airline} onDeleteAirline={onDeleteAirline} /> */}
                         </TableCell>
+
+
                       </TableRow>
 
                     );

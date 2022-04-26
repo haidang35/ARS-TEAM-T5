@@ -17,6 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import bookingService from "../../Shared/Service/BookingService";
+import BookingTicketDetails from "../../../BookingTicket/Components/BookingTicketDetails/BookingTicketDetails";
 
 class BookingDEtails extends Form {
   constructor(props) {
@@ -295,16 +296,7 @@ class BookingDEtails extends Form {
               </Grid>
 
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      color="secondary"
-                      name="saveAddress"
-                      value="yes"
-                    />
-                  }
-                  label="Use this address for payment details"
-                />
+                <BookingTicketDetails/>
               </Grid>
               <div id="submit">
                 <Button variant="contained" onClick={this.saveUpdateBooking}>
