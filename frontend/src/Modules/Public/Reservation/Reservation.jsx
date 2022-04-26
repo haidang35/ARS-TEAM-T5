@@ -95,7 +95,7 @@ class Reservation extends Component {
         </div>
 
           <div className="row">
-            {/* <SelectedFlight   flightTicket={flightTicket} /> */}
+            <SelectedFlight   flightTicket={flightTicket} />
           
             <CustomerInfomation
               passengers={passengers}

@@ -25,7 +25,7 @@ export class SelectedFlight extends Component {
 
     }
     render() {
-        const { flightTicket, data } = this.props;
+        const { flightTicket } = this.props;
         return (
             <>
                 <div className="selected-flight">
@@ -44,17 +44,17 @@ export class SelectedFlight extends Component {
                                     <div className="col-sm-4">
                                         <div className="destination">
                                             <Typography className="city">
-                                            {flightTicket.Flight.Departure.City.Name}
+                                            {flightTicket && flightTicket.Flight.Departure.City.Name}
                                             </Typography>
                                             <Typography className="time">
-                                            {getTime(flightTicket.Flight.DepartureTime)}
+                                            {flightTicket && getTime(flightTicket.Flight.DepartureTime)}
                                             </Typography>
                                         </div>
                                     </div>
                                     <div className="col-sm-4">
                                         <div className="info">
                                             <Typography className="flight-name">
-                                            {flightTicket.Flight.Airline.Code}
+                                            {flightTicket && flightTicket.Flight.FlightCode}
                                             </Typography>
                                             <div className="icon-flight-box">
                                                 <LocationOnIcon className="location-icon" />
@@ -79,10 +79,10 @@ export class SelectedFlight extends Component {
                                     <div className="col-sm-4">
                                         <div className="destination">
                                             <Typography className="city">
-                                            {flightTicket.Flight.Destination.City.Name}
+                                            {flightTicket && flightTicket.Flight.Destination.City.Name}
                                             </Typography>
                                             <Typography className="time">
-                                            {getTime(flightTicket.Flight.ArrivalTime)}
+                                            {flightTicket && getTime(flightTicket.Flight.ArrivalTime)}
                                             </Typography>
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@ export class SelectedFlight extends Component {
                         <div className="col-md-4">
                             <div className="flight-choose">
                                 <Typography className="price">
-                                    {this.props.price} USD
+                                    {this.props.price} VND
                                 </Typography>
                                 <Button
                                     onClick={() =>

@@ -72,7 +72,7 @@ const NavbarV2 = () => {
         <div className="wrap-container">
           <Container maxWidth="xl">
             <Toolbar disableGutters>
-              <Link to="/">
+              <Link to="/" className='form-navbar'>
               <Typography
                 variant="h6"
                 noWrap
@@ -80,7 +80,7 @@ const NavbarV2 = () => {
                 sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
               >
                 <div className="icons">
-                <LocalAirportIcon></LocalAirportIcon>
+               FLIGHt T5
                 </div>
               </Typography>
               </Link>
