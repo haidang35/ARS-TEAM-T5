@@ -9,6 +9,7 @@ import { BookingStepBar } from "./Components/BookingStepBar/BookingStepBar";
 import { FilterFlightBox } from "./Components/FilterFlightBox/FilterFlightBox";
 import { SelectDateTicketBox } from "./Components/SelectDateTicketBox/SelectDateTicketBox";
 import { TicketItem } from "./Components/TicketItem/TicketItem";
+import { FlightAmination } from "./Components/FlightAmination/FlightAmination";
 
 class FlightTicket extends Component {
   constructor(props) {
@@ -115,7 +116,7 @@ class FlightTicket extends Component {
         <div className="wrap-container">
           <div className="row">
             <SearchTicketBox />
-            <BookingStepBar />
+            <BookingStepBar step={1}/>
             <div className="col-md-3">
               <FilterFlightBox />
             </div>
@@ -134,12 +135,15 @@ class FlightTicket extends Component {
                     passengers={passengers}
                     onChooseFlightTicket={this.onChooseFlightTicket}
                   />
+                  
                 );
               })}
+                <FlightAmination />
             </div>
           </div>
+          <CheckoutStepBar totalMoney={totalMoney} onContinue={this.onContinue} />
         </div>
-        <CheckoutStepBar totalMoney={totalMoney} onContinue={this.onContinue} />
+      
       </>
     );
   }

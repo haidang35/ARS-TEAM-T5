@@ -5,6 +5,9 @@
         text-align: center;
     }
     .plane-icon{
-        font-size: 5rem;
+        font-size: 10rem;
+        animation: flight linear 5s infinite;
+        animation-direction: alternate;
+        
     }
 }

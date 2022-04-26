@@ -1,4 +1,5 @@
 @import "../../../../../Shared/Styles/variables";
+
 #select-ticket-box {
     width: 100%;
     height: 9rem;
@@ -9,7 +10,8 @@
         background-color: $background-color;
         padding: 2rem 2rem;
         display: flex;
-        width: 100%;
+        width: 61rem;
+
 
         .icon-plane {
             color: #ffff;
@@ -45,7 +47,9 @@
 
     .bottom-content-bar {
         margin-top: 1rem;
-        width: 100%;
+        width: 60rem;
+        margin-left: 12px;
+
 
         .item-box {
             width: 14.2%;
@@ -75,6 +79,7 @@
         .item-box:nth-child(7n) {
             border-right: none;
         }
+
         .item-selected {
             background-color: $background-color;
         }

@@ -17,8 +17,8 @@ import { InputBase } from '@mui/material';
 import "./Navbar.scss";
 
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Flight Ticket', 'Reservation', 'Bonus service', 'Payment'];
+const settings = ['Profile', 'Account',  'Logout'];
 
 
 const Navbar = () => {

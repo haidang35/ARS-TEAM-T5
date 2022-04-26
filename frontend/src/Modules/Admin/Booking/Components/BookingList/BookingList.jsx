@@ -17,6 +17,8 @@ import { Link, useLocation } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
+import PreviewIcon from '@mui/icons-material/Preview';
+import bookingService from '../../Shared/Service/BookingService';
 
 
 const columns = [
@@ -66,23 +68,24 @@ export default function BookingList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [bookingList, setBookingList] = useState([]);
+  const [bookingTicket, setBookingTicket] = useState([]);
   const [msg, setMsg] = useState('');
 
-//   useEffect(() => {
-//     getAirlineList();
-//     getMsg();
-//   }, []);
+  useEffect(() => {
+    getBookingList();
+    getMsg();
+  }, []);
 
-//   const getAirlineList = async () => {
-//     await airlineService
-//       .getAirlineList()
-//       .then((res) => {
-//         setAirlineList(res.data);
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
+  const getBookingList = async () => {
+    await bookingService
+      .getBookingList()
+      .then((res) => {
+        setBookingList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
 
   const handleChangePage = (event, newPage) => {
@@ -94,40 +97,19 @@ export default function BookingList() {
     setPage(0);
   };
 
-//   let location = useLocation();
+  let location = useLocation();
 
-//   const getMsg = () => {
-//     if (typeof location.state !== 'undefined') {
-//       let isHasMessage = false;
-//       Object.keys(location.state).forEach(key => {
-//         if (key === 'message') isHasMessage = true;
-//       });
-//       if (isHasMessage) {
-//         setMsg(location.state.message);
-//       }
-//     }
-//   }
-//   const onDeleteAirline = async (airline) => {
-//     await  airlineService.deleteAirline(airline.Id)
-//     .then((res) => {
-//         console.log('success', res.data);
-//         //Handle when success
-//         getAirlineList();
-//         setMsg({
-//           type: 'success',
-//           content: `Delete airline  ${airline.Name} successful !`
-//         });
-       
-//     })
-//     .catch((err) => {
-//         console.log(err);
-//         //Handle when catching error
-//         setMsg({
-//           type: 'error',
-//           content: `Delete airline ${airline.Name} failed !`
-//         });
-//     })
-//   }
+  const getMsg = () => {
+    if (typeof location.state !== 'undefined') {
+      let isHasMessage = false;
+      Object.keys(location.state).forEach(key => {
+        if (key === 'message') isHasMessage = true;
+      });
+      if (isHasMessage) {
+        setMsg(location.state.message);
+      }
+    }
+  }
 
   return (
     <>
@@ -148,10 +130,11 @@ export default function BookingList() {
                 <TableRow>
                   <TableCell align="center" colSpan={3}>
                   </TableCell>
-                  <TableCell align="right" colSpan={3}>
+                  <TableCell align="right" colSpan={4}>
+                  View 
                   </TableCell>
                 </TableRow>
-                <TableRow>
+                <TableRow >
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
@@ -169,30 +152,36 @@ export default function BookingList() {
                   .map((booking) => {
                     return (
                       <TableRow hover role="checkbox" tabIndex={-1} key={booking.Id}>
-                        {/* <TableCell>
+                        <TableCell>
                           {booking.Id}
                         </TableCell>
                         <TableCell>
-                          {booking.Name}
+                          {booking.ContactName }  
                         </TableCell>
                         <TableCell>
-                          {airline.Code}
+                          {booking.BookingCode}
                         </TableCell>
                         <TableCell>
-                          {airline.Country}
+                          {booking.ContactPhone}
                         </TableCell>
                         <TableCell>
-                          {airline.Logo}
-                        </TableCell> */}
+                          {booking.Status}
+                        </TableCell>
                         <TableCell>
-                          <Link to={`/admin/bookings/${booking.Id}`}>
+                          {booking.CreatedAt}
+                        </TableCell>
+                        <TableCell>
+                          <Link to={`/admin/bookings/details/${booking.Id}`}>
+                            <IconButton aria-label="edit-icon">
+                              <PreviewIcon/>
+                            </IconButton>
+                            <Link to={`/admin/bookings/${booking.Id}`}>
                             <IconButton aria-label="edit-icon">
                               <EditIcon />
                             </IconButton>
                           </Link>
+                          </Link>
                         </TableCell>
-
-
                       </TableRow>
 
                     );

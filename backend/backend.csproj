@@ -196,6 +196,7 @@
     <Compile Include="Dtos\PaymentDto.cs" />
     <Compile Include="Dtos\SearchFlightTicket.cs" />
     <Compile Include="Dtos\UpdateAirline.cs" />
+    <Compile Include="Dtos\UpdateBooking.cs" />
     <Compile Include="Dtos\UpdateFlight.cs" />
     <Compile Include="Dtos\UpdateLocation.cs" />
     <Compile Include="Dtos\UpdateTicket.cs" />
@@ -243,6 +244,10 @@
     <Compile Include="Migrations\202204240807559_UpdateDatabase1.cs" />
     <Compile Include="Migrations\202204240807559_UpdateDatabase1.designer.cs">
       <DependentUpon>202204240807559_UpdateDatabase1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204251459485_UpdateDatabase2.cs" />
+    <Compile Include="Migrations\202204251459485_UpdateDatabase2.designer.cs">
+      <DependentUpon>202204251459485_UpdateDatabase2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Airline.cs" />
@@ -383,6 +388,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204240807559_UpdateDatabase1.resx">
       <DependentUpon>202204240807559_UpdateDatabase1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204251459485_UpdateDatabase2.resx">
+      <DependentUpon>202204251459485_UpdateDatabase2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

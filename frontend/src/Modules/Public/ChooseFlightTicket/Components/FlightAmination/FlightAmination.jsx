@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import { LinearProgress, Typography } from "@mui/material";
 import "./FlightAmination.scss";
+import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
+
 
 export class FlightAmination extends Component {
     constructor(props) {
@@ -15,7 +16,7 @@ export class FlightAmination extends Component {
             <>
                 <div id="flight-amination">
                     <div className="notice-none-flight">
-                        <FlightTakeoffIcon className="plane-icon" />
+                        <ConnectingAirportsIcon className="plane-icon" />
                         <div className="progress-search">
                             <LinearProgress />
                         </div>

@@ -33,7 +33,6 @@ export class SelectDateTicketBox extends Component {
           destinationid: urlParams.get("destination"),
         };
         await publicService.getFlightTickets(searchData).then((res) => {
-            console.log("🚀 ~ file: SelectDateTicketBox.jsx ~ line 36 ~ SelectDateTicketBox ~ awaitpublicService.getFlightTickets ~ res", res.data)
             this.getDaysOfWeek(this.props.departureDateTime, res.data);
         });
     }
@@ -47,14 +46,6 @@ export class SelectDateTicketBox extends Component {
     compareDate = (departureDate, date) => {
         let depaDate = new Date(departureDate);
         let newDate = new Date(date);
-        // if (
-        //     depaDate.getDate() == newDate.getDate() &&
-        //     newDate.getMonth() == depaDate.getMonth() &&
-        //     depaDate.getFullYear() == newDate.getFullYear()
-        // )
-        //     return true;
-        // return false;
-
         return depaDate.getDate() == newDate.getDate() &&  newDate.getMonth() == depaDate.getMonth() && depaDate.getFullYear() == newDate.getFullYear();
     };
 
@@ -63,14 +54,10 @@ export class SelectDateTicketBox extends Component {
     };
 
     getDaysOfWeek = (departureDate, ticketList) => {
-        //TODO:  departureDate = 2022-04-22 
         let current = new Date(departureDate);
-        //TODO: current = Fri Apr 22 2022 09:44:00 GMT+0700 (Giờ Đông Dương);
         let flightOnWeek = new Array(); // = []
         current.setDate(current.getDate() - 3);
-        //TODO: current = Tue Apr 19 2022 09:44:00 GMT+0700 (Giờ Đông Dương);
         for (let i = 0; i < 7; i++) {
-            //TODO: i = 0; i < 7 => 0, 1, 2, 3, 4, 5, 6
             let data = {
                 id: i,
                 date: new Date(current),

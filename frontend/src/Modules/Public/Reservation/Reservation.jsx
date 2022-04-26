@@ -90,8 +90,9 @@ class Reservation extends Component {
         <NavbarV2 />
         <div className="wrap-container">
           <div className="row">
-            <BookingStepBar />
+            <BookingStepBar step={2} />
             {/* <SelectedFlight   flightTicket={flightTicket} /> */}
+          
             <CustomerInfomation
               passengers={passengers}
               isContinue={isContinue}

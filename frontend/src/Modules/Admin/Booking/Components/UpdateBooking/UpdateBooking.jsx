@@ -10,31 +10,68 @@ import Form from "../../../../../Shared/Components/Form";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { Redirect, withRouter } from "react-router-dom";
-import flightService from "../../../Flight/Shared/Services/FlightService";
 import { id } from "date-fns/locale";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import bookingService from "../../Shared/Service/BookingService";
 
 class UpdateBooking extends Form {
   constructor(props) {
     super(props);
     this.state = {
       form: this._getInitFormData({
-        bookingCode:"",
-        contactName:"",
-        contactPhone:"",
-        contactEmail:"",
-        note:"",
+        bookingCode: "",
+        contactName: "",
+        contactPhone: "",
+        contactEmail: "",
+        contactAddress: "",
+        note: "",
       }),
-      userId:"",
+      userId: "",
+      status: "",
+      paymentMethod: "",
       content: "",
       isLoading: false,
-      postAirlineList: [],
       isRedirectSuccess: false,
+      bookingStatus: [
+        {
+          key: 1,
+          type: "Active",
+        },
+        {
+          key: 0,
+          type: "DeActive",
+        },
+      ],
+      paymentMethodList: [
+        {
+          key: 1,
+          type: "Paypal",
+        },
+        {
+          key: 0,
+          type: "Visa",
+        },
+      ],
     };
   }
 
-//   componentDidMount() {
-//     this.getAirlineDetails();
-//   }
+  componentDidMount() {
+    this.getBookingeDetails();
+  }
+  handleChangePaymentMethod = (ev) => {
+    this.setState({
+      paymentMethod: ev.target.value,
+    });
+  }
+  handleChangeStatus = (ev) => {
+    this.setState({
+      status: ev.target.value,
+    });
+  };
 
   handleChangeFile = (event) => {
     const file = event.target.files[0];
@@ -43,46 +80,66 @@ class UpdateBooking extends Form {
     this.setState({ form });
   };
 
-//   getAirlineDetails = async () => {
-//     const { id } = this.props.match.params;
-//     await airlineService.getAirlineDetails(id).then((res) => {
-//       this._fillForm({
-//         name: res.data.Name,
-//         code: res.data.Code,
-//         country: res.data.Country,
-//         logo: res.data.Logo,
-//       });
-//     });
-//   };
+  getBookingeDetails = async () => {
+    const { id } = this.props.match.params;
+    await bookingService.getBookingDetails(id).then((res) => {
+      this.setState({
+        userId: res.data.UserId,
+        status: res.data.Status,
+        paymentMethod: res.data.PaymentMethod,
+      });
+      this._fillForm({
+        bookingCode: res.data.BookingCode,
+        contactName: res.data.ContactName,
+        contactPhone: res.data.ContactPhone,
+        contactEmail: res.data.ContactEmail,
+        contactAddress: res.data.ContactAddress,
+        note: res.data.Note,
+      });
+    });
+  };
 
-//   saveUpdateAirline = async () => {
-//     this._validateForm();
-//     if (this._isFormValid()) {
-//       const { id } = this.props.match.params;
-//       const { form, isRedirectSuccess } = this.state;
-//       const dataConverted = {
-//         Name: form.name.value,
-//         Code: form.code.value,
-//         Country: form.country.value,
-//         Logo: form.country.value,
-//       };
-//       await airlineService
-//         .updateDetails(id, dataConverted)
-//         .then((res) => {
-//           this.setState({
-//             isRedirectSuccess: true,
-//           });
-//         })
-//         .catch((err) => {
-//           console.log(err);
-//         });
-//     }
-//   };
+  saveUpdateBooking = async () => {
+    this._validateForm();
+    if (this._isFormValid()) {
+      const { id } = this.props.match.params;
+      const { form, isRedirectSuccess, userId, status, paymentMethod } =
+        this.state;
+      const dataConverted = {
+        BookingCode: form.bookingCode.value,
+        ContactName: form.contactName.value,
+        ContactEmail: form.contactEmail.value,
+        ContactPhone: form.contactPhone.value,
+        ContactAddress: form.contactAddress.value,
+        Status: status,
+        PaymentMethod: paymentMethod,
+      };
+      await bookingService
+        .updateDetails(id, dataConverted)
+        .then((res) => {
+          this.setState({
+            isRedirectSuccess: true,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   render() {
-    const { bookingCode, contactName, contactEmail, contactPhone, note } = this.state.form;
-    const { isRedirectSuccess, content, postAirlineList, isLoading } =
-      this.state;
+    const { bookingCode, contactName, contactEmail, contactPhone, note } =
+      this.state.form;
+    const {
+      isRedirectSuccess,
+      content,
+      isLoading,
+      userId,
+      status,
+      paymentMethod,
+      bookingStatus,
+      paymentMethodList,
+    } = this.state;
     if (isRedirectSuccess) {
       return (
         <Redirect
@@ -91,7 +148,7 @@ class UpdateBooking extends Form {
             state: {
               message: {
                 type: "success",
-                content: "Update airline successful !",
+                content: "Update booking successful !",
               },
             },
           }}
@@ -192,7 +249,7 @@ class UpdateBooking extends Form {
                   helperText={
                     note.err !== ""
                       ? note.err === "*"
-                        ? "ContactEmail cannot be empty"
+                        ? "Note cannot be empty"
                         : note.err
                       : ""
                   }
@@ -205,6 +262,50 @@ class UpdateBooking extends Form {
                   variant="standard"
                   onChange={(ev) => this._setValue(ev, "note")}
                 />
+              </Grid>
+              <Grid item xs={6}>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="status">Select Status</InputLabel>
+                    <Select
+                      id="status"
+                      name="status"
+                      value={status}
+                      label="Status"
+                      onChange={this.handleChangeStatus}
+                    >
+                      {bookingStatus.map((status) => {
+                        return (
+                          <MenuItem key={status.key} value={status.type}>
+                            {status.type}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="paymentMethod">Select Payment Method</InputLabel>
+                    <Select
+                      id="paymentMethod"
+                      name="paymentMethod"
+                      value={paymentMethod}
+                      label="PaymentMethod"
+                      onChange={this.handleChangePaymentMethod}
+                    >
+                      {paymentMethodList.map((paymentMethod) => {
+                        return (
+                          <MenuItem key={paymentMethod.key} value={paymentMethod.type}>
+                            {paymentMethod.type}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </Box>
               </Grid>
 
               <Grid item xs={12}>
