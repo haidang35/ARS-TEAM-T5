@@ -10,15 +10,27 @@
             padding-right: 0px;
         }
     }
+    .form-navbar{
+        color: #fff;
+        text-decoration: none;
+    }
+    .icons{
 
+        .css-i4bv87-MuiSvgIcon-root{
+            font-size: 80px;
+            color: #ffff;
+            margin-left: 20px;
+
+        }
+    }
+   
     .list-menu {
         margin-left: 10rem;
         padding-top: 1rem;
+        margin-left: 340px;
 
         .hotline {
             display: flex;
-            justify-content: center;
-            align-items: center;
 
 
 
@@ -51,3 +63,4 @@
         }
     }
 }
+
