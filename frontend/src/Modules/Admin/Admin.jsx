@@ -22,6 +22,8 @@ import UserList from "./User/Components/UserList/UserList";
 import UpdateUser from "./User/Components/UpdateUser/UpdateUser";
 import BookingList from "./Booking/Components/BookingList/BookingList";
 import UpdateBooking from "./Booking/Components/UpdateBooking/UpdateBooking";
+import PaymentList from "./Payment/Components/PaymentList/PaymentList";
+import AddNewPayment from "./Payment/Components/AddNewPayment/AddNewPayment";
 import BookingDetails from "./Booking/Components/BookingDetails/BookingDetails";
 
 
@@ -104,6 +106,12 @@ export class Admin extends Component {
                                         </Route>
                                         <Route exact path = "/admin/bookings/:id">
                                            <UpdateBooking/>
+                                        </Route>
+                                        <Route exact path="/admin/payments">
+                                           <PaymentList />
+                                        </Route>
+                                        <Route exact path="/admin/payment/create">
+                                           <AddNewPayment />
                                         </Route>
                                         <Route exact path = "/admin/bookings/details/:id">
                                            <BookingDetails/>
