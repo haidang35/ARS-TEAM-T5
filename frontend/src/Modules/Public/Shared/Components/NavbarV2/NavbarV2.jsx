@@ -80,7 +80,7 @@ const NavbarV2 = () => {
                 sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
               >
                 <div className="icons">
-               FLIGHt T5
+               FLIGHT T5
                 </div>
               </Typography>
               </Link>

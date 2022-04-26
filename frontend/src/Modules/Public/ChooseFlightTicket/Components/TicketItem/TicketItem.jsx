@@ -9,6 +9,7 @@ import FlightLandIcon from "@mui/icons-material/FlightLand";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { FlightDetails } from "../FlightDetails/FlightDetails";
 import { getTime } from "../../../../../Helpers/datetime";
+import { formatCurrencyToVND } from "../../../../../Helpers/currency";
 
 export class TicketItem extends Component {
   constructor(props) {
@@ -100,7 +101,7 @@ export class TicketItem extends Component {
             </div>
             <div className="col-md-4">
               <div className="flight-choose">
-                <Typography className="price">{data.Price} VND</Typography>
+                <Typography className="price">{formatCurrencyToVND(data.Price)}</Typography>
                 {isChoosed ? (
                   <Button
                     onClick={() => this.onChooseFlight(data, "cancel")}

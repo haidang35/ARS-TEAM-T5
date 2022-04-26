@@ -77,7 +77,7 @@ const Navbar = () => {
                 component="div"
                 sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
               >
-                FLIGTH T5
+                FLIGHT T5
               </Typography>
 
               <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
