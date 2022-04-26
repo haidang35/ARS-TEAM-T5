@@ -10,13 +10,53 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using backend.Data;
 using backend.Dtos;
+using backend.Helpers;
 using backend.Models;
 
 namespace backend.Controllers
 {
+ 
     public class UsersController : ApiController
     {
         private MyDbContext db = new MyDbContext();
+
+        [AllowAnonymous]
+        [Route ("~/api/user/register")]
+        [HttpPost]
+        public IHttpActionResult Register(UserRegisterDto userRegister)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var user = db.Users.Where(u => u.Email == userRegister.Email).FirstOrDefault();
+            if(user != null)
+            {
+                return BadRequest("Email already exist !!");
+            }
+            var newUser = new User()
+            {
+                Name = userRegister.Name,
+                Email = userRegister.Email,
+                PhoneNumber = userRegister.PhoneNumber,
+                Birthday = userRegister.Birthday,
+                Status = UserStatus.Active,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                Password = Hash.Make(userRegister.Password)
+
+            };
+            db.Users.Add(newUser);
+            try
+            {
+                db.SaveChanges();
+            }catch(Exception e)
+            {
+                return BadRequest();
+            }
+            return Ok(newUser);
+        }
+
 
         // GET: api/Users
         [Route ("~/api/users")]
