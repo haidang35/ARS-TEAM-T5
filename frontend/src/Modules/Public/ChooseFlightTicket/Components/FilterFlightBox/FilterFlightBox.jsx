@@ -8,13 +8,60 @@ import { ViewMode } from "./Components/ViewMode/ViewMode";
 export class FilterFlightBox extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            flightsData: [],
+            flightListDate: [],
+            flightsDataReturn: [],
+            flightListDateReturn: [],
+
+        }
     }
 
+    sortFlight = (value) => {
+        if (value == 0) {
+            this.sortFLightPriceFromLowToHigh();
+        } else if (value == 1) {
+            this.sortFLightPriceFromHighToLow();
+        } else if (value == 2) {
+            this.sortDepartureTime();
+        } else if (value == 3) {
+            this.sortFlightTime();
+        }
+    };
+
+    sortFLightPriceFromHighToLow = () => {
+        let {
+            flightsData,
+            flightListDate,
+            flightsDataReturn,
+            flightListDateReturn,
+        } = this.state;
+        flightsData = flightsData.sort((item1, item2) => {
+            return item2.total_price - item1.total_price;
+        });
+        flightListDate = flightListDate.sort((item1, item2) => {
+            return item2.total_price - item1.total_price;
+        });
+        flightsDataReturn = flightsDataReturn.sort((item1, item2) => {
+            return item2.total_price - item1.total_price;
+        });
+        flightListDateReturn = flightListDateReturn.sort((item1, item2) => {
+            return item2.total_price - item1.total_price;
+        });
+
+        this.setState({
+            flightsData,
+            flightListDate,
+            flightListDateReturn,
+            flightsDataReturn,
+        });
+    };
+
     render() {
+        const { flightsData,flightListDate, flightListDateReturn,flightsDataReturn } = this.state;
         return(
             <>
-                <SortByFlight />
+                <SortByFlight onSortFlight={this.sortFlight}/>
                 <ViewMode />
                 <FilterByFlight />
             </>
