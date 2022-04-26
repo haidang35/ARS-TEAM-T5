@@ -10,6 +10,8 @@ import Search from "@mui/icons-material/Search";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Location } from "./Location/Location";
+import { Redirect } from "react-router-dom";
+
 
 const TRIP_TYPE = {
   ONEWAY: 1,
@@ -35,6 +37,8 @@ export class SearchTicketBox extends Component {
 
       openLocationDialog: false,
       locationType: "",
+      isRedirect: false
+
     };
   }
 
@@ -127,15 +131,45 @@ export class SearchTicketBox extends Component {
     });
   };
   onSearchFlight = () => {
-    
-    
-   
+    this.setState({
+      isRedirect: true
+    })
+
+
   };
 
   render() {
-    const { departure, destination, departureDate, returnDate, tripType } =
-      this.state.searchData;
-    const { open, location } = this.state;
+    const { departure, destination, departureDate, returnDate, tripType } = this.state.searchData;
+    const { open, locations, isRedirect, children, infants, adults } = this.state;
+
+    if (isRedirect) {
+      return <Redirect to={{
+        pathname: '/flight-ticket',
+        search: `?tripType=${tripType}&departure=${departure.Id}&destination=${destination.Id}&departureDate=${departureDate}`,
+        state: {
+          passengers: [
+            {
+              id: 1,
+              passengerType: 'adults',
+              quantity: adults
+            },
+            {
+              id: 2,
+              passengerType: 'children',
+              quantity: children
+            },
+            {
+              id: 3,
+              passengerType: 'infants',
+              quantity: infants
+            }
+          ],
+          departure,
+          destination
+        }
+
+      }} />
+    }
 
     return (
       <>

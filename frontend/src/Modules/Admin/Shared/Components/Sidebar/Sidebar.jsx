@@ -33,7 +33,7 @@ const data = [
   { icon: <AirlinesIcon />, label: 'Airline', path: '/admin/airlines'  },
   { icon: <Public />, label: 'Location', path: '/admin/locations' },
   { icon: <AirplaneTicket />, label: 'Flight Ticket', path: '/admin/flight-tickets' },
-  { icon: <Payments />, label: 'Payment', path: '/admin' },
+  { icon: <Payments />, label: 'Payment', path: '/admin/payments' },
   { icon: <Flight />, label: 'Flight' , path: '/admin/flights' },
   { icon: <Notifications />, label: 'Notification', path: '/admin'},
 ];
