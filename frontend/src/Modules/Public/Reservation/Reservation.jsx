@@ -8,7 +8,6 @@ import { BookingStepBar } from "../ChooseFlightTicket/Components/BookingStepBar/
 import { ContactsInfo } from "./Components/ContactsInfo/ContactsInfo";
 import "./Reservation.scss";
 
-
 class Reservation extends Component {
   constructor(props) {
     super(props);
