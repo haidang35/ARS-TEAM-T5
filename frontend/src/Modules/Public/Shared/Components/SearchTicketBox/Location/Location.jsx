@@ -45,10 +45,8 @@ export class Location extends Component {
         this.props.selectLocation(location);
     }
 
-    handleChangeLocation = (ev, newValue) => {
-        this.props.selectLocation({
-            province: newValue.label
-        })
+    handleChangeLocation = (ev, location) => {
+        this.props.selectLocation(location)
     }
     render() {
         const { locations } = this.state;
@@ -72,7 +70,8 @@ export class Location extends Component {
                              disablePortal
                              id="combo-box-demo"
                              onChange={this.handleChangeLocation}
-                             options={locations.map((location) => `${location.City.Name} (${location.AirPortName} - ${location.AirPortCode})` )}
+                             options={locations}
+                             getOptionLabel={(location) => `${location.City.Name} (${location.AirPortName} - ${location.AirPortCode})`}
                              renderInput={(params) => <TextField {...params} label="City,airport code" />}
                         />
 
