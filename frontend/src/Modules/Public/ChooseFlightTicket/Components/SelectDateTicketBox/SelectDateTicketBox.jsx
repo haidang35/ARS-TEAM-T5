@@ -34,13 +34,16 @@ export class SelectDateTicketBox extends Component {
         };
         await publicService.getFlightTickets(searchData).then((res) => {
             this.getDaysOfWeek(this.props.departureDateTime, res.data);
+            this.setState({
+                flightTicketList: res.data
+            })
         });
     }
 
     componentWillReceiveProps = (nextProps) => {
-        // const departureDate = nextProps.departureDateTime;
-        // const ticketList = nextProps.flightTicketList;
-        // this.getDaysOfWeek(departureDate, ticketList);
+        const departureDate = nextProps.departureDateTime;
+        const {flightTicketList} = this.state;
+        this.getDaysOfWeek(departureDate, flightTicketList);
     }
 
     compareDate = (departureDate, date) => {

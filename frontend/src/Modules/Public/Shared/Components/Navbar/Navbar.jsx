@@ -17,8 +17,7 @@ import { InputBase } from '@mui/material';
 import "./Navbar.scss";
 
 
-const pages = ['Flight Ticket', 'Reservation', 'Bonus service', 'Payment'];
-const settings = ['Profile', 'Account',  'Logout'];
+const settings = ['Profile', 'Account', 'Logout'];
 
 
 const Navbar = () => {
@@ -78,7 +77,7 @@ const Navbar = () => {
                 component="div"
                 sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
               >
-                FLIGTH T5
+                FLIGHT T5
               </Typography>
 
               <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -110,11 +109,7 @@ const Navbar = () => {
                     display: { xs: 'block', md: 'none' },
                   }}
                 >
-                  {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
-                    </MenuItem>
-                  ))}
+
                 </Menu>
               </Box>
               <Typography
@@ -126,15 +121,6 @@ const Navbar = () => {
                 LOGO
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                {pages.map((page) => (
-                  <Button
-                    key={page}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
-                  >
-                    {page}
-                  </Button>
-                ))}
                 <div className="list-menu">
                   <div className="hotline">
                     <img
