@@ -14,13 +14,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import publicService from "../../../Services/PublicService";
 
-const departure = [
-    { label: 'Hà Nội' },
-    { label: 'Hồ Chí Minh' },
-    { label: 'Đà Lạt' },
-    { label: 'Nha Trang' },
-    { label: 'Đà Nẵng' }
-]
+
 
 
 export class Location extends Component {
@@ -78,7 +72,7 @@ export class Location extends Component {
                              disablePortal
                              id="combo-box-demo"
                              onChange={this.handleChangeLocation}
-                             options={ departure }
+                             options={locations.map((location) => `${location.City.Name} (${location.AirPortName} - ${location.AirPortCode})` )}
                              renderInput={(params) => <TextField {...params} label="City,airport code" />}
                         />
 
@@ -97,7 +91,7 @@ export class Location extends Component {
                                                     <ListItemIcon>
                                                         <InboxIcon />
                                                     </ListItemIcon>
-                                                    <ListItemText primary={location.City.Name} />
+                                                    <ListItemText primary={`${location.City.Name} (${location.AirPortName} - ${location.AirPortCode})`} />
                                                 </ListItemButton>
                                             </ListItem>
                                         )
