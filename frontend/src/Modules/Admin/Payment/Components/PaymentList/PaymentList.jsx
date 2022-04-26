@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link, useLocation } from 'react-router-dom';
-import paymentService from '../../Shared/PaymentService';
+import paymentService1 from '../../Shared/PaymentService'
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
@@ -20,7 +20,7 @@ import DeletePayment from '../DeletePayment/DeletePayment'
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
-  { id: 'paymentMethod', label: 'PaymentMethod', minWidth: 170 },
+  { id: 'paymentMethod', label: 'Payment Method', minWidth: 170 },
   { id: 'booking', label: 'Booking', minWidth: 100 },
   {
     id: 'amount',
@@ -65,10 +65,11 @@ export default function PaymentList() {
   }, []);
 
   const getPaymentList = async () => {
-    await paymentService
+    await paymentService1
       .getPaymentList()
       .then((res) => {
         setPaymentList(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -99,7 +100,7 @@ export default function PaymentList() {
     }
   }
   const onDeletePayment = async (payment) => {
-    await  paymentService.deletePayment(payment.Id)
+    await  paymentService1.deletePayment(payment.Id)
     .then((res) => {
         console.log('success', res.data);
         //Handle when success
@@ -172,7 +173,7 @@ export default function PaymentList() {
                           {payment.PaymentMethod}
                         </TableCell>
                         <TableCell>
-                          {payment.Booking}
+                          {payment.Booking.BookingCode}
                         </TableCell>
                         <TableCell>
                           {payment.Amount}

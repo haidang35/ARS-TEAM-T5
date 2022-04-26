@@ -3,11 +3,11 @@ import { AUTH_TOKEN, BASE_URL_SERVER } from '../../../../Configs/server';
 
 
 const API_ENDPOINT = {
-  GET_PAYMENT_LIST: "/api/payment",
-  GET_DETAILS: "/api/payment/",
-  UPDATE_DETAILS: "/api/payment/",
-  CREATE_NEW: "/api/payment",
-  DELETE_PAYMENT: "/api/payment/"
+  GET_PAYMENT_LIST: "/api/payments",
+  GET_DETAILS: "/api/payments/",
+  UPDATE_DETAILS: "/api/payments/",
+  CREATE_NEW: "/api/payments",
+  DELETE_PAYMENT: "/api/payments/"
 }
 
 const configs = {
@@ -43,5 +43,5 @@ class PaymentService {
 }
 
 const paymentService1 = new PaymentService();
-export default PaymentService;
+export default paymentService1;
 

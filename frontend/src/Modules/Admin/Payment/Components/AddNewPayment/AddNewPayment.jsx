@@ -13,6 +13,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import bookingService from '../../../Booking/Shared/Service/BookingService'
 import paymentService1 from '../../Shared/PaymentService'
 
 class AddNewPayment extends Form {
@@ -32,8 +33,9 @@ class AddNewPayment extends Form {
     }
   }
   componentDidMount() {
-    console.log(this.state.form);
+    console.log('222',this.state.form);
     this.getPaymentList();
+    this.getBookingList();
   }
 
   handleChangeFile =(event) => {
@@ -47,11 +49,16 @@ class AddNewPayment extends Form {
     await paymentService.getPaymentList().then((res) =>{
       this.setState({
         postPaymentList: res.data,
-
       });
     });
   }
-
+  getBookingList = async () => {
+      await bookingService.getBookingList().then((res) =>{
+          this.setState({
+              bookingList: res.data,
+          })
+      })
+  }
 
   saveNewPayment = async () => {
 
@@ -87,11 +94,11 @@ class AddNewPayment extends Form {
   }
 
   render() {
-    const { paymentMethod, amount, status, bookingId } = this.state.form;
-    const {isRedirectSuccess, content, bookingList, postAirlineList, isLoading} = this.state;
+    const { paymentMethod, amount, status } = this.state.form;
+    const {isRedirectSuccess, content, bookingList, bookingId, isLoading} = this.state;
     if(isRedirectSuccess){
       return <Redirect to={{
-        pathname: '/admin/payment',
+        pathname: '/admin/payments',
         state: {
           message: {
             type: 'success',
@@ -124,9 +131,8 @@ class AddNewPayment extends Form {
                           <MenuItem
                             key={booking.Id}
                             value={booking.Id}>
-                            {booking.Id}
+                            {booking.BookingCode}
                           </MenuItem>
-
                         )
                       })
                       }
