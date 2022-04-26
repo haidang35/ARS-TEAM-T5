@@ -6,7 +6,7 @@ export class BookingHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            
         }
     }
     render() {
@@ -35,22 +35,22 @@ export class BookingHistory extends Component {
                                         <tbody>
                                             <tr>
                                                 <td className="text-bold-500">
-                                                    111
+                                                    1
                                                 </td>
                                                 <td className="text-bold-500">
-                                                    111
+                                                04-04-2022
                                                 </td>
                                                 <td className="text-bold-500">
-                                                    111
+                                                Hà Nội - Hồ Chí Minh
                                                 </td>
                                                 <td className="text-bold-500">
-                                                    111
+                                                VNA1111
                                                 </td>
                                                 <td className="text-bold-500">
-                                                    121
+                                                1.210.000 ₫
                                                 </td>
                                                 <td>
-                                                    122
+                                                Paid
                                                 </td>
                                                 <td>
                                                     <div className="btn-box-control">

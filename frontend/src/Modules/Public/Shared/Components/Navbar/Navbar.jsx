@@ -8,13 +8,13 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import SearchIcon from '@mui/icons-material/Search';
 import { style } from '@mui/system';
 import { InputBase } from '@mui/material';
 import "./Navbar.scss";
+import { Link } from 'react-router-dom';
 
 
 const settings = ['Profile', 'Account', 'Logout'];
@@ -189,10 +189,12 @@ const Navbar = () => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
+                  {settings.map((setting, index) => (
+                    <Link key={index} to="/profile" className='profile'> 
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <Typography textAlign="center">{setting}</Typography>
+                      </MenuItem>
+                    </Link>
                   ))}
                 </Menu>
               </Box>
