@@ -91,7 +91,7 @@ class Reservation extends Component {
         <div className="wrap-container">
           <div className="row">
             <BookingStepBar step={2} />
-            {/* <SelectedFlight   flightTicket={flightTicket} /> */}
+            <SelectedFlight  flightTicket={flightTicket} />
           
             <CustomerInfomation
               passengers={passengers}

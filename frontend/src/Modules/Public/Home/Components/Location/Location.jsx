@@ -70,9 +70,8 @@ export class Location extends Component {
                             <DialogTitle className="alert-dialog-title">
                                 {"Select "}
                             </DialogTitle>
-
                             <Autocomplete
-                                className="box"
+                                className="form-box"
                                 disablePortal
                                 onChange={this.handleChangeLocation}
                                 options={departure}
@@ -107,7 +106,6 @@ export class Location extends Component {
                             </DialogActions>
                         </Dialog>
                     </div>
-
                 </div>
             </>
         )
