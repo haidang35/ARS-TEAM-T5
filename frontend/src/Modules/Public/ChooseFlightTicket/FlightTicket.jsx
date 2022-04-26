@@ -72,11 +72,11 @@ class FlightTicket extends Component {
   };
 
   onChooseFlightTicket = (flightTicket, status) => {
-    let { totalMoney, choosedFlightTicket } =  this.state;
+    let { totalMoney, choosedFlightTicket } = this.state;
     const { passengers } = this.props.location.state;
     if (status === "cancel") {
-        totalMoney = 0;
-        choosedFlightTicket = '';
+      totalMoney = 0;
+      choosedFlightTicket = '';
     } else {
       passengers.forEach((psg) => {
         if (psg.quantity > 0) {
@@ -101,7 +101,7 @@ class FlightTicket extends Component {
     const { flightTickets, departureDate, choosedFlightTicket, totalMoney, isRedirect } =
       this.state;
     const { passengers, departure, destination } = this.props.location.state;
-    if(isRedirect) {
+    if (isRedirect) {
       return <Redirect to={{
         pathname: '/reservation',
         state: {
@@ -116,7 +116,7 @@ class FlightTicket extends Component {
         <div className="wrap-container">
           <div className="row">
             <SearchTicketBox />
-            <BookingStepBar step={1}/>
+            <BookingStepBar step={1} />
             <div className="col-md-3">
               <FilterFlightBox />
             </div>
@@ -135,15 +135,16 @@ class FlightTicket extends Component {
                     passengers={passengers}
                     onChooseFlightTicket={this.onChooseFlightTicket}
                   />
-                  
+
                 );
               })}
-                <FlightAmination />
+              <FlightAmination />
+              <CheckoutStepBar totalMoney={totalMoney} onContinue={this.onContinue} />
+
             </div>
           </div>
-          <CheckoutStepBar totalMoney={totalMoney} onContinue={this.onContinue} />
         </div>
-      
+
       </>
     );
   }

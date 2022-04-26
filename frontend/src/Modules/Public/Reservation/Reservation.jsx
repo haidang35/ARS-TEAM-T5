@@ -6,6 +6,7 @@ import { Redirect, withRouter } from "react-router-dom";
 import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
 import { BookingStepBar } from "../ChooseFlightTicket/Components/BookingStepBar/BookingStepBar";
 import { ContactsInfo } from "./Components/ContactsInfo/ContactsInfo";
+import "./Reservation.scss";
 
 
 class Reservation extends Component {
@@ -89,8 +90,11 @@ class Reservation extends Component {
       <>
         <NavbarV2 />
         <div className="wrap-container">
+          <div className="style">
+        <BookingStepBar step={2}/>
+        </div>
+
           <div className="row">
-            <BookingStepBar step={2} />
             {/* <SelectedFlight   flightTicket={flightTicket} /> */}
           
             <CustomerInfomation
