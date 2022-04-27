@@ -28,40 +28,40 @@ const columns = [
     id: 'flightCode',
     label: 'FlightCode',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'departure',
     label: 'Departure',
     minWidth: 150,
-    align: 'center',
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'destination',
     label: 'Destination',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'airline ',
     label: 'Airline',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'status ',
     label: 'Status',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'edit', label: 'Edit', minWidth: 80,
-    align: 'right',
+    align: 'left',
   }
 
 ];
@@ -203,7 +203,8 @@ export default function FlightList() {
                           {flight.Airline.Name}
                         </TableCell>
                         <TableCell>
-                          {flight.Status}
+                          {flight.Status === 1 ? 'Deactive' :'Active' }
+                          
                         </TableCell>
                         <TableCell>
                         <Link to={`/admin/flights/${flight.Id}`}>

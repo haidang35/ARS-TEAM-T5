@@ -276,7 +276,7 @@ class UpdateBooking extends Form {
                     >
                       {bookingStatus.map((status) => {
                         return (
-                          <MenuItem key={status.key} value={status.type}>
+                          <MenuItem key={status.key} value={status.key}>
                             {status.type}
                           </MenuItem>
                         );
@@ -298,7 +298,7 @@ class UpdateBooking extends Form {
                     >
                       {paymentMethodList.map((paymentMethod) => {
                         return (
-                          <MenuItem key={paymentMethod.key} value={paymentMethod.type}>
+                          <MenuItem key={paymentMethod.key} value={paymentMethod.key}>
                             {paymentMethod.type}
                           </MenuItem>
                         );
