@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -146,18 +147,56 @@ namespace backend.Controllers
         [Route("~/api/users")]
         [HttpPost]
         [ResponseType(typeof(User))]
-        public IHttpActionResult PostUser(User user)
+        public IHttpActionResult PostUser(UserCreate userCreate)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            user.CreatedAt = DateTime.Now;
-            user.UpdatedAt = DateTime.Now;
-            db.Users.Add(user);
-            db.SaveChanges();
+            var user = db.Users.Where(u => u.Email == userCreate.Email).FirstOrDefault();
+            if(user != null)
+            {
+                return BadRequest("Email already exists");
+            }
+            var newUser = new User()
+            {
+                Name = userCreate.Name,
+                Birthday = userCreate.Birthday,
+                Vocative = userCreate.Vocative,
+                PhoneNumber = userCreate.PhoneNumber,
+                Email = userCreate.Email,
+                Password = userCreate.Password,
+                Address = userCreate.Address,
+                Status = userCreate.Status,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
 
-            return Ok(user);
+
+        };
+            db.Users.Add(newUser);
+            var newUserRoles = userCreate.Roles.GroupBy(ur => ur.Id).Select(g => g.First()).ToList();
+            Debug.WriteLine($"Count newUserROles {newUserRoles.Count}");
+            foreach (var role in newUserRoles)
+            {
+                var userRole = new UserRole
+                {
+                    RoleId = role.Id,
+                    UserId = newUser.Id,
+                    CreatedAt = DateTime.Now,
+                    UpdateAt = DateTime.Now
+                };
+                db.UserRoles.Add(userRole);
+            }
+
+            try
+            {
+                db.SaveChanges();
+            }catch(Exception e)
+            {
+                return BadRequest("Save to database failed");
+            }
+
+            return Ok();
         }
 
         // DELETE: api/Users/5

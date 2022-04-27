@@ -9,7 +9,7 @@ import AirlineList from "./Airline/Components/AirlineList/AirlineList";
 import AddNewFlight from "./Flight/Components/AddNewFlight/AddNewFlight";
 import AddNewAirline from "./Airline/Components/AddNewAirline/AddNewAirline";
 import FlightList from "./Flight/Components/FlightList/FlightList";
-import AddNewFlightTicket from "./FlightTicket/Components/AddNewFlightTIcket/AddNewFlightTicket";
+import AddNewFlightTicket from "./FlightTicket/Components/AddNewFlightTicket/AddNewFlightTicket";
 import FlightTicketList from "./FlightTicket/Components/FlightTicketList/FlightTicketList";
 import UpdateFlight from "./Flight/Components/Update Flight/UpdateFlight";
 import UpdateAirline from "./Airline/Components/UpdateAirline/UpdateAirline";

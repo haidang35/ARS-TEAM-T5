@@ -1,6 +1,6 @@
 import { async } from "@firebase/util";
 import axios from "axios";
-import { BASE_URL_SERVER } from "../../../../Configs/server";
+import { AUTH_TOKEN, BASE_URL_SERVER } from "../../../../Configs/server";
 
 const API_ENDPOINT = {
   ACCESS_AUTH_TOKEN: "/api/token",
@@ -30,7 +30,7 @@ class AuthService {
   getCurrentUserRoles = async () => {
     return await axios.get(BASE_URL_SERVER + API_ENDPOINT.CURRENT_USER_ROLES, {
         headers: {
-            Authorization:  `Bearer ${localStorage.getItem('access_token')}`
+            Authorization:  `Bearer ${AUTH_TOKEN}`
         }
     });
   }

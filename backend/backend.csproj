@@ -223,6 +223,7 @@
     <Compile Include="Dtos\UpdateTicket.cs" />
     <Compile Include="Dtos\UpdateUser.cs" />
     <Compile Include="Dtos\UserBooking.cs" />
+    <Compile Include="Dtos\UserCreate.cs" />
     <Compile Include="Dtos\UserRegisterDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
