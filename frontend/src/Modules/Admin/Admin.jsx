@@ -68,7 +68,7 @@ export const Admin = () => {
                 }}
               >
                 <Switch>
-                  <Route path="/admin/dashboard">
+                  <Route exact path="/admin/dashboard">
                     <Dashboard />
                   </Route>
                   <Route exact path="/admin/airlines">
