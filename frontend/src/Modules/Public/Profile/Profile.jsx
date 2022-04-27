@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-import { FilterFlightBox } from "../ChooseFlightTicket/Components/FilterFlightBox/FilterFlightBox";
-import { FilterByFlight } from "../Home/Components/SearchTiketBox/SortByFLlight/FilterByFlight/FilterByFlight";
 import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
 import { SearchTicketBox } from "../Shared/Components/SearchTicketBox/SearchTicketBox";
-import { BookingHistory } from "./Components/BookingHistory/BookingHistory";
-import { CustomerProfile } from "./Components/CustomerProfile/CustomerProfile";
 import { SlideBar } from "./Components/SlideBar/SlideBar";
 
 export class Profile extends Component {
