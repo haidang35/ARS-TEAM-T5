@@ -13,7 +13,14 @@ import { Redirect } from "react-router-dom";
 import userService from "../../Shared/Services/UserService";
 import SelectRole from "../../../Role/Components/SelectRole/SelectRole";
 import roleService from "../../../Role/Shared/Services/RoleService";
-import { FormControl, InputLabel, MenuItem, OutlinedInput, Select } from "@mui/material";
+import ListItemText from "@mui/material/ListItemText";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+} from "@mui/material";
 
 class AddNewUser extends Form {
   constructor(props) {
@@ -28,7 +35,7 @@ class AddNewUser extends Form {
         address: "",
         confirmPassword: "",
       }),
-      roleId: "",
+      roleIds: [],
       content: "",
       isLoading: false,
       isRedirectSuccess: false,
@@ -40,10 +47,14 @@ class AddNewUser extends Form {
   }
   getRoleList = async () => {
     await roleService.getRoleList().then((res) => {
-      console.log("999999999999999", res.data);
       this.setState({
         roleList: res.data,
       });
+    });
+  };
+  handleChangeRole = (ev) => {
+    this.setState({
+      roleIds: ev.target.value,
     });
   };
 
@@ -93,7 +104,8 @@ class AddNewUser extends Form {
       address,
       confirmPassword,
     } = this.state.form;
-    const { isRedirectSuccess, content, isLoading, roleId, roleList } = this.state;
+    const { isRedirectSuccess, content, isLoading, roleIds, roleList } =
+      this.state;
     if (isRedirectSuccess) {
       return (
         <Redirect
@@ -259,31 +271,31 @@ class AddNewUser extends Form {
                   onChange={(ev) => this._setValue(ev, "confirmPassword")}
                 />
               </Grid>
-              <Grid item xs={12}>
+               <Grid item xs={12}>
                 <FormControl sx={{ m: 1, width: 300 }}>
-                  <InputLabel id="demo-multiple-checkbox-label">Role</InputLabel>
+                  <InputLabel id="demo-multiple-name-label">Role</InputLabel>
                   <Select
-                    labelId="demo-multiple-checkbox-label"
-                    id="demo-multiple-checkbox"
+                    id="roleId"
                     multiple
-                    value={roleId}
-                    // onChange={handleChange}
-                    input={<OutlinedInput label="Tag" />}
-                    renderValue={(selected) => selected.join(", ")}
-                    MenuProps={MenuProps}
+                    value={roleIds}
+                    onChange={this.handleChangeRole}
+                    input={<OutlinedInput label="Role" />}
                   >
                     {roleList.map((role) => (
-                      <MenuItem key={name} value={name}>
-                        <Checkbox checked={personName.indexOf(name) > -1} />
-                        <ListItemText primary={name} />
+                      <MenuItem
+                        key={role.Id}
+                        value={role.Id}
+                        // style={getStyles(name, personName, theme)}
+                      >
+                        {role.RoleName}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
-              </Grid>
-              <Grid item xs={12}>
+              </Grid> 
+              {/* <Grid item xs={12}>
                 <SelectRole />
-              </Grid>
+              </Grid> */}
               <div id="submit">
                 <Button variant="contained" onClick={this.saveNewUser}>
                   Submit

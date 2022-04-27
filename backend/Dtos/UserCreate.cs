@@ -32,6 +32,6 @@ namespace backend.Dtos
         [Required]
         public UserStatus Status { get; set; }
         [Required]
-        public ICollection<Role> Roles { get; set; }
+        public ICollection<int> RoleIds { get; set; }
     }
 }
