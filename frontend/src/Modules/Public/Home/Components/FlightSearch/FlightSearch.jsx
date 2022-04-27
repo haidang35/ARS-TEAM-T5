@@ -100,11 +100,16 @@ export class FlightSearch extends Component {
     }
 
     onSearchFlight = () => {
-        this.setState({
-            isRedirect: true
-        })
-
+      this.setState({
+        isRedirect : true
+      })
+        
+    
     }
+
+
+
+
 
     handleAgree = () => {
         this.setState({
