@@ -177,7 +177,6 @@ class AddNewFlightTicket extends Form {
                           <MenuItem
                             key={flightTicket.Id}
                             value={flightTicket.Id}>
-
                             {flightTicket.FlightCode}
                           </MenuItem>
 

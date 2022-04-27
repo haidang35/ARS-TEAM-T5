@@ -1,16 +1,19 @@
-import * as React from 'react';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+import * as React from "react";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 import Form from "../../../../../Shared/Components/Form";
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-import { Redirect } from 'react-router-dom';
-import userService from '../../Shared/Services/UserService';
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import { Redirect } from "react-router-dom";
+import userService from "../../Shared/Services/UserService";
+import SelectRole from "../../../Role/Components/SelectRole/SelectRole";
+import roleService from "../../../Role/Shared/Services/RoleService";
+import { FormControl, InputLabel, MenuItem, OutlinedInput, Select } from "@mui/material";
 
 class AddNewUser extends Form {
   constructor(props) {
@@ -21,32 +24,42 @@ class AddNewUser extends Form {
         vocative: "",
         phoneNumber: "",
         email: "",
-        password:"",
-        address:"",
+        password: "",
+        address: "",
+        confirmPassword: "",
       }),
+      roleId: "",
       content: "",
       isLoading: false,
       isRedirectSuccess: false,
-    }
+      roleList: [],
+    };
   }
   componentDidMount() {
+    this.getRoleList();
   }
+  getRoleList = async () => {
+    await roleService.getRoleList().then((res) => {
+      console.log("999999999999999", res.data);
+      this.setState({
+        roleList: res.data,
+      });
+    });
+  };
 
-  handleChangeFile =(event) => {
-    const file =event.target.files[0];
-    let {form} =this.state;
+  handleChangeFile = (event) => {
+    const file = event.target.files[0];
+    let { form } = this.state;
     form.logo.value = file;
-    this.setState({form});
-  }
-
+    this.setState({ form });
+  };
 
   saveNewUser = async () => {
-
     this._validateForm();
     console.log(this.state.form);
     if (this._isFormValid()) {
       this.setState({ isLoading: true });
-      let { form, content } = this.state;
+      let { form, content, roleId } = this.state;
       let dataConverted = {
         Name: form.name.value,
         Vocative: form.vocative.value,
@@ -54,7 +67,8 @@ class AddNewUser extends Form {
         Email: form.email.value,
         Password: form.password.value,
         Address: form.address.value,
-
+        RoleId: roleId,
+        ConfirmPassword: form.confirmPassword.value,
       };
       await userService
         .createNew(dataConverted)
@@ -66,37 +80,53 @@ class AddNewUser extends Form {
         .catch((err) => {
           console.log(err);
         });
-
     }
-
-  }
+  };
 
   render() {
-    const { name, vocative, phoneNumber, email, password, address } = this.state.form;
-    const {isRedirectSuccess, content, isLoading} = this.state;
-    if(isRedirectSuccess){
-      return <Redirect to={{
-        pathname: '/admin/users',
-        state: {
-          message: {
-            type: 'success',
-            content: 'Add new user successful !'
-          }
-        }
-      }}/>;
+    const {
+      name,
+      vocative,
+      phoneNumber,
+      email,
+      password,
+      address,
+      confirmPassword,
+    } = this.state.form;
+    const { isRedirectSuccess, content, isLoading, roleId, roleList } = this.state;
+    if (isRedirectSuccess) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/admin/users",
+            state: {
+              message: {
+                type: "success",
+                content: "Add new user successful !",
+              },
+            },
+          }}
+        />
+      );
     }
     return (
       <>
         <React.Fragment>
-          <div id='addNewAirline'>
-            <Typography variant="h4" gutterBottom >
+          <div id="addNewAirline">
+            <Typography variant="h4" gutterBottom>
               Add New User
             </Typography>
             <Grid container spacing={3}>
-              <Grid item xs={12} >
+              <Grid item xs={12}>
                 <TextField
-                  error={name.err !== ''}
-                  helperText={name.err !== '' ? name.err === '*' ? 'Name cannot be empty' : name.err : ''}
+                  error={name.err !== ""}
+                  helperText={
+                    name.err !== ""
+                      ? name.err === "*"
+                        ? "Name cannot be empty"
+                        : name.err
+                      : ""
+                  }
                   required
                   id="name"
                   name="name"
@@ -104,13 +134,19 @@ class AddNewUser extends Form {
                   label="Name"
                   autoComplete="given-name"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'name')}
+                  onChange={(ev) => this._setValue(ev, "name")}
                 />
               </Grid>
-              <Grid item xs={12} >
+              <Grid item xs={12}>
                 <TextField
-                  error={vocative.err !== ''}
-                  helperText={vocative.err !== '' ? vocative.err === '*' ? 'Vocative cannot be empty' : vocative.err : ''}
+                  error={vocative.err !== ""}
+                  helperText={
+                    vocative.err !== ""
+                      ? vocative.err === "*"
+                        ? "Vocative cannot be empty"
+                        : vocative.err
+                      : ""
+                  }
                   required
                   id="vocative"
                   name="vocative"
@@ -118,76 +154,140 @@ class AddNewUser extends Form {
                   label="Vocative"
                   autoComplete="given-name"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'vocative')}
+                  onChange={(ev) => this._setValue(ev, "vocative")}
                 />
               </Grid>
-             
+
               <Grid item xs={12}>
                 <TextField
-                error= {phoneNumber.err !==''}
-                helperText={phoneNumber.err !== '' ? phoneNumber.err === '*' ? 'PhoneNumber cannot be empty': phoneNumber.err : '' }
+                  error={phoneNumber.err !== ""}
+                  helperText={
+                    phoneNumber.err !== ""
+                      ? phoneNumber.err === "*"
+                        ? "PhoneNumber cannot be empty"
+                        : phoneNumber.err
+                      : ""
+                  }
                   required
                   id="phoneNumber"
                   name="phoneNumber"
-                  value= {phoneNumber.value}
+                  value={phoneNumber.value}
                   label="PhoneNumber"
                   autoComplete="shipping address-line1"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'phoneNumber')}
+                  onChange={(ev) => this._setValue(ev, "phoneNumber")}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                error= {address.err !==''}
-                helperText={address.err !== '' ? address.err === '*' ? 'Address cannot be empty': address.err : '' }
+                  error={address.err !== ""}
+                  helperText={
+                    address.err !== ""
+                      ? address.err === "*"
+                        ? "Address cannot be empty"
+                        : address.err
+                      : ""
+                  }
                   required
                   id="address"
                   name="address"
-                  value= {address.value}
+                  value={address.value}
                   label="Address"
                   autoComplete="shipping address-line1"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'address')}
+                  onChange={(ev) => this._setValue(ev, "address")}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                error= {email.err !==''}
-                helperText={email.err !== '' ? email.err === '*' ? 'Email cannot be empty': email.err : '' }
+                  error={email.err !== ""}
+                  helperText={
+                    email.err !== ""
+                      ? email.err === "*"
+                        ? "Email cannot be empty"
+                        : email.err
+                      : ""
+                  }
                   required
                   id="email"
                   name="email"
-                  value= {email.value}
+                  value={email.value}
                   label="Email"
                   autoComplete="shipping address-line1"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'email')}
+                  onChange={(ev) => this._setValue(ev, "email")}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={6}>
                 <TextField
-                error= {password.err !==''}
-                helperText={password.err !== '' ? password.err === '*' ? 'Password cannot be empty': password.err : '' }
+                  error={password.err !== ""}
+                  helperText={
+                    password.err !== ""
+                      ? password.err === "*"
+                        ? "Password cannot be empty"
+                        : password.err
+                      : ""
+                  }
                   required
                   id="password"
                   name="password"
-                  value= {password.value}
+                  value={password.value}
                   label="Password"
                   autoComplete="shipping address-line1"
                   variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'password')}
+                  onChange={(ev) => this._setValue(ev, "password")}
                 />
               </Grid>
-              
-             
+
+              <Grid item xs={6}>
+                <TextField
+                  error={confirmPassword.err !== ""}
+                  helperText={
+                    confirmPassword.err !== ""
+                      ? confirmPassword.err === "*"
+                        ? "Confirm Password cannot be empty"
+                        : confirmPassword.err
+                      : ""
+                  }
+                  required
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={confirmPassword.value}
+                  label="Confirm Password"
+                  autoComplete="shipping address-line1"
+                  variant="standard"
+                  onChange={(ev) => this._setValue(ev, "confirmPassword")}
+                />
+              </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-                  label="Use this address for payment details"
-                />
+                <FormControl sx={{ m: 1, width: 300 }}>
+                  <InputLabel id="demo-multiple-checkbox-label">Role</InputLabel>
+                  <Select
+                    labelId="demo-multiple-checkbox-label"
+                    id="demo-multiple-checkbox"
+                    multiple
+                    value={roleId}
+                    // onChange={handleChange}
+                    input={<OutlinedInput label="Tag" />}
+                    renderValue={(selected) => selected.join(", ")}
+                    MenuProps={MenuProps}
+                  >
+                    {roleList.map((role) => (
+                      <MenuItem key={name} value={name}>
+                        <Checkbox checked={personName.indexOf(name) > -1} />
+                        <ListItemText primary={name} />
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
-              <div id='submit'>
-                <Button variant="contained" onClick={this.saveNewUser} >Submit</Button>
+              <Grid item xs={12}>
+                <SelectRole />
+              </Grid>
+              <div id="submit">
+                <Button variant="contained" onClick={this.saveNewUser}>
+                  Submit
+                </Button>
               </div>
             </Grid>
           </div>
@@ -195,7 +295,6 @@ class AddNewUser extends Form {
       </>
     );
   }
-
 }
 
 export default AddNewUser;
