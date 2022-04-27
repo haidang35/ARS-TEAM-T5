@@ -6,6 +6,8 @@ import FormLabel from "@mui/material/FormLabel";
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import FlightIcon from '@mui/icons-material/Flight';
+
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -22,7 +24,10 @@ export class ViewMode extends Component {
             <FormControl>
               <div className="side-bar-filter">
                 <div className="title-bar">
-                  <FormLabel className="radio-buttons">VIEW MODEL</FormLabel>
+                <FlightIcon className="icon-filter" />
+                  <FormLabel className="radio-buttons">
+                    VIEW MODEL
+                    </FormLabel>
                 </div>
               </div>
               <div className="content">

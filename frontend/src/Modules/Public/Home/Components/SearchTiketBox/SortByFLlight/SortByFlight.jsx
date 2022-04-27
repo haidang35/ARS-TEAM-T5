@@ -12,11 +12,20 @@ export class SortByFlight extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            sortFlight: null,
+
 
         }
 
     }
+    handleChangeFlightPrice = (value) => {
+        this.setState({
+            sortFlight: value,
+        });
+        this.props.onSortFlight(value);
+    };
     render() {
+        const { sortFlight } = this.state;
         return (
             <>
                 <div id="sort-by-flight">
