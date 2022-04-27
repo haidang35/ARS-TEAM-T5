@@ -48,6 +48,7 @@ export class SignUp extends Form {
                 confirmPassword: form.confirmPassword.value,
                 lastName: form.lastName.value,
             };
+            console.log("🚀 ~ file: SignUp.jsx ~ line 51 ~ SignUp ~ data", data)
         }
     };
 

@@ -53,13 +53,13 @@ export class Public extends Component {
                             <Route path="/profile" exact >
                                 <Profile />
                             </Route>
-                            <Route path="/customerprofile">
+                            <Route path="/customer-info/profile">
                                 <CustomerProfile />
                             </Route>
-                            <Route path="/booking">
+                            <Route path="/customer-bookinghistory">
                                 <BookingHistory />
                             </Route>
-                            <Route path="/viewdetailsbooking" exact >
+                            <Route path="/customer-info/viewdetailsbooking" exact >
                                 <ViewDetailsBooking />
                             </Route>
                         </Switch>

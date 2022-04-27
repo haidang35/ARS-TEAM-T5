@@ -36,6 +36,18 @@ export class CustomerProfile extends Form {
 
     }
 
+    onSaveChange = () => {
+        this._validateForm();
+        if (this._isFormValid()) {
+            const { form } = this.state;
+            const data = {
+                fullName: form.fullName.value,
+                phone: form.phone.value,
+                email: form.email.value,
+            };
+        }
+    }
+
     render() {
         const { fullName, email, phone } = this.state.form;
         const { onEdit } = this.state;
@@ -82,10 +94,6 @@ export class CustomerProfile extends Form {
                                                             )
                                                         }}
                                                     />
-
-                                                    <div className="form-control-icon">
-                                                        <i className="bi bi-person" />
-                                                    </div>
                                                     {fullName.message == "*" ? (
                                                         <ErrorForm
                                                             err={
@@ -114,9 +122,6 @@ export class CustomerProfile extends Form {
                                                         )
                                                     }}
                                                 />
-                                                <div className="form-control-icon">
-                                                    <i className="bi bi-phone" />
-                                                </div>
                                                 {email.message == "*" ? (
                                                     <ErrorForm
                                                         err={
@@ -149,11 +154,6 @@ export class CustomerProfile extends Form {
                                                             )
                                                         }}
                                                     />
-
-
-                                                    <div className="form-control-icon">
-                                                        <i className="bi bi-phone" />
-                                                    </div>
                                                     {phone.message == "*" ? (
                                                         <ErrorForm
                                                             err={
@@ -170,7 +170,7 @@ export class CustomerProfile extends Form {
                                         <div className="col-md-12"></div>
                                         {onEdit ? (
                                             <div className="col-md-12 d-flex justify-content-end">
-                                                <Button variant="contained" color="success">
+                                                <Button variant="contained" color="success" onClick={this.onSaveChange}>
                                                     Submit
                                                 </Button>
                                                 <Button variant="outlined" color="error" onClick={this.onCancelEdit}>
