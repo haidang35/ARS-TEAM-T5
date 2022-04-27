@@ -174,13 +174,11 @@ namespace backend.Controllers
 
         };
             db.Users.Add(newUser);
-            var newUserRoles = userCreate.Roles.GroupBy(ur => ur.Id).Select(g => g.First()).ToList();
-            Debug.WriteLine($"Count newUserROles {newUserRoles.Count}");
-            foreach (var role in newUserRoles)
+            foreach (var roleId in userCreate.RoleIds.Distinct())
             {
                 var userRole = new UserRole
                 {
-                    RoleId = role.Id,
+                    RoleId = roleId,
                     UserId = newUser.Id,
                     CreatedAt = DateTime.Now,
                     UpdateAt = DateTime.Now
