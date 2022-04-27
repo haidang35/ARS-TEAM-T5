@@ -14,7 +14,7 @@ function App() {
     <>
       <BrowserRouter>
         <Switch>
-          <Route path="/admin" exact>
+          <Route path="/admin">
             {isLogged ? <Admin /> : <Redirect to="/admin-login" />}
           </Route>
           <Route path="/" exact>

@@ -70,16 +70,18 @@ class AddNewUser extends Form {
     console.log(this.state.form);
     if (this._isFormValid()) {
       this.setState({ isLoading: true });
-      let { form, content, roleId } = this.state;
+      let { form, content, roleIds } = this.state;
       let dataConverted = {
         Name: form.name.value,
         Vocative: form.vocative.value,
         PhoneNumber: form.phoneNumber.value,
         Email: form.email.value,
         Password: form.password.value,
+        Birthday: '2022-12-12',
         Address: form.address.value,
-        RoleId: roleId,
-        ConfirmPassword: form.confirmPassword.value,
+        RoleIds: roleIds,
+        Status: 0,
+        ConfirmationPassword: form.confirmPassword.value,
       };
       await userService
         .createNew(dataConverted)
