@@ -9,7 +9,6 @@ import AirlineList from "./Airline/Components/AirlineList/AirlineList";
 import AddNewFlight from "./Flight/Components/AddNewFlight/AddNewFlight";
 import AddNewAirline from "./Airline/Components/AddNewAirline/AddNewAirline";
 import FlightList from "./Flight/Components/FlightList/FlightList";
-import AddNewFlightTicket from "./FlightTicket/Components/AddNewFlightTicket/AddNewFlightTicket";
 import FlightTicketList from "./FlightTicket/Components/FlightTicketList/FlightTicketList";
 import UpdateFlight from "./Flight/Components/Update Flight/UpdateFlight";
 import UpdateAirline from "./Airline/Components/UpdateAirline/UpdateAirline";
@@ -27,6 +26,8 @@ import AddNewPayment from "./Payment/Components/AddNewPayment/AddNewPayment";
 import BookingDetails from "./Booking/Components/BookingDetails/BookingDetails";
 import authService from "./Auth/Service/AuthServices";
 import { ROLES } from "../../Configs/server";
+import AddNweFlightTicket from "./FlightTicket/Components/AddNewFlightTIcket/AddNewFlightTicket";
+
 
 export const Admin = () => {
   useEffect(() => {
@@ -93,7 +94,7 @@ export const Admin = () => {
                     <FlightTicketList />
                   </Route>
                   <Route exact path="/admin/flight-tickets/create">
-                    <AddNewFlightTicket />
+                    <AddNweFlightTicket />
                   </Route>
                   <Route exact path="/admin/flightTickets/:id">
                     <UpdateFlightTicket />
