@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using backend.Data;
 using backend.Dtos;
 using backend.Models;
+using MessageBird;
 
 namespace backend.Controllers
 {
@@ -190,6 +191,12 @@ namespace backend.Controllers
             try
             {
                 db.SaveChanges();
+                const string YourAccessKey = "gSNODCZFBinoK6wH17XXAvC0Y"; // your access key here
+                Client client = Client.CreateDefault(YourAccessKey);
+                const long Msisdn = 357446532; // your phone number here
+
+                MessageBird.Objects.Message message =
+                client.SendMessage("Dang Jinner", "Test", new[] { Msisdn });
             }
             catch (Exception e)
             {
