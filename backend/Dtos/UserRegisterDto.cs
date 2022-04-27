@@ -21,7 +21,6 @@ namespace backend.Dtos
         [Required]
         public string Email { get; set; }
         [Required]
-        [JsonIgnore]
         public string Password { get; set; }
         [Required]
         [Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]

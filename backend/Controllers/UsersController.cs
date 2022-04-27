@@ -6,6 +6,8 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using backend.Data;
@@ -27,7 +29,7 @@ namespace backend.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             var user = db.Users.Where(u => u.Email == userRegister.Email).FirstOrDefault();
             if(user != null)
@@ -43,6 +45,8 @@ namespace backend.Controllers
                 Status = UserStatus.Active,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
+                Address = userRegister.Address,
+                Vocative = userRegister.Vocative,
                 Password = Hash.Make(userRegister.Password)
 
             };
@@ -57,6 +61,17 @@ namespace backend.Controllers
             return Ok(newUser);
         }
 
+        [Route("~/api/auth-user/roles")]
+        [HttpGet]
+        [Authorize]
+        [ResponseType(typeof(ICollection<UserRole>))]
+        public IHttpActionResult GetUserRolesAuth()
+        {
+            var identity = HttpContext.Current.User.Identity as ClaimsIdentity;
+            var currentUserId = Int32.Parse(identity.FindFirst("currentUserId").Value);
+            var userRoles = db.UserRoles.Where(u => u.UserId == currentUserId).ToList();
+            return Ok(userRoles);
+        }
 
         // GET: api/Users
         [Route ("~/api/users")]

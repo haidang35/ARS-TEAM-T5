@@ -274,6 +274,10 @@
     <Compile Include="Migrations\202204251459485_UpdateDatabase2.designer.cs">
       <DependentUpon>202204251459485_UpdateDatabase2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204261306177_UpdateUserTable.cs" />
+    <Compile Include="Migrations\202204261306177_UpdateUserTable.designer.cs">
+      <DependentUpon>202204261306177_UpdateUserTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Airline.cs" />
     <Compile Include="Models\Booking.cs" />
@@ -417,6 +421,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204251459485_UpdateDatabase2.resx">
       <DependentUpon>202204251459485_UpdateDatabase2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204261306177_UpdateUserTable.resx">
+      <DependentUpon>202204261306177_UpdateUserTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
