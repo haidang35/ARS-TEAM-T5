@@ -14,8 +14,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ErrorForm } from "../../../../../Shared/Components/ErrorMessage";
 import Form from "../../../../../Shared/Components/Form";
 import { REGEX_TEL } from "../../../../../Configs/validation";
-import publicService, { PublicService } from "../../../Shared/Services/PublicService";
-
+import authService from "../../../Shared/Services/AuthService";
+import authServices from "../../../Shared/Services/AuthService";
 
 export class SignUp extends Form {
     constructor(props) {
@@ -30,13 +30,11 @@ export class SignUp extends Form {
                 phoneNumber: "",
 
             }),
-            message: "",
-
-
+           
         }
     }
 
-    onSignUp = () => {
+    onSignUp =  async () => {
         this._validateForm();
         if (this._isFormValid()) {
             const { form } = this.state;
@@ -48,30 +46,15 @@ export class SignUp extends Form {
                 confirmPassword: form.confirmPassword.value,
                 lastName: form.lastName.value,
             };
-            publicService.userRegister(data)
-                .then((res) => {
-                    this.setState({
-                        message: " Đăng ký thành công ",
-                    });
-                    this._fillForm({
-                        firstName: "",
-                        lastName: "",
-                        email: "",
-                        password: "",
-                        confirmPassword: "",
-                        phoneNumber: "",
-                    });
-
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        }else{
-            this.setState({
-                passwordErr: "Mật khẩu không trùng khớp ",
+            await authServices.userRegister(data)
+            .then((ress) =>{
+                window.location.replace("/signup");
+            })
+            .catch((err) =>{
+                console.log(err);
             });
-        }
     };
+}
 
 
     render() {

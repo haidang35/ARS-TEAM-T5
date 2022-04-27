@@ -1,21 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using backend.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace backend.Models
+namespace backend.Dtos
 {
-    public enum UserStatus
+    public class UserCreate
     {
-        Active = 1,
-        Deactive = 0,
-    }
-    public class User
-    {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
@@ -23,16 +16,22 @@ namespace backend.Models
         [Required]
         public string Vocative { get; set; }
         [Required]
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
         [Required]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         [Required]
-        [JsonIgnore]
+        [MinLength(6)]
         public string Password { get; set; }
         [Required]
+        [Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
+        public string ConfirmationPassword { get; set; }
+        [Required]
         public string Address { get; set; }
+        [Required]
         public UserStatus Status { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        [Required]
+        public ICollection<Role> Roles { get; set; }
     }
 }

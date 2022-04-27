@@ -14,6 +14,7 @@ using backend.Models;
 
 namespace backend.Controllers
 {
+    [Authorize(Roles = "Admin, SuperAdmin")]
     public class BookingsController : ApiController
     {
         private MyDbContext db = new MyDbContext();

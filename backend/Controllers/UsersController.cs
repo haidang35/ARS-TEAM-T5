@@ -3,20 +3,76 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using backend.Data;
 using backend.Dtos;
+using backend.Helpers;
 using backend.Models;
 
 namespace backend.Controllers
 {
+ 
     public class UsersController : ApiController
     {
         private MyDbContext db = new MyDbContext();
+
+        [AllowAnonymous]
+        [Route ("~/api/user/register")]
+        [HttpPost]
+        public IHttpActionResult Register(UserRegisterDto userRegister)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var user = db.Users.Where(u => u.Email == userRegister.Email).FirstOrDefault();
+            if(user != null)
+            {
+                return BadRequest("Email already exist !!");
+            }
+            var newUser = new User()
+            {
+                Name = userRegister.Name,
+                Email = userRegister.Email,
+                PhoneNumber = userRegister.PhoneNumber,
+                Birthday = userRegister.Birthday,
+                Status = UserStatus.Active,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                Address = userRegister.Address,
+                Vocative = userRegister.Vocative,
+                Password = Hash.Make(userRegister.Password)
+
+            };
+            db.Users.Add(newUser);
+            try
+            {
+                db.SaveChanges();
+            }catch(Exception e)
+            {
+                return BadRequest();
+            }
+            return Ok(newUser);
+        }
+
+        [Route("~/api/auth-user/roles")]
+        [HttpGet]
+        [Authorize]
+        [ResponseType(typeof(ICollection<UserRole>))]
+        public IHttpActionResult GetUserRolesAuth()
+        {
+            var identity = HttpContext.Current.User.Identity as ClaimsIdentity;
+            var currentUserId = Int32.Parse(identity.FindFirst("currentUserId").Value);
+            var userRoles = db.UserRoles.Where(u => u.UserId == currentUserId).ToList();
+            return Ok(userRoles);
+        }
 
         // GET: api/Users
         [Route ("~/api/users")]
@@ -91,18 +147,56 @@ namespace backend.Controllers
         [Route("~/api/users")]
         [HttpPost]
         [ResponseType(typeof(User))]
-        public IHttpActionResult PostUser(User user)
+        public IHttpActionResult PostUser(UserCreate userCreate)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            user.CreatedAt = DateTime.Now;
-            user.UpdatedAt = DateTime.Now;
-            db.Users.Add(user);
-            db.SaveChanges();
+            var user = db.Users.Where(u => u.Email == userCreate.Email).FirstOrDefault();
+            if(user != null)
+            {
+                return BadRequest("Email already exists");
+            }
+            var newUser = new User()
+            {
+                Name = userCreate.Name,
+                Birthday = userCreate.Birthday,
+                Vocative = userCreate.Vocative,
+                PhoneNumber = userCreate.PhoneNumber,
+                Email = userCreate.Email,
+                Password = userCreate.Password,
+                Address = userCreate.Address,
+                Status = userCreate.Status,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
 
-            return Ok(user);
+
+        };
+            db.Users.Add(newUser);
+            var newUserRoles = userCreate.Roles.GroupBy(ur => ur.Id).Select(g => g.First()).ToList();
+            Debug.WriteLine($"Count newUserROles {newUserRoles.Count}");
+            foreach (var role in newUserRoles)
+            {
+                var userRole = new UserRole
+                {
+                    RoleId = role.Id,
+                    UserId = newUser.Id,
+                    CreatedAt = DateTime.Now,
+                    UpdateAt = DateTime.Now
+                };
+                db.UserRoles.Add(userRole);
+            }
+
+            try
+            {
+                db.SaveChanges();
+            }catch(Exception e)
+            {
+                return BadRequest("Save to database failed");
+            }
+
+            return Ok();
         }
 
         // DELETE: api/Users/5

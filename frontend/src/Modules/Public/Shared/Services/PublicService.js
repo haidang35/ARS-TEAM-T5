@@ -8,8 +8,7 @@ const API_ENDPOINT = {
     GET_LOCKED_FLIGHT_SEATS: '/api/flights/',
     GET_BOOKING_DETAILS: '/api/bookings/',
     PAYMENT_BOOKING: '/api/payments/booking',
-    USER_REGISTER: "/api/user/register",
-    USER_LOGIN: "/api/users",
+  
     
 }
 
@@ -58,12 +57,7 @@ class PublicService {
         return await axios.get(API_GET_IP_ADDRESS);
     }
 
-    userRegister = async (data) =>{
-        return await axios.post(BASE_URL_SERVER + API_ENDPOINT.USER_REGISTER, data)
-    }
-    userLogin = async (data) => {
-        return await axios.post( BASE_URL_SERVER + API_ENDPOINT.USER_LOGIN, data )
-    }
+
 
 
 
