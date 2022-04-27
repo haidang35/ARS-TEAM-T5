@@ -38,7 +38,7 @@ class UpdateFlight extends Form {
         aircraft: "",
         seatsReseved: "",
         seatsAvaliable: "",
-        status: "",
+        
       }),
       airlineId: "",
       departureId: "",
@@ -49,6 +49,17 @@ class UpdateFlight extends Form {
       isRedirectSuccess: false,
       locationList: [],
       airlineList: [],
+      status: "",
+      flightStatus: [
+        {
+          key: 0,
+          type: "Active",
+        },
+        {
+          key: 1,
+          type: "DeActive",
+        },
+      ],
     };
   }
   componentDidMount() {
@@ -64,6 +75,8 @@ class UpdateFlight extends Form {
         departureId: res.data.DepartureId,
         destinationId: res.data.DestinationId,
         airlineId: res.data.AirlineId,
+        status: res.data.Status
+
       });
       this._fillForm({
         flightCode: res.data.FlightCode,
@@ -86,7 +99,7 @@ class UpdateFlight extends Form {
     this._validateForm();
     if (this._isFormValid()) {
       const { id } = this.props.match.params;
-      const { form, isRedirectSuccess, departureId, destinationId, airlineId } =
+      const { form, isRedirectSuccess, departureId, destinationId, airlineId, status } =
         this.state;
       const dataConverted = {
         FlightCode: form.flightCode.value,
@@ -103,7 +116,7 @@ class UpdateFlight extends Form {
         Aircraft: form.aircraft.value,
         SeatsReseved: form.seatsReseved.value,
         SeatsAvaliable: form.seatsAvaliable.value,
-        Status: form.status.value,
+        Status: status,
       };
       await flightService
         .updateDetails(id, dataConverted)
@@ -140,6 +153,11 @@ class UpdateFlight extends Form {
       });
     });
   };
+  handleChangeStatus = (ev) => {
+    this.setState({
+      status: ev.target.value,
+    });
+  };
 
   handleChangeAirline = (ev) => {
     this.setState({
@@ -174,9 +192,8 @@ class UpdateFlight extends Form {
       aircraft,
       seatsReseved,
       seatsAvaliable,
-      status,
+     
     } = this.state.form;
-    console.log("statussssss", status);
     const {
       isRedirectSuccess,
       content,
@@ -187,6 +204,9 @@ class UpdateFlight extends Form {
       locationList,
       airlineId,
       airlineList,
+      status,
+      flightStatus
+
     } = this.state;
     if (isRedirectSuccess) {
       return (
@@ -493,25 +513,27 @@ class UpdateFlight extends Form {
                   </FormControl>
                 </Box>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={status.err !== ""}
-                  helperText={
-                    status.err !== ""
-                      ? status.err === "*"
-                        ? "Status cannot be empty"
-                        : status.err
-                      : ""
-                  }
-                  required
-                  id="status"
-                  name="status"
-                  value={status.value}
-                  label="Status"
-                  autoComplete="shipping address-line1"
-                  variant="standard"
-                  onChange={(ev) => this._setValue(ev, "status")}
-                />
+              <Grid item xs={6}>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="status">Select Status</InputLabel>
+                    <Select
+                      id="status"
+                      name="status"
+                      value={status}
+                      label="Status"
+                      onChange={this.handleChangeStatus}
+                    >
+                      {flightStatus.map((status) => {
+                        return (
+                          <MenuItem key={status.key} value={status.key}>
+                            {status.type}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </Box>
               </Grid>
 
               <Grid item xs={12}>

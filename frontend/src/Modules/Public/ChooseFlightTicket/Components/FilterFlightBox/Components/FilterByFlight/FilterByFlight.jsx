@@ -8,6 +8,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import "./FilterByFlight.scss";
 import Slider from "@mui/material/Slider";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import FlightIcon from '@mui/icons-material/Flight';
+
 
 function valuetext(value) {
   return `${value}°C`;
@@ -40,6 +42,7 @@ export default function FilterByFlight() {
           <FormControl>
             <div className="side-bar-filter">
               <div className="title-bar">
+              <FlightIcon className="icon-filter" />
                 <FormLabel className="radio-buttons">
                   FILTER BY FLIGHT
                 </FormLabel>

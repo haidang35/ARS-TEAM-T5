@@ -26,40 +26,40 @@ const columns = [
     id: 'flight',
     label: 'Flight',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'ticketType',
     label: 'Ticket Type',
     minWidth: 150,
-    align: 'center',
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'availableClass ',
     label: 'Available Class',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'price ',
     label: 'Price',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'status ',
     label: 'Status',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'edit', label: 'Edit', minWidth: 80,
-    align: 'right',
+    align: 'left',
   }
 
 ];

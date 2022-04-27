@@ -21,9 +21,10 @@ namespace backend.Controllers
         [Route("~/api/bookingtickets")]
         [HttpGet]
         [ResponseType(typeof(ICollection<BookingTicket>))]
-        public IHttpActionResult GetBookingTickets()
+        public IHttpActionResult GetBookingTickets(int bookingid)
         {
-            return Ok(db.BookingTickets.ToList());
+            var bookingTicket = db.BookingTickets.Where(c => c.BookingId == bookingid).ToList();
+            return Ok(bookingTicket);
         }
 
         // GET: api/BookingTickets/5
