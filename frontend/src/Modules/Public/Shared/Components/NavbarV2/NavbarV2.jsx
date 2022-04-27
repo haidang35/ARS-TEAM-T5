@@ -195,10 +195,12 @@ const NavbarV2 = () => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  {settings.map((setting, index) => (
+                    <Link key={index} to="/profile">
+                        <MenuItem onClick={handleCloseUserMenu}>
                       <Typography textAlign="center">{setting}</Typography>
                     </MenuItem>
+                    </Link>
                   ))}
                 </Menu>
               </Box>

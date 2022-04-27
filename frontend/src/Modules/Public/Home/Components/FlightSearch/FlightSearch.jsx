@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, Typography } from "@mui/material";
 import React, { Component } from "react";
 import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material";
 import TextField from '@mui/material/TextField';
@@ -37,7 +37,8 @@ export class FlightSearch extends Component {
 
             openLocationDialog: false,
             locationType: "",
-            isRedirect: false
+            isRedirect: false,
+            onOpenDialog: false
 
         }
 
@@ -99,8 +100,20 @@ export class FlightSearch extends Component {
     }
 
     onSearchFlight = () => {
+      this.setState({
+        isRedirect : true
+      })
+        
+    
+    }
+
+
+
+
+
+    handleAgree = () => {
         this.setState({
-            isRedirect: true
+            onOpenDialog: false
         })
     }
 
@@ -164,7 +177,7 @@ export class FlightSearch extends Component {
 
 
     render() {
-        const { open, locations, isRedirect, children, infants, adults } = this.state;
+        const { open, locations, isRedirect, children, infants, adults, onOpenDialog } = this.state;
         const { departure, destination, departureDate, returnDate, tripType } = this.state.searchData;
 
         if (isRedirect) {
@@ -192,7 +205,7 @@ export class FlightSearch extends Component {
                     departure,
                     destination
                 }
-                
+
             }} />
         }
 
@@ -202,7 +215,7 @@ export class FlightSearch extends Component {
                     <Typography variant="h1" className="title">
                         WHERE WOULD YOU LIKE TO GO ?
                     </Typography>
-                    <FormControlLabel 
+                    <FormControlLabel
                         control={
                             <Checkbox
                                 name="oneWay"
@@ -383,7 +396,29 @@ export class FlightSearch extends Component {
                                 >
                                     Search flights
                                 </Button>
+                                <Dialog
+                                    open={onOpenDialog}
+                                    onClose={this.onSearchFlight}
+                                    aria-labelledby="alert-dialog-title"
+                                    aria-describedby="alert-dialog-description"
+                                >
+                                    <DialogTitle id="alert-dialog-title">
+                                        Warning
+                                    </DialogTitle>
+                                    <DialogContent>
+                                        <DialogContentText id="alert-dialog-description">
+                                            You have not selected your destination or departure
+                                        </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={this.handleAgree} autoFocus>
+                                            Agree
+                                        </Button>
+                                    </DialogActions>
+                                </Dialog>
                             </div>
+
+
                         </div>
                     </div>
                     <Location open={open} selectLocation={this.selectLocation} onCloseDialog={this.onCloseDialog} />
