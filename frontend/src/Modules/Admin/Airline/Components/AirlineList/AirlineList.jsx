@@ -177,10 +177,8 @@ export default function AirlineList() {
                         sx={{ height: 28, m: 0.5 }}
                         orientation="vertical"
                       />
-              
                     </Paper>
-                  </TableCell>
-                  <TableCell align="right" colSpan={3}>
+
                   </TableCell>
                   <TableCell align="right" colSpan={3}>
                     <Link to={"/admin/airlines/create"}>
