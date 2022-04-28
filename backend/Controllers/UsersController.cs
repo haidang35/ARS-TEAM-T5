@@ -165,7 +165,7 @@ namespace backend.Controllers
                 Vocative = userCreate.Vocative,
                 PhoneNumber = userCreate.PhoneNumber,
                 Email = userCreate.Email,
-                Password = userCreate.Password,
+                Password = Hash.Make(userCreate.Password),
                 Address = userCreate.Address,
                 Status = userCreate.Status,
                 CreatedAt = DateTime.Now,

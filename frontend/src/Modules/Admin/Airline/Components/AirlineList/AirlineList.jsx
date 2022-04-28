@@ -20,6 +20,8 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import DeleteAirline from '../DeleteAirline/DeleteAirline';
+import { DataGridPro } from '@mui/x-data-grid-pro';
+
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -159,7 +161,7 @@ export default function AirlineList() {
                     >
                       {column.label}
                     </TableCell>
-                  ))}
+                  ))}/>
                 </TableRow>
               </TableHead>
               <TableBody>
