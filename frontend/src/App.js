@@ -5,6 +5,7 @@ import { Admin } from "./Modules/Admin/Admin";
 import Login from "./Modules/Admin/Auth/Components/Login/Login";
 import Register from "./Modules/Admin/Auth/Components/Register/Register";
 
+
 const isLogged =
   localStorage.getItem("access_token") !== "" &&
   localStorage.getItem("access_token") !== null;
@@ -17,7 +18,7 @@ function App() {
           <Route path="/admin">
             {isLogged ? <Admin /> : <Redirect to="/admin-login" />}
           </Route>
-          <Route path="/" exact>
+          <Route path="/">
             <Public />
           </Route>
           <Route path="/admin-login" exact>
@@ -26,6 +27,8 @@ function App() {
           <Route path="/admin-register" exact>
             <Register />
           </Route>
+
+
         </Switch>
       </BrowserRouter>
     </>
