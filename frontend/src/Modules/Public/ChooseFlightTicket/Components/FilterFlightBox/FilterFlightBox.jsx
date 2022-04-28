@@ -15,7 +15,9 @@ export class FilterFlightBox extends Component {
       onSortFlightTickets,
       onChangeViewMode,
       filterFlightTicketByDepartHour,
-      filterFlightTicketByLandingHour
+      filterFlightTicketByLandingHour,
+      airlineList,
+      filterFlightTicketByAirline
     } = this.props;
     return (
       <>
@@ -24,6 +26,8 @@ export class FilterFlightBox extends Component {
         <FilterByFlight
           filterFlightTicketByDepartHour={filterFlightTicketByDepartHour}
           filterFlightTicketByLandingHour={filterFlightTicketByLandingHour}
+          airlineList={airlineList}
+          filterFlightTicketByAirline={filterFlightTicketByAirline}
         />
       </>
     );
