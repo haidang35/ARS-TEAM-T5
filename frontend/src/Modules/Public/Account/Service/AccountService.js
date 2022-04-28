@@ -1,5 +1,5 @@
 import axios  from "axios";
-import { AUTH_TOKEN, BASE_URL_SERVER } from "../../../../../Configs/server";
+import { AUTH_TOKEN, BASE_URL_SERVER } from "../../../../Configs/server";
 
 
 const API_ENDPOINT = {

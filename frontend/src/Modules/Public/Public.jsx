@@ -12,7 +12,7 @@ import { BookingHistory } from "./Profile/Components/BookingHistory/BookingHisto
 import { ViewDetailsBooking } from "./Profile/Components/ViewDetailsBooking/ViewDetailsBooking";
 import { SignUp } from "./Account/Components/SignUp/SignUp";
 import { SignIn } from "./Account/Components/SignIn/SignIn";
-import registerService from "./Account/Components/Service/RegisterService";
+import registerService from "./Account/Components/Service/AccountService";
 import { ROLES } from "../../Configs/server";
 
 

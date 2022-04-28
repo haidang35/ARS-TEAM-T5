@@ -14,7 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ErrorForm } from "../../../../../Shared/Components/ErrorMessage";
 import Form from "../../../../../Shared/Components/Form";
 import { REGEX_TEL } from "../../../../../Configs/validation";
-import registerService from "../Service/RegisterService";
+import registerService from "../../Service/AccountService";
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
