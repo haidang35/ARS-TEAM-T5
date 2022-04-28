@@ -12,9 +12,11 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import SearchIcon from '@mui/icons-material/Search';
 import { style } from '@mui/system';
-import { InputBase } from '@mui/material';
+import { Button, InputBase } from '@mui/material';
 import "./Navbar.scss";
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import Stack from '@mui/material/Stack';
+
 
 
 const settings = ['Profile', 'Account', 'Logout'];
@@ -65,7 +67,12 @@ const Navbar = () => {
     justifyContent: 'center',
   }));
 
+
+  const authUser = JSON.parse(localStorage.getItem("auth_user" ));
+
+  
   return (
+   
     <>
       <AppBar position="static" id="navbar">
         <div className="wrap-container">
@@ -173,6 +180,7 @@ const Navbar = () => {
                     <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                   </IconButton>
                 </Tooltip>
+                {authUser.Name}
                 <Menu
                   sx={{ mt: '45px' }}
                   id="menu-appbar"
@@ -190,7 +198,7 @@ const Navbar = () => {
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map((setting, index) => (
-                    <Link key={index} to="/profile" className='profile'> 
+                    <Link key={index} to="/profile" className='profile'>
                       <MenuItem onClick={handleCloseUserMenu}>
                         <Typography textAlign="center">{setting}</Typography>
                       </MenuItem>
@@ -198,12 +206,25 @@ const Navbar = () => {
                   ))}
                 </Menu>
               </Box>
+              <Stack spacing={2} direction="row">
+                <Button variant="text">
+                  <Link to="/signin" >
+                    Login
+                  </Link>
+                </Button>
+              </Stack>
+              <Stack spacing={2} direction="row">
+                <Button variant="text">
+                  <Link to="/signup" >
+                    SignUp
+                  </Link>
+                </Button>
+              </Stack>
             </Toolbar>
           </Container>
         </div>
-
       </AppBar>
     </>
   )
 }
-export default Navbar;
+export default withRouter(Navbar);

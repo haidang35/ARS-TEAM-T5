@@ -12,9 +12,8 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import registerService from "../Service/RegisterService";
+import registerService from "../../Service/AccountService";
 import Form from "../../../../../Shared/Components/Form";
-
 
 
 
@@ -31,11 +30,11 @@ export class SignIn extends Form {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     console.log(this.state.form);
 
   }
-  
+
 
   onSubmit = async () => {
     this._validateForm();
@@ -44,7 +43,9 @@ export class SignIn extends Form {
       const params = new URLSearchParams();
       params.append("grant_type", "password");
       params.append("username", email.value);
+      console.log("🚀 ~ file: SignIn.jsx ~ line 46 ~ SignIn ~ onSubmit= ~ email.value", email.value)
       params.append("password", password.value);
+      console.log("🚀 ~ file: SignIn.jsx ~ line 48 ~ SignIn ~ onSubmit= ~ password.value", password.value)
       await registerService
         .accessAuthToken(params)
         .then((res) => {
@@ -65,6 +66,7 @@ export class SignIn extends Form {
 
 
   render() {
+    const { email, password } = this.state.form;
     const theme = createTheme();
     return (
       <>
@@ -111,6 +113,8 @@ export class SignIn extends Form {
                     name="email"
                     autoComplete="email"
                     autoFocus
+                    value={email.value}
+                    onChange={(ev) => this._setValue(ev, "email")}
                   />
                   <TextField
                     margin="normal"
@@ -121,6 +125,10 @@ export class SignIn extends Form {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    value={password.value}
+                    onChange={(ev) =>
+                      this._setValue(ev, "password")}
+
                   />
                   <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
@@ -128,7 +136,7 @@ export class SignIn extends Form {
                   />
                   <Button
                     onClick={this.onSubmit}
-                    type="submit"
+                    type="button"
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}

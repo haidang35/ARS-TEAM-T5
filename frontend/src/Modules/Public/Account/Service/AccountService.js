@@ -1,5 +1,5 @@
 import axios  from "axios";
-import { AUTH_TOKEN, BASE_URL_SERVER } from "../../../../../Configs/server";
+import { AUTH_TOKEN, BASE_URL_SERVER } from "../../../../Configs/server";
 
 
 const API_ENDPOINT = {
@@ -9,7 +9,7 @@ const API_ENDPOINT = {
     
   };
 
-  class RegisterService {
+  class AccountService {
     accessAuthToken = async (data) => {
       return await axios.post(
         BASE_URL_SERVER + API_ENDPOINT.ACCESS_AUTH_TOKEN,
@@ -36,5 +36,5 @@ const API_ENDPOINT = {
     }
   
   }
-  const registerService = new RegisterService();
-  export default registerService ;
+  const accountService = new AccountService();
+  export default accountService ;

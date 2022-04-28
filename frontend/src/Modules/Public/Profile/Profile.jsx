@@ -22,7 +22,6 @@ export class Profile extends Component {
             <>
                 <NavbarV2 />
                 <SearchTicketBox />
-
                 <div className="customer-profile">
                     <div className="wrap-container">
                         <div className="row">

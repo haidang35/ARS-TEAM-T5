@@ -8,7 +8,8 @@ const API_ENDPOINT = {
     GET_LOCKED_FLIGHT_SEATS: '/api/flights/',
     GET_BOOKING_DETAILS: '/api/bookings/',
     PAYMENT_BOOKING: '/api/payments/booking',
-    GET_AIRLINE_LIST: '/api/airlines'
+    GET_AIRLINE_LIST: '/api/airlines',
+    GET_AUTH_USER: "/api/auth-user",
 }
 
 export const API_CONVERT_CURRENCY = 'https://currency-converter5.p.rapidapi.com/currency/convert';
@@ -16,7 +17,7 @@ export const API_CONVERT_CURRENCY = 'https://currency-converter5.p.rapidapi.com/
 
 const configs = {
     headers: { Authorization: `Bearer ${AUTH_TOKEN}` },
-  };
+};
 
 
 class PublicService {
@@ -24,7 +25,7 @@ class PublicService {
     getLocationsList = async () => {
         return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_LOCATIONS_LIST);
     }
-    
+
     getFlightTickets = async (searchData) => {
         return await axios.post(BASE_URL_SERVER + API_ENDPOINT.GET_FLIGHT_TICKETS, searchData);
     }
@@ -42,10 +43,12 @@ class PublicService {
     }
 
     convertCurrency = async (params) => {
-        return await axios.get(API_CONVERT_CURRENCY, { params, headers: {
-            'X-RapidAPI-Host': 'currency-converter5.p.rapidapi.com',
-            'X-RapidAPI-Key': 'a14fa83095msh4e61c2f7cc01530p112814jsnaa0c0896cb17'
-        } });
+        return await axios.get(API_CONVERT_CURRENCY, {
+            params, headers: {
+                'X-RapidAPI-Host': 'currency-converter5.p.rapidapi.com',
+                'X-RapidAPI-Key': 'a14fa83095msh4e61c2f7cc01530p112814jsnaa0c0896cb17'
+            }
+        });
     }
 
     paymentBooking = async (data) => {
@@ -58,9 +61,19 @@ class PublicService {
     getAirlineList = async () => {
         return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_AIRLINE_LIST);
     }
+
+    getAuthUser = async (accessToken) => {
+        return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_AUTH_USER,
+            {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            });
+
+
+    };
 }
 
-   
+
+
 
 
 
