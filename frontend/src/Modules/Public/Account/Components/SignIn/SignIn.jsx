@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import authServices from "../../../Shared/Services/AuthService";
+import registerService from "../Service/RegisterService";
 import Form from "../../../../../Shared/Components/Form";
 
 
@@ -25,21 +25,40 @@ export class SignIn extends Form {
         email: "",
         password: "",
       }),
+      message: "",
 
     }
   }
 
+  componentDidMount(){
+    console.log(this.state.form);
+
+  }
+  
+
   onSubmit = async () => {
+    this._validateForm();
     const { email, password } = this.state.form;
-    const params = new URLSearchParams();
-    params.append("grant_type", "password");
-    params.append("username", email.value);
-    params.append("password", password.value);
-    await authServices.accessAuthToken(params)
-      .then((res) => {
-        localStorage.setItem("access_token", res.data.access_token);
-        window.location.replace("/");
-      })
+    if (this._isFormValid()) {
+      const params = new URLSearchParams();
+      params.append("grant_type", "password");
+      params.append("username", email.value);
+      params.append("password", password.value);
+      await registerService
+        .accessAuthToken(params)
+        .then((res) => {
+          localStorage.setItem("access_token", res.data.access_token);
+          window.location.replace("/");
+        })
+        .catch((err) => {
+          this.setState({
+            message:
+              "Đăng nhập thất bại",
+          });
+        });
+    } else {
+      console.log("in valid");
+    }
 
   }
 

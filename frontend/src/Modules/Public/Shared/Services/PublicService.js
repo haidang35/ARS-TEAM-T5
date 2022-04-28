@@ -8,8 +8,7 @@ const API_ENDPOINT = {
     GET_LOCKED_FLIGHT_SEATS: '/api/flights/',
     GET_BOOKING_DETAILS: '/api/bookings/',
     PAYMENT_BOOKING: '/api/payments/booking',
-  
-    
+    GET_AIRLINE_LIST: '/api/airlines'
 }
 
 export const API_CONVERT_CURRENCY = 'https://currency-converter5.p.rapidapi.com/currency/convert';
@@ -56,14 +55,12 @@ class PublicService {
     getIpAdressInfo = async () => {
         return await axios.get(API_GET_IP_ADDRESS);
     }
-
-
-
-
-
+    getAirlineList = async () => {
+        return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_AIRLINE_LIST);
+    }
 }
 
-    
+   
 
 
 

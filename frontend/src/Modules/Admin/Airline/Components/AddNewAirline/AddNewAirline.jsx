@@ -4,13 +4,10 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import "./AddNewAirline.scss";
 import Form from "../../../../../Shared/Components/Form";
 import airlineService from '../../Shared/Services/AirlineService';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
 import { Redirect } from 'react-router-dom';
 
 class AddNewAirline extends Form {
