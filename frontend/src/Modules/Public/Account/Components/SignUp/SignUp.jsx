@@ -1,20 +1,23 @@
-import React, { Component } from "react"; import { Button } from "@mui/material";
+import React, { Component } from "react";
+import { Button } from "@mui/material";
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Copyright } from "@mui/icons-material";
 import { ErrorForm } from "../../../../../Shared/Components/ErrorMessage";
 import Form from "../../../../../Shared/Components/Form";
 import { REGEX_TEL } from "../../../../../Configs/validation";
+import registerService from "../Service/RegisterService";
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 
 
@@ -25,39 +28,50 @@ export class SignUp extends Form {
             form: this._getInitFormData({
                 firstName: "",
                 lastName: "",
-                email: "",
-                password: "",
-                confirmPassword: "",
-                phoneNumber: "",
-
+                Email: "",
+                Password: "",
+                ConfirmationPassword: "",
+                PhoneNumber: "",
+                Birthday: new Date(),
+                Vocative: "",
+                Address: "",
             }),
-
-
         }
     }
 
-    onSignUp = () => {
+    onSignUp = async () => {
         this._validateForm();
         if (this._isFormValid()) {
             const { form } = this.state;
             const data = {
-                firstName: form.firstName.value,
-                phoneNumber: form.phoneNumber.value,
-                email: form.email.value,
-                password: form.password.value,
-                confirmPassword: form.confirmPassword.value,
-                lastName: form.lastName.value,
+                Name: `${form.lastName.value} ${form.firstName.value}`,
+                PhoneNumber: form.PhoneNumber.value,
+                Email: form.Email.value,
+                Password: form.Password.value,
+                ConfirmationPassword: form.ConfirmationPassword.value,
+                Birthday: form.Birthday.value,
+                Address: form.Address.value,
+                Vocative: form.Vocative.value,
             };
+            await registerService.userRegister(data)
+                .then((ress) => {
+                    window.location.replace("/signin");
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         }
     };
 
+    handleChangeBirthday = () =>{
+
+    }
 
 
 
     render() {
-        const { lastName, firstName, email, password, confirmPassword, phoneNumber } = this.state.form;
+        const { lastName, firstName, Email, Password, ConfirmationPassword, PhoneNumber, Address, Birthday, Vocative } = this.state.form;
         const theme = createTheme();
-
         return (
             <>
                 <div id="signup-form">
@@ -97,7 +111,6 @@ export class SignUp extends Form {
                                                     )
                                                 }
                                             />
-
                                             {firstName.err == "*"
                                                 ? (
                                                     <ErrorForm message="Vui lòng nhập tên" />
@@ -105,8 +118,6 @@ export class SignUp extends Form {
                                                     <ErrorForm
                                                         err={firstName.err}
                                                     />
-
-
                                                 )}
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
@@ -135,7 +146,6 @@ export class SignUp extends Form {
 
 
                                                 )}
-
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
@@ -143,80 +153,142 @@ export class SignUp extends Form {
                                                 className="form-control"
                                                 fullWidth
                                                 pattern={REGEX_TEL}
-                                                name="phone"
-                                                label="phone Number"
-                                                type="tel"
-                                                value={phoneNumber.value}
+                                                name="Phone Number"
+                                                label="Phone Number"
+                                                value={PhoneNumber.value}
                                                 onChange={(ev) =>
                                                     this._setValue(
                                                         ev,
-                                                        "phoneNumber"
+                                                        "PhoneNumber"
                                                     )
                                                 }
                                             />
-                                            {phoneNumber.err == "*"
+                                            {PhoneNumber.err == "*"
                                                 ? (
-                                                    <ErrorForm message="Vui lòng nhập số điện thoại  " />
+                                                    <ErrorForm message="Vui lòng nhập so dien thoai   " />
                                                 ) : (
                                                     <ErrorForm
-                                                        err={phoneNumber.err}
+                                                        err={PhoneNumber.err}
                                                     />
+                                                )}
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                required
+                                                className="form-control"
+                                                fullWidth
+                                                name="Vocation"
+                                                label="Vocation"
+                                                value={Vocative.value}
+                                                onChange={(ev) =>
+                                                    this._setValue(
+                                                        ev,
+                                                        "Vocative"
+                                                    )
+                                                }
+                                            />
+                                            {Vocative.err == "*"
+                                                ? (
+                                                    <ErrorForm message="Vui lòng nhập   " />
+                                                ) : (
+                                                    <ErrorForm
+                                                        err={Vocative.err}
+                                                    />
+                                                )}
+                                        </Grid>
+                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                            <Grid item xs={12}>
+                                                <DesktopDatePicker
+                                                    label="Date desktop"
+                                                    inputFormat="dd/MM/yyyy"
+                                                    value={Birthday.value}
+                                                    onChange={this.handleChangeBirthday}
+                                                    renderInput={(params) => <TextField {...params} />}
+                                                />
+                                                {Birthday.err == "*"
+                                                    ? (
+                                                        <ErrorForm message="Vui lòng nhập ngay thang   " />
+                                                    ) : (
+                                                        <ErrorForm
+                                                            err={Birthday.err}
+                                                        />
+                                                    )}
+                                            </Grid>
+                                        </LocalizationProvider>
 
-
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                required
+                                                className="form-control"
+                                                fullWidth
+                                                name="Address"
+                                                label="Address"
+                                                value={Address.value}
+                                                onChange={(ev) =>
+                                                    this._setValue(
+                                                        ev,
+                                                        "Address"
+                                                    )
+                                                }
+                                            />
+                                            {Address.err == "*"
+                                                ? (
+                                                    <ErrorForm message="Vui lòng nhập Address " />
+                                                ) : (
+                                                    <ErrorForm
+                                                        err={Address.err}
+                                                    />
                                                 )}
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
                                                 required
                                                 fullWidth
-                                                id="email"
+                                                id="Email"
                                                 label="Email Address"
-                                                name="email"
-                                                autoComplete="email"
-                                                value={email.value}
+                                                name="Email"
+                                                autoComplete="Email"
+                                                value={Email.value}
                                                 onChange={(ev) =>
                                                     this._setValue(
                                                         ev,
-                                                        "email"
+                                                        "Email"
                                                     )
                                                 }
                                             />
-                                            {email.err == "*"
+                                            {Email.err == "*"
                                                 ? (
                                                     <ErrorForm message="Vui lòng nhập địa chỉ Email" />
                                                 ) : (
                                                     <ErrorForm
-                                                        err={email.err}
+                                                        err={Email.err}
                                                     />
                                                 )}
                                         </Grid>
-
                                         <Grid item xs={12}>
                                             <TextField
                                                 required
                                                 fullWidth
-                                                name="password"
+                                                name="Password"
+                                                type="Password"
                                                 label="Password"
-                                                value={password.value}
-                                                id="password"
+                                                value={Password.value}
+                                                id="Password"
                                                 autoComplete="new-password"
                                                 onChange={(ev) =>
                                                     this._setValue(
                                                         ev,
-                                                        "password"
+                                                        "Password"
                                                     )
                                                 }
-
                                             />
-                                            {password.err == "*"
+                                            {Password.err == "*"
                                                 ? (
                                                     <ErrorForm message="Vui lòng nhập mật khẩu" />
                                                 ) : (
                                                     <ErrorForm
-                                                        err={password.err}
+                                                        err={Password.err}
                                                     />
-
-
                                                 )}
                                         </Grid>
                                         <Grid item xs={12}>
@@ -228,26 +300,23 @@ export class SignUp extends Form {
                                                 type="password"
                                                 id="confirm password"
                                                 autoComplete="confirm password"
-                                                value={confirmPassword.value}
+                                                value={ConfirmationPassword.value}
                                                 onChange={(ev) =>
                                                     this._setValue(
                                                         ev,
-                                                        "confirmPassword"
+                                                        "ConfirmationPassword"
                                                     )
                                                 }
                                             />
-                                            {confirmPassword.err == "*"
+                                            {ConfirmationPassword.err == "*"
                                                 ? (
                                                     <ErrorForm message="Vui lòng nhập lại mật khẩu" />
                                                 ) : (
                                                     <ErrorForm
-                                                        err={confirmPassword.err}
+                                                        err={ConfirmationPassword.err}
                                                     />
-
-
                                                 )}
                                         </Grid>
-
                                         <Grid item xs={12}>
                                             <FormControlLabel
                                                 control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -260,22 +329,15 @@ export class SignUp extends Form {
                                         type="button"
                                         variant="contained"
                                         sx={{ mt: 3, mb: 2 }}
+                                        fullWidth
                                     >
                                         Sign Up
                                     </Button>
-                                    <Grid container justifyContent="flex-end">
-                                        <Grid item>
-                                            <Link href="#">
-                                                Already have an account? Sign in
-                                            </Link>
-                                        </Grid>
-                                    </Grid>
                                 </Box>
                             </Box>
                         </Container>
                     </ThemeProvider>
                 </div>
-
             </>
         )
     }

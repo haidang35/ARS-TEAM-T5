@@ -12,17 +12,58 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import registerService from "../Service/RegisterService";
+import Form from "../../../../../Shared/Components/Form";
 
 
 
 
-export class SignIn extends Component {
+export class SignIn extends Form {
   constructor(props) {
     super(props);
     this.state = {
+      form: this._getInitFormData({
+        email: "",
+        password: "",
+      }),
+      message: "",
 
     }
   }
+
+  componentDidMount(){
+    console.log(this.state.form);
+
+  }
+  
+
+  onSubmit = async () => {
+    this._validateForm();
+    const { email, password } = this.state.form;
+    if (this._isFormValid()) {
+      const params = new URLSearchParams();
+      params.append("grant_type", "password");
+      params.append("username", email.value);
+      params.append("password", password.value);
+      await registerService
+        .accessAuthToken(params)
+        .then((res) => {
+          localStorage.setItem("access_token", res.data.access_token);
+          window.location.replace("/");
+        })
+        .catch((err) => {
+          this.setState({
+            message:
+              "Đăng nhập thất bại",
+          });
+        });
+    } else {
+      console.log("in valid");
+    }
+
+  }
+
+
   render() {
     const theme = createTheme();
     return (
@@ -86,6 +127,7 @@ export class SignIn extends Component {
                     label="Remember me"
                   />
                   <Button
+                    onClick={this.onSubmit}
                     type="submit"
                     fullWidth
                     variant="contained"
