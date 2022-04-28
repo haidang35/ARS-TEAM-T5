@@ -83,8 +83,10 @@ export default function AirlineList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [airlineList, setAirlineList] = useState([]);
+  const [airlineListApi, setAirlineListApi] = useState([]);
   const [select, setSelect] = React.useState([]);
   const [msg, setMsg] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
   const handleChange = (event) => {
     const {
@@ -101,11 +103,18 @@ export default function AirlineList() {
     getMsg();
   }, []);
 
+  useEffect(() => {
+    setAirlineList(airlineListApi.filter((airline) => {
+      return (airline.Name.toLowerCase()).includes(searchValue.toLowerCase());
+    }));
+  }, [searchValue]);
+
   const getAirlineList = async () => {
     await airlineService
       .getAirlineList()
       .then((res) => {
         setAirlineList(res.data);
+        setAirlineListApi(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -192,9 +201,11 @@ export default function AirlineList() {
                         sx={{ ml: 1, flex: 1 }}
                         placeholder="Search Airline"
                         inputProps={{ "aria-label": "search google maps" }}
+                        value={searchValue}
+                        onChange={(ev) => setSearchValue(ev.target.value)}
                       />
                       <IconButton
-                        type="submit"
+                        type="button"
                         sx={{ p: "10px" }}
                         aria-label="search"
                       >
@@ -206,34 +217,7 @@ export default function AirlineList() {
                       />
                     </Paper>
                   </TableCell>
-                  <TableCell>
-                    <FormControl sx={{ m: 1, width: 300, right: 150 }}>
-                      <InputLabel id="demo-multiple-name-label">
-                        Select
-                      </InputLabel>
-                      <Select
-                        id="select"
-                        multiple
-                        value={select}
-                        onChange={handleChange}
-                        input={<OutlinedInput label="Select" />}
-                      >
-                        {selectList.map((select) => (
-                          <MenuItem
-                            key={select}
-                            value={select}
-                          >
-                            {select}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                    <FormControl sx={{ m: 1, top: 10, right: 150 }}>
-                      <Button variant="contained" startIcon={<SearchIcon />}>
-                        Search
-                      </Button>
-                    </FormControl>
-                  </TableCell>
+                 
                   <TableCell align="right" colSpan={3}>
                     <Link to={"/admin/airlines/create"}>
                       <Button variant="contained" startIcon={<AddCircleIcon />}>
