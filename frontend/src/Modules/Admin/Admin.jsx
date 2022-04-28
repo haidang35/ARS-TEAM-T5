@@ -26,7 +26,7 @@ import AddNewPayment from "./Payment/Components/AddNewPayment/AddNewPayment";
 import BookingDetails from "./Booking/Components/BookingDetails/BookingDetails";
 import authService from "./Auth/Service/AuthServices";
 import { ROLES } from "../../Configs/server";
-import AddNweFlightTicket from "./FlightTicket/Components/AddNewFlightTIcket/AddNewFlightTicket";
+import AddNweFlightTicket from "./FlightTicket/Components/AddNewFlightTicket/AddNewFlightTicket";
 
 
 export const Admin = () => {
