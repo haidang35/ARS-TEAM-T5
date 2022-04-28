@@ -74,6 +74,22 @@ namespace backend.Controllers
             return Ok(userRoles);
         }
 
+        [Route("~/api/auth-user")]
+        [HttpGet]
+        [Authorize]
+        [ResponseType(typeof(User))]
+        public IHttpActionResult GetAuthUser()
+        {
+            var identity = HttpContext.Current.User.Identity as ClaimsIdentity;
+            var currentUserId = Int32.Parse(identity.FindFirst("currentUserId").Value);
+            var user = db.Users.Find(currentUserId); ;
+            if(user == null)
+            {
+                return BadRequest("User not exists");
+            }
+            return Ok(user);
+        }
+
         // GET: api/Users
         [Route ("~/api/users")]
         [HttpGet]
