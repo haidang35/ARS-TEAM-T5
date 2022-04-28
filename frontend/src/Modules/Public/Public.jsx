@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom"
 import { Home } from "./Home/Home";
 import "./Shared/Styles/Public.scss";
@@ -12,41 +12,15 @@ import { BookingHistory } from "./Profile/Components/BookingHistory/BookingHisto
 import { ViewDetailsBooking } from "./Profile/Components/ViewDetailsBooking/ViewDetailsBooking";
 import { SignUp } from "./Account/Components/SignUp/SignUp";
 import { SignIn } from "./Account/Components/SignIn/SignIn";
-import registerService from "./Account/Components/Service/AccountService";
-import { ROLES } from "../../Configs/server";
 
 
 
-export class Public extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
 
-        }
-    }
+export const Public = () => {
 
+   
 
-    checkCurrentUserRoles = async () => {
-        await registerService.getCurrentUserRoles()
-            .then((res) => {
-                const userRoles = res.data;
-                let isPublic = false;
-                userRoles.forEach((userRoles) => {
-                    if (
-                        userRoles.ROLE.ROLECODE === ROLES.ADMIN ||
-                        userRoles.ROLE.ROLECODE === ROLES.SUPER_ADMIN ||
-                        userRoles.ROLE.ROLECODE === ROLES.USER
-                    ) {
-                        isPublic = true;
-                    }
-                    if (isPublic) {
-                        window.localtion.replace('/signin')
-                    }
-                });
-            });
-    }
-
-    render() {
+   
         return (
             <>
                 <BrowserRouter>
@@ -91,4 +65,3 @@ export class Public extends Component {
             </>
         )
     }
-}
