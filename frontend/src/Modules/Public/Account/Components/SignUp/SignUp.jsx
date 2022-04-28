@@ -14,7 +14,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ErrorForm } from "../../../../../Shared/Components/ErrorMessage";
 import Form from "../../../../../Shared/Components/Form";
 import { REGEX_TEL } from "../../../../../Configs/validation";
-import authService from "../../../Shared/Services/AuthService";
 import authServices from "../../../Shared/Services/AuthService";
 
 export class SignUp extends Form {
@@ -30,11 +29,11 @@ export class SignUp extends Form {
                 phoneNumber: "",
 
             }),
-           
+
         }
     }
 
-    onSignUp =  async () => {
+    onSignUp = async () => {
         this._validateForm();
         if (this._isFormValid()) {
             const { form } = this.state;
@@ -47,14 +46,14 @@ export class SignUp extends Form {
                 lastName: form.lastName.value,
             };
             await authServices.userRegister(data)
-            .then((ress) =>{
-                window.location.replace("/signup");
-            })
-            .catch((err) =>{
-                console.log(err);
-            });
-    };
-}
+                .then((ress) => {
+                    window.location.replace("/");
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        };
+    }
 
 
     render() {

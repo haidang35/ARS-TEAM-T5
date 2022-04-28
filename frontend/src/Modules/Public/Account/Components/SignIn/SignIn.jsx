@@ -12,25 +12,40 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import publicService from "../../../Shared/Services/PublicService";
+import authServices from "../../../Shared/Services/AuthService";
+import Form from "../../../../../Shared/Components/Form";
 
 
 
-
-export class SignIn extends Component {
+export class SignIn extends Form {
   constructor(props) {
     super(props);
     this.state = {
+      form: this._getInitFormData({
+        email: "",
+        password: "",
+      }),
 
     }
   }
 
-  onSubmit = () =>{
-   
+  onSubmit = async () => {
+    const { email, password } = this.state.form;
+    const params = new URLSearchParams();
+    params.append("grant_type", "password");
+    params.append("username", email.value);
+    params.append("password", password.value);
+    await authServices.accessAuthToken(params)
+      .then((res) => {
+        localStorage.setItem("access_token", res.data.access_token);
+        window.location.replace("/");
+      })
+
   }
 
 
   render() {
+    const { email, password} = this.state.form;
     const theme = createTheme();
     return (
       <>
@@ -93,7 +108,7 @@ export class SignIn extends Component {
                     label="Remember me"
                   />
                   <Button
-                  onClick={this.onSubmit}
+                    onClick={this.onSubmit}
                     type="submit"
                     fullWidth
                     variant="contained"
