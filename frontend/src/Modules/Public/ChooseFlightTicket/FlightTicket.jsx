@@ -37,11 +37,16 @@ class FlightTicket extends Component {
       viewMode: VIEW_MODE.BASIC_FARE_FOR_ADULTS,
       filterByDepartHours: [],
       filterByLandingHours: [],
+      airlineList: [],
+      filterByAirline:0,
+      sortType: FLIGHT_TICKET_SORT_TYPE.HIGHT_TO_LOW,
+      
     };
   }
   componentDidMount() {
     this.getFlightTicketList();
     this.setDepartureDateFromParamUrl();
+    this.getAirlineList();
   }
 
   setDepartureDateFromParamUrl = () => {
@@ -49,6 +54,14 @@ class FlightTicket extends Component {
     const departureDate = urlParams.get("departureDate");
     this.setState({
       departureDate,
+    });
+  };
+
+  getAirlineList = async () => {
+    await publicService.getAirlineList().then((res) => {
+      this.setState({
+        airlineList: res.data,
+      });
     });
   };
 
@@ -139,7 +152,7 @@ class FlightTicket extends Component {
         break;
     }
 
-    this.setState({ flightTickets });
+    this.setState({ flightTickets, sortType });
   };
 
   sortDepartHour = (departureTimeA, departureTimeB) => {
@@ -179,6 +192,13 @@ class FlightTicket extends Component {
     });
   };
 
+  filterFlightTicketByAirline = (scopeAirline) => {
+    this.setState({
+      filterByAirline: scopeAirline
+    });
+
+  }
+
   render() {
     const {
       departureDate,
@@ -188,6 +208,9 @@ class FlightTicket extends Component {
       viewMode,
       filterByDepartHours,
       filterByLandingHours,
+      airlineList,
+      filterByAirline,
+      sortType
     } = this.state;
     let { flightTickets } = this.state;
     const { passengers, departure, destination } = this.props.location.state;
@@ -209,6 +232,12 @@ class FlightTicket extends Component {
           arrivalTime.getHours() <= filterByLandingHours[1]
         );
       });
+    }
+
+    if (filterByAirline != 0) {
+      flightTickets= flightTickets.filter((ticket) => {
+        return ticket.Flight.Airline.Id == filterByAirline;
+      })
     }
 
     if (isRedirect) {
@@ -241,6 +270,8 @@ class FlightTicket extends Component {
                 filterFlightTicketByLandingHour={
                   this.filterFlightTicketByLandingHour
                 }
+                airlineList={airlineList}
+                filterFlightTicketByAirline={this.filterFlightTicketByAirline}
               />
             </div>
             <div className="col-md-9">
@@ -249,6 +280,11 @@ class FlightTicket extends Component {
                 departure={departure}
                 destination={destination}
                 handleDepartureDate={this.handleDepartureDate}
+                filterByAirline={filterByAirline}
+                sortType={sortType}
+                viewMode={viewMode}
+                filterByDepartHours={filterByDepartHours}
+                filterByLandingHours={filterByLandingHours}
               />
               {flightTickets.map((item, index) => {
                 return (
