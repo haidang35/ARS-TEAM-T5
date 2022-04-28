@@ -12,6 +12,8 @@ using backend.Data;
 using backend.Dtos;
 using backend.Models;
 using MessageBird;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace backend.Controllers
 {
@@ -138,6 +140,7 @@ namespace backend.Controllers
             return db.Bookings.Count(e => e.Id == id) > 0;
         }
 
+        [AllowAnonymous]
         [Route("~/api/public/booking")]
         [HttpPost]
         [ResponseType(typeof(Booking))]
@@ -192,12 +195,16 @@ namespace backend.Controllers
             try
             {
                 db.SaveChanges();
-                const string YourAccessKey = "gSNODCZFBinoK6wH17XXAvC0Y"; // your access key here
-                Client client = Client.CreateDefault(YourAccessKey);
-                const long Msisdn = 357446532; // your phone number here
+              /*  string accountSid = "AC3d3336f55e56591728f7365c86ac8847";
+                string authToken = "367d10f3d92404a6f0b7e880a7e14426";
 
-                MessageBird.Objects.Message message =
-                client.SendMessage("Dang Jinner", "Test", new[] { Msisdn });
+                TwilioClient.Init(accountSid, authToken);
+
+                var message = MessageResource.Create(
+                    body: "Booking Flight Success",
+                    from: new Twilio.Types.PhoneNumber("+16205914451"),
+                    to: new Twilio.Types.PhoneNumber("+84357446532")
+                );*/
             }
             catch (Exception e)
             {
@@ -207,6 +214,7 @@ namespace backend.Controllers
 
         }
 
+        [AllowAnonymous]
         [Route("~/api/bookings/{code}")]
         [HttpGet]
         [ResponseType(typeof(BookingDto))]
