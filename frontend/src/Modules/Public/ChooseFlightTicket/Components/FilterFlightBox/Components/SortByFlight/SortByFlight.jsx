@@ -7,6 +7,7 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import "./SortByFlight.scss";
 import FlightIcon from '@mui/icons-material/Flight';
+import { FLIGHT_TICKET_SORT_TYPE } from "../../../../FlightTicket";
 
 
 export class SortByFlight extends Component {
@@ -18,10 +19,11 @@ export class SortByFlight extends Component {
   }
   handleChangeFlightPrice = (value) => {
     this.setState({
-      sortFlight: value,
+      sortFlight: value
     });
-    this.props.onSortFlight(value);
+    this.props.onSortFlightTickets(value);
   };
+
   render() {
     const { sortFlight } = this.state;
 
@@ -50,9 +52,9 @@ export class SortByFlight extends Component {
                         value="Flight price"
                         control={
                           <Radio
-                            checked={sortFlight == 0}
-                            onChange={() => this.handleChangeFlightPrice(0)}
-                            value={sortFlight}
+                            checked={sortFlight == FLIGHT_TICKET_SORT_TYPE.LOW_TO_HIGH}
+                            onChange={() => this.handleChangeFlightPrice(FLIGHT_TICKET_SORT_TYPE.LOW_TO_HIGH)}
+                            value={FLIGHT_TICKET_SORT_TYPE.LOW_TO_HIGH}
                             className="radio-check"
                           />
                         }
@@ -62,9 +64,9 @@ export class SortByFlight extends Component {
                         value="Flight price low"
                         control={
                           <Radio
-                            checked={sortFlight == 1}
-                            onChange={() => this.handleChangeFlightPrice(1)}
-                            value={sortFlight}
+                            checked={sortFlight == FLIGHT_TICKET_SORT_TYPE.HIGHT_TO_LOW}
+                            onChange={() => this.handleChangeFlightPrice(FLIGHT_TICKET_SORT_TYPE.HIGHT_TO_LOW)}
+                            value={FLIGHT_TICKET_SORT_TYPE.HIGHT_TO_LOW}
                             className="radio-check"
                           />
                         }
@@ -75,8 +77,8 @@ export class SortByFlight extends Component {
                         value="Depart hour"
                         control={
                           <Radio
-                            checked={sortFlight == 2}
-                            onChange={() => this.handleChangeFlightPrice(2)}
+                            checked={sortFlight == FLIGHT_TICKET_SORT_TYPE.DEPART_HOUR}
+                            onChange={() => this.handleChangeFlightPrice(FLIGHT_TICKET_SORT_TYPE.DEPART_HOUR)}
                             value={sortFlight}
                             className="radio-check"
                           />
@@ -88,8 +90,8 @@ export class SortByFlight extends Component {
                         value="flight"
                         control={
                           <Radio
-                            checked={sortFlight == 3}
-                            onChange={() => this.handleChangeFlightPrice(3)}
+                            checked={sortFlight == FLIGHT_TICKET_SORT_TYPE.FLIGHT_TIME}
+                            onChange={() => this.handleChangeFlightPrice(FLIGHT_TICKET_SORT_TYPE.FLIGHT_TIME)}
                             value={sortFlight}
                             className="radio-check"
                           />

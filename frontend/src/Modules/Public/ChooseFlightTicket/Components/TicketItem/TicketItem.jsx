@@ -10,6 +10,7 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { FlightDetails } from "../FlightDetails/FlightDetails";
 import { getTime } from "../../../../../Helpers/datetime";
 import { formatCurrencyToVND } from "../../../../../Helpers/currency";
+import { VIEW_MODE } from "../../FlightTicket";
 
 export class TicketItem extends Component {
   constructor(props) {
@@ -28,13 +29,13 @@ export class TicketItem extends Component {
 
   onChooseFlight = (data, status) => {
     this.setState({
-      isChoosed: ! this.state.isChoosed,
+      isChoosed: !this.state.isChoosed,
     });
     this.props.onChooseFlightTicket(data, status);
   };
 
   render() {
-    const { data, passengers } = this.props;
+    const { data, passengers, viewMode } = this.props;
     const { isChoosed } = this.state;
     return (
       <>
@@ -101,7 +102,11 @@ export class TicketItem extends Component {
             </div>
             <div className="col-md-4">
               <div className="flight-choose">
-                <Typography className="price">{formatCurrencyToVND(data.Price)}</Typography>
+                <Typography className="price">
+                  {formatCurrencyToVND(
+                    viewMode == VIEW_MODE.BASIC_FARE_FOR_ADULTS ? data.Price : data.Price + data.Tax
+                  )}
+                </Typography>
                 {isChoosed ? (
                   <Button
                     onClick={() => this.onChooseFlight(data, "cancel")}

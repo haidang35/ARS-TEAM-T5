@@ -11,6 +11,7 @@ import FlightTicket from "./ChooseFlightTicket/FlightTicket";
 import { Profile } from "./Profile/Profile";
 import { CustomerProfile } from "./Profile/Components/CustomerProfile/CustomerProfile";
 import { BookingHistory } from "./Profile/Components/BookingHistory/BookingHistory";
+import {  ViewDetailsBooking } from "./Profile/Components/ViewDetailsBooking/ViewDetailsBooking";
 
 
 
@@ -52,11 +53,14 @@ export class Public extends Component {
                             <Route path="/profile" exact >
                                 <Profile />
                             </Route>
-                            <Route path="/customerprofile">
+                            <Route path="/customer-info/profile">
                                 <CustomerProfile />
                             </Route>
-                            <Route path="/booking">
+                            <Route path="/customer-bookinghistory">
                                 <BookingHistory />
+                            </Route>
+                            <Route path="/customer-info/viewdetailsbooking" exact >
+                                <ViewDetailsBooking />
                             </Route>
                         </Switch>
                     </div>

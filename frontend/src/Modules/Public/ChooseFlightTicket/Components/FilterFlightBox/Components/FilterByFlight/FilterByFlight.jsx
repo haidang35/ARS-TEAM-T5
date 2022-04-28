@@ -16,12 +16,12 @@ function valuetext(value) {
 }
 const minDistance = 10;
 
-export default function FilterByFlight() {
-  const [value1, setValue1] = React.useState([0, 24]);
-  const [value2, setValue2] = React.useState([0, 24]);
+export default function FilterByFlight({ filterFlightTicketByDepartHour, filterFlightTicketByLandingHour }) {
+  const [departHour, setValue1] = React.useState([0, 24]);
+  const [landingHour, setValue2] = React.useState([0, 24]);
 
   const handleChange1 = (event, newValue, activeThumb) => {
-    console.log(newValue);
+    filterFlightTicketByDepartHour(newValue);
     if (!Array.isArray(newValue)) {
       return;
     }
@@ -29,6 +29,7 @@ export default function FilterByFlight() {
   };
 
   const handleChange2 = (event, newValue, activeThumb) => {
+    filterFlightTicketByLandingHour(newValue);
     if (!Array.isArray(newValue)) {
       return;
     }
@@ -81,7 +82,7 @@ export default function FilterByFlight() {
             <Box>
               <Slider
                 getAriaLabel={() => "Minimum distance"}
-                value={value1}
+                value={departHour}
                 onChange={handleChange1}
                 valueLabelDisplay="auto"
                 getAriaValueText={valuetext}
@@ -89,16 +90,16 @@ export default function FilterByFlight() {
                 max={24}
               />
               <h5 className="h5">
-                {value1[0]}:00
+                {departHour[0]}:00
                 <ArrowRightAltIcon></ArrowRightAltIcon>
-                {value1[1]}:00
+                {departHour[1]}:00
               </h5>
               <br />
               <h4 className="h4-2">Landing hour</h4>
 
               <Slider
                 getAriaLabel={() => "Minimum distance shift"}
-                value={value2}
+                value={landingHour}
                 onChange={handleChange2}
                 valueLabelDisplay="auto"
                 getAriaValueText={valuetext}
@@ -106,9 +107,9 @@ export default function FilterByFlight() {
                 max={24}
               />
               <h5 className="h5">
-                {value2[0]}:00
+                {landingHour[0]}:00
                 <ArrowRightAltIcon></ArrowRightAltIcon>
-                {value2[1]}:00
+                {landingHour[1]}:00
               </h5>
             </Box>
             </div>

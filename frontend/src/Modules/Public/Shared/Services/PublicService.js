@@ -2,13 +2,14 @@ import axios from "axios";
 import { API_GET_IP_ADDRESS, AUTH_TOKEN, BASE_URL_SERVER } from "../../../../Configs/server";
 
 const API_ENDPOINT = {
-
     GET_LOCATIONS_LIST: "/api/locations",
     GET_FLIGHT_TICKETS: '/api/tickets/search',
     BOOKING_TICKET: '/api/public/booking',
     GET_LOCKED_FLIGHT_SEATS: '/api/flights/',
     GET_BOOKING_DETAILS: '/api/bookings/',
-    PAYMENT_BOOKING: '/api/payments/booking'
+    PAYMENT_BOOKING: '/api/payments/booking',
+  
+    
 }
 
 export const API_CONVERT_CURRENCY = 'https://currency-converter5.p.rapidapi.com/currency/convert';
@@ -55,6 +56,11 @@ class PublicService {
     getIpAdressInfo = async () => {
         return await axios.get(API_GET_IP_ADDRESS);
     }
+
+
+
+
+
 }
 
     

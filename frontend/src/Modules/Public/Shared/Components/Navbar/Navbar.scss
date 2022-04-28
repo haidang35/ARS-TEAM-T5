@@ -10,6 +10,7 @@
             padding-right: 0px;
         }
     }
+    
 
     .list-menu {
         margin-left: 10rem;
@@ -49,5 +50,12 @@
         .active {
             border-bottom: 2px solid white;
         }
+    }
+
+    .profile{
+        .css-6hp17o-MuiList-root-MuiMenu-list{
+            text-decoration: none;
+        }
+       
     }
 }

@@ -17,7 +17,7 @@ export class SlideBar extends Component {
                 <div className="customer-side-bar">
                     <ul className="menu-list">
                         <Link
-                            to="/customerprofile"
+                            to="/customer-info/profile"
                             style={{ textDecoration: "none" }}
                         >
                             <li className="menu-item">
@@ -28,7 +28,7 @@ export class SlideBar extends Component {
                         </Link>
 
                         <Link
-                            to="/booking"
+                            to="/customer-bookinghistory"
                             style={{ textDecoration: "none" }}
                         >
                             {" "}

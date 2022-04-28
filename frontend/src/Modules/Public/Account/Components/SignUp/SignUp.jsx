@@ -1,22 +1,21 @@
-import React, { Component } from "react"; import { Button } from "@mui/material";
+import React, { Component } from "react";
+import { Button } from "@mui/material";
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Copyright } from "@mui/icons-material";
 import { ErrorForm } from "../../../../../Shared/Components/ErrorMessage";
 import Form from "../../../../../Shared/Components/Form";
 import { REGEX_TEL } from "../../../../../Configs/validation";
-
-
+import authService from "../../../Shared/Services/AuthService";
+import authServices from "../../../Shared/Services/AuthService";
 
 export class SignUp extends Form {
     constructor(props) {
@@ -31,12 +30,11 @@ export class SignUp extends Form {
                 phoneNumber: "",
 
             }),
-
-
+           
         }
     }
 
-    onSignUp = () => {
+    onSignUp =  async () => {
         this._validateForm();
         if (this._isFormValid()) {
             const { form } = this.state;
@@ -48,16 +46,20 @@ export class SignUp extends Form {
                 confirmPassword: form.confirmPassword.value,
                 lastName: form.lastName.value,
             };
-        }
+            await authServices.userRegister(data)
+            .then((ress) =>{
+                window.location.replace("/signup");
+            })
+            .catch((err) =>{
+                console.log(err);
+            });
     };
-
-
+}
 
 
     render() {
         const { lastName, firstName, email, password, confirmPassword, phoneNumber } = this.state.form;
         const theme = createTheme();
-
         return (
             <>
                 <div id="signup-form">
@@ -196,6 +198,7 @@ export class SignUp extends Form {
                                                 required
                                                 fullWidth
                                                 name="password"
+                                                type="password"
                                                 label="Password"
                                                 value={password.value}
                                                 id="password"
@@ -260,16 +263,10 @@ export class SignUp extends Form {
                                         type="button"
                                         variant="contained"
                                         sx={{ mt: 3, mb: 2 }}
+                                        fullWidth
                                     >
                                         Sign Up
                                     </Button>
-                                    <Grid container justifyContent="flex-end">
-                                        <Grid item>
-                                            <Link href="#">
-                                                Already have an account? Sign in
-                                            </Link>
-                                        </Grid>
-                                    </Grid>
                                 </Box>
                             </Box>
                         </Container>
