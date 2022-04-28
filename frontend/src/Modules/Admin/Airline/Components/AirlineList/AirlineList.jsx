@@ -207,7 +207,7 @@ export default function AirlineList() {
                     </Paper>
                   </TableCell>
                   <TableCell>
-                    <FormControl sx={{ m: 1, width: 250, right: 150 }}>
+                    <FormControl sx={{ m: 1, width: 300, right: 150 }}>
                       <InputLabel id="demo-multiple-name-label">
                         Select
                       </InputLabel>
