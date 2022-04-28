@@ -39,6 +39,8 @@ class FlightTicket extends Component {
       filterByLandingHours: [],
       airlineList: [],
       filterByAirline:0,
+      sortType: FLIGHT_TICKET_SORT_TYPE.HIGHT_TO_LOW,
+      
     };
   }
   componentDidMount() {
@@ -150,7 +152,7 @@ class FlightTicket extends Component {
         break;
     }
 
-    this.setState({ flightTickets });
+    this.setState({ flightTickets, sortType });
   };
 
   sortDepartHour = (departureTimeA, departureTimeB) => {
@@ -207,7 +209,8 @@ class FlightTicket extends Component {
       filterByDepartHours,
       filterByLandingHours,
       airlineList,
-      filterByAirline
+      filterByAirline,
+      sortType
     } = this.state;
     let { flightTickets } = this.state;
     const { passengers, departure, destination } = this.props.location.state;
@@ -277,6 +280,11 @@ class FlightTicket extends Component {
                 departure={departure}
                 destination={destination}
                 handleDepartureDate={this.handleDepartureDate}
+                filterByAirline={filterByAirline}
+                sortType={sortType}
+                viewMode={viewMode}
+                filterByDepartHours={filterByDepartHours}
+                filterByLandingHours={filterByLandingHours}
               />
               {flightTickets.map((item, index) => {
                 return (
