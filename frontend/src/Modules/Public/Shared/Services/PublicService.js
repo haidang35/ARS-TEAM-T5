@@ -2,7 +2,6 @@ import axios from "axios";
 import { API_GET_IP_ADDRESS, AUTH_TOKEN, BASE_URL_SERVER } from "../../../../Configs/server";
 
 const API_ENDPOINT = {
-
     GET_LOCATIONS_LIST: "/api/locations",
     GET_FLIGHT_TICKETS: '/api/tickets/search',
     BOOKING_TICKET: '/api/public/booking',

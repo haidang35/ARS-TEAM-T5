@@ -166,7 +166,7 @@ class AddNewFlightTicket extends Form {
                   <FormControl fullWidth>
                     <InputLabel id="flightId">Select Flight</InputLabel>
                     <Select
-                      id="flightTd"
+                      id="flightId"
                       name="flightTd"
                       value={flightId}
                       label="Flight"
@@ -177,7 +177,6 @@ class AddNewFlightTicket extends Form {
                           <MenuItem
                             key={flightTicket.Id}
                             value={flightTicket.Id}>
-
                             {flightTicket.FlightCode}
                           </MenuItem>
 
