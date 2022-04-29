@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import "./CustomerProfile.scss";
 import { ErrorForm } from "../../../../../Shared/Components/ErrorMessage";
 import { REGEX_TEL } from "../../../../../Configs/validation";
+import publicService from "../../../Shared/Services/PublicService";
 
 
 export class CustomerProfile extends Form {
@@ -21,6 +22,9 @@ export class CustomerProfile extends Form {
     }
 
 
+    componentDidMount() {
+        this.getAuthUser();
+    }
 
     onEditInfo = () => {
         this.setState({
@@ -47,6 +51,30 @@ export class CustomerProfile extends Form {
             };
         }
     }
+
+    // getAuthUser = async () => {
+    //     await publicService.getAuthUser(accessToken).then((res) => {
+    //         this._fillForm({
+    //             fullName: res.data.Name,
+    //             phone: res.data.PhoneNumber,
+    //             email: res.data.Email,
+    //         });
+    //     });
+    // };
+
+    getAuthUser = async () => {
+        const authToken = localStorage.getItem('access_token');
+        await publicService.getAuthUser(authToken)
+            .then((res) => {
+                this._fillForm({
+                    fullName: res.data.Name,
+                    phone: res.data.PhoneNumber,
+                    email: res.data.Email,
+                });
+            })
+    }
+
+
 
     render() {
         const { fullName, email, phone } = this.state.form;

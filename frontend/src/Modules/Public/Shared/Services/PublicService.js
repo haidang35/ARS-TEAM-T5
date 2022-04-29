@@ -10,6 +10,8 @@ const API_ENDPOINT = {
     PAYMENT_BOOKING: '/api/payments/booking',
     GET_AIRLINE_LIST: '/api/airlines',
     GET_AUTH_USER: "/api/auth-user",
+    GET_USER_BOOKING: "/api/auth-user/bookings",
+    
 }
 
 export const API_CONVERT_CURRENCY = 'https://currency-converter5.p.rapidapi.com/currency/convert';
@@ -70,6 +72,10 @@ class PublicService {
 
 
     };
+
+    getUserBooking = async () => {
+        return await axios.get( BASE_URL_SERVER + API_ENDPOINT.GET_USER_BOOKING)
+    }
 }
 
 
