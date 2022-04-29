@@ -17,12 +17,12 @@ const configs = {
 class BookingService {
 
   getBookingList = async () => {
-    return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_BOOKING_LIST);
+    return await axios.get(BASE_URL_SERVER + API_ENDPOINT.GET_BOOKING_LIST, configs);
   };
 
   getBookingDetails = async (id) => {
     return await axios.get(
-      BASE_URL_SERVER + API_ENDPOINT.GET_DETAILS + id
+      BASE_URL_SERVER + API_ENDPOINT.GET_DETAILS + id, configs
     );
   };
 

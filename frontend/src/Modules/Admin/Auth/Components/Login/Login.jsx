@@ -152,8 +152,6 @@ export class Login extends Form{
    }
 }
  
-
-  // const handleSubmit = (event) => {
-  // };
+;
 
 export default Login;
