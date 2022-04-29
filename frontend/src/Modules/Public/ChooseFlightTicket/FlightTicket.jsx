@@ -40,7 +40,6 @@ class FlightTicket extends Component {
       airlineList: [],
       filterByAirline:0,
       sortType: FLIGHT_TICKET_SORT_TYPE.HIGHT_TO_LOW,
-      
     };
   }
   componentDidMount() {
@@ -199,6 +198,7 @@ class FlightTicket extends Component {
 
   }
 
+
   render() {
     const {
       departureDate,
@@ -210,7 +210,8 @@ class FlightTicket extends Component {
       filterByLandingHours,
       airlineList,
       filterByAirline,
-      sortType
+      sortType,
+      redirectToObject
     } = this.state;
     let { flightTickets } = this.state;
     const { passengers, departure, destination } = this.props.location.state;

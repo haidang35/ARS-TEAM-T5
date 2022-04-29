@@ -101,16 +101,14 @@ export default function BookingList() {
 
 
   useEffect(() => {
-    setBookingList(bookingListAPI.filter((booking) => {
-      switch(filterType) {
-        case FILTER_TYPE.AIRLINE:
-          console.log("🚀 ~ file: BookingList.jsx ~ line 109 ~ setBookingList ~ booking.BookingTickets[0].Ticket.Flight.AirlineId, filterByAirlineId", booking.BookingTickets[0].Ticket.Flight.AirlineId, filterByAirlineId)
-        }
-          return booking.BookingTickets[0].Ticket.Flight.AirlineId == filterByAirlineId.
-          break;
-         
-    }));
+    const bookingList = bookingListAPI.filter((booking) => {
+      if(filterType === FILTER_TYPE.AIRLINE) {
+        return booking.BookingTickets[0].Ticket.Flight.AirlineId == filterByAirlineId
+      }
+    });
+    setBookingList(bookingList);
   }, [filterByAirlineId]);
+
   useEffect(() =>{
     setBookingList(bookingListAPI.filter((booking) => {
       return(booking.BookingCode.toLowerCase()).includes(searchValue.toLowerCase())
@@ -241,7 +239,7 @@ export default function BookingList() {
                       <Select
                         id="airline"
                         value={filterByAirlineId}
-                        onChange={(ev) => setFilterByAirId(ev.target.value) }
+                        onChange={(ev) => setFilterByAirId(+ev.target.value) }
                         input={<OutlinedInput label="Select" />}
                       >
                         {airlineList.map((airline) => (

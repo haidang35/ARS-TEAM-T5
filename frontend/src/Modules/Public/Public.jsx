@@ -15,9 +15,6 @@ import { SignIn } from "./Account/Components/SignIn/SignIn";
 
 export const Public = () => {
 
-   
-
-   
         return (
             <>
                 <BrowserRouter>
