@@ -25,8 +25,10 @@ function App() {
   const getAuthUser = async () => {
     const authToken = localStorage.getItem('access_token');
     if (authToken !== '' && authToken !== null) {
+      console.log('isLogged', authToken);
       await publicService.getAuthUser(authToken)
         .then((res) => {
+          console.log("🚀 ~ file: App.js ~ line 30 ~ .then ~ res", res.data)
           localStorage.setItem("auth_user", JSON.stringify(res.data))
           // setAuthUser(res.data);
         })
@@ -39,7 +41,7 @@ function App() {
     <>
       <BrowserRouter>
         <Switch>
-          <Route path="/admin" exact>
+          <Route path="/admin">
             {isLogged ? <Admin /> : <Redirect to="/admin-login" />}
           </Route>
           <Route path="/" exact>

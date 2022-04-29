@@ -182,7 +182,7 @@ const Navbar = () => {
                         <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
                       </IconButton>
                     </Tooltip>
-                    HI, {authUser.Name}
+                    HI, {authUser && authUser.Name}
                     <Menu
                       sx={{ mt: '45px' }}
                       id="menu-appbar"
