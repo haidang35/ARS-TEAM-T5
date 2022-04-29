@@ -19,6 +19,11 @@ import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import userService from '../../Shared/Services/UserService';
 import DeleteUser from '../DeleteUser/DeleteUser';
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -59,18 +64,26 @@ export default function UserList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [userList, setUserList] = useState([]);
+  const [userListApi, setUserListApi] = useState([]);
   const [msg, setMsg] = useState('');
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     getUserList();
     getMsg();
   }, []);
+  useEffect(() => {
+    setUserList(userListApi.filter((user) => {
+      return (user.Name.toLowerCase()).includes(searchValue.toLowerCase());
+    }));
+  }, [searchValue]);
 
   const getUserList = async () => {
     await userService
      .getUserList()
      .then((res) => {
         setUserList(res.data);
+        setUserListApi(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -140,6 +153,37 @@ export default function UserList() {
               <TableHead>
                 <TableRow>
                   <TableCell align="center" colSpan={3}>
+                  <Paper
+                      component="form"
+                      sx={{
+                        p: "2px 4px",
+                        display: "flex",
+                        alignItems: "center",
+                        width: 250,
+                      }}
+                    >
+                      <IconButton sx={{ p: "10px" }} aria-label="menu">
+                        <MenuIcon />
+                      </IconButton>
+                      <InputBase
+                        sx={{ ml: 1, flex: 1 }}
+                        placeholder="Search  Username "
+                        inputProps={{ "aria-label": "search google maps" }}
+                        value={searchValue}
+                        onChange={(ev) => setSearchValue(ev.target.value)}
+                      />
+                      <IconButton
+                        type="button"
+                        sx={{ p: "10px" }}
+                        aria-label="search"
+                      >
+                        <SearchIcon />
+                      </IconButton>
+                      <Divider
+                        sx={{ height: 28, m: 0.5 }}
+                        orientation="vertical"
+                      />
+                    </Paper>
                   </TableCell>
                   <TableCell align="right" colSpan={3}>
                     <Link to={"/admin/users/create"}>

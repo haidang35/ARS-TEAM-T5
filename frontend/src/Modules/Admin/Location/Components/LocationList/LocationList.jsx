@@ -19,6 +19,11 @@ import IconButton from '@mui/material/IconButton';
 import DeleteLocation from '../DeleteLocation/DeleteLocation';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+
 
 
 const columns = [
@@ -75,12 +80,21 @@ export default function LocationList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [locationList, setLocationList] = useState([]); 
+  const [locationListApi, setLocationListApi] = useState([]); 
   const [msg, setMsg] = useState('');
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     getLocationList();
     getMsg();
   }, []);
+
+  useEffect(() => {
+    setLocationList(locationListApi.filter((location) => {
+      return (location.City.Name.toLowerCase()).includes(searchValue.toLowerCase());
+    }));
+  }, [searchValue]);
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -107,6 +121,7 @@ export default function LocationList() {
     await locationsService.getLocationList()
       .then((res) => {
         setLocationList(res.data);
+        setLocationListApi(res.data);
       })
   }
   const onDeleteLocation = async (location) => {
@@ -148,6 +163,37 @@ export default function LocationList() {
               <TableHead>
                 <TableRow>
                   <TableCell align="center" colSpan={3}>
+                  <Paper
+                      component="form"
+                      sx={{
+                        p: "2px 4px",
+                        display: "flex",
+                        alignItems: "center",
+                        width: 250,
+                      }}
+                    >
+                      <IconButton sx={{ p: "10px" }} aria-label="menu">
+                        <MenuIcon />
+                      </IconButton>
+                      <InputBase
+                        sx={{ ml: 1, flex: 1 }}
+                        placeholder="Search  Location "
+                        inputProps={{ "aria-label": "search google maps" }}
+                        value={searchValue}
+                        onChange={(ev) => setSearchValue(ev.target.value)}
+                      />
+                      <IconButton
+                        type="button"
+                        sx={{ p: "10px" }}
+                        aria-label="search"
+                      >
+                        <SearchIcon />
+                      </IconButton>
+                      <Divider
+                        sx={{ height: 28, m: 0.5 }}
+                        orientation="vertical"
+                      />
+                    </Paper>
                   </TableCell>
                   <TableCell align="right" colSpan={3}>
                     <Link to={"/admin/locations/create"}>
