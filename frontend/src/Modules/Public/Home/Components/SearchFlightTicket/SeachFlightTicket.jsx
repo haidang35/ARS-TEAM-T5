@@ -21,7 +21,7 @@ export class SeachFlightTicket extends Component {
         return (
             <>
                 <div id="search">
-                    <div>
+                    <div className="warp-container">
                         <div className="content">
                             Search Flight's Information
                         </div>
@@ -34,7 +34,6 @@ export class SeachFlightTicket extends Component {
                                 <FormControlLabel value="female" control={<Radio />} label="Flight" />
                             </RadioGroup>
                         </FormControl>
-                    </div>
                     <div className="search-form">
                         <TextField className="input"
                             label="Search Flight"
@@ -48,6 +47,8 @@ export class SeachFlightTicket extends Component {
                         </Button>
                     </div>
                 </div>
+                </div>
+
             </>
         )
     }
