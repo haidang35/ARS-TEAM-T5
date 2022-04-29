@@ -19,6 +19,10 @@ import Stack from '@mui/material/Stack';
 import { Link, useLocation } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import DeleteFlightTicket from '../DeleteFlightTicket/DeleteFlightTicket';
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -78,18 +82,27 @@ export default function FlightTicketList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [FlightTicketList, setFlightTicketList] = useState([]);
+  const [flightTicketListApi, setFlightTicketListApi] = useState([]);
   const [msg, setMsg] = useState('');
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     getFlightTicketList();
     getMsg();
   }, []);
+  useEffect(() => {
+    setFlightTicketList(flightTicketListApi.filter((flightTicket) => {
+      return (flightTicket.TicketType.toLowerCase()).includes(searchValue.toLowerCase());
+    }));
+  }, [searchValue]);
 
   const getFlightTicketList = async () => {
     await flightTicketService
       .getFlightTicketList()
       .then((res) => {
         setFlightTicketList(res.data);
+        setFlightTicketListApi(res.data);
+        
       })
       .catch((err) => {
         console.log(err);
@@ -159,6 +172,37 @@ export default function FlightTicketList() {
               <TableHead>
                 <TableRow>
                   <TableCell align="center" colSpan={3}>
+                  <Paper
+                      component="form"
+                      sx={{
+                        p: "2px 4px",
+                        display: "flex",
+                        alignItems: "center",
+                        width: 250,
+                      }}
+                    >
+                      <IconButton sx={{ p: "10px" }} aria-label="menu">
+                        <MenuIcon />
+                      </IconButton>
+                      <InputBase
+                        sx={{ ml: 1, flex: 1 }}
+                        placeholder="Search  Flight Ticket "
+                        inputProps={{ "aria-label": "search google maps" }}
+                        value={searchValue}
+                        onChange={(ev) => setSearchValue(ev.target.value)}
+                      />
+                      <IconButton
+                        type="button"
+                        sx={{ p: "10px" }}
+                        aria-label="search"
+                      >
+                        <SearchIcon />
+                      </IconButton>
+                      <Divider
+                        sx={{ height: 28, m: 0.5 }}
+                        orientation="vertical"
+                      />
+                    </Paper>
                   </TableCell>
                   <TableCell align="right" colSpan={12}>
                     <Link to={"/admin/flight-tickets/create"}>

@@ -16,7 +16,12 @@ import paymentService1 from '../../Shared/PaymentService'
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
-import DeletePayment from '../DeletePayment/DeletePayment'
+import DeletePayment from '../DeletePayment/DeletePayment';
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+
 
 const columns = [
   { id: 'id', label: 'Id', minWidth: 80 },
@@ -57,18 +62,26 @@ export default function PaymentList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [paymentList, setPaymentList] = useState([]);
+  const [paymentListApi, setPaymentListApi] = useState([]);
   const [msg, setMsg] = useState('');
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     getPaymentList();
     getMsg();
   }, []);
+  useEffect(() => {
+    setPaymentList(paymentListApi.filter((payment) => {
+      return (payment.PaymentMethod.toLowerCase()).includes(searchValue.toLowerCase());
+    }));
+  }, [searchValue]);
 
   const getPaymentList = async () => {
     await paymentService1
       .getPaymentList()
       .then((res) => {
         setPaymentList(res.data);
+        setPaymentListApi(res.data);
         console.log(res.data);
       })
       .catch((err) => {
@@ -139,6 +152,37 @@ export default function PaymentList() {
               <TableHead>
                 <TableRow>
                   <TableCell align="center" colSpan={3}>
+                  <Paper
+                      component="form"
+                      sx={{
+                        p: "2px 4px",
+                        display: "flex",
+                        alignItems: "center",
+                        width: 250,
+                      }}
+                    >
+                      <IconButton sx={{ p: "10px" }} aria-label="menu">
+                        <MenuIcon />
+                      </IconButton>
+                      <InputBase
+                        sx={{ ml: 1, flex: 1 }}
+                        placeholder="Search  Payment Method "
+                        inputProps={{ "aria-label": "search google maps" }}
+                        value={searchValue}
+                        onChange={(ev) => setSearchValue(ev.target.value)}
+                      />
+                      <IconButton
+                        type="button"
+                        sx={{ p: "10px" }}
+                        aria-label="search"
+                      >
+                        <SearchIcon />
+                      </IconButton>
+                      <Divider
+                        sx={{ height: 28, m: 0.5 }}
+                        orientation="vertical"
+                      />
+                    </Paper>
                   </TableCell>
                   <TableCell align="right" colSpan={3}>
                     <Link to={"/admin/payment/create"}>

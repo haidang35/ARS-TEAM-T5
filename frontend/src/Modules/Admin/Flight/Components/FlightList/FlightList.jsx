@@ -20,6 +20,10 @@ import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { Link, useLocation } from "react-router-dom";
 import DeleteFlight from "../DeleteFlight/DeleteFlight";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";  
 
 const columns = [
   { id: "id", label: "Id", minWidth: 80 },
@@ -79,24 +83,35 @@ const rows = [
 export default function FlightList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [FlightList, setFlightList] = useState([]);
+  const [flightList, setFlightList] = useState([]);
+  const [flightListAPI, setFlightListAPI] = useState([]);
   const [msg, setMsg] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+
+
 
   useEffect(() => {
     getFlightList();
     getMsg();
   }, []);
+  useEffect(() =>{
+    setFlightList(flightListAPI.filter((flight) => {
+      return(flight.FlightCode.toLowerCase()).includes(searchValue.toLowerCase())
+    }));
+  },[searchValue]);
 
   const getFlightList = async () => {
     await flightService
       .getFlightList()
       .then((res) => {
         setFlightList(res.data);
+        setFlightListAPI(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -160,7 +175,39 @@ export default function FlightList() {
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center" colSpan={3}></TableCell>
+                  <TableCell align="center" colSpan={3}>
+                  <Paper
+                      component="form"
+                      sx={{
+                        p: "2px 4px",
+                        display: "flex",
+                        alignItems: "center",
+                        width: 300,
+                      }}
+                    >
+                      <IconButton sx={{ p: "10px" }} aria-label="menu">
+                        <MenuIcon />
+                      </IconButton>
+                      <InputBase
+                        sx={{ ml: 1, flex: 1 }}
+                        placeholder="Search Flight Code"
+                        inputProps={{ "aria-label": "search google maps" }}
+                        value={searchValue}
+                        onChange={(ev) => setSearchValue(ev.target.value)}
+                      />
+                      <IconButton
+                        type="button"
+                        sx={{ p: "10px" }}
+                        aria-label="search"
+                      >
+                        <SearchIcon />
+                      </IconButton>
+                      <Divider
+                        sx={{ height: 28, m: 0.5 }}
+                        orientation="vertical"
+                      />
+                    </Paper>
+                  </TableCell>
                   <TableCell align="right" colSpan={12}>
                     <Link to={"/admin/flights/create"}>
                       <Button variant="contained" startIcon={<AddCircleIcon />}>
@@ -182,7 +229,7 @@ export default function FlightList() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {FlightList.slice(
+                {flightList.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 ).map((flight) => {
