@@ -104,9 +104,11 @@ export default function BookingList() {
     setBookingList(bookingListAPI.filter((booking) => {
       switch(filterType) {
         case FILTER_TYPE.AIRLINE:
-          return booking.Ticket.Flight.AirlineId == filterByAirlineId.
+          console.log("🚀 ~ file: BookingList.jsx ~ line 109 ~ setBookingList ~ booking.BookingTickets[0].Ticket.Flight.AirlineId, filterByAirlineId", booking.BookingTickets[0].Ticket.Flight.AirlineId, filterByAirlineId)
+        }
+          return booking.BookingTickets[0].Ticket.Flight.AirlineId == filterByAirlineId.
           break;
-      }
+         
     }));
   }, [filterByAirlineId]);
   useEffect(() =>{
