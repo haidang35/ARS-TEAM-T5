@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -37,12 +37,12 @@ class UpdateUser extends Form {
     this.state = {
       form: this._getInitFormData({
         name: "",
-        vocative: "",
         phoneNumber: "",
         email: "",
-        password:"",
-        address:"",
+        password: "",
+        address: "",
         confirmPassword: "",
+        birthday: "",
       }),
       status: "",
       vocative: "",
@@ -81,25 +81,24 @@ class UpdateUser extends Form {
       ],
       showPassword: false,
       showPasswordConfirm: false,
-      
-    }
+    };
   }
   componentDidMount() {
     this.getUserDetails();
     // this.getRoleList();
   }
-  
+
   handleChangeRole = (ev) => {
     this.setState({
       roleIds: ev.target.value,
     });
   };
-  handleChangeFile =(event) => {
-    const file =event.target.files[0];
-    let {form} =this.state;
+  handleChangeFile = (event) => {
+    const file = event.target.files[0];
+    let { form } = this.state;
     form.logo.value = file;
-    this.setState({form});
-  }
+    this.setState({ form });
+  };
   handleChangeVocative = (ev) => {
     this.setState({
       vocative: ev.target.value,
@@ -112,31 +111,31 @@ class UpdateUser extends Form {
   };
   handleClickShowPassword = (ev) => {
     this.setState({
-      showPassword: !this.state.showPassword
+      showPassword: !this.state.showPassword,
     });
   };
 
-   handleMouseDownPassword = (ev) => {
+  handleMouseDownPassword = (ev) => {
     ev.preventDefault();
   };
   handleClickShowPasswordConfirm = (ev) => {
     this.setState({
-      showPasswordConfirm: !this.state.showPasswordConfirm
+      showPasswordConfirm: !this.state.showPasswordConfirm,
     });
   };
 
-   handleMouseDownPasswordConfirm = (ev) => {
+  handleMouseDownPasswordConfirm = (ev) => {
     ev.preventDefault();
   };
+
   getUserDetails = async () => {
     const { id } = this.props.match.params;
     await userService.getUserDetails(id).then((res) => {
       this.setState({
         roleIds: res.data.Role,
-        vocative: res.data.Vocative, 
+        vocative: res.data.Vocative,
         status: res.data.Status,
-
-    });
+      });
       this._fillForm({
         name: res.data.Name,
         phoneNumber: res.data.PhoneNumber,
@@ -144,14 +143,10 @@ class UpdateUser extends Form {
         password: res.data.Password,
         address: res.data.Address,
         birthday: res.data.Birthday,
-        confirmPassword: res.data.ConfirmationPassword
-
-
-       
+        confirmPassword: res.data.ConfirmationPassword,
       });
     });
   };
-
 
   saveUpdateUser = async () => {
     this._validateForm();
@@ -184,7 +179,6 @@ class UpdateUser extends Form {
   };
   getRoleList = async () => {
     await roleService.getRoleList().then((res) => {
-      console.log("🚀 ~ file: UpdateUser.jsx ~ line 189 ~ UpdateUser ~ awaitroleService.getRoleList ~ res.data", res.data)
       this.setState({
         roleList: res.data,
       });
@@ -234,7 +228,7 @@ class UpdateUser extends Form {
         <React.Fragment>
           <div id="addNewAirline">
             <Typography variant="h4" gutterBottom>
-             Update User
+              Update User
             </Typography>
             <Grid container spacing={3}>
               <Grid item xs={6}>
@@ -283,11 +277,11 @@ class UpdateUser extends Form {
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <Stack spacing={3}>
                     <TextField
-                      id="date"
+                      id="birthday"
                       name="birthday"
                       label="Birthday"
                       type="date"
-                      // value={birthday.value}
+                      value={birthday.value}
                       sx={{ width: 250 }}
                       InputLabelProps={{
                         shrink: true,
@@ -358,54 +352,58 @@ class UpdateUser extends Form {
                   onChange={(ev) => this._setValue(ev, "email")}
                 />
               </Grid>
-              <Grid item xs={6 }>
-              <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
-                <InputLabel htmlFor="standard-adornment-password">
-                  Password
-                </InputLabel>
-                <Input
-                  id="standard-adornment-password"
-                  type={showPassword ? "text" : "password"}
-                  value={password.value}
-                  onChange={(ev) => this._setValue(ev, "password")}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={this.handleClickShowPassword}
-                        onMouseDown={this.handleMouseDownPassword}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
+              <Grid item xs={6}>
+                <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+                  <InputLabel htmlFor="standard-adornment-password">
+                    Password
+                  </InputLabel>
+                  <Input
+                    id="standard-adornment-password"
+                    type={showPassword ? "text" : "password"}
+                    value={password.value}
+                    onChange={(ev) => this._setValue(ev, "password")}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={this.handleClickShowPassword}
+                          onMouseDown={this.handleMouseDownPassword}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
               </Grid>
 
-              <Grid item xs={6 }>
-              <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
-                <InputLabel htmlFor="standard-adornment-password">
-                  Confirm Password
-                </InputLabel>
-                <Input
-                  id="standard-adornment-password-confirm"
-                  type={showPasswordConfirm ? "text" : "password"}
-                  value={confirmPassword.value}
-                  onChange={(ev) => this._setValue(ev, "confirmPassword")}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={this.handleClickShowPasswordConfirm}
-                        onMouseDown={this.handleMouseDownPasswordConfirm}
-                      >
-                        {showPasswordConfirm ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
+              <Grid item xs={6}>
+                <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+                  <InputLabel htmlFor="standard-adornment-password">
+                    Confirm Password
+                  </InputLabel>
+                  <Input
+                    id="standard-adornment-password-confirm"
+                    type={showPasswordConfirm ? "text" : "password"}
+                    value={confirmPassword.value}
+                    onChange={(ev) => this._setValue(ev, "confirmPassword")}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={this.handleClickShowPasswordConfirm}
+                          onMouseDown={this.handleMouseDownPasswordConfirm}
+                        >
+                          {showPasswordConfirm ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
               </Grid>
               <Grid item xs={6}>
                 <Box sx={{ minWidth: 120 }}>
@@ -447,8 +445,10 @@ class UpdateUser extends Form {
                   </Select>
                 </FormControl>
               </Grid>
-              <div id='submit'>
-                <Button variant="contained" onClick={this.saveUpdateUser} >Submit</Button>
+              <div id="submit">
+                <Button variant="contained" onClick={this.saveUpdateUser}>
+                  Submit
+                </Button>
               </div>
             </Grid>
           </div>
@@ -456,7 +456,6 @@ class UpdateUser extends Form {
       </>
     );
   }
-
 }
 
 export default withRouter(UpdateUser);

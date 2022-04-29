@@ -89,6 +89,17 @@ namespace backend.Controllers
             }
             return Ok(user);
         }
+        [Route("~/api/auth-user/bookings")]
+        [HttpGet]
+        [Authorize]
+        [ResponseType(typeof(ICollection<Booking>))]
+        public IHttpActionResult GetBookingAuthUser()
+        {
+            var identity = HttpContext.Current.User.Identity as ClaimsIdentity;
+            var currentUserId = Int32.Parse(identity.FindFirst("currentUserId").Value);
+            var bookings = db.Bookings.Where(b => b.UserId == currentUserId).ToList() ;
+            return Ok(bookings);
+        }
 
         // GET: api/Users
         [Route ("~/api/users")]
@@ -102,7 +113,7 @@ namespace backend.Controllers
         // GET: api/Users/5
         [Route("~/api/users/{id:int}")]
         [HttpGet]
-        [ResponseType(typeof(User))]
+        [ResponseType(typeof(UserDto))]
         public IHttpActionResult GetUser(int id)
         {
             User user = db.Users.Find(id);
@@ -110,8 +121,20 @@ namespace backend.Controllers
             {
                 return NotFound();
             }
+            var userRoles = db.UserRoles.Where(ur => ur.UserId == id).ToList();
+            var userDto = new UserDto()
+            {
+                Name = user.Name,
+                Birthday = user.Birthday,
+                Vocative = user.Vocative,
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email,
+                Address = user.Address,
+                Status = user.Status,
+                UserRoles = userRoles,
+            };
 
-            return Ok(user);
+            return Ok(userDto);
         }
 
         // PUT: api/Users/5
@@ -131,29 +154,68 @@ namespace backend.Controllers
                 return BadRequest();
             }
             user.Name = updateUser.Name;
+            user.Birthday = updateUser.Birthday;
             user.Vocative = updateUser.Vocative;
             user.PhoneNumber = updateUser.PhoneNumber;
             user.Email = updateUser.Email;
-            user.Password = updateUser.Password;
+            user.Password = Hash.Make(updateUser.Password);
             user.Address = updateUser.Address;
+            user.Status = updateUser.Status;
             user.UpdatedAt = DateTime.Now;
 
             db.Entry(user).State = EntityState.Modified;
+            var userRoles = db.UserRoles.Where(ur => ur.UserId == user.Id).ToList();
+            foreach (var roleId in updateUser.RoleIds.Distinct())
+            {
+                bool isAddNew = true;
+                foreach (var userRoleCurrent in userRoles)
+                {
+                    if (userRoleCurrent.RoleId == roleId)
+                    {
+                        isAddNew = false;
+                    }
+                }
+
+                if(isAddNew)
+                {
+                    var userRole = new UserRole
+                    {
+                        RoleId = roleId,
+                        UserId = user.Id,
+                        CreatedAt = DateTime.Now,
+                        UpdateAt = DateTime.Now
+                    };
+                    db.UserRoles.Add(userRole);
+                }
+               
+            }
+
+            foreach (var userRoleCurrent in userRoles)
+            {
+                bool isDelete = true;
+                foreach (var roleId in updateUser.RoleIds.Distinct())
+                {
+                    if (userRoleCurrent.RoleId == roleId)
+                    {
+                        isDelete = false;
+                    }
+                }
+                if(isDelete)
+                {
+                    db.UserRoles.Remove(userRoleCurrent);
+                }
+
+            }
+
+            
 
             try
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest("Save to database failed");
             }
 
             return Ok(user);

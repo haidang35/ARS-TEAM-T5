@@ -25,7 +25,15 @@ import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
+import SearchSharpIcon from "@mui/icons-material/SearchSharp";
 import DirectionsIcon from "@mui/icons-material/Directions";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+} from "@mui/material";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 80 },
@@ -52,6 +60,14 @@ const columns = [
     align: "left",
   },
 ];
+const selectList = [
+  "Booking Code",
+  "Flight Code",
+  "Airline List",
+  "Deparute",
+  "Destination",
+  "Status",
+];
 
 function createData(id, name, code, country, logo, edit) {
   return { id, name, code, country, logo, edit };
@@ -67,18 +83,38 @@ export default function AirlineList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [airlineList, setAirlineList] = useState([]);
+  const [airlineListApi, setAirlineListApi] = useState([]);
+  const [select, setSelect] = React.useState([]);
   const [msg, setMsg] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSelect(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
 
   useEffect(() => {
     getAirlineList();
     getMsg();
   }, []);
 
+  useEffect(() => {
+    setAirlineList(airlineListApi.filter((airline) => {
+      return (airline.Name.toLowerCase()).includes(searchValue.toLowerCase());
+    }));
+  }, [searchValue]);
+
   const getAirlineList = async () => {
     await airlineService
       .getAirlineList()
       .then((res) => {
         setAirlineList(res.data);
+        setAirlineListApi(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -165,9 +201,11 @@ export default function AirlineList() {
                         sx={{ ml: 1, flex: 1 }}
                         placeholder="Search Airline"
                         inputProps={{ "aria-label": "search google maps" }}
+                        value={searchValue}
+                        onChange={(ev) => setSearchValue(ev.target.value)}
                       />
                       <IconButton
-                        type="submit"
+                        type="button"
                         sx={{ p: "10px" }}
                         aria-label="search"
                       >
@@ -178,8 +216,8 @@ export default function AirlineList() {
                         orientation="vertical"
                       />
                     </Paper>
-
                   </TableCell>
+                 
                   <TableCell align="right" colSpan={3}>
                     <Link to={"/admin/airlines/create"}>
                       <Button variant="contained" startIcon={<AddCircleIcon />}>
@@ -193,7 +231,7 @@ export default function AirlineList() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ top: 57, minWidth: column.minWidth }}
+                      style={{ top: 100, minWidth: column.minWidth }}
                     >
                       {column.label}
                     </TableCell>
