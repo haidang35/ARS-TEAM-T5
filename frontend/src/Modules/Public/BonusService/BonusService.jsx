@@ -172,6 +172,10 @@ class BonusServices extends Component {
       BookingTickets: bookingTicketsPsg,
       PaymentMethod: reservationData.paymentMethod.type,
     };
+    const currentUser = JSON.parse(localStorage.getItem('auth_user'));
+    if(currentUser !== '' && currentUser !== null) {
+      dataConvert['UserId'] = currentUser.Id;
+    }
     await publicService
       .bookingTicket(dataConvert)
       .then((res) => {

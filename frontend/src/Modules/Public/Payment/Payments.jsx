@@ -99,6 +99,7 @@ class Payments extends Component {
 
   render() {
     const { bookingData, isRedirect, totalMoneyConverted } = this.state;
+    console.log("🚀 ~ file: Payments.jsx ~ line 102 ~ Payments ~ render ~ bookingData", bookingData)
     const { totalMoney } = this.props.location.state;
     if (isRedirect) {
       return (

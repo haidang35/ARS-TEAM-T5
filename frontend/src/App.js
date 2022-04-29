@@ -44,13 +44,13 @@ function App() {
           <Route path="/admin">
             {isLogged ? <Admin /> : <Redirect to="/admin-login" />}
           </Route>
-          <Route path="/" exact>
+          <Route path="/">
             <Public />
           </Route>
-          <Route path="/admin-login" exact>
+          <Route path="/admin-login">
             <Login />
           </Route>
-          <Route path="/admin-register" exact>
+          <Route path="/admin-register">
             <Register />
           </Route>
         </Switch>

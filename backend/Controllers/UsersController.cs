@@ -92,13 +92,33 @@ namespace backend.Controllers
         [Route("~/api/auth-user/bookings")]
         [HttpGet]
         [Authorize]
-        [ResponseType(typeof(ICollection<Booking>))]
+        [ResponseType(typeof(ICollection<BookingDto>))]
         public IHttpActionResult GetBookingAuthUser()
         {
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity;
             var currentUserId = Int32.Parse(identity.FindFirst("currentUserId").Value);
-            var bookings = db.Bookings.Where(b => b.UserId == currentUserId).ToList() ;
-            return Ok(bookings);
+            var bookings = db.Bookings.Where(b => b.UserId == currentUserId).ToList();
+            var bookingListDto = new List<BookingDto>();
+            foreach (var booking in bookings)
+            {
+                var bookingTicketList = db.BookingTickets.Where(bt => bt.BookingId == booking.Id).ToList();
+                var bookingDto = new BookingDto()
+                {
+                    User = booking.User,
+                    Status = booking.Status,
+                    ContactName = booking.ContactName,
+                    ContactPhone = booking.ContactPhone,
+                    ContactEmail = booking.ContactEmail,
+                    ContactAddress = booking.ContactAddress,
+                    Note = booking.Note,
+                    CreatedAt = booking.CreatedAt,
+                    UpdatedAt = booking.UpdatedAt,
+                    BookingTickets = bookingTicketList,
+                    PaymentMethod = booking.PaymentMethod,
+                };
+                bookingListDto.Add(bookingDto);
+            }
+            return Ok(bookingListDto);
         }
 
         // GET: api/Users

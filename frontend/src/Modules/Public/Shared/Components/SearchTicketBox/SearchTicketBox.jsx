@@ -142,35 +142,35 @@ export class SearchTicketBox extends Component {
       this.state;
 
     if (isRedirect) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/flight-ticket",
-            search: `?tripType=${tripType}&departure=${departure.Id}&destination=${destination.Id}&departureDate=${departureDate}`,
-            state: {
-              passengers: [
-                {
-                  id: 1,
-                  passengerType: "adults",
-                  quantity: adults,
-                },
-                {
-                  id: 2,
-                  passengerType: "children",
-                  quantity: children,
-                },
-                {
-                  id: 3,
-                  passengerType: "infants",
-                  quantity: infants,
-                },
-              ],
-              departure,
-              destination,
-            },
-          }}
-        />
-      );
+      const pathName = '/flight-ticket';
+      const queryParams = `?tripType=${tripType}&departure=${departure.Id}&destination=${destination.Id}&departureDate=${departureDate}`;
+      const pushState = {
+        passengers: [
+          {
+            id: 1,
+            passengerType: "adults",
+            quantity: adults,
+          },
+          {
+            id: 2,
+            passengerType: "children",
+            quantity: children,
+          },
+          {
+            id: 3,
+            passengerType: "infants",
+            quantity: infants,
+          },
+        ],
+        departure,
+        destination,
+      };
+      // window.history.pushState(pushState, '', pathName + queryParams)
+      return <Redirect to={{
+        pathname: pathName,
+        search: queryParams,
+        state: pushState
+      }} />
     }
 
     return (
