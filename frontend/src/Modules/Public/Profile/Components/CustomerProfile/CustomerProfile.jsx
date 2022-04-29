@@ -49,19 +49,11 @@ export class CustomerProfile extends Form {
                 phone: form.phone.value,
                 email: form.email.value,
             };
+
         }
     }
 
-    // getAuthUser = async () => {
-    //     await publicService.getAuthUser(accessToken).then((res) => {
-    //         this._fillForm({
-    //             fullName: res.data.Name,
-    //             phone: res.data.PhoneNumber,
-    //             email: res.data.Email,
-    //         });
-    //     });
-    // };
-
+  
     getAuthUser = async () => {
         const authToken = localStorage.getItem('access_token');
         await publicService.getAuthUser(authToken)
@@ -168,19 +160,19 @@ export class CustomerProfile extends Form {
                                             >
                                                 <div className="position-relative">
                                                     <TextField
-                                                        id="outlined-basic"
-                                                        disabled={!onEdit}
-                                                        pattern={REGEX_TEL}
-                                                        required
-                                                        label="Phone Number"
-                                                        variant="outlined"
-                                                        value={phone.value}
-                                                        onChange={(ev) => {
-                                                            this._setValue(
-                                                                ev,
-                                                                "Phone Number"
-                                                            )
-                                                        }}
+                                                         id="outlined-basic"
+                                                         label="Phone Number"
+                                                         pattern={REGEX_TEL}
+                                                         required
+                                                         disabled={!onEdit}
+                                                         variant="outlined"
+                                                         value={phone.value}
+                                                         onChange={(ev) => {
+                                                             this._setValue(
+                                                                 ev,
+                                                                 "phone"
+                                                             )
+                                                         }}
                                                     />
                                                     {phone.message == "*" ? (
                                                         <ErrorForm

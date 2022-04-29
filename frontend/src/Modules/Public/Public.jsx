@@ -7,9 +7,6 @@ import BonusServices from "./BonusService/BonusService";
 import Payments from "./Payment/Payments";
 import FlightTicket from "./ChooseFlightTicket/FlightTicket";
 import { Profile } from "./Profile/Profile";
-import { CustomerProfile } from "./Profile/Components/CustomerProfile/CustomerProfile";
-import { BookingHistory } from "./Profile/Components/BookingHistory/BookingHistory";
-import { ViewDetailsBooking } from "./Profile/Components/ViewDetailsBooking/ViewDetailsBooking";
 import { SignUp } from "./Account/Components/SignUp/SignUp";
 import { SignIn } from "./Account/Components/SignIn/SignIn";
 
@@ -49,15 +46,6 @@ export const Public = () => {
                             </Route>
                             <Route path="/profile" exact >
                                 <Profile />
-                            </Route>
-                            <Route path="/customer-info/profile">
-                                <CustomerProfile />
-                            </Route>
-                            <Route path="/customer-bookinghistory">
-                                <BookingHistory />
-                            </Route>
-                            <Route path="/customer-info/viewdetailsbooking" exact >
-                                <ViewDetailsBooking />
                             </Route>
                         </Switch>
                     </div>

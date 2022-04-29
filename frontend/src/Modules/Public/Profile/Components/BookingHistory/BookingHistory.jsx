@@ -5,6 +5,9 @@ import "./BookingHistory.scss";
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import publicService from "../../../Shared/Services/PublicService";
+import { dateConvert } from "../../../../../Helpers/datetime";
+import { formatCurrencyToVND } from "../../../../../Helpers/currency";
 
 
 export class BookingHistory extends Component {
@@ -13,9 +16,12 @@ export class BookingHistory extends Component {
         this.state = {
             open: false,
             openAlert: false,
-            
-
+            bookingList: []
         }
+    }
+
+    componentDidMount = () => {
+        this.getBookingList();
     }
 
     handleClickOpen = () => {
@@ -37,25 +43,31 @@ export class BookingHistory extends Component {
         this.handleClose();
     }
 
-    handleCloseMessage = () =>{
+    handleCloseMessage = () => {
         this.setState({
             openAlert: false
         });
     }
 
-    
-
-
+    getBookingList = async () => {
+        await publicService.getBookingList()
+            .then((res) => {
+                this.setState({
+                    bookingList: res.data,
+                });
+            });
+    }
 
 
     render() {
-        const { open, openAlert } = this.state;
+        const { open, openAlert, bookingList } = this.state;
+        let loop = 1;
         return (
             <>
                 <div className="user-booking-list">
                     <div className="card">
                         <div className="card-header">
-                            <h4 className="card-title">Booking History</h4>
+                            <h4 className="card-title">Booking List</h4>
                         </div>
                         <div className="card-content">
                             <div className="card-body">
@@ -69,68 +81,76 @@ export class BookingHistory extends Component {
                                                 <th>Flight</th>
                                                 <th>Total</th>
                                                 <th>Payment status</th>
-                                                <th></th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td className="text-bold-500">
-                                                    1
-                                                </td>
-                                                <td className="text-bold-500">
-                                                    04-04-2022
-                                                </td>
-                                                <td className="text-bold-500">
-                                                    Hà Nội - Hồ Chí Minh
-                                                </td>
-                                                <td className="text-bold-500">
-                                                    VNA1111
-                                                </td>
-                                                <td className="text-bold-500">
-                                                    1.210.000 ₫
-                                                </td>
-                                                <td>
-                                                    Paid
-                                                </td>
-                                                <td>
-                                                    <div className="btn-box-control">
-                                                        <Link
-                                                            to={{
-                                                                pathname: "/customer-info/viewdetailsbooking"
+                                            {bookingList.map((item) => {
+                                                return (
+                                                    <tr key={item.id}>
+                                                        <td className="text-bold-500">
+                                                            {loop ++ }
+                                                        </td>
+                                                        <td className="text-bold-500">
+                                                           {dateConvert(
+                                                               item.Flight.ArrivalTime
+                                                           )}
+                                                        </td>
+                                                        <td className="text-bold-500">
+                                                           {`${ item.Flight.Departure.City.Name} - ${item.Flight.Destination.City.Name}`}
+                                                        </td>
+                                                        <td className="text-bold-500">
+                                                            {item.Flight.FlightCode}
+                                                        </td>
+                                                        <td className="text-bold-500">
+                                                            { formatCurrencyToVND (
+                                                                item.Flight.Price 
+                                                            )}
+                                                        </td>
+                                                        <td>
+                                                            Paid
+                                                        </td>
+                                                        <td>
+                                                            <div className="btn-box-control">
+                                                                <Link
+                                                                    to={{
+                                                                        pathname: "/profile/bookings/viewdetails"
 
-                                                            }}
-                                                        >
-                                                            <Button fullWidth variant="contained">View Details</Button>
+                                                                    }}
+                                                                >
+                                                                    <Button fullWidth variant="contained">View Details</Button>
 
-                                                        </Link>
+                                                                </Link>
 
-                                                        <Button variant="outlined" color="error" onClick={this.handleClickOpen}>
-                                                            Cancel
-                                                        </Button>
-                                                        <Dialog
-                                                            open={open}
-                                                            onClose={this.handleClose}
-                                                            aria-labelledby="alert-dialog-title"
-                                                            aria-describedby="alert-dialog-description"
-                                                        >
-                                                            <DialogTitle id="alert-dialog-title">
-                                                                Warning
-                                                            </DialogTitle>
-                                                            <DialogContent>
-                                                                <DialogContentText id="alert-dialog-description">
-                                                                    Are you sure delete booking
-                                                                </DialogContentText>
-                                                            </DialogContent>
-                                                            <DialogActions>
-                                                                <Button onClick={this.handleClose}>Disagree</Button>
-                                                                <Button onClick={this.handleCancel} autoFocus>
-                                                                    Agree
+                                                                <Button variant="outlined" color="error" onClick={this.handleClickOpen}>
+                                                                    Cancel
                                                                 </Button>
-                                                            </DialogActions>
-                                                        </Dialog>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                                <Dialog
+                                                                    open={open}
+                                                                    onClose={this.handleClose}
+                                                                    aria-labelledby="alert-dialog-title"
+                                                                    aria-describedby="alert-dialog-description"
+                                                                >
+                                                                    <DialogTitle id="alert-dialog-title">
+                                                                        Warning
+                                                                    </DialogTitle>
+                                                                    <DialogContent>
+                                                                        <DialogContentText id="alert-dialog-description">
+                                                                            Are you sure delete booking
+                                                                        </DialogContentText>
+                                                                    </DialogContent>
+                                                                    <DialogActions>
+                                                                        <Button onClick={this.handleClose}>Disagree</Button>
+                                                                        <Button onClick={this.handleCancel} autoFocus>
+                                                                            Agree
+                                                                        </Button>
+                                                                    </DialogActions>
+                                                                </Dialog>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })}
                                         </tbody>
                                     </table>
                                 </div>
@@ -139,7 +159,7 @@ export class BookingHistory extends Component {
                     </div>
                 </div>
                 <Stack spacing={2} sx={{ width: '100%' }}>
-                    <Snackbar open={openAlert} onClose={this.handleCloseMessage}  autoHideDuration={3000}>
+                    <Snackbar open={openAlert} onClose={this.handleCloseMessage} autoHideDuration={3000}>
                         <Alert onClose={this.handleCloseMessage} severity="success" sx={{ width: '100%' }}>
                             This is a success message!
                         </Alert>
