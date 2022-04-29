@@ -25,10 +25,31 @@ namespace backend.Controllers
         // GET: api/Bookings
         [Route("~/api/bookings")]
         [HttpGet]
-        [ResponseType(typeof(ICollection<Booking>))]
+        [ResponseType(typeof(ICollection<BookingDto>))]
         public IHttpActionResult GetBookings()
         {
-            return Ok(db.Bookings.ToList());
+            var bookingList = db.Bookings.ToList();
+            var bookingListDto = new List<BookingDto>();
+            foreach (var booking in bookingList)
+            {
+                var bookingTicketList = db.BookingTickets.Where(bt => bt.BookingId == booking.Id).ToList();
+                var bookingDto = new BookingDto()
+                {
+                    User = booking.User,
+                    Status = booking.Status,
+                    ContactName = booking.ContactName,
+                    ContactPhone = booking.ContactPhone,
+                    ContactEmail = booking.ContactEmail,
+                    ContactAddress = booking.ContactAddress,
+                    Note = booking.Note,
+                    CreatedAt = booking.CreatedAt,
+                    UpdatedAt = booking.UpdatedAt,
+                    BookingTickets = bookingTicketList,
+                    PaymentMethod = booking.PaymentMethod,
+                };
+                bookingListDto.Add(bookingDto);
+            }
+            return Ok(bookingListDto);
         }
 
         // GET: api/Bookings/5
@@ -57,7 +78,7 @@ namespace backend.Controllers
                 return BadRequest(ModelState);
             }
             var booking = db.Bookings.Find(id);
-            if(booking == null)
+            if (booking == null)
             {
                 return BadRequest();
             }
@@ -83,7 +104,7 @@ namespace backend.Controllers
                 }
                 else
                 {
-                    throw;  
+                    throw;
                 }
             }
 
@@ -146,12 +167,12 @@ namespace backend.Controllers
         [ResponseType(typeof(Booking))]
         public IHttpActionResult UserBooking(UserBooking userBooking)
         {
-            if(! ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             var ticket = db.Tickets.Find(userBooking.TicketId);
-            if(ticket == null)
+            if (ticket == null)
             {
                 return BadRequest("Ticket not found");
             }
@@ -169,12 +190,12 @@ namespace backend.Controllers
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
             };
-            if(userBooking.UserId != null)
+            if (userBooking.UserId != null)
             {
                 booking.UserId = userBooking.UserId;
             }
             db.Bookings.Add(booking);
-            foreach(var bookingTicket in userBooking.BookingTickets)
+            foreach (var bookingTicket in userBooking.BookingTickets)
             {
                 var bookTicket = new BookingTicket()
                 {
@@ -195,16 +216,16 @@ namespace backend.Controllers
             try
             {
                 db.SaveChanges();
-              /*  string accountSid = "AC3d3336f55e56591728f7365c86ac8847";
-                string authToken = "367d10f3d92404a6f0b7e880a7e14426";
+                /*  string accountSid = "AC3d3336f55e56591728f7365c86ac8847";
+                  string authToken = "367d10f3d92404a6f0b7e880a7e14426";
 
-                TwilioClient.Init(accountSid, authToken);
+                  TwilioClient.Init(accountSid, authToken);
 
-                var message = MessageResource.Create(
-                    body: "Booking Flight Success",
-                    from: new Twilio.Types.PhoneNumber("+16205914451"),
-                    to: new Twilio.Types.PhoneNumber("+84357446532")
-                );*/
+                  var message = MessageResource.Create(
+                      body: "Booking Flight Success",
+                      from: new Twilio.Types.PhoneNumber("+16205914451"),
+                      to: new Twilio.Types.PhoneNumber("+84357446532")
+                  );*/
             }
             catch (Exception e)
             {
@@ -221,14 +242,14 @@ namespace backend.Controllers
         public IHttpActionResult getBookingDetails(string code)
         {
             var booking = db.Bookings.Where(b => b.BookingCode == code).FirstOrDefault();
-            if(booking == null)
+            if (booking == null)
             {
                 return BadRequest("Booking not found");
             }
             var bookingTickets = db.BookingTickets.Where(bt => bt.BookingId == booking.Id).ToList();
             double totalMoney = 0;
             double totalSeatFee = 0;
-            foreach(var bookingTicket in bookingTickets)
+            foreach (var bookingTicket in bookingTickets)
             {
                 totalSeatFee += bookingTicket.SeatFlightFee;
                 totalMoney += bookingTicket.Ticket.Price + bookingTicket.Ticket.Tax + bookingTicket.SeatFlightFee;
