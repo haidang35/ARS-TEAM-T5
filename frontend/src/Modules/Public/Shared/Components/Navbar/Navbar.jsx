@@ -180,7 +180,7 @@ const Navbar = () => {
                     <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                   </IconButton>
                 </Tooltip>
-                {authUser.Name}
+                HI, {authUser.Name}
                 <Menu
                   sx={{ mt: '45px' }}
                   id="menu-appbar"
