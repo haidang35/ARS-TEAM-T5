@@ -39,10 +39,10 @@ function App() {
     <>
       <BrowserRouter>
         <Switch>
-          <Route path="/admin">
+          <Route path="/admin" exact>
             {isLogged ? <Admin /> : <Redirect to="/admin-login" />}
           </Route>
-          <Route path="/">
+          <Route path="/" exact>
             <Public />
           </Route>
           <Route path="/admin-login" exact>
@@ -51,8 +51,6 @@ function App() {
           <Route path="/admin-register" exact>
             <Register />
           </Route>
-
-
         </Switch>
       </BrowserRouter>
     </>

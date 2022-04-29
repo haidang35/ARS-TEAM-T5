@@ -92,6 +92,7 @@ export default function BookingList() {
   const [filterType, setFilterType] = useState('');
   const [filterByAirlineId, setFilterByAirId] = useState(0);
   const [airlineList, setAirlineList] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     getBookingList();
@@ -108,6 +109,11 @@ export default function BookingList() {
       }
     }));
   }, [filterByAirlineId]);
+  useEffect(() =>{
+    setBookingList(bookingListAPI.filter((booking) => {
+      return(booking.BookingCode.toLowerCase()).includes(searchValue.toLowerCase())
+    }));
+  },[searchValue]);
 
   const getBookingList = async () => {
     await bookingService
@@ -191,8 +197,8 @@ export default function BookingList() {
                         sx={{ ml: 1, flex: 1 }}
                         placeholder="Search BookingCode"
                         inputProps={{ "aria-label": "search google maps" }}
-                        // value={searchValue}
-                        // onChange={(ev) => setSearchValue(ev.target.value)}
+                        value={searchValue}
+                        onChange={(ev) => setSearchValue(ev.target.value)}
                       />
                       <IconButton
                         type="button"
