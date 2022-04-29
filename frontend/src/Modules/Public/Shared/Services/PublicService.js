@@ -10,7 +10,7 @@ const API_ENDPOINT = {
     PAYMENT_BOOKING: '/api/payments/booking',
     GET_AIRLINE_LIST: '/api/airlines',
     GET_AUTH_USER: "/api/auth-user",
-    GET_USER_BOOKING: "/api/auth-user/bookings",
+    GET_BOOKING_LIST: "/api/auth-user/bookings",
     
 }
 
@@ -73,8 +73,8 @@ class PublicService {
 
     };
 
-    getUserBooking = async () => {
-        return await axios.get( BASE_URL_SERVER + API_ENDPOINT.GET_USER_BOOKING)
+    getBookingList = async () => {
+        return await axios.get( BASE_URL_SERVER + API_ENDPOINT.GET_BOOKING_LIST, configs)
     }
 }
 
