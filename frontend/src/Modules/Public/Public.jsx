@@ -10,14 +10,8 @@ import { Profile } from "./Profile/Profile";
 import { SignUp } from "./Account/Components/SignUp/SignUp";
 import { SignIn } from "./Account/Components/SignIn/SignIn";
 
-
-
-
 export const Public = () => {
 
-   
-
-   
         return (
             <>
                 <BrowserRouter>

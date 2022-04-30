@@ -11,7 +11,7 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Location } from "./Location/Location";
 import { Redirect } from "react-router-dom";
-
+import { getDate } from "../../../../../Helpers/datetime";
 
 const TRIP_TYPE = {
   ONEWAY: 1,
@@ -37,8 +37,7 @@ export class SearchTicketBox extends Component {
 
       openLocationDialog: false,
       locationType: "",
-      isRedirect: false
-
+      isRedirect: false,
     };
   }
 
@@ -76,7 +75,7 @@ export class SearchTicketBox extends Component {
 
   handleDepartureDate = (newValue) => {
     let { searchData } = this.state;
-    searchData["departureDate"] = newValue;
+    searchData["departureDate"] =  getDate(newValue);
     this.setState({
       searchData,
     });
@@ -116,7 +115,7 @@ export class SearchTicketBox extends Component {
 
   handleReturnDate = (newValue) => {
     let { searchData } = this.state;
-    searchData["returnDate"] = newValue;
+    searchData["returnDate"] = getDate(newValue);
     this.setState({
       searchData,
     });
@@ -132,42 +131,45 @@ export class SearchTicketBox extends Component {
   };
   onSearchFlight = () => {
     this.setState({
-      isRedirect: true
-    })
-
-
+      isRedirect: true,
+    });
   };
 
   render() {
-    const { departure, destination, departureDate, returnDate, tripType } = this.state.searchData;
-    const { open, locations, isRedirect, children, infants, adults } = this.state;
+    const { departure, destination, departureDate, returnDate, tripType } =
+      this.state.searchData;
+    const { open, locations, isRedirect, children, infants, adults } =
+      this.state;
 
     if (isRedirect) {
+      const pathName = '/flight-ticket';
+      const queryParams = `?tripType=${tripType}&departure=${departure.Id}&destination=${destination.Id}&departureDate=${departureDate}`;
+      const pushState = {
+        passengers: [
+          {
+            id: 1,
+            passengerType: "adults",
+            quantity: adults,
+          },
+          {
+            id: 2,
+            passengerType: "children",
+            quantity: children,
+          },
+          {
+            id: 3,
+            passengerType: "infants",
+            quantity: infants,
+          },
+        ],
+        departure,
+        destination,
+      };
+      // window.history.pushState(pushState, '', pathName + queryParams)
       return <Redirect to={{
-        pathname: '/flight-ticket',
-        search: `?tripType=${tripType}&departure=${departure.Id}&destination=${destination.Id}&departureDate=${departureDate}`,
-        state: {
-          passengers: [
-            {
-              id: 1,
-              passengerType: 'adults',
-              quantity: adults
-            },
-            {
-              id: 2,
-              passengerType: 'children',
-              quantity: children
-            },
-            {
-              id: 3,
-              passengerType: 'infants',
-              quantity: infants
-            }
-          ],
-          departure,
-          destination
-        }
-
+        pathname: pathName,
+        search: queryParams,
+        state: pushState
       }} />
     }
 
@@ -186,6 +188,7 @@ export class SearchTicketBox extends Component {
                           color="primary"
                           className="check-box"
                           value={TRIP_TYPE.ROUNDTRIP}
+                          checked={tripType == TRIP_TYPE.ROUNDTRIP}
                           onChange={this.handleChangeTripType}
                         />
                       }
@@ -198,6 +201,7 @@ export class SearchTicketBox extends Component {
                           color="primary"
                           className="check-box"
                           value={TRIP_TYPE.ONEWAY}
+                          checked={tripType == TRIP_TYPE.ONEWAY}
                           onChange={this.handleChangeTripType}
                         />
                       }

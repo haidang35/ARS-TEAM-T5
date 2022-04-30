@@ -92,6 +92,7 @@ export default function BookingList() {
   const [filterType, setFilterType] = useState('');
   const [filterByAirlineId, setFilterByAirId] = useState(0);
   const [airlineList, setAirlineList] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     getBookingList();
@@ -100,14 +101,19 @@ export default function BookingList() {
 
 
   useEffect(() => {
-    setBookingList(bookingListAPI.filter((booking) => {
-      switch(filterType) {
-        case FILTER_TYPE.AIRLINE:
-          return booking.Ticket.Flight.AirlineId == filterByAirlineId.
-          break;
+    const bookingList = bookingListAPI.filter((booking) => {
+      if(filterType === FILTER_TYPE.AIRLINE) {
+        return booking.BookingTickets[0].Ticket.Flight.AirlineId == filterByAirlineId
       }
-    }));
+    });
+    setBookingList(bookingList);
   }, [filterByAirlineId]);
+
+  useEffect(() =>{
+    setBookingList(bookingListAPI.filter((booking) => {
+      return(booking.BookingCode.toLowerCase()).includes(searchValue.toLowerCase())
+    }));
+  },[searchValue]);
 
   const getBookingList = async () => {
     await bookingService
@@ -115,6 +121,7 @@ export default function BookingList() {
       .then((res) => {
         setBookingList(res.data);
         setBookingListAPI(res.data);
+        console.log("🚀 ~ file: BookingList.jsx ~ line 124 ~ .then ~ res.data", res.data)
       })
       .catch((err) => {
         console.log(err);
@@ -191,8 +198,8 @@ export default function BookingList() {
                         sx={{ ml: 1, flex: 1 }}
                         placeholder="Search BookingCode"
                         inputProps={{ "aria-label": "search google maps" }}
-                        // value={searchValue}
-                        // onChange={(ev) => setSearchValue(ev.target.value)}
+                        value={searchValue}
+                        onChange={(ev) => setSearchValue(ev.target.value)}
                       />
                       <IconButton
                         type="button"
@@ -232,7 +239,7 @@ export default function BookingList() {
                       <Select
                         id="airline"
                         value={filterByAirlineId}
-                        onChange={(ev) => setFilterByAirId(ev.target.value) }
+                        onChange={(ev) => setFilterByAirId(+ev.target.value) }
                         input={<OutlinedInput label="Select" />}
                       >
                         {airlineList.map((airline) => (

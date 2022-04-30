@@ -25,8 +25,10 @@ function App() {
   const getAuthUser = async () => {
     const authToken = localStorage.getItem('access_token');
     if (authToken !== '' && authToken !== null) {
+      console.log('isLogged', authToken);
       await publicService.getAuthUser(authToken)
         .then((res) => {
+          console.log("🚀 ~ file: App.js ~ line 30 ~ .then ~ res", res.data)
           localStorage.setItem("auth_user", JSON.stringify(res.data))
           // setAuthUser(res.data);
         })
@@ -45,14 +47,12 @@ function App() {
           <Route path="/">
             <Public />
           </Route>
-          <Route path="/admin-login" exact>
+          <Route path="/admin-login">
             <Login />
           </Route>
-          <Route path="/admin-register" exact>
+          <Route path="/admin-register">
             <Register />
           </Route>
-
-
         </Switch>
       </BrowserRouter>
     </>
