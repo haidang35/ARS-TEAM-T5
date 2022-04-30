@@ -21,7 +21,7 @@ export class BookingHistory extends Component {
     }
 
     componentDidMount = () => {
-        this.getBookingList();
+        this.getUserBookingList();
     }
 
     handleClickOpen = () => {
@@ -49,9 +49,10 @@ export class BookingHistory extends Component {
         });
     }
 
-    getBookingList = async () => {
-        await publicService.getBookingList()
+    getUserBookingList = async () => {
+        await publicService.getUserBookingList()
             .then((res) => {
+                console.log("🚀 ~ file: BookingHistory.jsx ~ line 55 ~ BookingHistory ~ .then ~ res", res.data)
                 this.setState({
                     bookingList: res.data,
                 });
@@ -81,7 +82,6 @@ export class BookingHistory extends Component {
                                                 <th>Flight</th>
                                                 <th>Total</th>
                                                 <th>Payment status</th>
-                                                
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -89,39 +89,39 @@ export class BookingHistory extends Component {
                                                 return (
                                                     <tr key={item.id}>
                                                         <td className="text-bold-500">
-                                                            {loop ++ }
+                                                            {loop++}
                                                         </td>
                                                         <td className="text-bold-500">
-                                                           {dateConvert(
-                                                               item.Flight.ArrivalTime
-                                                           )}
+                                                            {dateConvert(
+                                                                item.BookingTickets[0].Ticket.Flight.ArrivalTime
+                                                            )}
                                                         </td>
                                                         <td className="text-bold-500">
-                                                           {`${ item.Flight.Departure.City.Name} - ${item.Flight.Destination.City.Name}`}
+                                                            {`${item.BookingTickets[0].Ticket.Flight.Departure.City.Name} - ${item.BookingTickets[0].Ticket.Flight.Destination.City.Name}`}
                                                         </td>
                                                         <td className="text-bold-500">
-                                                            {item.Flight.FlightCode}
+                                                            {item.BookingTickets[0].Ticket.Flight.FlightCode}
                                                         </td>
                                                         <td className="text-bold-500">
-                                                            { formatCurrencyToVND (
-                                                                item.Flight.Price 
+                                                            {formatCurrencyToVND(
+                                                                item.BookingTickets[0].Ticket.Price
                                                             )}
                                                         </td>
                                                         <td>
-                                                            Paid
+                                                            {item.BookingTickets.PaymentMethod === 0
+                                                                ? "Unpaid"
+                                                                : "Paid"
+                                                            }
                                                         </td>
                                                         <td>
                                                             <div className="btn-box-control">
                                                                 <Link
                                                                     to={{
                                                                         pathname: "/profile/bookings/viewdetails"
-
                                                                     }}
                                                                 >
                                                                     <Button fullWidth variant="contained">View Details</Button>
-
                                                                 </Link>
-
                                                                 <Button variant="outlined" color="error" onClick={this.handleClickOpen}>
                                                                     Cancel
                                                                 </Button>

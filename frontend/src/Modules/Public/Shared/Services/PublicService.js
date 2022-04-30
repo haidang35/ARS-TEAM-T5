@@ -73,8 +73,8 @@ class PublicService {
 
     };
 
-    getBookingList = async () => {
-        return await axios.get( BASE_URL_SERVER + API_ENDPOINT.GET_BOOKING_LIST, configs)
+    getUserBookingList = async () => {
+        return await axios.get( BASE_URL_SERVER + API_ENDPOINT.GET_BOOKING_LIST, configs )
     }
 }
 
