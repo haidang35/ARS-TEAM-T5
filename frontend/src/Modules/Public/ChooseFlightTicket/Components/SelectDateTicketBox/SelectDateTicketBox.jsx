@@ -28,7 +28,7 @@ export class SelectDateTicketBox extends Component {
     const urlParams = new URLSearchParams(queryString);
     const searchData = {
       departureId: urlParams.get("departure"),
-      destinationid: urlParams.get("destination"),
+      destinationId: urlParams.get("destination"),
     };
     await publicService.getFlightTickets(searchData).then((res) => {
       this.getDaysOfWeek(this.props.departureDateTime, res.data);
