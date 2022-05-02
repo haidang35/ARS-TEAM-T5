@@ -35,9 +35,11 @@ export class ContactsInfo extends Form {
         this._validateForm();
         if (this._isFormValid()) {
             const { form } = this.state;
+            let convertPhone = form.phone.value;
+            convertPhone = `+84${convertPhone.substring(1)}`
             const data = {
                 contactName: form.nameContact.value,
-                phone: form.phone.value,
+                phone: convertPhone,
                 email: form.email.value,
                 vocative: form.vocative.value,
                 address: form.address.value,
@@ -109,9 +111,8 @@ export class ContactsInfo extends Form {
                                     Phone number{" "}
                                     <span className="required-label">*</span>
                                 </label>
-
                                 <input
-                                    type="tel"
+                                    type="text"
                                     required
                                     pattern={REGEX_TEL}
                                     name="phone"

@@ -18,7 +18,7 @@ class FlightSeatServiceTicketPrice extends Component {
   }
 
   render() {
-    const { flightTicket, passengerNumbers, totalSeatFee } = this.props;
+    const { flightTicket, passengerNumbers, totalSeatFee, flightTicketReturn } = this.props;
     let totalMoney = 0;
     return (
       <>

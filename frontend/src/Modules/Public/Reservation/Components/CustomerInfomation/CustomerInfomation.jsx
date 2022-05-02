@@ -244,7 +244,6 @@ class CustomerInfomation extends Form {
                           id="Identity number"
                           label="Identity number"
                           required
-                          property={{ pattern: REGEX_TEL }}
                           className="identity-number"
                           name={`psg_${index}_identityNumber`}
                           value={
@@ -253,7 +252,7 @@ class CustomerInfomation extends Form {
                           }
                           onChange={(ev) => this._setValue(ev, `psg_${index}_identityNumber`)}
                           error={form[`psg_${index}_identityNumber`] && form[`psg_${index}_identityNumber`]['err'] !== ""}
-                          helperText={form[`psg_${index}_identityNumber`] && form[`psg_${index}_identityNumber`]['err'] === "*" ? "IdentityNumber cannot be empty" : form[`psg_${index}_fullname`]['err']}
+                          helperText={form[`psg_${index}_identityNumber`] && form[`psg_${index}_identityNumber`]['err'] === "*" ? "IdentityNumber cannot be empty" : form[`psg_${index}_identityNumber`]['err']}
                         />
                       </div>
                       <div className="col-md-12">

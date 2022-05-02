@@ -17,7 +17,7 @@ export class FilterFlightBox extends Component {
       filterFlightTicketByDepartHour,
       filterFlightTicketByLandingHour,
       airlineList,
-      filterFlightTicketByAirline
+      filterFlightTicketByAirline,
     } = this.props;
     return (
       <>
