@@ -32,10 +32,17 @@ class FlightSeatMap extends Component {
       businessSeatRows: [1, 2, 3],
       deluxSeatRows: [4, 5, 6, 7],
       exitSeatRows: [18, 19, 29],
-      seatSelected: ''
+      seatSelected: "",
     };
   }
-  
+
+  checkSeatRowType = (rowNumber) => {
+    const { businessSeatRows, deluxSeatRows, exitSeatRows } = this.state;
+    if (businessSeatRows.includes(rowNumber)) return SEAT_TYPE.BUSINESS;
+    if (deluxSeatRows.includes(rowNumber)) return SEAT_TYPE.DELUXE;
+    if (exitSeatRows.includes(rowNumber)) return SEAT_TYPE.EXIT;
+    return SEAT_TYPE.ECONOMY;
+  };
 
   render() {
     const { capacity } = this.state;
@@ -49,7 +56,7 @@ class FlightSeatMap extends Component {
         fee: 0,
       });
     }
-    
+
     return (
       <>
         <div id="flight-seat-map">
@@ -61,6 +68,9 @@ class FlightSeatMap extends Component {
           <LetterRow />
           <Box sx={{ flexGrow: 1 }}>
             {seatRows.map((row, index) => {
+              let seatRowType = this.checkSeatRowType(row.rowNumber);
+              let seatFee = 0;
+              row["fee"] = seatFee;
               return (
                 <SeatRow
                   key={index}
@@ -68,6 +78,7 @@ class FlightSeatMap extends Component {
                   seatInfo={row}
                   reservedSeats={reservedSeats}
                   lockedSeats={lockedSeats}
+                  seatRowType={seatRowType}
                 />
               );
             })}

@@ -71,6 +71,7 @@ class UpdateFlight extends Form {
     this.getLocationList();
     this.getAirlineList();
     this.getFlightDetails();
+    this.getLockedSeats();
   }
 
   getFlightDetails = async () => {
@@ -97,6 +98,7 @@ class UpdateFlight extends Form {
         departureId: res.data.DepartureId,
         status: res.data.Status,
       });
+      this.getReservedFlightSeats(res.data.FlightCode);
     });
   };
   saveUpdateFlight = async () => {
@@ -205,9 +207,10 @@ class UpdateFlight extends Form {
     });
   };
 
-  getLockedSeats = async (flightTicket) => {
+  getLockedSeats = async () => {
+    const { id } = this.props.match.params;
     await publicService
-      .getLockedFlightSeats(flightTicket.FlightId)
+      .getLockedFlightSeats(id)
       .then((res) => {
         this.setState({
           lockedSeats: res.data,
@@ -243,6 +246,8 @@ class UpdateFlight extends Form {
       lockedSeats,
       lockingSeats
     } = this.state;
+      console.log("🚀 ~ file: UpdateFlight.jsx ~ line 249 ~ UpdateFlight ~ render ~ lockedSeats", lockedSeats)
+      console.log("🚀 ~ file: UpdateFlight.jsx ~ line 248 ~ UpdateFlight ~ render ~ lockingSeats", lockingSeats)
     if (isRedirectSuccess) {
       return (
         <Redirect
@@ -590,11 +595,11 @@ class UpdateFlight extends Form {
               </div>
             </Grid>
             <Box>
-              {/* <FlightSeatMap
+              <FlightSeatMap
                 onSelectSeatFlight={this.onSelectSeatFlight}
                 reservedSeats={lockingSeats}
                 lockedSeats={lockedSeats}
-              /> */}
+              />
             </Box>
           </div>
         </React.Fragment>
