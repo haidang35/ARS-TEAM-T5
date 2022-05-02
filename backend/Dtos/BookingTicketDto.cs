@@ -22,5 +22,7 @@ namespace backend.Dtos
         public string PassengerPhone { get; set; }
         [Required]
         public string PassengerIdentityNumber { get; set; }
+        [Required]
+        public string PassengerType { get; set; }
     }
 }

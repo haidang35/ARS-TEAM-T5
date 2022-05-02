@@ -8,6 +8,7 @@ import { dbFirebase } from "../../../Configs/firebase";
 import CheckoutStepBar from "../Shared/Components/CheckoutStepBar/CheckoutStepBar";
 import publicService from "../Shared/Services/PublicService";
 import { BookingStepBar } from "../ChooseFlightTicket/Components/BookingStepBar/BookingStepBar";
+import { Backdrop, Box, Dialog, LinearProgress, Typography } from "@mui/material";
 
 export const GENDER = {
   MALE: 1,
@@ -36,10 +37,12 @@ class BonusServices extends Component {
       lockedSeats: [],
       bookingData: "",
       ipAddress: "",
+      isLoading: false,
     };
   }
 
   componentDidMount = () => {
+    window.scrollTo(0, 0);
     let { reservationData, flightTicket, passengers } =
       this.props.location.state;
     reservationData.passengers.forEach((psg) => {
@@ -152,6 +155,9 @@ class BonusServices extends Component {
   onContinue = async () => {
     const { reservationData, flightTicket } = this.state;
     const bookingTicketsPsg = [];
+    this.setState({
+      isLoading: true
+    })
     reservationData.passengers.forEach((psg) => {
       bookingTicketsPsg.push({
         SeatFlightCode: psg.seatInfo.seatCode,
@@ -160,6 +166,7 @@ class BonusServices extends Component {
         PassengerGender: checkGender(psg.gender),
         PassengerBirthday: psg.birthday,
         PassengerIdentityNumber: psg.identityNumber,
+        PassengerType: psg.passengerType,
       });
     });
     const dataConvert = {
@@ -172,9 +179,9 @@ class BonusServices extends Component {
       BookingTickets: bookingTicketsPsg,
       PaymentMethod: reservationData.paymentMethod.type,
     };
-    const currentUser = JSON.parse(localStorage.getItem('auth_user'));
-    if(currentUser !== '' && currentUser !== null) {
-      dataConvert['UserId'] = currentUser.Id;
+    const currentUser = JSON.parse(localStorage.getItem("auth_user"));
+    if (currentUser !== "" && currentUser !== null) {
+      dataConvert["UserId"] = currentUser.Id;
     }
     await publicService
       .bookingTicket(dataConvert)
@@ -182,6 +189,7 @@ class BonusServices extends Component {
         this.setState({
           isRedirect: true,
           bookingData: res.data,
+          isLoading: false
         });
       })
       .catch((err) => {
@@ -193,21 +201,21 @@ class BonusServices extends Component {
   };
 
   checkExpiresReserveSeat = (seatCode) => {
-     let { lockingSeats, flightTicket, reservationData } = this.state;
-     lockingSeats.forEach((seat, index) => {
-       if(seat.seatCode === seatCode) {
-          lockingSeats.splice(index, 1);
-       }
-     });
-     set(ref(dbFirebase, `flights/${flightTicket.Flight.FlightCode}`), {
+    let { lockingSeats, flightTicket, reservationData } = this.state;
+    lockingSeats.forEach((seat, index) => {
+      if (seat.seatCode === seatCode) {
+        lockingSeats.splice(index, 1);
+      }
+    });
+    set(ref(dbFirebase, `flights/${flightTicket.Flight.FlightCode}`), {
       lockingSeats,
     });
     reservationData.passengers.forEach((psg) => {
-      if(psg.seatInfo.seatCode == seatCode) {
-        psg.seatInfo.seatCode = '';
+      if (psg.seatInfo.seatCode == seatCode) {
+        psg.seatInfo.seatCode = "";
       }
-    })
-    this.setState({ reservationData })
+    });
+    this.setState({ reservationData });
   };
 
   render() {
@@ -222,6 +230,7 @@ class BonusServices extends Component {
       lockedSeats,
       bookingData,
       ipAddress,
+      isLoading,
     } = this.state;
     if (isRedirect) {
       return (
@@ -240,7 +249,7 @@ class BonusServices extends Component {
       <>
         <NavbarV2 />
         <div className="wrap-container">
-          <BookingStepBar step={3}/>
+          <BookingStepBar step={3} />
           <div className="row">
             <div className="col-md-12">
               <FlightSeatService
@@ -261,6 +270,16 @@ class BonusServices extends Component {
           totalMoney={totalMoney + totalSeatFee}
           onContinue={this.onContinue}
         />
+        <Backdrop
+          sx={{ color: "#fff", zIndex: 9999 }}
+          open={isLoading}
+          onClose={this.handleCloseLoading}
+        >
+          <Box sx={{ width: "80%" }}>
+            <Typography variant="h6" component="div" align="center" marginBottom={2}>Flight T5 Loading ...</Typography>
+            <LinearProgress />
+          </Box>
+        </Backdrop>
       </>
     );
   }

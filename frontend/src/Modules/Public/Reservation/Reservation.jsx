@@ -23,6 +23,7 @@ class Reservation extends Component {
   contactInfo = "";
 
   componentDidMount = () => {
+    window.scrollTo(0, 0);
     this.getChoosedFlightTicket();
   };
 

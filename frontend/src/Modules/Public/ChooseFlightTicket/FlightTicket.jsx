@@ -99,9 +99,16 @@ class FlightTicket extends Component {
 
   onChooseFlightTicket = (flightTicket, status) => {
     let { totalMoney, choosedFlightTicket } = this.state;
-    const { passengers } = this.props.location.state;
+    const { state } = this.props.location;
+    let passengers = [];
+    if(typeof state !== 'undefined') {
+      passengers = state.passengers;
+    }else {
+      const searchData = JSON.parse(localStorage.getItem('search_data'));
+      passengers = searchData.passengers;
+    }
+    totalMoney = 0;
     if (status === "cancel") {
-      totalMoney = 0;
       choosedFlightTicket = "";
     } else {
       passengers.forEach((psg) => {
@@ -311,6 +318,7 @@ class FlightTicket extends Component {
                     passengers={passengers}
                     onChooseFlightTicket={this.onChooseFlightTicket}
                     viewMode={viewMode}
+                    choosedFlightTicket={choosedFlightTicket}
                   />
                 );
               })}
