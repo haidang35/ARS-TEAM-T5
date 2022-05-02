@@ -11,6 +11,8 @@ import { SelectDateTicketBox } from "./Components/SelectDateTicketBox/SelectDate
 import { TicketItem } from "./Components/TicketItem/TicketItem";
 import { FlightAmination } from "./Components/FlightAmination/FlightAmination";
 import { Alert, Snackbar, Stack } from "@mui/material";
+import { SelectedFlight } from "../Reservation/Components/SelectedFlight/SelectedFlight";
+import { FlightDetailsTicket } from "../Payment/Components/FlightDetailsTicket/FlightDetailsTicket";
 
 export const FLIGHT_TICKET_SORT_TYPE = {
   LOW_TO_HIGH: 0,
@@ -442,7 +444,7 @@ class FlightTicket extends Component {
                   />
                 );
               })}
-
+              <SelectedFlight passengers={passengers} viewMode={viewMode} />
               {/* Return Date */}
               <SelectDateTicketBox
                 departureDateTime={returnDate}

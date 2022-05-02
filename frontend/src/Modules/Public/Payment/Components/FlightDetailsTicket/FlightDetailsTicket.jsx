@@ -31,7 +31,7 @@ export class FlightDetailsTicket extends Component {
                             <div className="col-md-3">
                                 <div className="list-info">
                                     <Typography className="info-item">
-                                        Hà Nội (HAN) 
+                                  
                                     </Typography>
                                     <Typography className="info-item">
                                         Airport Nội Bài

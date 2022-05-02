@@ -8,6 +8,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import "./SelectedFlight.scss";
 import { SelectedFlightDetails } from "../SelectedFlightDetails/SelectedFlightDeatails";
 import { getTime } from "../../../../../Helpers/datetime";
+import { formatCurrencyToVND } from "../../../../../Helpers/currency";
+import { VIEW_MODE } from "../../../ChooseFlightTicket/FlightTicket";
 
 
 export class SelectedFlight extends Component {
@@ -25,7 +27,7 @@ export class SelectedFlight extends Component {
 
     }
     render() {
-        const { flightTicket } = this.props;
+        const { flightTicket, viewMode, passengers} = this.props;
         return (
             <>
                 <div className="selected-flight">
@@ -44,17 +46,17 @@ export class SelectedFlight extends Component {
                                     <div className="col-sm-4">
                                         <div className="destination">
                                             <Typography className="city">
-                                            {flightTicket && flightTicket.Flight.Departure.City.Name}
+                                                {flightTicket && flightTicket.Flight.Departure.City.Name}
                                             </Typography>
                                             <Typography className="time">
-                                            {flightTicket && getTime(flightTicket.Flight.DepartureTime)}
+                                                {flightTicket && getTime(flightTicket.Flight.DepartureTime)}
                                             </Typography>
                                         </div>
                                     </div>
                                     <div className="col-sm-4">
                                         <div className="info">
                                             <Typography className="flight-name">
-                                            {flightTicket && flightTicket.Flight.FlightCode}
+                                                {flightTicket && flightTicket.Flight.FlightCode}
                                             </Typography>
                                             <div className="icon-flight-box">
                                                 <LocationOnIcon className="location-icon" />
@@ -79,10 +81,10 @@ export class SelectedFlight extends Component {
                                     <div className="col-sm-4">
                                         <div className="destination">
                                             <Typography className="city">
-                                            {flightTicket && flightTicket.Flight.Destination.City.Name}
+                                                {flightTicket && flightTicket.Flight.Destination.City.Name}
                                             </Typography>
                                             <Typography className="time">
-                                            {flightTicket && getTime(flightTicket.Flight.ArrivalTime)}
+                                                {flightTicket && getTime(flightTicket.Flight.ArrivalTime)}
                                             </Typography>
                                         </div>
                                     </div>
@@ -92,7 +94,9 @@ export class SelectedFlight extends Component {
                         <div className="col-md-4">
                             <div className="flight-choose">
                                 <Typography className="price">
-                                    {this.props.price} VND
+                                    {formatCurrencyToVND(
+                                        viewMode == VIEW_MODE.BASIC_FARE_FOR_ADULTS ? flightTicket && flightTicket.Price : flightTicket && flightTicket.Price + flightTicket && flightTicket.Tax
+                                    )}
                                 </Typography>
                                 <Button
                                     onClick={() =>
@@ -109,7 +113,7 @@ export class SelectedFlight extends Component {
                     </div>
                 </div>
                 {this.state.isShowTicketDetails ? (
-                    <SelectedFlightDetails  flightTicket={flightTicket} />
+                    <SelectedFlightDetails   passengers={passengers}  flightTicket={flightTicket} />
                 ) : (
                     ""
                 )}

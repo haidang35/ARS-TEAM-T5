@@ -8,6 +8,7 @@ import { BookingStepBar } from "../ChooseFlightTicket/Components/BookingStepBar/
 import { ContactsInfo } from "./Components/ContactsInfo/ContactsInfo";
 import "./Reservation.scss";
 import { Alert, Snackbar, Stack } from "@mui/material";
+import Payments from "../Payment/Payments";
 
 class Reservation extends Component {
   constructor(props) {
@@ -105,9 +106,9 @@ class Reservation extends Component {
           <div className="style">
         <BookingStepBar step={2}/>
         </div>
-
           <div className="row">
             <SelectedFlight   flightTicket={flightTicket} />
+            <Payments flightTicket={flightTicket} />
             {
               flightTicketReturn !== '' && <SelectedFlight   flightTicket={flightTicketReturn} />
             }
