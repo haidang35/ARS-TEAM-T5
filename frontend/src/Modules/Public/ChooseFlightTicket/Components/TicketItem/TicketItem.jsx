@@ -21,6 +21,19 @@ export class TicketItem extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.checkChooseTicket(nextProps);
+  }
+
+  checkChooseTicket = (nextProps) => {
+    const { choosedFlightTicket, data } = nextProps;
+    if(choosedFlightTicket.Id !== data.Id) {
+      this.setState({
+        isChoosed: false
+      })
+    }
+  }
+
   onShowFlightTicketDetails = (id) => {
     this.setState({
       isShowFlightDetails: !this.state.isShowFlightDetails,

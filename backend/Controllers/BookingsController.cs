@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using backend.Data;
 using backend.Dtos;
 using backend.Models;
 using MessageBird;
+using Newtonsoft.Json;
+using RestSharp;
+using RestSharp.Authenticators;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 
@@ -21,6 +29,8 @@ namespace backend.Controllers
     public class BookingsController : ApiController
     {
         private MyDbContext db = new MyDbContext();
+        private string accountSid = ConfigurationManager.AppSettings["twilio_user_id"];
+        private string authToken = ConfigurationManager.AppSettings["twilio_auth_token"];
 
         // GET: api/Bookings
         [Route("~/api/bookings")]
@@ -165,7 +175,7 @@ namespace backend.Controllers
         [Route("~/api/public/booking")]
         [HttpPost]
         [ResponseType(typeof(Booking))]
-        public IHttpActionResult UserBooking(UserBooking userBooking)
+        public async Task<IHttpActionResult> UserBooking(UserBooking userBooking)
         {
             if (!ModelState.IsValid)
             {
@@ -178,6 +188,7 @@ namespace backend.Controllers
             }
 
             Random rdm = new Random();
+
             var booking = new Booking()
             {
                 Status = BookingStatus.Pending,
@@ -198,6 +209,8 @@ namespace backend.Controllers
             }
 
             db.Bookings.Add(booking);
+            var passengerMailList = new List<PassengerMail>();
+            double totalMoney = 0;
             foreach (var bookingTicket in userBooking.BookingTickets)
             {
                 var bookTicket = new BookingTicket()
@@ -215,25 +228,75 @@ namespace backend.Controllers
                     UpdatedAt = DateTime.Now
                 };
                 db.BookingTickets.Add(bookTicket);
+
+                bool isExistPsg = false;
+                foreach(var psgMail in passengerMailList)
+                {
+                    if(psgMail.passengerType == bookingTicket.PassengerType)
+                    {
+                        isExistPsg = true;
+                        psgMail.quantity += 1;
+                        psgMail.total = ((ticket.Price + ticket.Tax)*psgMail.quantity).ToString("C", CultureInfo.GetCultureInfo("vi-VN"));
+                    }
+                }
+                if(! isExistPsg)
+                {
+                    passengerMailList.Add(new PassengerMail()
+                    {
+                        currency = "",
+                        passengerType = bookingTicket.PassengerType,
+                        total = (ticket.Price + ticket.Tax).ToString("C", CultureInfo.GetCultureInfo("vi-VN")),
+                        quantity = 1,
+                    });
+                }
+                totalMoney += ticket.Price + ticket.Tax;
             }
+
+
+
             try
             {
                 db.SaveChanges();
-                /*  string accountSid = "AC3d3336f55e56591728f7365c86ac8847";
-                  string authToken = "367d10f3d92404a6f0b7e880a7e14426";
 
-                  TwilioClient.Init(accountSid, authToken);
-
-                  var message = MessageResource.Create(
-                      body: "Booking Flight Success",
-                      from: new Twilio.Types.PhoneNumber("+16205914451"),
-                      to: new Twilio.Types.PhoneNumber("+84357446532")
-                  );*/
             }
             catch (Exception e)
             {
                 return BadRequest("Save to database failed");
             }
+
+            try
+            {
+               
+
+                TwilioClient.Init(accountSid, authToken);
+
+                var message = MessageResource.Create(
+                    body: $"Flight T5: Your booking {booking.BookingCode} has been booked successfully !",
+                    from: new Twilio.Types.PhoneNumber(ConfigurationManager.AppSettings["twilio_phone"]),
+                    to: new Twilio.Types.PhoneNumber(userBooking.ContactPhone)
+                );
+                string mailSubject = "Congratulations on your successful flight booking at Flight T5";
+                string body = $"Congratulations you have successfully booked your ticket. " +
+                    $"Your booking code is {booking.BookingCode}, you can access the website link to look up flight and ticket information.";
+                /*SendMail(userBooking.ContactEmail, mailSubject, body);*/
+
+                var bookingMail = new BookingMail()
+                {
+                    bookingNo = booking.BookingCode,
+                    bookingDate = booking.CreatedAt.ToString("dddd, dd MMMM yyyy"),
+                    bookingLink = "",
+                    total = totalMoney.ToString("C", CultureInfo.GetCultureInfo("vi-VN")),
+                    message = body,
+                    passengers = passengerMailList
+                };
+
+                await SendMailWithApi(userBooking.ContactName, userBooking.ContactEmail, mailSubject, JsonConvert.SerializeObject(bookingMail));
+            }
+            catch (Exception e)
+            {
+
+            }
+
             return Ok(booking);
 
         }
@@ -275,6 +338,45 @@ namespace backend.Controllers
                 PaymentMethod = booking.PaymentMethod,
             };
             return Ok(bookingDto);
+        }
+
+        public void SendMail(string email, string subject, string body)
+        {
+            var fromEmail = new MailAddress(ConfigurationManager.AppSettings["smtp_username"], "Flight T5");
+            var passFromEmail = ConfigurationManager.AppSettings["smtp_password"];
+            var toEmail = new MailAddress(email);
+            var smtp = new SmtpClient
+            {
+                Host = ConfigurationManager.AppSettings["smtp_host"],
+                Port = 587,
+                EnableSsl = true,
+                DeliveryFormat = (SmtpDeliveryFormat)SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromEmail.Address, passFromEmail),
+            };
+            using (var message = new MailMessage(fromEmail, toEmail)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true,
+            })
+                smtp.Send(message);
+        }
+
+        public static async Task<RestResponse> SendMailWithApi(string receiver, string receiveMail, string subject, string bodyJson)
+        {
+            RestClient client = new RestClient("https://api.mailgun.net/v3");
+            client.Authenticator = new HttpBasicAuthenticator("api", ConfigurationManager.AppSettings["mailgun_api"]);
+            RestRequest request = new RestRequest();
+            request.AddParameter("domain", "neverdev.com", ParameterType.UrlSegment);
+            request.Resource = "{domain}/messages";
+            request.AddParameter("from", "Flight T5 <postmaster@neverdev.com>");
+            request.AddParameter("to", $"{receiver} <{receiveMail}>");
+            request.AddParameter("subject", subject);
+            request.AddParameter("template", "flight-t5-booking");
+            request.AddParameter("h:X-Mailgun-Variables", bodyJson);
+            var response = await client.PostAsync(request);
+            return response;
         }
     }
 }

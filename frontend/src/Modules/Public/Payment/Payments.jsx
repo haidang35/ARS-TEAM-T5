@@ -30,6 +30,7 @@ class Payments extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.getBookingData();
     this.checkBookingDetails();
   }
@@ -99,7 +100,6 @@ class Payments extends Component {
 
   render() {
     const { bookingData, isRedirect, totalMoneyConverted } = this.state;
-    console.log("🚀 ~ file: Payments.jsx ~ line 102 ~ Payments ~ render ~ bookingData", bookingData)
     const { totalMoney } = this.props.location.state;
     if (isRedirect) {
       return (
@@ -116,7 +116,6 @@ class Payments extends Component {
         <SearchTicketBox />
         <div className="wrap-container">
         <BookingStepBar step={4}/>
-
           <div className="row">
             <div className="col-md-12">
               <NoticeOfBookingStatus bookingData={bookingData} />

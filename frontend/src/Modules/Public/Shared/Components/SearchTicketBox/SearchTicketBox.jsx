@@ -40,8 +40,11 @@ class SearchTicketBox extends Component {
     };
   }
 
+
   componentWillReceiveProps(nextProps) {
-    this.getSearchFlightTicketInfo(nextProps);
+    if(typeof nextProps.passengers !== 'undefined') {
+      this.getSearchFlightTicketInfo(nextProps);
+    }
   }
 
   getSearchFlightTicketInfo = (nextProps) => {

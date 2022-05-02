@@ -20,7 +20,7 @@ export class SelectDateTicketBox extends Component {
   }
 
   componentDidMount = () => {
-    this.getFlightTicketList();
+    // this.getFlightTicketList();
   };
 
   getFlightTicketList = async () => {
@@ -46,7 +46,11 @@ export class SelectDateTicketBox extends Component {
       viewMode,
       filterByDepartHours,
       filterByLandingHours,
+      flightTicketAll
     } = nextProps;
+    this.setState({
+      flightTicketList: flightTicketAll
+    })
     let { flightTicketList } = this.state;
     if (filterByAirline != 0) {
       flightTicketList = flightTicketList.filter((ticket) => {
