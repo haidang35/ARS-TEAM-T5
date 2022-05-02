@@ -24,6 +24,13 @@ import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";  
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+} from "@mui/material";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 80 },
@@ -79,7 +86,9 @@ const rows = [
   createData("2", "Bamboo Airways", "QH", "Viet Nam", "Cay tre"),
   createData("3", "Vietravel Airlines", "VU", "Viet Nam", "Viettravel"),
 ];
-
+const FILTER_TYPE = {
+  FLIGHT: 1,
+ }
 export default function FlightList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -87,7 +96,8 @@ export default function FlightList() {
   const [flightListAPI, setFlightListAPI] = useState([]);
   const [msg, setMsg] = useState("");
   const [searchValue, setSearchValue] = useState("");
-
+  const [filterType, setFilterType] = useState('');
+  const [filterByProvince, setFilterByProvince] = useState(0);
 
 
   useEffect(() => {
@@ -100,6 +110,14 @@ export default function FlightList() {
       return(flight.FlightCode.toLowerCase()).includes(searchValue.toLowerCase())
     }));
   },[searchValue]);
+  useEffect(() => {
+    const flightList = flightListAPI.filter((flight) => {
+      if(filterType === FILTER_TYPE.FLIGHT) {
+        return flight.Departure.City.Province.Name == filterByProvince
+      }
+    });
+    setFlightList(flightList);
+  }, [filterByProvince]);
 
   const getFlightList = async () => {
     await flightService
@@ -112,7 +130,16 @@ export default function FlightList() {
         console.log(err);
       });
   };
-
+  const handleChangeFilterType = async (ev) => {
+    setFilterType(ev.target.value);
+    if(ev.target.value == FILTER_TYPE.LOCATION) {
+      await flightService.getFlightList()
+        .then((res) => {
+          setFlightList(res.data);
+        })
+    }
+   }
+  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -209,6 +236,51 @@ export default function FlightList() {
                       />
                     </Paper>
                   </TableCell>
+                  <TableCell colSpan={6} align="center">
+                    <FormControl sx={{ m: 1, width: 300, right: 150 }}>
+                      <InputLabel id="demo-multiple-name-label">
+                        Select
+                      </InputLabel>
+                      <Select
+                        id="select"
+                        value={filterType}
+                        onChange={handleChangeFilterType}
+                        input={<OutlinedInput label="Select" />}
+                      >
+                        <MenuItem
+                            value={FILTER_TYPE.LOCATION}
+                          >
+                            Locations 
+                          </MenuItem>
+                      </Select>
+                    </FormControl>
+                    <FormControl sx={{ m: 1, width: 300, right: 150 }}>
+                      <InputLabel id="demo-multiple-name-label">
+                        Location
+                      </InputLabel>
+                      <Select
+                        id="airline"
+                        value={filterByProvince}
+                        onChange={(ev) => setFilterByProvince(+ev.target.value) }
+                        input={<OutlinedInput label="Select" />}
+                      >
+                        {flightList.map((flight) => (
+                          <MenuItem
+                            key={flight.Id}
+                            value={flight.Id}
+                          >
+                            {flight.Departure.City.Province.Name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl sx={{ m: 1, top: 10, right: 150 }}>
+                      <Button variant="contained" startIcon={<SearchIcon />}>
+                        Search
+                      </Button>
+                    </FormControl>
+                  </TableCell>
+
                   <TableCell align="right" colSpan={12}>
                     <Link to={"/admin/flights/create"}>
                       <Button variant="contained" startIcon={<AddCircleIcon />}>

@@ -92,7 +92,7 @@ export default function FlightTicketList() {
   }, []);
   useEffect(() => {
     setFlightTicketList(flightTicketListApi.filter((flightTicket) => {
-      return (flightTicket.TicketType.toLowerCase()).includes(searchValue.toLowerCase());
+      return (flightTicket.Flight.FlightCode.toLowerCase()).includes(searchValue.toLowerCase());
     }));
   }, [searchValue]);
 

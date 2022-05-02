@@ -23,6 +23,13 @@ import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+} from "@mui/material";
 
 
 
@@ -58,7 +65,7 @@ function createData(id, city, province, airportName, country, edit) {
   return { id, city, province, airportName, country, edit };
 }
 const FILTER_TYPE = {
- LOCATIOn: 1,
+ LOCATION: 1,
 }
 export default function LocationList() {
   const [page, setPage] = React.useState(0);
@@ -68,11 +75,14 @@ export default function LocationList() {
   const [msg, setMsg] = useState('');
   const [searchValue, setSearchValue] = useState("");
   const [filterType, setFilterType] = useState('');
+  const [proviceList, setProvinceList] = useState();
+  const [cityList, setCityList] = useState();
   const [filterByProvinceId, setFilterByProvinceId] = useState(0);
 
   useEffect(() => {
     getLocationList();
     getMsg();
+    getProvinceList();
   }, []);
   useEffect(() => {
     const locationList = locationListApi.filter((location) => {
@@ -80,7 +90,7 @@ export default function LocationList() {
         return location.City.ProvinceId == filterByProvinceId
       }
     });
-    setLocationList(location);
+    setLocationList(locationList);
   }, [filterByProvinceId]);
 
   useEffect(() => {
@@ -88,6 +98,29 @@ export default function LocationList() {
       return (location.City.Name.toLowerCase()).includes(searchValue.toLowerCase());
     }));
   }, [searchValue]);
+
+
+  const handleChangeFilterType = async (ev) => {
+    setFilterType(ev.target.value);
+    if(ev.target.value == FILTER_TYPE.LOCATION) {
+      await locationsService.getLocationList()
+        .then((res) => {
+          setLocationList(res.data);
+          setLocationListApi(res.data);
+        })
+    }
+   }
+   const handleChangeCity = (ev) =>{
+     setCityList(ev.target.value)
+   }
+   const handleChangeProvince = (ev) =>{
+    const provinceId = ev.target.value;
+     setProvinceList(ev.target.value);
+     locationsService.getCitiesByProvince(provinceId)
+     .then((res) => {
+       setCityList(res.data);
+     })
+   }
   
 
   const handleChangePage = (event, newPage) => {
@@ -110,6 +143,14 @@ export default function LocationList() {
       }
     }
   }
+
+  const getProvinceList = async () => {
+    await locationsService.getProvinceList()
+      .then((res) => {
+        setProvinceList(res.data);
+      })
+    }
+
 
   const getLocationList = async () => {
     await locationsService.getLocationList()
@@ -189,6 +230,71 @@ export default function LocationList() {
                       />
                     </Paper>
                   </TableCell>
+                  <TableCell colSpan={6} align="center">
+                    {/* <FormControl sx={{ m: 1, width: 300, right: 150 }}>
+                      <InputLabel id="demo-multiple-name-label">
+                        Select
+                      </InputLabel>
+                      <Select
+                        id="select"
+                        value={filterType}
+                        onChange={handleChangeFilterType}
+                        input={<OutlinedInput label="Select" />}
+                      >
+                        <MenuItem
+                            value={FILTER_TYPE.LOCATION}
+                          >
+                            Locations 
+                          </MenuItem>
+                      </Select>
+                    </FormControl> */}
+                    <FormControl sx={{ m: 1, width: 300, right: 150 }}>
+                      <InputLabel id="demo-multiple-name-label">
+                        Province
+                      </InputLabel>
+                      <Select
+                        id="airline"
+                        value={filterByProvinceId}
+                        onChange={handleChangeProvince }
+                        input={<OutlinedInput label="Select" />}
+                      >
+                        {proviceList.map((province) => (
+                          <MenuItem
+                            key={province.Id}
+                            value={province.Id}
+                          >
+                            {province.Name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl sx={{ m: 1, width: 300, right: 150 }}>
+                      <InputLabel id="demo-multiple-name-label">
+                        City
+                      </InputLabel>
+                      <Select
+                        id="airline"
+                        value={filterByProvinceId}
+                        onChange={handleChangeCity }
+                        input={<OutlinedInput label="Select" />}
+                      >
+                        {cityList.map((city) => (
+                          <MenuItem
+                            key={city.Id}
+                            value={city.Id}
+                          >
+                            {city.Name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl sx={{ m: 1, top: 10, right: 150 }}>
+                      <Button variant="contained" startIcon={<SearchIcon />}>
+                        Search
+                      </Button>
+                    </FormControl>
+                  </TableCell>
+
                   <TableCell align="right" colSpan={3}>
                     <Link to={"/admin/locations/create"}>
                       <Button variant="contained" startIcon={< AddCircleIcon />}>
