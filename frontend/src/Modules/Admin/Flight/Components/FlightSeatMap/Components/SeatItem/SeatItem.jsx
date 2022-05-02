@@ -12,17 +12,14 @@ class SeatItem extends Component {
     super(props);
     this.state = {};
   }
-  
+
   render() {
     const {
       seat,
       seatType,
       rowNumber,
-      seatSelected,
-      passengers,
       reservedSeats,
       lockedSeats,
-      ipAddress
     } = this.props;
     const seatCode = rowNumber + seat.letterCode;
     let isSelected = false;
@@ -41,11 +38,6 @@ class SeatItem extends Component {
       }
     });
 
-    passengers.forEach((psg) => {
-      if (psg.seatInfo["seatCode"] === seatCode) {
-        isSelected = true;
-      }
-    });
     return (
       <>
         <div
