@@ -10,6 +10,15 @@
             padding-right: 0px;
         }
     }
+    
+     .css-e53awj-MuiStack-root{
+        float: right;
+        margin-left: 20px;
+    }
+
+    .css-2s90m6-MuiAvatar-root{
+        margin-right: 8px;
+    }
 
 
     .list-menu {
@@ -42,10 +51,16 @@
                     margin-left: 1rem;
                     color: #ffeb00;
                     font-size: 16px;
+                
+                    .css-e53awj-MuiStack-root{
+                        float: right;
                 }
+
             }
         }
 
+     
+      }
 
         .active {
             border-bottom: 2px solid white;

@@ -10,9 +10,17 @@ import { FilterFlightBox } from "./Components/FilterFlightBox/FilterFlightBox";
 import { SelectDateTicketBox } from "./Components/SelectDateTicketBox/SelectDateTicketBox";
 import { TicketItem } from "./Components/TicketItem/TicketItem";
 import { FlightAmination } from "./Components/FlightAmination/FlightAmination";
-import { Alert, Snackbar, Stack } from "@mui/material";
-import { SelectedFlight } from "../Reservation/Components/SelectedFlight/SelectedFlight";
-import { FlightDetailsTicket } from "../Payment/Components/FlightDetailsTicket/FlightDetailsTicket";
+import {
+  Alert,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Snackbar,
+  Stack,
+} from "@mui/material";
 
 export const FLIGHT_TICKET_SORT_TYPE = {
   LOW_TO_HIGH: 0,
@@ -26,6 +34,11 @@ export const VIEW_MODE = {
   INCLUDE_TAX_AND_FEES: 2,
 };
 
+const TRIP_TYPE = {
+  ONE_WAY: 1,
+  ROUND_TRIP: 2,
+};
+
 class FlightTicket extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +49,7 @@ class FlightTicket extends Component {
       flightTicketsReturnAll: [],
       departureId: "",
       destinationid: "",
+      tripType: "",
       departureDate: new Date(),
       returnDate: new Date(),
       choosedFlightTicket: "",
@@ -53,6 +67,12 @@ class FlightTicket extends Component {
         show: false,
         message: "",
       },
+      dialog: {
+        show: false,
+        redirect: false,
+        redirectTo: "",
+      },
+      isLoading: false
     };
   }
   componentDidMount() {
@@ -66,17 +86,19 @@ class FlightTicket extends Component {
 
   getFlightTicketDepartureAll = async () => {
     const urlParams = new URLSearchParams(window.location.search);
+    // this.setState({
+    //   isLoading: true
+    // })
     const searchData = {
       departureId: urlParams.get("departure"),
       destinationId: urlParams.get("destination"),
     };
-    await publicService.getFlightTickets(searchData)
-      .then(res => {
-        this.setState({
-          flightTicketsDepartureAll: res.data
-        })
-      })
-  }
+    await publicService.getFlightTickets(searchData).then((res) => {
+      this.setState({
+        flightTicketsDepartureAll: res.data,
+      });
+    });
+  };
 
   getFlightTicketReturnAll = async () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -84,21 +106,22 @@ class FlightTicket extends Component {
       departureId: urlParams.get("destination"),
       destinationId: urlParams.get("departure"),
     };
-    await publicService.getFlightTickets(searchData)
-      .then(res => {
-        this.setState({
-          flightTicketsReturnAll: res.data
-        })
-      })
-  }
+    await publicService.getFlightTickets(searchData).then((res) => {
+      this.setState({
+        flightTicketsReturnAll: res.data,
+      });
+    });
+  };
 
   setDepartureDateFromParamUrl = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const departureDate = urlParams.get("departureDate");
     const returnDate = urlParams.get("returnDate");
+    const tripType = urlParams.get("tripType");
     this.setState({
       departureDate,
-      returnDate
+      returnDate,
+      tripType,
     });
   };
 
@@ -219,7 +242,8 @@ class FlightTicket extends Component {
     } else {
       passengers.forEach((psg) => {
         if (psg.quantity > 0) {
-          totalMoneyReturn += psg.quantity * flightTicket.Price + flightTicket.Tax;
+          totalMoneyReturn +=
+            psg.quantity * flightTicket.Price + flightTicket.Tax;
         }
       });
       choosedFlightTicketReturn = flightTicket;
@@ -231,17 +255,24 @@ class FlightTicket extends Component {
   };
 
   onContinue = () => {
-    let { alert, choosedFlightTicket, isRedirect } = this.state;
-    if (choosedFlightTicket !== "") {
-      isRedirect = true;
+    let { alert, choosedFlightTicket, isRedirect, dialog, tripType } =
+      this.state;
+
+    if (tripType == TRIP_TYPE.ROUND_TRIP) {
+      dialog = { ...dialog, show: true };
+      isRedirect = false;
     } else {
-      alert = {
-        ...alert,
-        show: true,
-        message: "Please choose flight ticket before continue",
-      };
+      if (choosedFlightTicket !== "") {
+        isRedirect = true;
+      } else {
+        alert = {
+          ...alert,
+          show: true,
+          message: "Please choose flight ticket before continue",
+        };
+      }
     }
-    this.setState({ isRedirect, alert });
+    this.setState({ isRedirect, alert, dialog });
   };
 
   onSortFlightTickets = (sortType) => {
@@ -318,6 +349,17 @@ class FlightTicket extends Component {
     });
   };
 
+  handleCloseAlertTripType = () => {
+    const { dialog } = this.state;
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('tripType', TRIP_TYPE.ONE_WAY);
+    this.setState({
+      dialog: {...dialog, show: false},
+      tripType: TRIP_TYPE.ONE_WAY
+    })
+    window.history.pushState(this.props.location.state, '', `/flight-ticket?${urlParams.toString()}`)
+  }
+
   render() {
     const {
       departureDate,
@@ -335,8 +377,16 @@ class FlightTicket extends Component {
       redirectToObject,
       returnDate,
       alert,
+      tripType,
+      dialog,
+      isLoading
     } = this.state;
-    let { flightTickets, flightTicketsReturn, flightTicketsDepartureAll, flightTicketsReturnAll } = this.state;
+    let {
+      flightTickets,
+      flightTicketsReturn,
+      flightTicketsDepartureAll,
+      flightTicketsReturnAll,
+    } = this.state;
     let passengers = "";
     let departure = "";
     let destination = "";
@@ -431,6 +481,7 @@ class FlightTicket extends Component {
                 filterByDepartHours={filterByDepartHours}
                 filterByLandingHours={filterByLandingHours}
                 flightTicketAll={flightTicketsDepartureAll}
+                isLoading={isLoading}
               />
               {flightTickets.map((item, index) => {
                 return (
@@ -444,33 +495,36 @@ class FlightTicket extends Component {
                   />
                 );
               })}
-              <SelectedFlight passengers={passengers} viewMode={viewMode} />
-              {/* Return Date */}
-              <SelectDateTicketBox
-                departureDateTime={returnDate}
-                departure={destination}
-                destination={departure}
-                handleDepartureDate={this.handleReturnDate}
-                filterByAirline={filterByAirline}
-                sortType={sortType}
-                viewMode={viewMode}
-                filterByDepartHours={filterByDepartHours}
-                filterByLandingHours={filterByLandingHours}
-                flightTicketAll={flightTicketsReturnAll}
-              />
-              {flightTicketsReturn.map((item, index) => {
-                return (
-                  <TicketItem
-                    key={index}
-                    data={item}
-                    passengers={passengers}
-                    onChooseFlightTicket={this.onChooseFlightTicketReturn}
-                    viewMode={viewMode}
-                    choosedFlightTicket={choosedFlightTicketReturn}
-                  />
-                );
-              })}
-              {flightTickets.length === 0 || flightTicketsReturn.length === 0 && <FlightAmination />}
+
+              {tripType == TRIP_TYPE.ROUND_TRIP && (
+                <SelectDateTicketBox
+                  departureDateTime={returnDate}
+                  departure={destination}
+                  destination={departure}
+                  handleDepartureDate={this.handleReturnDate}
+                  filterByAirline={filterByAirline}
+                  sortType={sortType}
+                  viewMode={viewMode}
+                  filterByDepartHours={filterByDepartHours}
+                  filterByLandingHours={filterByLandingHours}
+                  flightTicketAll={flightTicketsReturnAll}
+                />
+              )}
+
+              {tripType == TRIP_TYPE.ROUND_TRIP &&
+                flightTicketsReturn.map((item, index) => {
+                  return (
+                    <TicketItem
+                      key={index}
+                      data={item}
+                      passengers={passengers}
+                      onChooseFlightTicket={this.onChooseFlightTicketReturn}
+                      viewMode={viewMode}
+                      choosedFlightTicket={choosedFlightTicketReturn}
+                    />
+                  );
+                })}
+              {flightTickets.length === 0 && <FlightAmination />}
               <CheckoutStepBar
                 totalMoney={totalMoney + totalMoneyReturn}
                 onContinue={this.onContinue}
@@ -492,6 +546,27 @@ class FlightTicket extends Component {
             </Alert>
           </Stack>
         </Snackbar>
+        <Dialog
+          open={dialog.show}
+          onClose={this.handleCloseAlertTripType}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"System notification "}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Round trip booking function is not yet supported, sorry for the
+              inconvenience. You can rebook a one-way ticket.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseAlertTripType} autoFocus>
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
       </>
     );
   }

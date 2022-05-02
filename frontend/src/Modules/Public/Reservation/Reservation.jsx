@@ -63,9 +63,9 @@ class Reservation extends Component {
         isRedirect: true,
         reservationData
       });
-    }else {
+    } else {
       this.setState({
-        alert: {show: true, message: 'Please fill out the information completely'}
+        alert: { show: true, message: 'Please fill out the information completely' }
       })
     }
   };
@@ -104,13 +104,13 @@ class Reservation extends Component {
         <NavbarV2 />
         <div className="wrap-container">
           <div className="style">
-        <BookingStepBar step={2}/>
-        </div>
+            <BookingStepBar step={2} />
+          </div>
           <div className="row">
-            <SelectedFlight   flightTicket={flightTicket} />
-            <Payments flightTicket={flightTicket} />
+            <SelectedFlight passengers={passengers} flightTicket={flightTicket} />
+          
             {
-              flightTicketReturn !== '' && <SelectedFlight   flightTicket={flightTicketReturn} />
+              flightTicketReturn !== '' && <SelectedFlight flightTicket={flightTicketReturn} />
             }
             <CustomerInfomation
               passengers={passengers}
@@ -127,14 +127,14 @@ class Reservation extends Component {
         <Snackbar
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
           open={alert.show}
-          onClose={() => this.setState({ alert: {...alert, show: false} })}
+          onClose={() => this.setState({ alert: { ...alert, show: false } })}
           message=""
           autoHideDuration={3000}
           key={"bottom" + "left"}
         >
           <Stack sx={{ width: "100%" }} spacing={2}>
             <Alert variant="filled" severity="error">
-               {alert.message}
+              {alert.message}
             </Alert>
           </Stack>
         </Snackbar>

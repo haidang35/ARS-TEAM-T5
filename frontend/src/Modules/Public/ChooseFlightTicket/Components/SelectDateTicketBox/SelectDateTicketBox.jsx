@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import { Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
 import "./SelectDateTicketBox.scss";
 import { dateConvert, getDayOfWeek } from "../../../../../Helpers/datetime";
@@ -16,11 +16,15 @@ export class SelectDateTicketBox extends Component {
       flightTicketList: [],
       flightListOrg: [],
       departureDate: "",
+      isLoading: false,
     };
   }
 
   componentDidMount = () => {
     // this.getFlightTicketList();
+    this.setState({
+      isLoading: true
+    })
   };
 
   getFlightTicketList = async () => {
@@ -46,11 +50,13 @@ export class SelectDateTicketBox extends Component {
       viewMode,
       filterByDepartHours,
       filterByLandingHours,
-      flightTicketAll
+      flightTicketAll,
+      isLoading
     } = nextProps;
     this.setState({
-      flightTicketList: flightTicketAll
-    })
+      flightTicketList: flightTicketAll,
+      isLoading
+    });
     let { flightTicketList } = this.state;
     if (filterByAirline != 0) {
       flightTicketList = flightTicketList.filter((ticket) => {
@@ -121,7 +127,6 @@ export class SelectDateTicketBox extends Component {
       arrivalTimeAConvert.getTime() - departureTimeAConvert.getTime();
     const flightTimeB =
       arrivalTimeBConvert.getTime() - departureTimeBConvert.getTime();
-    console.log("flightss", flightTimeA - flightTimeB);
     return flightTimeA - flightTimeB;
   };
 
@@ -221,7 +226,13 @@ export class SelectDateTicketBox extends Component {
                     <span className="item-date">{dateConvert(item.date)}</span>
                     <span className="item-day">{getDayOfWeek(item.date)}</span>
                     <span className="item-price">
-                      {item.ticketPrice !== "-"
+                      {/* {this.state.isLoading && (
+                        <CircularProgress
+                          color="inherit"
+                          style={{ width: "25px", height: "25px" }}
+                        />
+                      )} */}
+                      {item.ticketPrice !== "-" 
                         ? formatCurrencyToVND(item.ticketPrice)
                         : "-"}
                     </span>

@@ -95,7 +95,7 @@ export class SelectedFlight extends Component {
                             <div className="flight-choose">
                                 <Typography className="price">
                                     {formatCurrencyToVND(
-                                        viewMode == VIEW_MODE.BASIC_FARE_FOR_ADULTS ? flightTicket && flightTicket.Price : flightTicket && flightTicket.Price + flightTicket && flightTicket.Tax
+                                         flightTicket &&  flightTicket.Price  
                                     )}
                                 </Typography>
                                 <Button
