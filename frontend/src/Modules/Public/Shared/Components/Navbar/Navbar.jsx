@@ -215,18 +215,22 @@ const Navbar = () => {
                         Log Out
                       </Button>
                     </Stack>
-                  </Box> 
+                  </Box>
                   :
-                  <Stack className='register'>
-                    <Stack spacing={2} direction="row">
+                  <Stack className="account">
+                    <Stack
+                      className="login"
+                      direction="row">
                       <Button
-                       variant="outlined">
+                        variant="outlined">
                         <Link to="/signin" >
                           Login
                         </Link>
                       </Button>
                     </Stack>
-                    <Stack spacing={2} direction="row">
+                    <Stack
+                      className="signup"
+                      direction="row">
                       <Button variant="outlined">
                         <Link to="/signup" >
                           SignUp
