@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect, withRouter } from "react-router-dom";
 import { PAYMENT_METHODS } from "../Reservation/Components/Payment/Payment";
 import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
-import { SearchTicketBox } from "../Shared/Components/SearchTicketBox/SearchTicketBox";
+import  SearchTicketBox  from "../Shared/Components/SearchTicketBox/SearchTicketBox";
 import publicService from "../Shared/Services/PublicService";
 import { ContactsInfomation } from "./Components/ContactInfomation/ContactInfomation";
 import { FlightDetailsTicket } from "./Components/FlightDetailsTicket/FlightDetailsTicket";
@@ -99,6 +99,7 @@ class Payments extends Component {
 
   render() {
     const { bookingData, isRedirect, totalMoneyConverted } = this.state;
+    console.log("🚀 ~ file: Payments.jsx ~ line 102 ~ Payments ~ render ~ bookingData", bookingData)
     const { totalMoney } = this.props.location.state;
     if (isRedirect) {
       return (

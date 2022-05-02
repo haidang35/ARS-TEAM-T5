@@ -10,7 +10,7 @@ import Search from "@mui/icons-material/Search";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Location } from "./Location/Location";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import { getDate } from "../../../../../Helpers/datetime";
 
 const TRIP_TYPE = {
@@ -18,7 +18,7 @@ const TRIP_TYPE = {
   ROUNDTRIP: 2,
 };
 
-export class SearchTicketBox extends Component {
+class SearchTicketBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +28,6 @@ export class SearchTicketBox extends Component {
       infants: 0,
       searchData: {
         departure: "",
-
         destination: "",
         departureDate: getDateTimeNow(),
         returnDate: getDateTimeNow(),
@@ -40,6 +39,44 @@ export class SearchTicketBox extends Component {
       isRedirect: false,
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    this.getSearchFlightTicketInfo(nextProps);
+  }
+
+  getSearchFlightTicketInfo = (nextProps) => {
+    const { departure, destination, passengers } = nextProps;
+    let { searchData, adults, children, infants } = this.state;
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const searchParams = {
+      departureId: urlParams.get("departure"),
+      destinationid: urlParams.get("destination"),
+      departureDate: urlParams.get("departureDate"),
+      tripType: urlParams.get("tripType"),
+      returnDate: urlParams.get("returnDate"),
+    };
+
+    passengers.forEach((psg) => {
+      if (psg.passengerType === "adults") adults = psg.quantity;
+      if (psg.passengerType === "children") children = psg.quantity;
+      if (psg.passengerType === "infants") infants = psg.quantity;
+    });
+
+    this.setState({
+      adults,
+      children,
+      infants,
+      searchData: {
+        ...searchData,
+        departure,
+        destination,
+        tripType: searchParams.tripType,
+        departureDate: searchParams.departureDate,
+        returnDate: searchParams.returnDate || new Date(),
+      },
+    });
+  };
 
   handleChangeTripType = (ev) => {
     this.setState({
@@ -75,7 +112,7 @@ export class SearchTicketBox extends Component {
 
   handleDepartureDate = (newValue) => {
     let { searchData } = this.state;
-    searchData["departureDate"] =  getDate(newValue);
+    searchData["departureDate"] = getDate(newValue);
     this.setState({
       searchData,
     });
@@ -142,35 +179,42 @@ export class SearchTicketBox extends Component {
       this.state;
 
     if (isRedirect) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/flight-ticket",
-            search: `?tripType=${tripType}&departure=${departure.Id}&destination=${destination.Id}&departureDate=${departureDate}`,
-            state: {
-              passengers: [
-                {
-                  id: 1,
-                  passengerType: "adults",
-                  quantity: adults,
-                },
-                {
-                  id: 2,
-                  passengerType: "children",
-                  quantity: children,
-                },
-                {
-                  id: 3,
-                  passengerType: "infants",
-                  quantity: infants,
-                },
-              ],
-              departure,
-              destination,
-            },
-          }}
-        />
-      );
+      const pathName = "/flight-ticket";
+      const queryParams = `?tripType=${tripType}&departure=${departure.Id}&destination=${destination.Id}&departureDate=${departureDate}`;
+      const pushState = {
+        passengers: [
+          {
+            id: 1,
+            passengerType: "adults",
+            quantity: adults,
+          },
+          {
+            id: 2,
+            passengerType: "children",
+            quantity: children,
+          },
+          {
+            id: 3,
+            passengerType: "infants",
+            quantity: infants,
+          },
+        ],
+        departure,
+        destination,
+      };
+      window.history.pushState(pushState, '', pathName + queryParams)
+      window.location.replace(`/flight-ticket${queryParams}`);
+      localStorage.setItem('search_data', JSON.stringify(pushState));
+      // return (
+      //   <Redirect
+      //     exact
+      //     to={{
+      //       pathname: pathName,
+      //       search: queryParams,
+      //       state: pushState,
+      //     }}
+      //   />
+      // );
     }
 
     return (
@@ -298,6 +342,7 @@ export class SearchTicketBox extends Component {
                         inputFormat="dd/MM/yyyy"
                         onChange={this.handleDepartureDate}
                         renderInput={(params) => <TextField {...params} />}
+                        disablePast
                       />
                     </LocalizationProvider>
                   </div>
@@ -312,6 +357,7 @@ export class SearchTicketBox extends Component {
                         inputFormat="dd/MM/yyyy"
                         onChange={this.handleReturnDate}
                         renderInput={(params) => <TextField {...params} />}
+                        disablePast
                       />
                     </LocalizationProvider>
                   </div>
@@ -341,3 +387,5 @@ export class SearchTicketBox extends Component {
     );
   }
 }
+
+export default withRouter(SearchTicketBox);

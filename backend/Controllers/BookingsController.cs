@@ -176,6 +176,7 @@ namespace backend.Controllers
             {
                 return BadRequest("Ticket not found");
             }
+
             Random rdm = new Random();
             var booking = new Booking()
             {
@@ -190,10 +191,12 @@ namespace backend.Controllers
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
             };
+
             if (userBooking.UserId != null)
             {
                 booking.UserId = userBooking.UserId;
             }
+
             db.Bookings.Add(booking);
             foreach (var bookingTicket in userBooking.BookingTickets)
             {

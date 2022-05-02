@@ -33,7 +33,7 @@ export class PassengerInfomation extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {bookingData &&
+                  {bookingData.BookingTickets &&
                     bookingData.BookingTickets.map((bookingTicket, index) => {
                       return (
                         <tr key={index}>

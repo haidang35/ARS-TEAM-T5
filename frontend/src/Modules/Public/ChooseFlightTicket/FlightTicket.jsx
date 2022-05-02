@@ -3,7 +3,7 @@ import { Redirect, withRouter } from "react-router-dom";
 import Reservation from "../Reservation/Reservation";
 import CheckoutStepBar from "../Shared/Components/CheckoutStepBar/CheckoutStepBar";
 import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
-import { SearchTicketBox } from "../Shared/Components/SearchTicketBox/SearchTicketBox";
+import  SearchTicketBox  from "../Shared/Components/SearchTicketBox/SearchTicketBox";
 import publicService from "../Shared/Services/PublicService";
 import { BookingStepBar } from "./Components/BookingStepBar/BookingStepBar";
 import { FilterFlightBox } from "./Components/FilterFlightBox/FilterFlightBox";
@@ -214,7 +214,23 @@ class FlightTicket extends Component {
       redirectToObject
     } = this.state;
     let { flightTickets } = this.state;
-    const { passengers, departure, destination } = this.props.location.state;
+    let passengers = '';
+    let departure = '';
+    let destination = '';
+    const { state } = this.props.location;
+    if(state !== null && typeof state !== 'undefined') {
+      passengers = state.passengers;
+      departure = state.departure;
+      destination = state.destination;
+    }else {
+      const searchDataLocal = JSON.parse(localStorage.getItem('search_data'));
+      if(searchDataLocal !== null) {
+        passengers = searchDataLocal.passengers;
+        departure = searchDataLocal.departure;
+        destination = searchDataLocal.destination;
+      }
+    }
+
     if (filterByDepartHours.length === 2) {
       flightTickets = flightTickets.filter((ticket) => {
         const departTime = new Date(ticket.Flight.DepartureTime);
@@ -259,7 +275,7 @@ class FlightTicket extends Component {
         <NavbarV2 />
         <div className="wrap-container">
           <div className="row">
-            <SearchTicketBox />
+            <SearchTicketBox departure={departure} destination={destination} passengers={passengers} />
             <BookingStepBar step={1} />
             <div className="col-md-3">
               <FilterFlightBox
