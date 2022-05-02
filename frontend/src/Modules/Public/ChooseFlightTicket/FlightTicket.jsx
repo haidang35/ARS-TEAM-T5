@@ -3,13 +3,14 @@ import { Redirect, withRouter } from "react-router-dom";
 import Reservation from "../Reservation/Reservation";
 import CheckoutStepBar from "../Shared/Components/CheckoutStepBar/CheckoutStepBar";
 import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
-import  SearchTicketBox  from "../Shared/Components/SearchTicketBox/SearchTicketBox";
+import SearchTicketBox from "../Shared/Components/SearchTicketBox/SearchTicketBox";
 import publicService from "../Shared/Services/PublicService";
 import { BookingStepBar } from "./Components/BookingStepBar/BookingStepBar";
 import { FilterFlightBox } from "./Components/FilterFlightBox/FilterFlightBox";
 import { SelectDateTicketBox } from "./Components/SelectDateTicketBox/SelectDateTicketBox";
 import { TicketItem } from "./Components/TicketItem/TicketItem";
 import { FlightAmination } from "./Components/FlightAmination/FlightAmination";
+import { Alert, Snackbar, Stack } from "@mui/material";
 
 export const FLIGHT_TICKET_SORT_TYPE = {
   LOW_TO_HIGH: 0,
@@ -28,31 +29,74 @@ class FlightTicket extends Component {
     super(props);
     this.state = {
       flightTickets: [],
+      flightTicketsDepartureAll: [],
+      flightTicketsReturn: [],
+      flightTicketsReturnAll: [],
       departureId: "",
       destinationid: "",
       departureDate: new Date(),
+      returnDate: new Date(),
       choosedFlightTicket: "",
+      choosedFlightTicketReturn: "",
       totalMoney: 0,
+      totalMoneyReturn: 0,
       isRedirect: false,
       viewMode: VIEW_MODE.BASIC_FARE_FOR_ADULTS,
       filterByDepartHours: [],
       filterByLandingHours: [],
       airlineList: [],
-      filterByAirline:0,
+      filterByAirline: 0,
       sortType: FLIGHT_TICKET_SORT_TYPE.HIGHT_TO_LOW,
+      alert: {
+        show: false,
+        message: "",
+      },
     };
   }
   componentDidMount() {
+    this.getFlightTicketDepartureAll();
+    this.getFlightTicketReturnAll();
     this.getFlightTicketList();
+    this.getFlightTicketReturnList();
     this.setDepartureDateFromParamUrl();
     this.getAirlineList();
+  }
+
+  getFlightTicketDepartureAll = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchData = {
+      departureId: urlParams.get("departure"),
+      destinationId: urlParams.get("destination"),
+    };
+    await publicService.getFlightTickets(searchData)
+      .then(res => {
+        this.setState({
+          flightTicketsDepartureAll: res.data
+        })
+      })
+  }
+
+  getFlightTicketReturnAll = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchData = {
+      departureId: urlParams.get("destination"),
+      destinationId: urlParams.get("departure"),
+    };
+    await publicService.getFlightTickets(searchData)
+      .then(res => {
+        this.setState({
+          flightTicketsReturnAll: res.data
+        })
+      })
   }
 
   setDepartureDateFromParamUrl = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const departureDate = urlParams.get("departureDate");
+    const returnDate = urlParams.get("returnDate");
     this.setState({
       departureDate,
+      returnDate
     });
   };
 
@@ -79,6 +123,21 @@ class FlightTicket extends Component {
     });
   };
 
+  getFlightTicketReturnList = async () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const searchData = {
+      departureId: urlParams.get("destination"),
+      destinationid: urlParams.get("departure"),
+      departureDate: urlParams.get("returnDate"),
+    };
+    await publicService.getFlightTickets(searchData).then((res) => {
+      this.setState({
+        flightTicketsReturn: res.data,
+      });
+    });
+  };
+
   handleDepartureDate = async (departureDate) => {
     this.setState({
       departureDate,
@@ -87,7 +146,7 @@ class FlightTicket extends Component {
     const urlParams = new URLSearchParams(queryString);
     const searchData = {
       departureId: urlParams.get("departure"),
-      destinationid: urlParams.get("destination"),
+      destinationId: urlParams.get("destination"),
       departureDate,
     };
     await publicService.getFlightTickets(searchData).then((res) => {
@@ -97,14 +156,32 @@ class FlightTicket extends Component {
     });
   };
 
+  handleReturnDate = async (returnDate) => {
+    this.setState({
+      returnDate,
+    });
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const searchData = {
+      departureId: urlParams.get("destination"),
+      destinationId: urlParams.get("departure"),
+      returnDate,
+    };
+    await publicService.getFlightTickets(searchData).then((res) => {
+      this.setState({
+        flightTicketsReturn: res.data,
+      });
+    });
+  };
+
   onChooseFlightTicket = (flightTicket, status) => {
     let { totalMoney, choosedFlightTicket } = this.state;
     const { state } = this.props.location;
     let passengers = [];
-    if(typeof state !== 'undefined') {
+    if (typeof state !== "undefined") {
       passengers = state.passengers;
-    }else {
-      const searchData = JSON.parse(localStorage.getItem('search_data'));
+    } else {
+      const searchData = JSON.parse(localStorage.getItem("search_data"));
       passengers = searchData.passengers;
     }
     totalMoney = 0;
@@ -124,10 +201,45 @@ class FlightTicket extends Component {
     });
   };
 
-  onContinue = () => {
+  onChooseFlightTicketReturn = (flightTicket, status) => {
+    let { totalMoneyReturn, choosedFlightTicketReturn } = this.state;
+    const { state } = this.props.location;
+    let passengers = [];
+    if (typeof state !== "undefined") {
+      passengers = state.passengers;
+    } else {
+      const searchData = JSON.parse(localStorage.getItem("search_data"));
+      passengers = searchData.passengers;
+    }
+    totalMoneyReturn = 0;
+    if (status === "cancel") {
+      choosedFlightTicketReturn = "";
+    } else {
+      passengers.forEach((psg) => {
+        if (psg.quantity > 0) {
+          totalMoneyReturn += psg.quantity * flightTicket.Price + flightTicket.Tax;
+        }
+      });
+      choosedFlightTicketReturn = flightTicket;
+    }
     this.setState({
-      isRedirect: true,
+      totalMoneyReturn,
+      choosedFlightTicketReturn,
     });
+  };
+
+  onContinue = () => {
+    let { alert, choosedFlightTicket, isRedirect } = this.state;
+    if (choosedFlightTicket !== "") {
+      isRedirect = true;
+    } else {
+      alert = {
+        ...alert,
+        show: true,
+        message: "Please choose flight ticket before continue",
+      };
+    }
+    this.setState({ isRedirect, alert });
   };
 
   onSortFlightTickets = (sortType) => {
@@ -200,17 +312,17 @@ class FlightTicket extends Component {
 
   filterFlightTicketByAirline = (scopeAirline) => {
     this.setState({
-      filterByAirline: scopeAirline
+      filterByAirline: scopeAirline,
     });
-
-  }
-
+  };
 
   render() {
     const {
       departureDate,
       choosedFlightTicket,
+      choosedFlightTicketReturn,
       totalMoney,
+      totalMoneyReturn,
       isRedirect,
       viewMode,
       filterByDepartHours,
@@ -218,20 +330,22 @@ class FlightTicket extends Component {
       airlineList,
       filterByAirline,
       sortType,
-      redirectToObject
+      redirectToObject,
+      returnDate,
+      alert,
     } = this.state;
-    let { flightTickets } = this.state;
-    let passengers = '';
-    let departure = '';
-    let destination = '';
+    let { flightTickets, flightTicketsReturn, flightTicketsDepartureAll, flightTicketsReturnAll } = this.state;
+    let passengers = "";
+    let departure = "";
+    let destination = "";
     const { state } = this.props.location;
-    if(state !== null && typeof state !== 'undefined') {
+    if (state !== null && typeof state !== "undefined") {
       passengers = state.passengers;
       departure = state.departure;
       destination = state.destination;
-    }else {
-      const searchDataLocal = JSON.parse(localStorage.getItem('search_data'));
-      if(searchDataLocal !== null) {
+    } else {
+      const searchDataLocal = JSON.parse(localStorage.getItem("search_data"));
+      if (searchDataLocal !== null) {
         passengers = searchDataLocal.passengers;
         departure = searchDataLocal.departure;
         destination = searchDataLocal.destination;
@@ -259,9 +373,9 @@ class FlightTicket extends Component {
     }
 
     if (filterByAirline != 0) {
-      flightTickets= flightTickets.filter((ticket) => {
+      flightTickets = flightTickets.filter((ticket) => {
         return ticket.Flight.Airline.Id == filterByAirline;
-      })
+      });
     }
 
     if (isRedirect) {
@@ -271,6 +385,7 @@ class FlightTicket extends Component {
             pathname: "/reservation",
             state: {
               flightTicket: choosedFlightTicket,
+              flightTicketReturn: choosedFlightTicketReturn,
               passengers,
             },
           }}
@@ -282,7 +397,11 @@ class FlightTicket extends Component {
         <NavbarV2 />
         <div className="wrap-container">
           <div className="row">
-            <SearchTicketBox departure={departure} destination={destination} passengers={passengers} />
+            <SearchTicketBox
+              departure={departure}
+              destination={destination}
+              passengers={passengers}
+            />
             <BookingStepBar step={1} />
             <div className="col-md-3">
               <FilterFlightBox
@@ -309,6 +428,7 @@ class FlightTicket extends Component {
                 viewMode={viewMode}
                 filterByDepartHours={filterByDepartHours}
                 filterByLandingHours={filterByLandingHours}
+                flightTicketAll={flightTicketsDepartureAll}
               />
               {flightTickets.map((item, index) => {
                 return (
@@ -322,14 +442,54 @@ class FlightTicket extends Component {
                   />
                 );
               })}
-              <FlightAmination />
+
+              {/* Return Date */}
+              <SelectDateTicketBox
+                departureDateTime={returnDate}
+                departure={destination}
+                destination={departure}
+                handleDepartureDate={this.handleReturnDate}
+                filterByAirline={filterByAirline}
+                sortType={sortType}
+                viewMode={viewMode}
+                filterByDepartHours={filterByDepartHours}
+                filterByLandingHours={filterByLandingHours}
+                flightTicketAll={flightTicketsReturnAll}
+              />
+              {flightTicketsReturn.map((item, index) => {
+                return (
+                  <TicketItem
+                    key={index}
+                    data={item}
+                    passengers={passengers}
+                    onChooseFlightTicket={this.onChooseFlightTicketReturn}
+                    viewMode={viewMode}
+                    choosedFlightTicket={choosedFlightTicketReturn}
+                  />
+                );
+              })}
+              {flightTickets.length === 0 || flightTicketsReturn.length === 0 && <FlightAmination />}
               <CheckoutStepBar
-                totalMoney={totalMoney}
+                totalMoney={totalMoney + totalMoneyReturn}
                 onContinue={this.onContinue}
               />
             </div>
           </div>
         </div>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={alert.show}
+          onClose={() => this.setState({ openAlertSearchForn: false })}
+          message=""
+          autoHideDuration={3000}
+          key={"bottom" + "left"}
+        >
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert variant="filled" severity="error">
+              {alert.message}
+            </Alert>
+          </Stack>
+        </Snackbar>
       </>
     );
   }

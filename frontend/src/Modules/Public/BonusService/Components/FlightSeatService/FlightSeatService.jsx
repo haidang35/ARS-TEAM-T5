@@ -18,7 +18,16 @@ class FlightSeatService extends Component {
 
   render() {
     const { isShowService } = this.state;
-    const { reservationData, flightTicket, passengers, reservedSeats, totalSeatFee, lockedSeats, ipAddress } = this.props;
+    const {
+      reservationData,
+      flightTicket,
+      passengers,
+      reservedSeats,
+      totalSeatFee,
+      lockedSeats,
+      ipAddress,
+      flightTicketReturn,
+    } = this.props;
     return (
       <>
         <ChooseSeatFlight onSelectService={this.onSelectService} />
@@ -33,6 +42,7 @@ class FlightSeatService extends Component {
             lockedSeats={lockedSeats}
             ipAddress={ipAddress}
             checkExpiresReserveSeat={this.props.checkExpiresReserveSeat}
+            flightTicketReturn={flightTicketReturn}
           />
         ) : (
           ""

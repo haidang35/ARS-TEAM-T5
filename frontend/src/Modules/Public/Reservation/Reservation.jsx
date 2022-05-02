@@ -7,16 +7,22 @@ import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
 import { BookingStepBar } from "../ChooseFlightTicket/Components/BookingStepBar/BookingStepBar";
 import { ContactsInfo } from "./Components/ContactsInfo/ContactsInfo";
 import "./Reservation.scss";
+import { Alert, Snackbar, Stack } from "@mui/material";
 
 class Reservation extends Component {
   constructor(props) {
     super(props);
     this.state = {
       flightTicket: "",
+      flightTicketReturn: '',
       passengers: "",
       isContinue: false,
       isRedirect: false,
-      reservationData: ''
+      reservationData: '',
+      alert: {
+        show: false,
+        message: ''
+      }
     };
   }
   passengers = "";
@@ -28,10 +34,11 @@ class Reservation extends Component {
   };
 
   getChoosedFlightTicket = () => {
-    const { flightTicket, passengers } = this.props.location.state;
+    const { flightTicket, passengers, flightTicketReturn } = this.props.location.state;
     this.setState({
       flightTicket,
       passengers,
+      flightTicketReturn
     });
   };
 
@@ -55,6 +62,10 @@ class Reservation extends Component {
         isRedirect: true,
         reservationData
       });
+    }else {
+      this.setState({
+        alert: {show: true, message: 'Please fill out the information completely'}
+      })
     }
   };
 
@@ -71,7 +82,7 @@ class Reservation extends Component {
   };
 
   render() {
-    const { flightTicket, passengers, isContinue, isRedirect, reservationData } = this.state;
+    const { flightTicket, flightTicketReturn, passengers, isContinue, isRedirect, reservationData, alert } = this.state;
     if (isRedirect) {
       return (
         <Redirect
@@ -80,7 +91,8 @@ class Reservation extends Component {
             state: {
               reservationData,
               flightTicket,
-              passengers
+              passengers,
+              flightTicketReturn
             },
           }}
         />
@@ -96,7 +108,9 @@ class Reservation extends Component {
 
           <div className="row">
             <SelectedFlight   flightTicket={flightTicket} />
-          
+            {
+              flightTicketReturn !== '' && <SelectedFlight   flightTicket={flightTicketReturn} />
+            }
             <CustomerInfomation
               passengers={passengers}
               isContinue={isContinue}
@@ -109,6 +123,20 @@ class Reservation extends Component {
             <Payment onContinute={this.onContinute} />
           </div>
         </div>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={alert.show}
+          onClose={() => this.setState({ alert: {...alert, show: false} })}
+          message=""
+          autoHideDuration={3000}
+          key={"bottom" + "left"}
+        >
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert variant="filled" severity="error">
+               {alert.message}
+            </Alert>
+          </Stack>
+        </Snackbar>
       </>
     );
   }

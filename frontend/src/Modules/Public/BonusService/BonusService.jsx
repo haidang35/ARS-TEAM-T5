@@ -29,6 +29,7 @@ class BonusServices extends Component {
     this.state = {
       reservationData: "",
       flightTicket: "",
+      flightTicketReturn: '',
       passengers: "",
       lockingSeats: [],
       totalMoney: 0,
@@ -43,7 +44,7 @@ class BonusServices extends Component {
 
   componentDidMount = () => {
     window.scrollTo(0, 0);
-    let { reservationData, flightTicket, passengers } =
+    let { reservationData, flightTicket, passengers, flightTicketReturn } =
       this.props.location.state;
     reservationData.passengers.forEach((psg) => {
       psg["seatInfo"] = {
@@ -56,6 +57,7 @@ class BonusServices extends Component {
       reservationData,
       flightTicket,
       passengers,
+      flightTicketReturn
     });
     this.getReservedFlightSeats(flightTicket.Flight.FlightCode);
     this.calcTotalMoney(flightTicket, passengers);
@@ -222,6 +224,7 @@ class BonusServices extends Component {
     let {
       reservationData,
       flightTicket,
+      flightTicketReturn,
       passengers,
       lockingSeats,
       totalMoney,
@@ -255,6 +258,7 @@ class BonusServices extends Component {
               <FlightSeatService
                 reservationData={reservationData}
                 flightTicket={flightTicket}
+                flightTicketReturn={flightTicketReturn}
                 passengers={passengers}
                 onSelectSeatFlight={this.onSelectSeatFlight}
                 reservedSeats={lockingSeats}
