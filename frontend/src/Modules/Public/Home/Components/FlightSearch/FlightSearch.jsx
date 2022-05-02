@@ -158,7 +158,7 @@ export class FlightSearch extends Component {
 
   handleReturnDate = (newValue) => {
     let { searchData } = this.state;
-    searchData["returnDate"] = newValue;
+    searchData["returnDate"] = getDate(newValue);
     this.setState({
       searchData,
     });
@@ -192,7 +192,7 @@ export class FlightSearch extends Component {
         <Redirect
           to={{
             pathname: "flight-ticket",
-            search: `?tripType=${tripType}&departure=${departure.Id}&destination=${destination.Id}&departureDate=${departureDate}`,
+            search: `?tripType=${tripType}&departure=${departure.Id}&destination=${destination.Id}&departureDate=${departureDate}&returnDate=${returnDate}`,
             state: {
               passengers: [
                 {
