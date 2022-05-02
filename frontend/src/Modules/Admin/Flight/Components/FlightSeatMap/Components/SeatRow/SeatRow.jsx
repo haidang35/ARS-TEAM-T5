@@ -37,14 +37,6 @@ class SeatRow extends Component {
     };
   }
 
-  onChooseSeat = (seat) => {
-    const { rowNumber, seatInfo } = this.props;
-    let selectedSeat = {
-      seatCode: rowNumber + seat.letterCode,
-      fee: seatInfo.fee,
-    };
-    this.props.onSelectSeatFlight(selectedSeat);
-  };
 
   render() {
     const { seatItems } = this.state;
@@ -61,7 +53,6 @@ class SeatRow extends Component {
                     rowNumber={rowNumber}
                     reservedSeats={reservedSeats}
                     lockedSeats={lockedSeats}
-                    ipAddress={ipAddress}
                   />
                 </Grid>
               );

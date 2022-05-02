@@ -24,6 +24,7 @@ import locationsService from "../../../Location/Shared/Services/LocationService"
 import FlightSeatMap from "../FlightSeatMap/FlightSeatMap";
 import { onValue, ref } from "firebase/database";
 import publicService from "../../../../Public/Shared/Services/PublicService";
+import { dbFirebase } from "../../../../../Configs/firebase";
 
 class UpdateFlight extends Form {
   constructor(props) {
@@ -589,11 +590,11 @@ class UpdateFlight extends Form {
               </div>
             </Grid>
             <Box>
-              <FlightSeatMap
+              {/* <FlightSeatMap
                 onSelectSeatFlight={this.onSelectSeatFlight}
                 reservedSeats={lockingSeats}
                 lockedSeats={lockedSeats}
-              />
+              /> */}
             </Box>
           </div>
         </React.Fragment>
