@@ -182,7 +182,7 @@ const Navbar = () => {
                         <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
                       </IconButton>
                     </Tooltip>
-                    HI, {authUser && authUser.Name}
+                    Hi, {authUser && authUser.Name}
                     <Menu
                       sx={{ mt: '45px' }}
                       id="menu-appbar"
@@ -209,6 +209,7 @@ const Navbar = () => {
                     </Menu>
                     <Stack spacing={2} direction="row">
                       <Button
+                        className="account"
                         onClick={onLogOut}
                         variant="outlined"
                       >

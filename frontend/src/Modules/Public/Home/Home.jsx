@@ -29,7 +29,7 @@ export class Home extends Component {
             <>
             <Navbar />
             <Header favouriteDestination={favouriteDestination} />
-            <SeachFlightTicket  />
+            {/* <SeachFlightTicket  /> */}
             <FavouriteDestination onSelectDestinationThumbnail={this.onSelectDestinationThumbnail} />
             <SupportInfo />
             <Footer />
