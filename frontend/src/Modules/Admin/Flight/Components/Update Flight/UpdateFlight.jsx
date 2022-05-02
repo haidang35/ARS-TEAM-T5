@@ -21,6 +21,9 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import airlineService from "../../../Airline/Shared/Services/AirlineService";
 import locationsService from "../../../Location/Shared/Services/LocationService";
+import FlightSeatMap from "../FlightSeatMap/FlightSeatMap";
+import { onValue, ref } from "firebase/database";
+import publicService from "../../../../Public/Shared/Services/PublicService";
 
 class UpdateFlight extends Form {
   constructor(props) {
@@ -38,7 +41,6 @@ class UpdateFlight extends Form {
         aircraft: "",
         seatsReseved: "",
         seatsAvaliable: "",
-        
       }),
       airlineId: "",
       departureId: "",
@@ -60,6 +62,8 @@ class UpdateFlight extends Form {
           type: "DeActive",
         },
       ],
+      lockingSeats: [],
+      lockedSeats: []
     };
   }
   componentDidMount() {
@@ -75,8 +79,7 @@ class UpdateFlight extends Form {
         departureId: res.data.DepartureId,
         destinationId: res.data.DestinationId,
         airlineId: res.data.AirlineId,
-        status: res.data.Status
-
+        status: res.data.Status,
       });
       this._fillForm({
         flightCode: res.data.FlightCode,
@@ -99,8 +102,14 @@ class UpdateFlight extends Form {
     this._validateForm();
     if (this._isFormValid()) {
       const { id } = this.props.match.params;
-      const { form, isRedirectSuccess, departureId, destinationId, airlineId, status } =
-        this.state;
+      const {
+        form,
+        isRedirectSuccess,
+        departureId,
+        destinationId,
+        airlineId,
+        status,
+      } = this.state;
       const dataConverted = {
         FlightCode: form.flightCode.value,
         DepartureTime: form.departureTime.value,
@@ -179,6 +188,31 @@ class UpdateFlight extends Form {
       departureTime: ev.target.value,
     });
   };
+
+  getReservedFlightSeats = (flightCode) => {
+    const flightSeatRef = ref(dbFirebase, `flights/${flightCode}/lockingSeats`);
+    onValue(flightSeatRef, (snapshot) => {
+      let lockingSeats = [];
+      snapshot.forEach((snapshotChild) => {
+        let dataChild = snapshotChild.val();
+        dataChild["key"] = snapshotChild.key;
+        lockingSeats.push(dataChild);
+      });
+      this.setState({
+        lockingSeats,
+      });
+    });
+  };
+
+  getLockedSeats = async (flightTicket) => {
+    await publicService
+      .getLockedFlightSeats(flightTicket.FlightId)
+      .then((res) => {
+        this.setState({
+          lockedSeats: res.data,
+        });
+      });
+  };
   render() {
     const {
       flightCode,
@@ -192,7 +226,6 @@ class UpdateFlight extends Form {
       aircraft,
       seatsReseved,
       seatsAvaliable,
-     
     } = this.state.form;
     const {
       isRedirectSuccess,
@@ -205,8 +238,9 @@ class UpdateFlight extends Form {
       airlineId,
       airlineList,
       status,
-      flightStatus
-
+      flightStatus,
+      lockedSeats,
+      lockingSeats
     } = this.state;
     if (isRedirectSuccess) {
       return (
@@ -554,6 +588,13 @@ class UpdateFlight extends Form {
                 </Button>
               </div>
             </Grid>
+            <Box>
+              <FlightSeatMap
+                onSelectSeatFlight={this.onSelectSeatFlight}
+                reservedSeats={lockingSeats}
+                lockedSeats={lockedSeats}
+              />
+            </Box>
           </div>
         </React.Fragment>
       </>

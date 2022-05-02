@@ -8,6 +8,7 @@ namespace backend.Dtos
 {
     public class BookingDto
     {
+        public int Id { get; set; }
         public User User { get; set; }
         public BookingStatus Status { get; set; }
         public string BookingCode { get; set; }
