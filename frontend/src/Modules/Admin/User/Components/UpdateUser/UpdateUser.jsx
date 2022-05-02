@@ -165,6 +165,7 @@ class UpdateUser extends Form {
         Status: status,
         ConfirmationPassword: form.confirmPassword.value,
       };
+      
       await userService
         .updateDetails(id, dataConverted)
         .then((res) => {

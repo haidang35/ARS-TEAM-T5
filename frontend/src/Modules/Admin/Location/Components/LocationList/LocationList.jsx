@@ -57,7 +57,9 @@ const columns = [
 function createData(id, city, province, airportName, country, edit) {
   return { id, city, province, airportName, country, edit };
 }
-
+const FILTER_TYPE = {
+ LOCATIOn: 1,
+}
 export default function LocationList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -65,11 +67,21 @@ export default function LocationList() {
   const [locationListApi, setLocationListApi] = useState([]); 
   const [msg, setMsg] = useState('');
   const [searchValue, setSearchValue] = useState("");
+  const [filterType, setFilterType] = useState('');
+  const [filterByProvinceId, setFilterByProvinceId] = useState(0);
 
   useEffect(() => {
     getLocationList();
     getMsg();
   }, []);
+  useEffect(() => {
+    const locationList = locationListApi.filter((location) => {
+      if(filterType === FILTER_TYPE.LOCATION) {
+        return location.City.ProvinceId == filterByProvinceId
+      }
+    });
+    setLocationList(location);
+  }, [filterByProvinceId]);
 
   useEffect(() => {
     setLocationList(locationListApi.filter((location) => {
@@ -240,7 +252,6 @@ export default function LocationList() {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
-            count={rows.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

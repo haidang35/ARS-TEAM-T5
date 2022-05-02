@@ -94,6 +94,7 @@ export default function FlightList() {
     getFlightList();
     getMsg();
   }, []);
+  
   useEffect(() =>{
     setFlightList(flightListAPI.filter((flight) => {
       return(flight.FlightCode.toLowerCase()).includes(searchValue.toLowerCase())
