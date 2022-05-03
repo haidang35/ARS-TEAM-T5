@@ -75,9 +75,11 @@ export default function LocationList() {
   const [msg, setMsg] = useState('');
   const [searchValue, setSearchValue] = useState("");
   const [filterType, setFilterType] = useState('');
-  const [proviceList, setProvinceList] = useState();
-  const [cityList, setCityList] = useState();
+  const [provinceList, setProvinceList] = useState([]);
+  const [cityList, setCityList] = useState([]);
   const [filterByProvinceId, setFilterByProvinceId] = useState(0);
+  const [filterByCityId, setFilterByCityId] = useState(0);
+  
 
   useEffect(() => {
     getLocationList();
@@ -92,6 +94,14 @@ export default function LocationList() {
     });
     setLocationList(locationList);
   }, [filterByProvinceId]);
+  
+  useEffect(() => {
+    const locationList = locationListApi.filter((location) => {
+      return location.CityId == filterByCityId
+    })
+
+   setLocationList(locationList)
+  },[filterByCityId]);
 
   useEffect(() => {
     setLocationList(locationListApi.filter((location) => {
@@ -111,11 +121,12 @@ export default function LocationList() {
     }
    }
    const handleChangeCity = (ev) =>{
-     setCityList(ev.target.value)
+     
+     setFilterByCityId(ev.target.value)
    }
    const handleChangeProvince = (ev) =>{
     const provinceId = ev.target.value;
-     setProvinceList(ev.target.value);
+    setFilterByProvinceId(provinceId)
      locationsService.getCitiesByProvince(provinceId)
      .then((res) => {
        setCityList(res.data);
@@ -188,7 +199,7 @@ export default function LocationList() {
           <Typography variant="h4" component="div" gutterBottom>
             Location
           </Typography>
-          <TableContainer sx={{ maxHeight: 400 }}>
+          <TableContainer sx={{  maxHeight: 5000  }}>
           {
               msg !== '' ? <Stack sx={{ width: '100%' }} spacing={2}>
                 <Alert severity={msg.type}>{msg.content}</Alert>
@@ -229,26 +240,7 @@ export default function LocationList() {
                         orientation="vertical"
                       />
                     </Paper>
-                  </TableCell>
-                  <TableCell colSpan={6} align="center">
-                    {/* <FormControl sx={{ m: 1, width: 300, right: 150 }}>
-                      <InputLabel id="demo-multiple-name-label">
-                        Select
-                      </InputLabel>
-                      <Select
-                        id="select"
-                        value={filterType}
-                        onChange={handleChangeFilterType}
-                        input={<OutlinedInput label="Select" />}
-                      >
-                        <MenuItem
-                            value={FILTER_TYPE.LOCATION}
-                          >
-                            Locations 
-                          </MenuItem>
-                      </Select>
-                    </FormControl> */}
-                    <FormControl sx={{ m: 1, width: 300, right: 150 }}>
+                    <FormControl sx={{ m: 1, width: 250, right: 60, top: 10  }}>
                       <InputLabel id="demo-multiple-name-label">
                         Province
                       </InputLabel>
@@ -258,7 +250,7 @@ export default function LocationList() {
                         onChange={handleChangeProvince }
                         input={<OutlinedInput label="Select" />}
                       >
-                        {proviceList.map((province) => (
+                        {provinceList.map((province) => (
                           <MenuItem
                             key={province.Id}
                             value={province.Id}
@@ -268,13 +260,13 @@ export default function LocationList() {
                         ))}
                       </Select>
                     </FormControl>
-                    <FormControl sx={{ m: 1, width: 300, right: 150 }}>
+                    <FormControl sx={{ m: 1, width: 250, right: 40, top: 10 }}>
                       <InputLabel id="demo-multiple-name-label">
                         City
                       </InputLabel>
                       <Select
-                        id="airline"
-                        value={filterByProvinceId}
+                        id="city"
+                        value={filterByCityId}
                         onChange={handleChangeCity }
                         input={<OutlinedInput label="Select" />}
                       >
@@ -287,15 +279,20 @@ export default function LocationList() {
                           </MenuItem>
                         ))}
                       </Select>
+                      
                     </FormControl>
-                    <FormControl sx={{ m: 1, top: 10, right: 150 }}>
+                    
+                  </TableCell>
+                  <TableCell colSpan={6} align="center">
+                  
+                    <FormControl sx={{ m: 1, top: 30, right: 200 }}>
                       <Button variant="contained" startIcon={<SearchIcon />}>
                         Search
                       </Button>
                     </FormControl>
                   </TableCell>
 
-                  <TableCell align="right" colSpan={3}>
+                  <TableCell align="left" colSpan={3}>
                     <Link to={"/admin/locations/create"}>
                       <Button variant="contained" startIcon={< AddCircleIcon />}>
                         Add New
@@ -308,7 +305,7 @@ export default function LocationList() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ top: 57, minWidth: column.minWidth, textAlign: 'left' }}
+                      style={{ top: 57, minWidth: column.maxWidth, textAlign: 'left' }}
                     >
                       {column.label}
                     </TableCell>

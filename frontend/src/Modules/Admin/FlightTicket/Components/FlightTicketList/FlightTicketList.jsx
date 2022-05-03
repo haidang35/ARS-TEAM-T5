@@ -161,7 +161,7 @@ export default function FlightTicketList() {
           <Typography variant="h4" component="div" gutterBottom>
             Flight Ticket
           </Typography>
-          <TableContainer sx={{ maxHeight: 440 }}>
+          <TableContainer sx={{ maxHeight:1000}}>
             {
               msg !== '' ? <Stack sx={{ width: '100%' }} spacing={2}>
                 <Alert severity={msg.type}>{msg.content}</Alert>
@@ -246,7 +246,17 @@ export default function FlightTicketList() {
                           {flightTicket.Price}
                         </TableCell>
                         <TableCell>
-                          {flightTicket.Status}
+                        <TableCell>
+                        {flightTicket.Status === 1 ? (
+                          <Button variant="contained" color="error">
+                            Deactive
+                          </Button>
+                        ) : (
+                          <Button variant="contained" color="success">
+                            Active
+                          </Button>
+                        )}
+                      </TableCell>
                         </TableCell>
                         <TableCell>
                         <Link to={`/admin/flightTickets/${flightTicket.Id}`}>

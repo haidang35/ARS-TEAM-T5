@@ -37,13 +37,10 @@ class AddNewFlightTicket extends Form {
         businessSeatFee: "",
         deluxeSeatFee: "",
         economySeatFee: "",
-        exitSeatFee: "",
-        status: "",
+        exitSeatFee: "",     
         ticketType: "",
-
       }),
       availableClass: "",
-      
       flightId: "",
       content: "",
       isLoading: false,
@@ -65,6 +62,17 @@ class AddNewFlightTicket extends Form {
         },
       ],
       availableClassList: [],
+      status: "",
+      statusList:[
+        {
+          key: 0,
+          type: "Active",
+        },
+        {
+          key: 1,
+          type: "DeActive",
+        },
+      ]
     }
   }
   componentDidMount() {
@@ -89,14 +97,14 @@ class AddNewFlightTicket extends Form {
     this._validateForm();
     if (this._isFormValid()) {
       this.setState({ isLoading: true });
-      let { form, content, flightId, availableClass } = this.state;
+      let { form, content, flightId, availableClass,status } = this.state;
       let dataConverted = {
         FlightId: flightId,
         TicketType: form.ticketType.value,
         AvailableClass: availableClass,
         CarbinBag: form.carbinBag.value,
         CheckinBag: form.checkinBag.value,
-        Status: form.status.value,
+        Status: status,
         Price: form.price.value,
         Tax: form.tax.value,
         BusinessSeatFee: form.businessSeatFee.value,
@@ -122,6 +130,11 @@ class AddNewFlightTicket extends Form {
 
 
   }
+  handleChangeStatus = (ev) => {
+    this.setState({
+      status: ev.target.value,
+    });
+  };
   handleChangeAvailableClass = (ev) => {
     this.setState({
       availableClass: ev.target.value,
@@ -139,9 +152,9 @@ class AddNewFlightTicket extends Form {
   }
   
   render() {
-    const { carbinBag, checkinBag, status, price, tax, ticketType,
+    const { carbinBag, checkinBag, price, tax, ticketType,
       businessSeatFee, economySeatFee, deluxeSeatFee, exitSeatFee, } = this.state.form;
-    const { isRedirectSuccess, content, flightticketList,ticketTypeList,  flightId,  availableClass } = this.state;
+    const { isRedirectSuccess, content, flightticketList,ticketTypeList,  flightId,  availableClass, status, statusList } = this.state;
     if (isRedirectSuccess) {
       return <Redirect to={{
         pathname: '/admin/flight-tickets',
@@ -258,20 +271,6 @@ class AddNewFlightTicket extends Form {
                   onChange={(ev) => this._setValue(ev, 'checkinBag')}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={status.err !== ''}
-                  helperText={status.err !== '' ? status.err === '*' ? 'Status cannot be empty' : status.err : ''}
-                  required
-                  id="status"
-                  name="status"
-                  value={status.value}
-                  label="Status"
-                  autoComplete="shipping address-line1"
-                  variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'status')}
-                />
-              </Grid>
               <Grid item xs={6}>
                 <TextField
                   error={price.err !== ''}
@@ -356,6 +355,29 @@ class AddNewFlightTicket extends Form {
                   onChange={(ev) => this._setValue(ev, 'exitSeatFee')}
                 />
               </Grid>
+              <Grid item xs={12}>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="status">Select Status</InputLabel>
+                    <Select
+                      id="status"
+                      name="status"
+                      value={status}
+                      label="Status"
+                      onChange={this.handleChangeStatus}
+                    >
+                      {statusList.map((status) => {
+                        return (
+                          <MenuItem key={status.key} value={status.key}>
+                            {status.type}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Grid>
+
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox color="secondary" name="saveAddress" value="yes" />}

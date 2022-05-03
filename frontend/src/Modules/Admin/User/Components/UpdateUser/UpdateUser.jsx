@@ -46,7 +46,7 @@ class UpdateUser extends Form {
       }),
       status: "",
       vocative: "",
-      roleIds: [],
+      roleIds:"",
       content: "",
       isLoading: false,
       isRedirectSuccess: false,
@@ -85,7 +85,7 @@ class UpdateUser extends Form {
   }
   componentDidMount() {
     this.getUserDetails();
-    // this.getRoleList();
+    this.getRoleList();
   }
 
   handleChangeRole = (ev) => {
@@ -132,7 +132,7 @@ class UpdateUser extends Form {
     const { id } = this.props.match.params;
     await userService.getUserDetails(id).then((res) => {
       this.setState({
-        roleIds: res.data.Role,
+        roleIds: res.data.RoleId,
         vocative: res.data.Vocative,
         status: res.data.Status,
       });
