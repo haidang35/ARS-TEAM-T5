@@ -283,7 +283,7 @@ export class FlightSearch extends Component {
               </LocalizationProvider>
             </div>
             <div className="date">
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <LocalizationProvider dateAdapter={AdapterDateFns} >
                 <DatePicker
                   disablePast
                   disabled={tripType === TRIP_TYPE.ONEWAY}

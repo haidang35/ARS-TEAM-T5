@@ -45,7 +45,6 @@ namespace backend.Controllers
                 var bookingTicketList = db.BookingTickets.Where(bt => bt.BookingId == booking.Id).ToList();
                 var bookingDto = new BookingDto()
                 {
-                    
                     User = booking.User,
                     Status = booking.Status,
                     ContactName = booking.ContactName,

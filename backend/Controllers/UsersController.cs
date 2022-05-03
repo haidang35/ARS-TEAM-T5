@@ -104,12 +104,14 @@ namespace backend.Controllers
                 var bookingTicketList = db.BookingTickets.Where(bt => bt.BookingId == booking.Id).ToList();
                 var bookingDto = new BookingDto()
                 {
+                    Id = booking.Id,
                     User = booking.User,
                     Status = booking.Status,
                     ContactName = booking.ContactName,
                     ContactPhone = booking.ContactPhone,
                     ContactEmail = booking.ContactEmail,
                     ContactAddress = booking.ContactAddress,
+                    BookingCode = booking.BookingCode,
                     Note = booking.Note,
                     CreatedAt = booking.CreatedAt,
                     UpdatedAt = booking.UpdatedAt,
