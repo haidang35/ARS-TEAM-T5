@@ -40,7 +40,6 @@ namespace backend.Controllers
             {
                 return NotFound();
             }
-
             return Ok(ticket);
         }
 
