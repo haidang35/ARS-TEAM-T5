@@ -2,12 +2,13 @@ import { Typography, Button } from "@mui/material";
 import React, { Component } from "react";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import "./Payment.scss";
+import PaymentsIcon from '@mui/icons-material/Payments';
 
 export const PAYMENT_METHODS = {
     INTERNATIONAL_PAYMENT_GATEWAY: 1,
     BANKING_TRANSFER: 2,
     PAY_IN_OFFICE: 3,
-  };
+};
 export class Payment extends Component {
     constructor(props) {
         super(props);
@@ -55,19 +56,20 @@ export class Payment extends Component {
                         </div>
                         <div className="content">
                             {
-                                paymentMethods.map((method, index) => <div key={index}
+                                paymentMethods.map((method, index) => <div 
+                                className="payment-methods"
+                                key={index}
                                     onClick={() => this.handlePaymentMethod(method)}
                                 >
                                     <CheckCircleOutlineIcon className="icon-check" style={{
                                         color: choosedPaymentMethod.id === method.id ? 'green' : ''
                                     }} />
+                                   
                                     <Typography className="title" variant="h5">
-                                        {method.name}
+                                        {method.name}   <PaymentsIcon/>
                                     </Typography>
                                 </div>)
                             }
-
-
                         </div>
                         <div className="btn-box">
                             <Button
@@ -76,7 +78,6 @@ export class Payment extends Component {
                             >
                                 Back
                             </Button>
-
                             <Button
                                 className="btn-reser"
                                 variant="outlined"

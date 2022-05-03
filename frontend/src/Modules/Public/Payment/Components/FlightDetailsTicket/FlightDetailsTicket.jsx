@@ -10,6 +10,7 @@ export class FlightDetailsTicket extends Component {
         }
     }
     render() {
+        const  {bookingData  } = this.props;
         return (
             <>
                 <div className="flight-booking-detail">
@@ -31,7 +32,7 @@ export class FlightDetailsTicket extends Component {
                             <div className="col-md-3">
                                 <div className="list-info">
                                     <Typography className="info-item">
-                                  
+                                      { bookingData && bookingData.Departure }
                                     </Typography>
                                     <Typography className="info-item">
                                         Airport Nội Bài

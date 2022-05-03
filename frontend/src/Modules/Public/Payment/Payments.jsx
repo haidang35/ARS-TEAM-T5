@@ -135,7 +135,7 @@ class Payments extends Component {
               ) : (
                 ""
               )}
-              <FlightDetailsTicket   />
+              <FlightDetailsTicket bookingData={bookingData}   />
               <PassengerInfomation bookingData={bookingData} />
               <ContactsInfomation bookingData={bookingData} />
             </div>
