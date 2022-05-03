@@ -1,24 +1,41 @@
 import React, { Component } from "react";
-import { ContactsInfomation } from "../../../Payment/Components/ContactInfomation/ContactInfomation";
-import {FlightDetailsTicket } from "../../../Payment/Components/FlightDetailsTicket/FlightDetailsTicket";
-import { PassengerInfomation } from "../../../Payment/Components/PassengerInfomation/PassengerInfomation";
+import { withRouter } from "react-router-dom";
+import publicService from "../../../Shared/Services/PublicService";
+import { TicketItem} from "../../../ChooseFlightTicket/Components/TicketItem/TicketItem";
 
-export class ViewDetailsBooking extends Component {
-    constructor(props){
+class ViewDetailsBooking extends Component {
+    constructor(props) {
         super(props);
-        this.state ={
+        this.state = {
+            bookingDetails: "",
 
         }
     }
-    render(){
-        return(
+
+    componentDidMount() {
+        this.getBookingDetails();
+    }
+
+    getBookingDetails = async () => {
+        const { bookingCode } = this.props.match.params;
+        await publicService.getBookingDetails(bookingCode)
+            .then((res) => {
+                this.setState({
+                    bookingDetails: res.data,
+                })
+            })
+    }
+
+
+    render() {
+        const { bookingDetails } = this.state;
+        return (
             <>
-                <FlightDetailsTicket />
-               {/* <PassengerInfomation />
-               <ContactsInfomation /> */}
+           <TicketItem />
 
 
             </>
         )
     }
 }
+export default withRouter(ViewDetailsBooking);

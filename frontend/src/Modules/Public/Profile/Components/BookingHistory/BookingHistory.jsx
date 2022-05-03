@@ -1,6 +1,6 @@
 import { Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "./BookingHistory.scss";
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
@@ -16,7 +16,9 @@ export class BookingHistory extends Component {
         this.state = {
             open: false,
             openAlert: false,
-            bookingList: []
+            bookingList: [],
+            message: "",
+            errMessage: "",
         }
     }
 
@@ -59,10 +61,28 @@ export class BookingHistory extends Component {
             });
     }
 
+    deleteUserBooking = async (id) => {
+        await publicService.deleteUserBooking(id)
+            .then((res) => {
+                this.setState({
+                    message: `Cancel booking ${res.data.Flight.departure.city} - ${res.data.Flight.destination.city} successfull`,
+                })
+                this.getUserBookingList();
+            })
+            .catch((err) => {
+                this.setState({
+                    errMessage: `Cancel booking failed, try again please`,
+                });
+            });
+    }
+
+
+
 
     render() {
         const { open, openAlert, bookingList } = this.state;
         let loop = 1;
+        
         return (
             <>
                 <div className="user-booking-list">
@@ -87,7 +107,7 @@ export class BookingHistory extends Component {
                                         <tbody>
                                             {bookingList.map((item) => {
                                                 return (
-                                                    <tr key={item.id}>
+                                                    <tr key={item.Id}>
                                                         <td className="text-bold-500">
                                                             {loop++}
                                                         </td>
@@ -115,14 +135,10 @@ export class BookingHistory extends Component {
                                                         </td>
                                                         <td>
                                                             <div className="btn-box-control">
-                                                                <Link
-                                                                    to={{
-                                                                        pathname: "/profile/bookings/viewdetails"
-                                                                    }}
-                                                                >
+                                                                <Link to={`/profile/bookings/${item.BookingCode}`} >
                                                                     <Button fullWidth variant="contained">View Details</Button>
                                                                 </Link>
-                                                                <Button variant="outlined" color="error" onClick={this.handleClickOpen}>
+                                                                <Button variant="outlined" className="cancel" color="error" onClick={this.handleClickOpen}>
                                                                     Cancel
                                                                 </Button>
                                                                 <Dialog
@@ -141,7 +157,7 @@ export class BookingHistory extends Component {
                                                                     </DialogContent>
                                                                     <DialogActions>
                                                                         <Button onClick={this.handleClose}>Disagree</Button>
-                                                                        <Button onClick={this.handleCancel} autoFocus>
+                                                                        <Button onClick={this.deleteUserBooking} autoFocus>
                                                                             Agree
                                                                         </Button>
                                                                     </DialogActions>

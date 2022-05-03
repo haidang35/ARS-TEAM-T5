@@ -19,6 +19,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { getDate } from "date-fns";
+import { Link } from "react-router-dom";
 
 
 
@@ -80,9 +81,6 @@ export class SignUp extends Form {
         }
     };
 
-    handleChangeBirthday = () => {
-
-    }
 
 
 
@@ -184,12 +182,18 @@ export class SignUp extends Form {
                                         </Grid>
                                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                                             <Grid item xs={12} sm={6}>
-                                                <DesktopDatePicker
-                                                    label="BirthDay"
-                                                    inputFormat="dd/MM/yyyy"
+                                                <TextField
+                                                    id="date"
+                                                    name="birthday"
+                                                    label="Birthday"
+                                                    type="date"
                                                     value={Birthday.value}
-                                                    onChange={this.handleChangeBirthday}
-                                                    renderInput={(params) => <TextField {...params} />}
+                                                    sx={{ width: 190 }}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                    onChange={(ev) => this._setValue(ev, "Birthday")}
+
                                                 />
                                                 {Birthday.err == "*"
                                                     ? (
@@ -344,6 +348,11 @@ export class SignUp extends Form {
                                     >
                                         Sign Up
                                     </Button>
+                                    <Grid item>
+                                        <Link to="/signin" variant="body2">
+                                            {"Don't have an account? Sign Up"}
+                                        </Link>
+                                    </Grid>
                                 </Box>
                             </Box>
                         </Container>

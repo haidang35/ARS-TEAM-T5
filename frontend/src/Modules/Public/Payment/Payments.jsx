@@ -98,8 +98,11 @@ class Payments extends Component {
     }
   };
 
+ 
+
   render() {
     const { bookingData, isRedirect, totalMoneyConverted } = this.state;
+    console.log("🚀 ~ file: Payments.jsx ~ line 105 ~ Payments ~ render ~ bookingData", bookingData)
     const { totalMoney } = this.props.location.state;
     if (isRedirect) {
       return (
@@ -135,7 +138,7 @@ class Payments extends Component {
               ) : (
                 ""
               )}
-              <FlightDetailsTicket bookingData={bookingData}   />
+              <FlightDetailsTicket bookingData={bookingData}  />
               <PassengerInfomation bookingData={bookingData} />
               <ContactsInfomation bookingData={bookingData} />
             </div>

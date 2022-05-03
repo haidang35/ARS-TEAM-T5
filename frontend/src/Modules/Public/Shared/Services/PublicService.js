@@ -11,7 +11,8 @@ const API_ENDPOINT = {
     GET_AIRLINE_LIST: '/api/airlines',
     GET_AUTH_USER: "/api/auth-user",
     GET_BOOKING_LIST: "/api/auth-user/bookings",
-    
+    DELETE_USER_BOOKING: "/api/bookings",
+    UPDATE_USER: "/api/users/",
 }
 
 export const API_CONVERT_CURRENCY = 'https://currency-converter5.p.rapidapi.com/currency/convert';
@@ -75,6 +76,16 @@ class PublicService {
 
     getUserBookingList = async () => {
         return await axios.get( BASE_URL_SERVER + API_ENDPOINT.GET_BOOKING_LIST, configs )
+    }
+
+   
+
+    deleteUserBooking = async (id) => {
+        return await axios.delete( BASE_URL_SERVER + API_ENDPOINT.DELETE_USER_BOOKING + id, configs)
+    }
+    
+    updateUser = async (id, data) => {
+        return await axios.put(BASE_URL_SERVER + API_ENDPOINT.UPDATE_USER + id, data)
     }
 }
 
