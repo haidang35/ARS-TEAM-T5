@@ -245,7 +245,7 @@ export default function LocationList() {
                         Province
                       </InputLabel>
                       <Select
-                        id="airline"
+                        id="province"
                         value={filterByProvinceId}
                         onChange={handleChangeProvince }
                         input={<OutlinedInput label="Select" />}

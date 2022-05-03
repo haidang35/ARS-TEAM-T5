@@ -24,6 +24,7 @@ import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";  
+import airlineService from "../../../Airline/Shared/Services/AirlineService";
 import {
   FormControl,
   InputLabel,
@@ -44,7 +45,7 @@ const columns = [
   {
     id: "departure",
     label: "Departure",
-    minWidth: 150,
+    minWidth: 100,
     align: "left",
     format: (value) => value.toLocaleString("en-US"),
   },
@@ -98,12 +99,25 @@ export default function FlightList() {
   const [searchValue, setSearchValue] = useState("");
   const [filterType, setFilterType] = useState('');
   const [filterByProvince, setFilterByProvince] = useState(0);
+  const [filterAirlineId, setFilterByAirlineId] = useState(0);
+  const [airlineList, setAirlineList] = useState(0);
+
 
 
   useEffect(() => {
     getFlightList();
+    getAirlineList();
+
     getMsg();
   }, []);
+    
+  useEffect(() => {
+    const flightList = flightListAPI.filter((flight) => {
+      return flight.AirlineId == filterAirlineId
+    })
+
+   setFlightList(flightList)
+  },[filterAirlineId]);
   
   useEffect(() =>{
     setFlightList(flightListAPI.filter((flight) => {
@@ -118,6 +132,13 @@ export default function FlightList() {
     });
     setFlightList(flightList);
   }, [filterByProvince]);
+  
+  const getAirlineList = async () => {
+    await airlineService.getAirlineList()
+      .then((res) => {
+        setAirlineList(res.data);
+      })
+    }
 
   const getFlightList = async () => {
     await flightService
@@ -140,7 +161,10 @@ export default function FlightList() {
     }
    }
   
-
+   const handleChangeAirline = (ev) =>{
+     
+    setFilterByAirlineId(ev.target.value)
+  }
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -191,7 +215,7 @@ export default function FlightList() {
           <Typography variant="h4" component="div" gutterBottom>
             Flight
           </Typography>
-          <TableContainer sx={{ maxHeight: 440 }}>
+          <TableContainer sx={{ maxHeight: 5000 }}>
             {msg !== "" ? (
               <Stack sx={{ width: "100%" }} spacing={2}>
                 <Alert severity={msg.type}>{msg.content}</Alert>
@@ -210,7 +234,7 @@ export default function FlightList() {
                         p: "2px 4px",
                         display: "flex",
                         alignItems: "center",
-                        width: 300,
+                        width: 260,
                       }}
                     >
                       <IconButton sx={{ p: "10px" }} aria-label="menu">
@@ -235,52 +259,53 @@ export default function FlightList() {
                         orientation="vertical"
                       />
                     </Paper>
-                  </TableCell>
-                  <TableCell colSpan={6} align="center">
-                    <FormControl sx={{ m: 1, width: 300, right: 150 }}>
+                    <FormControl sx={{ m: 1, width: 250, left: -20, top: 10  }}>
                       <InputLabel id="demo-multiple-name-label">
-                        Select
+                        Airline
                       </InputLabel>
-                      <Select
-                        id="select"
-                        value={filterType}
-                        onChange={handleChangeFilterType}
-                        input={<OutlinedInput label="Select" />}
-                      >
-                        <MenuItem
-                            value={FILTER_TYPE.LOCATION}
-                          >
-                            Locations 
-                          </MenuItem>
-                      </Select>
-                    </FormControl>
-                    <FormControl sx={{ m: 1, width: 300, right: 150 }}>
-                      <InputLabel id="demo-multiple-name-label">
-                        Location
-                      </InputLabel>
-                      <Select
+                      {/* <Select
                         id="airline"
-                        value={filterByProvince}
-                        onChange={(ev) => setFilterByProvince(+ev.target.value) }
+                        value={filterAirlineId}
+                        onChange={handleChangeAirline}
                         input={<OutlinedInput label="Select" />}
                       >
-                        {flightList.map((flight) => (
+                        {airlineList.map((airline) => (
                           <MenuItem
-                            key={flight.Id}
-                            value={flight.Id}
+                            key={airline.Id}
+                            value={airline.Id}
                           >
-                            {flight.Departure.City.Province.Name}
+                            {airline.Name}
                           </MenuItem>
                         ))}
-                      </Select>
+                      </Select> */}
                     </FormControl>
-                    <FormControl sx={{ m: 1, top: 10, right: 150 }}>
+                    <FormControl sx={{ m: 1, width: 250, right: 30, top: 10 }}>
+                      <InputLabel id="demo-multiple-name-label">
+                        City
+                      </InputLabel>
+                      <Select
+                        id="city"
+                        // value={filterByCityId}
+                        // onChange={handleChangeCity }
+                        input={<OutlinedInput label="Select" />}
+                      >
+                        {/* {cityList.map((city) => (
+                          <MenuItem
+                            key={city.Id}
+                            value={city.Id}
+                          >
+                            {city.Name}
+                          </MenuItem>
+                        ))} */}
+                      </Select>
+                      
+                    </FormControl>
+                    <FormControl sx={{ m: 1, top: 15, }}>
                       <Button variant="contained" startIcon={<SearchIcon />}>
                         Search
                       </Button>
                     </FormControl>
                   </TableCell>
-
                   <TableCell align="right" colSpan={12}>
                     <Link to={"/admin/flights/create"}>
                       <Button variant="contained" startIcon={<AddCircleIcon />}>

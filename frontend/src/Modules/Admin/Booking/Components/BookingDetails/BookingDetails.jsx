@@ -18,6 +18,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import bookingService from "../../Shared/Service/BookingService";
 import BookingTicketDetails from "../../../BookingTicket/Components/BookingTicketDetails/BookingTicketDetails";
+import BookingTicketList from "../../../BookingTicket/Components/BookingTicketList/BookingTicketList";
 
 class BookingDEtails extends Form {
   constructor(props) {
@@ -38,6 +39,8 @@ class BookingDEtails extends Form {
       isLoading: false,
       isRedirectSuccess: false,
       status: "",
+      status: "",
+      paymentMethod: "",
       bookingStatus: [
         {
           key: 1,
@@ -48,17 +51,33 @@ class BookingDEtails extends Form {
           type: "DeActive",
         },
       ],
+      paymentMethodList: [
+        {
+          key: 1,
+          type: "Paypal",
+        },
+        {
+          key: 0,
+          type: "Visa",
+        },
+      ],
     };
   }
 
   componentDidMount() {
     this.getBookingeDetails();
   }
+  handleChangePaymentMethod = (ev) => {
+    this.setState({
+      paymentMethod: ev.target.value,
+    });
+  }
   handleChangeStatus = (ev) => {
     this.setState({
       status: ev.target.value,
-    })
-  }
+    });
+  };
+
 
   handleChangeFile = (event) => {
     const file = event.target.files[0];
@@ -85,35 +104,12 @@ class BookingDEtails extends Form {
       });
     });
   };
-  
-
-  saveUpdateBooking = async () => {
-    this._validateForm();
-    if (this._isFormValid()) {
-      const { id } = this.props.match.params;
-      const { form, isRedirectSuccess, userId, status, paymentMethod } =
-        this.state;
-      const dataConverted = {
-        BookingCode: form.bookingCode.value,
-        ContactName: form.contactName.value,
-        ContactEmail: form.contactEmail.value,
-        ContactPhone: form.contactPhone.value,
-        ContactAddress: form.contactAddress.value,
-        Status: status,
-        PaymentMethod: paymentMethod,
-      };
-      await bookingService
-        .updateDetails(id, dataConverted)
-        .then((res) => {
-          this.setState({
-            isRedirectSuccess: true,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+  returnBookingList = (ev) => {
+    this.setState({
+      isRedirectSuccess: true,
+    });
   };
+
 
   render() {
     const { bookingCode, contactName, contactEmail, contactPhone, note } =
@@ -126,7 +122,8 @@ class BookingDEtails extends Form {
       userId,
       status,
       paymentMethod,
-      bookingStatus
+      bookingStatus,
+      paymentMethodList
     } = this.state;
     if (isRedirectSuccess) {
       return (
@@ -135,8 +132,8 @@ class BookingDEtails extends Form {
             pathname: "/admin/bookings",
             state: {
               message: {
-                type: "success",
-                content: "Update booking successful !",
+                type: "",
+                content: "",
               },
             },
           }}
@@ -264,10 +261,7 @@ class BookingDEtails extends Form {
                     >
                       {bookingStatus.map((status) => {
                         return (
-                          <MenuItem
-                            key={status.key}
-                            value={status.type}
-                          >
+                          <MenuItem key={status.key} value={status.key}>
                             {status.type}
                           </MenuItem>
                         );
@@ -276,32 +270,34 @@ class BookingDEtails extends Form {
                   </FormControl>
                 </Box>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={paymentMethod.err !== ""}
-                  helperText={
-                    paymentMethod.err !== ""
-                      ? paymentMethod.err === "*"
-                        ? "paymentMethod cannot be empty"
-                        : paymentMethod.err
-                      : ""
-                  }
-                  required
-                  id="paymentMethod"
-                  name="paymentMethod"
-                  value={paymentMethod.value}
-                  label="PaymentMethod"
-                  autoComplete="shipping address-line1"
-                  variant="standard"
-                  onChange={(ev) => this._setValue(ev, "paymentMethod")}
-                />
+              <Grid item xs={6}>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="paymentMethod">Select Payment Method</InputLabel>
+                    <Select
+                      id="paymentMethod"
+                      name="paymentMethod"
+                      value={paymentMethod}
+                      label="PaymentMethod"
+                      onChange={this.handleChangePaymentMethod}
+                    >
+                      {paymentMethodList.map((paymentMethod) => {
+                        return (
+                          <MenuItem key={paymentMethod.key} value={paymentMethod.key}>
+                            {paymentMethod.type}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </Box>
               </Grid>
 
               <Grid item xs={12}>
-                <BookingTicketDetails/>
+                <BookingTicketList/>
               </Grid>
               <div id="submit">
-                <Button variant="contained" onClick={this.saveUpdateBooking}>
+                <Button variant="contained" onClick={this.returnBookingList}>
                   Back to list
                 </Button>
               </div>
