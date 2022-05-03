@@ -19,6 +19,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { getDate } from "date-fns";
+import "./SignUp.scss";
 import { Link } from "react-router-dom";
 
 
@@ -81,6 +82,9 @@ export class SignUp extends Form {
         }
     };
 
+    handleChangeBirthday = () =>{
+       
+    }
 
 
 
@@ -230,7 +234,8 @@ export class SignUp extends Form {
                                                     />
                                                 )}
                                         </Grid>
-
+                                       
+                                        
                                         <Grid item xs={12}>
                                             <TextField
                                                 required

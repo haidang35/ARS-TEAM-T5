@@ -61,14 +61,17 @@ export class Payment extends Component {
                                 key={index}
                                     onClick={() => this.handlePaymentMethod(method)}
                                 >
+                                    
                                     <CheckCircleOutlineIcon className="icon-check" style={{
-                                        color: choosedPaymentMethod.id === method.id ? 'green' : ''
+                                        color: choosedPaymentMethod.id === method.id ? 'green' : '' 
                                     }} />
                                    
                                     <Typography className="title" variant="h5">
                                         {method.name}   <PaymentsIcon/>
                                     </Typography>
+                                    
                                 </div>)
+                                
                             }
                         </div>
                         <div className="btn-box">

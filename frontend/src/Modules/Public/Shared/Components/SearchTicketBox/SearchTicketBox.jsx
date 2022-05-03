@@ -344,7 +344,7 @@ class SearchTicketBox extends Component {
                         value={departureDate}
                         inputFormat="dd/MM/yyyy"
                         onChange={this.handleDepartureDate}
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={(params) => <TextField className="selected-input" {...params} />}
                         disablePast
                       />
                     </LocalizationProvider>
@@ -359,7 +359,7 @@ class SearchTicketBox extends Component {
                         value={returnDate}
                         inputFormat="dd/MM/yyyy"
                         onChange={this.handleReturnDate}
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={(params) => <TextField className="selected-input" {...params} />}
                         disablePast
                       />
                     </LocalizationProvider>
