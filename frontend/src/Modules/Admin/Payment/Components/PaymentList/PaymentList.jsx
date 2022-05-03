@@ -141,7 +141,7 @@ export default function PaymentList() {
           <Typography variant="h4" component="div" gutterBottom>
             Payment
           </Typography>
-          <TableContainer sx={{ maxHeight: 440 }}>
+          <TableContainer sx={{ maxHeight: 5000 }}>
             {
               msg !== '' ? <Stack sx={{ width: '100%' }} spacing={2}>
                 <Alert severity={msg.type}>{msg.content}</Alert>

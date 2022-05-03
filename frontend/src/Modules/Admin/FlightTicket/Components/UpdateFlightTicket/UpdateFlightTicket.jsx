@@ -39,7 +39,6 @@ class UpdateFlightTicket extends Form {
         deluxeSeatFee: "",
         economySeatFee: "",
         exitSeatFee: "",
-        status: "",
         ticketType: "",
 
       }),
@@ -66,6 +65,17 @@ class UpdateFlightTicket extends Form {
         },
       ],
       availableClassList: [],
+      status: "",
+      statusList:[
+        {
+          key: 0,
+          type: "Active",
+        },
+        {
+          key: 1,
+          type: "DeActive",
+        },
+      ]
     }
   }
   componentDidMount() {
@@ -79,7 +89,8 @@ class UpdateFlightTicket extends Form {
     await flightTicketService.getFlightTicketDetails(id).then((res) =>{
         this.setState({
             availableClass: res.data.AvailableClass,
-            flightId: res.data.FlightId,
+            flightId: res.data.FlightId, 
+            status: res.data.Status,
 
         });
         this._fillForm({
@@ -91,7 +102,7 @@ class UpdateFlightTicket extends Form {
             deluxeSeatFee: res.data.DeluxeSeatFee,
             economySeatFee: res.data.EconomySeatFee,
             exitSeatFee: res.data.ExitSeatFee,
-            status: res.data.Status,
+          
             ticketType: res.data.TicketType,
         })
     })
@@ -113,14 +124,14 @@ class UpdateFlightTicket extends Form {
     if (this._isFormValid()) {
      const { id } = this.props.match.params;
       this.setState({ isLoading: true });
-      const { form, content, flightId, availableClass } = this.state;
+      const { form, content, flightId, availableClass, status } = this.state;
       const dataConverted = {
         FlightId: flightId,
         TicketType: form.ticketType.value,
         AvailableClass: availableClass,
         CarbinBag: form.carbinBag.value,
         CheckinBag: form.checkinBag.value,
-        Status: form.status.value,
+        Status: status,
         Price: form.price.value,
         Tax: form.tax.value,
         BusinessSeatFee: form.businessSeatFee.value,
@@ -146,6 +157,11 @@ class UpdateFlightTicket extends Form {
 
 
   }
+  handleChangeStatus = (ev) => {
+    this.setState({
+      status: ev.target.value,
+    });
+  };
   handleChangeAvailableClass = (ev) => {
     this.setState({
       availableClass: ev.target.value,
@@ -163,9 +179,9 @@ class UpdateFlightTicket extends Form {
   }
   
   render() {
-    const { carbinBag, checkinBag, status, price, tax, ticketType,
+    const { carbinBag, checkinBag, price, tax, ticketType,
       businessSeatFee, economySeatFee, deluxeSeatFee, exitSeatFee, } = this.state.form;
-    const { isRedirectSuccess, content, flightticketList,ticketTypeList,  flightId,  availableClass } = this.state;
+    const { isRedirectSuccess, content, flightticketList,ticketTypeList,  flightId,  availableClass, status, statusList } = this.state;
     if (isRedirectSuccess) {
       return <Redirect to={{
         pathname: '/admin/flight-tickets',
@@ -283,20 +299,7 @@ class UpdateFlightTicket extends Form {
                   onChange={(ev) => this._setValue(ev, 'checkinBag')}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={status.err !== ''}
-                  helperText={status.err !== '' ? status.err === '*' ? 'Status cannot be empty' : status.err : ''}
-                  required
-                  id="status"
-                  name="status"
-                  value={status.value}
-                  label="Status"
-                  autoComplete="shipping address-line1"
-                  variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'status')}
-                />
-              </Grid>
+             
               <Grid item xs={6}>
                 <TextField
                   error={price.err !== ''}
@@ -381,6 +384,29 @@ class UpdateFlightTicket extends Form {
                   onChange={(ev) => this._setValue(ev, 'exitSeatFee')}
                 />
               </Grid>
+              <Grid item xs={12}>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="status">Select Status</InputLabel>
+                    <Select
+                      id="status"
+                      name="status"
+                      value={status}
+                      label="Status"
+                      onChange={this.handleChangeStatus}
+                    >
+                      {statusList.map((status) => {
+                        return (
+                          <MenuItem key={status.key} value={status.key}>
+                            {status.type}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Grid>
+
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox color="secondary" name="saveAddress" value="yes" />}

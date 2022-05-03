@@ -32,11 +32,12 @@ class BookingDEtails extends Form {
         note: "",
       }),
       userId: "",
-      status: "",
+     
       paymentMethod: "",
       content: "",
       isLoading: false,
       isRedirectSuccess: false,
+      status: "",
       bookingStatus: [
         {
           key: 1,
@@ -84,6 +85,7 @@ class BookingDEtails extends Form {
       });
     });
   };
+  
 
   saveUpdateBooking = async () => {
     this._validateForm();

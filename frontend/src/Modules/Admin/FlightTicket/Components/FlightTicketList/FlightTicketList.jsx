@@ -161,7 +161,7 @@ export default function FlightTicketList() {
           <Typography variant="h4" component="div" gutterBottom>
             Flight Ticket
           </Typography>
-          <TableContainer sx={{ maxHeight:1000}}>
+          <TableContainer sx={{ maxHeight: 5000}}>
             {
               msg !== '' ? <Stack sx={{ width: '100%' }} spacing={2}>
                 <Alert severity={msg.type}>{msg.content}</Alert>

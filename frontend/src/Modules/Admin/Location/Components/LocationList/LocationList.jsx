@@ -240,7 +240,7 @@ export default function LocationList() {
                         orientation="vertical"
                       />
                     </Paper>
-                    <FormControl sx={{ m: 1, width: 250, right: 60, top: 10  }}>
+                    <FormControl sx={{ m: 1, width: 250, right: 95, top: 10  }}>
                       <InputLabel id="demo-multiple-name-label">
                         Province
                       </InputLabel>
@@ -260,7 +260,7 @@ export default function LocationList() {
                         ))}
                       </Select>
                     </FormControl>
-                    <FormControl sx={{ m: 1, width: 250, right: 40, top: 10 }}>
+                    <FormControl sx={{ m: 1, width: 250, right: 60, top: 10 }}>
                       <InputLabel id="demo-multiple-name-label">
                         City
                       </InputLabel>
@@ -281,18 +281,13 @@ export default function LocationList() {
                       </Select>
                       
                     </FormControl>
-                    
-                  </TableCell>
-                  <TableCell colSpan={6} align="center">
-                  
-                    <FormControl sx={{ m: 1, top: 30, right: 200 }}>
+                    <FormControl sx={{ m: 1, top: 15, }}>
                       <Button variant="contained" startIcon={<SearchIcon />}>
                         Search
                       </Button>
                     </FormControl>
                   </TableCell>
-
-                  <TableCell align="left" colSpan={3}>
+                  <TableCell align="right" colSpan={3}>
                     <Link to={"/admin/locations/create"}>
                       <Button variant="contained" startIcon={< AddCircleIcon />}>
                         Add New

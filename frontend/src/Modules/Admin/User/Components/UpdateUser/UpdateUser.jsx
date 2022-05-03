@@ -85,7 +85,7 @@ class UpdateUser extends Form {
   }
   componentDidMount() {
     this.getUserDetails();
-    this.getRoleList();
+    // this.getRoleList();
   }
 
   handleChangeRole = (ev) => {

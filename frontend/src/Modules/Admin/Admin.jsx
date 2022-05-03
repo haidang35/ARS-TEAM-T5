@@ -115,7 +115,7 @@ export const Admin = () => {
                     <AddNewUser />
                   </Route>
                   <Route exact path="/admin/users/:id">
-                    <UpdateUser />
+                    <UpdateUser/>
                   </Route>
                   <Route exact path="/admin/bookings">
                     <BookingList />
