@@ -19,6 +19,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { getDate } from "date-fns";
+import "./SignUp.scss";
 
 
 
@@ -66,7 +67,7 @@ export class SignUp extends Form {
     };
 
     handleChangeBirthday = () =>{
-        
+       
     }
 
 
@@ -201,9 +202,9 @@ export class SignUp extends Form {
                                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                                             <Grid item xs={12}>
                                                 <DesktopDatePicker
-                                                    label="Date desktop"
+                                                    label="Birthday"
                                                     inputFormat="dd/MM/yyyy"
-                                                    value={Birthday.value}
+                                                    value={Birthday}
                                                     onChange={this.handleChangeBirthday}
                                                     renderInput={(params) => <TextField {...params} />}
                                                 />
