@@ -57,8 +57,12 @@ class BookingDEtails extends Form {
           type: "Paypal",
         },
         {
-          key: 0,
-          type: "Visa",
+          key: 2,
+          type: "BankingTranfer",
+        },
+        {
+          key: 3,
+          type: "PayAtOffice",
         },
       ],
     };

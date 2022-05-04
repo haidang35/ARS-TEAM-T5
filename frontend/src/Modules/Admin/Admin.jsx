@@ -27,6 +27,7 @@ import BookingDetails from "./Booking/Components/BookingDetails/BookingDetails";
 import authService from "./Auth/Service/AuthServices";
 import { ROLES } from "../../Configs/server";
 import AddNewFlightTicket from "./FlightTicket/Components/AddNewFlightTicket/AddNewFlightTicket";
+import UpdateBookingTicket from "./BookingTicket/Components/UpdateBookingTicket/UpdateBookingTicket";
 
 
 export const Admin = () => {
@@ -132,6 +133,13 @@ export const Admin = () => {
                   <Route exact path="/admin/bookings/details/:id">
                     <BookingDetails />
                   </Route>
+                  <Route exact path="/admin/booking-tickets/details/:id">
+                    
+                  </Route>
+                  <Route exact path="/admin/booking-tickets/:id">
+                    <UpdateBookingTicket/>
+                  </Route>
+
                 </Switch>
               </Box>
             </div>

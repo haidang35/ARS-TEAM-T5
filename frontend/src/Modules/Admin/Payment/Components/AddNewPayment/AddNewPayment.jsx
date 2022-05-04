@@ -21,15 +21,40 @@ class AddNewPayment extends Form {
     super(props);
     this.state = {
       form: this._getInitFormData({
-        paymentMethod: "",
         amount: "",
-        status: "",
       }),
       bookingId: "",
       bookingList:[],
       isLoading: false,
       postPaymentList: [],
-      isRedirectSuccess: false,
+      isRedirectSuccess: false, 
+       paymentMethod: "",
+       paymentMethodList: [
+        {
+          key: 1,
+          type: "Paypal",
+        },
+        {
+          key: 2,
+          type: "BankingTranfer",
+        },
+        {
+          key: 3,
+          type: "PayAtOffice",
+        },
+      ],
+      status: "",
+      statusList: [
+        {
+          key: 1,
+          type: "Active",
+        },
+        {
+          key: 0,
+          type: "DeActive",
+        },
+
+      ],
     }
   }
   componentDidMount() {
@@ -44,6 +69,16 @@ class AddNewPayment extends Form {
     form.logo.value = file;
     this.setState({form});
   }
+  handleChangePaymentMethod = (ev) => {
+    this.setState({
+      paymentMethod: ev.target.value,
+    });
+  }
+  handleChangeStatus = (ev) => {
+    this.setState({
+      status: ev.target.value,
+    });
+  };
 
   getPaymentList = async () =>{
     await paymentService.getPaymentList().then((res) =>{
@@ -66,12 +101,12 @@ class AddNewPayment extends Form {
     console.log(this.state.form);
     if (this._isFormValid()) {
       this.setState({ isLoading: true });
-      let { form, content,bookingId } = this.state;
+      let { form, content,bookingId, status,paymentMethod } = this.state;
       let dataConverted = {
-        PaymentMethod: form.paymentMethod.value,
+        PaymentMethod: paymentMethod,
         BookingId: bookingId,
         Amount: form.amount.value,
-        Status: form.status.value,
+        Status: status,
       };
       await paymentService1
         .createNew(dataConverted)
@@ -94,8 +129,8 @@ class AddNewPayment extends Form {
   }
 
   render() {
-    const { paymentMethod, amount, status } = this.state.form;
-    const {isRedirectSuccess, content, bookingList, bookingId, isLoading} = this.state;
+    const { amount, } = this.state.form;
+    const {isRedirectSuccess, content, bookingList, bookingId, isLoading, paymentMethod, status, paymentMethodList, statusList} = this.state;
     if(isRedirectSuccess){
       return <Redirect to={{
         pathname: '/admin/payments',
@@ -140,19 +175,27 @@ class AddNewPayment extends Form {
                   </FormControl>
                 </Box>
               </Grid>
-              <Grid item xs={12} >
-                <TextField
-                error= {paymentMethod.err !==''}
-                helperText={paymentMethod.err !== '' ? paymentMethod.err === '*' ? 'Code cannot be empty': paymentMethod.err : '' }
-                  required
-                  id="paymentMethod"
-                  name="paymentMethod"
-                  value= {paymentMethod.value}
-                  label="PaymentMethod"
-                  autoComplete="family-name"
-                  variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'paymentMethod')}
-                />
+              <Grid item xs={6}>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="paymentMethod">Select Payment Method</InputLabel>
+                    <Select
+                      id="paymentMethod"
+                      name="paymentMethod"
+                      value={paymentMethod}
+                      label="PaymentMethod"
+                      onChange={this.handleChangePaymentMethod}
+                    >
+                      {paymentMethodList.map((paymentMethod) => {
+                        return (
+                          <MenuItem key={paymentMethod.key} value={paymentMethod.key}>
+                            {paymentMethod.type}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </Box>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -168,19 +211,27 @@ class AddNewPayment extends Form {
                   onChange={(ev) => this._setValue(ev, 'amount')}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                error= {status.err !==''}
-                helperText={status.err !== '' ? status.err === '*' ? 'Country cannot be empty': status.err : '' }
-                  required
-                  id="status"
-                  name="status"
-                  value= {status.value}
-                  label="Status"
-                  autoComplete="shipping address-line1"
-                  variant="standard"
-                  onChange={(ev) => this._setValue(ev, 'status')}
-                />
+              <Grid item xs={6}>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="status">Select Status</InputLabel>
+                    <Select
+                      id="status"
+                      name="status"
+                      value={status}
+                      label="Status"
+                      onChange={this.handleChangeStatus}
+                    >
+                      {statusList.map((status) => {
+                        return (
+                          <MenuItem key={status.key} value={status.key}>
+                            {status.type}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </Box>
               </Grid>
              
               <Grid item xs={12}>

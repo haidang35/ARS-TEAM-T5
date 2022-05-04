@@ -25,6 +25,8 @@ import Divider from "@mui/material/Divider";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";  
 import airlineService from "../../../Airline/Shared/Services/AirlineService";
+import locationsService from "../../../Location/Shared/Services/LocationService";
+
 import {
   FormControl,
   InputLabel,
@@ -100,14 +102,19 @@ export default function FlightList() {
   const [filterType, setFilterType] = useState('');
   const [filterByProvince, setFilterByProvince] = useState(0);
   const [filterAirlineId, setFilterByAirlineId] = useState(0);
-  const [airlineList, setAirlineList] = useState(0);
+  const [airlineList, setAirlineList] = useState([]);
+  const [departureList, setDepartureList] = useState([]);
+  const [destinationList, setDestinationList] = useState([]);
+  const [filterDepartureId, setFilterDepartureId] = useState(0);
+  const [filterDestinationId, setFilterDestinationId] = useState(0);
+
 
 
 
   useEffect(() => {
     getFlightList();
     getAirlineList();
-
+    getLocationList();
     getMsg();
   }, []);
     
@@ -118,20 +125,34 @@ export default function FlightList() {
 
    setFlightList(flightList)
   },[filterAirlineId]);
+  useEffect(() => {
+    const flightList = flightListAPI.filter((flight) => {
+      return flight.DepartureId == filterDepartureId
+    })
+
+   setFlightList(flightList)
+  },[filterDepartureId]);
+  useEffect(() => {
+    const flightList = flightListAPI.filter((flight) => {
+      return flight.DestinationId== filterDestinationId
+    })
+
+   setFlightList(flightList)
+  },[filterDestinationId]);
   
   useEffect(() =>{
     setFlightList(flightListAPI.filter((flight) => {
       return(flight.FlightCode.toLowerCase()).includes(searchValue.toLowerCase())
     }));
   },[searchValue]);
-  useEffect(() => {
-    const flightList = flightListAPI.filter((flight) => {
-      if(filterType === FILTER_TYPE.FLIGHT) {
-        return flight.Departure.City.Province.Name == filterByProvince
-      }
-    });
-    setFlightList(flightList);
-  }, [filterByProvince]);
+
+  const getLocationList = async () => {
+    await locationsService.getLocationList()
+    .then ((res) => {
+      setDepartureList(res.data);
+      setDestinationList(res.data);
+    })
+  }
   
   const getAirlineList = async () => {
     await airlineService.getAirlineList()
@@ -159,6 +180,15 @@ export default function FlightList() {
           setFlightList(res.data);
         })
     }
+   }
+  
+   const handleChangeDeparture = (ev) =>{
+     
+   setFilterDepartureId(ev.target.value);
+  }
+  const handleChangeDestination = (ev) =>{
+     
+    setFilterDestinationId(ev.target.value);
    }
   
    const handleChangeAirline = (ev) =>{
@@ -259,11 +289,11 @@ export default function FlightList() {
                         orientation="vertical"
                       />
                     </Paper>
-                    <FormControl sx={{ m: 1, width: 250, left: -20, top: 10  }}>
+                    <FormControl sx={{ m: 1, width: 200,right:40, top: 10  }}>
                       <InputLabel id="demo-multiple-name-label">
                         Airline
                       </InputLabel>
-                      {/* <Select
+                      <Select
                         id="airline"
                         value={filterAirlineId}
                         onChange={handleChangeAirline}
@@ -277,30 +307,49 @@ export default function FlightList() {
                             {airline.Name}
                           </MenuItem>
                         ))}
-                      </Select> */}
+                      </Select>
                     </FormControl>
-                    <FormControl sx={{ m: 1, width: 250, right: 30, top: 10 }}>
+                    <FormControl sx={{ m: 1, width: 200, right: 40, top: 10 }}>
                       <InputLabel id="demo-multiple-name-label">
-                        City
+                        Departure
                       </InputLabel>
                       <Select
-                        id="city"
-                        // value={filterByCityId}
-                        // onChange={handleChangeCity }
+                        id="departure"
+                        value={filterDepartureId}
+                        onChange={handleChangeDeparture }
                         input={<OutlinedInput label="Select" />}
                       >
-                        {/* {cityList.map((city) => (
+                        {departureList.map((departure) => (
                           <MenuItem
-                            key={city.Id}
-                            value={city.Id}
+                            key={departure.Id}
+                            value={departure.Id}
                           >
-                            {city.Name}
+                            {departure.City.Name}
                           </MenuItem>
-                        ))} */}
+                        ))}
                       </Select>
-                      
                     </FormControl>
-                    <FormControl sx={{ m: 1, top: 15, }}>
+                    <FormControl sx={{ m: 1, width: 200, right: 10, top:10 }}>
+                      <InputLabel id="demo-multiple-name-label">
+                        Destination
+                      </InputLabel>
+                      <Select
+                        id="destination"
+                        value={filterDestinationId}
+                        onChange={handleChangeDestination}
+                        input={<OutlinedInput label="Select" />}
+                      >
+                        {destinationList.map((destination) => (
+                          <MenuItem
+                            key={destination.Id}
+                            value={destination.Id}
+                          >
+                            {destination.City.Name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl sx={{ m: 1, top: 20, }}>
                       <Button variant="contained" startIcon={<SearchIcon />}>
                         Search
                       </Button>

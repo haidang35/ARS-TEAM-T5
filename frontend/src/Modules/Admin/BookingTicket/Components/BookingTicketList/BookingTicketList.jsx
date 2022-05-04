@@ -17,7 +17,8 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
-import bookingTicket from '../../Shared/Services/BookingTicket';
+import PreviewIcon from "@mui/icons-material/Preview";
+import bookingTicketService from '../../Shared/Services/BookingTicket';
 
 
 const columns = [
@@ -72,11 +73,10 @@ export default function BookingTicketList() {
     const params = {
         bookingId: id
     }
-    await bookingTicket
+    await bookingTicketService
       .getBookingTicketList(params)
       .then((res) => {
         setBookingTicketList(res.data);
-        console.log("🚀 ~ file: BookingTicketDetails.jsx ~ line 79 ~ .then ~ res.data", res.data)
       })
       .catch((err) => {
         console.log(err);
@@ -168,31 +168,35 @@ export default function BookingTicketList() {
               <TableBody>
                 {bookingTicketList
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((bookinTicket) => {
+                  .map((bookingTicket) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={bookinTicket.Id}>
+                      <TableRow hover role="checkbox" tabIndex={-1} key={bookingTicket.Id}>
                         <TableCell>
-                          {bookinTicket.Id}
+                          {bookingTicket.Id}
                         </TableCell>
                         <TableCell>
-                          {bookinTicket.SeatFlightCode}
+                          {bookingTicket.SeatFlightCode}
                         </TableCell>
                         <TableCell>
-                          {bookinTicket.PassengerName}
+                          {bookingTicket.PassengerName}
                         </TableCell>
                         <TableCell>
-                          {bookinTicket.PassengerPhone}
+                          {bookingTicket.PassengerPhone}
                         </TableCell>
                         <TableCell>
-                          {bookinTicket.SeatFlightFee}
+                          {bookingTicket.SeatFlightFee}
                         </TableCell>
                         <TableCell>
-                          {/* <Link to={`/admin/airlines/${airline.Id}`}>
+                          <Link to={`/admin/booking-tickets/details/${bookingTicket.Id}`}>
                             <IconButton aria-label="edit-icon">
-                              <EditIcon />
+                              <PreviewIcon />
                             </IconButton>
+                            <Link to={`/admin/booking-tickets/${bookingTicket.Id}`}>
+                              <IconButton aria-label="edit-icon">
+                                <EditIcon />
+                              </IconButton>
+                            </Link>
                           </Link>
-                          <DeleteAirline airline={airline} onDeleteAirline={onDeleteAirline} /> */}
                         </TableCell>
 
 

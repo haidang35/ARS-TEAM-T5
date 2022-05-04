@@ -214,7 +214,15 @@ export default function PaymentList() {
                           {payment.Id}
                         </TableCell>
                         <TableCell>
-                          {payment.PaymentMethod}
+                        {payment.paymentMethod === 1 ? (
+                          <Button variant="contained" color="error">
+                            Deactive
+                          </Button>
+                        ) : (
+                          <Button variant="contained" color="success">
+                            Active
+                          </Button>
+                        )}
                         </TableCell>
                         <TableCell>
                           {payment.Booking.BookingCode}
@@ -223,7 +231,15 @@ export default function PaymentList() {
                           {payment.Amount}
                         </TableCell>
                         <TableCell>
-                          {payment.Status}
+                        {payment.Status === 1 ? (
+                          <Button variant="contained" color="error">
+                            Deactive
+                          </Button>
+                        ) : (
+                          <Button variant="contained" color="success">
+                            Active
+                          </Button>
+                        )}
                         </TableCell>
                         <TableCell>
                           <Link to={`/admin/payment/${payment.Id}`}>

@@ -133,17 +133,14 @@ class UpdateUser extends Form {
     await userService.getUserDetails(id).then((res) => {
       this.setState({
         roleIds: res.data.RoleId,
-        vocative: res.data.Vocative,
         status: res.data.Status,
       });
       this._fillForm({
         name: res.data.Name,
         phoneNumber: res.data.PhoneNumber,
         email: res.data.Email,
-        password: res.data.Password,
         address: res.data.Address,
         birthday: res.data.Birthday,
-        confirmPassword: res.data.ConfirmationPassword,
       });
     });
   };
@@ -152,13 +149,11 @@ class UpdateUser extends Form {
     this._validateForm();
     if (this._isFormValid()) {
       const { id } = this.props.match.params;
-      const { form, isRedirectSuccess, roleIds, vocative, status } = this.state;
+      const { form, isRedirectSuccess, roleIds, status } = this.state;
       const dataConverted = {
         Name: form.name.value,
-        Vocative: vocative,
         PhoneNumber: form.phoneNumber.value,
         Email: form.email.value,
-        Password: form.password.value,
         Birthday: form.birthday.value,
         Address: form.address.value,
         RoleIds: roleIds,
@@ -252,7 +247,7 @@ class UpdateUser extends Form {
                   onChange={(ev) => this._setValue(ev, "name")}
                 />
               </Grid>
-              <Grid item xs={6}>
+              {/* <Grid item xs={6}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
                     <InputLabel id="vocative">Select Vocative</InputLabel>
@@ -273,8 +268,8 @@ class UpdateUser extends Form {
                     </Select>
                   </FormControl>
                 </Box>
-              </Grid>
-              <Grid item xs={6}>
+              </Grid> */}
+              <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <Stack spacing={3}>
                     <TextField
@@ -353,7 +348,7 @@ class UpdateUser extends Form {
                   onChange={(ev) => this._setValue(ev, "email")}
                 />
               </Grid>
-              <Grid item xs={6}>
+              {/* <Grid item xs={6}>
                 <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
                   <InputLabel htmlFor="standard-adornment-password">
                     Password
@@ -405,7 +400,7 @@ class UpdateUser extends Form {
                     }
                   />
                 </FormControl>
-              </Grid>
+              </Grid> */}
               <Grid item xs={6}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
