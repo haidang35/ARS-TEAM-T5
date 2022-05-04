@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import publicService from "../../../Shared/Services/PublicService";
-import { TicketItem} from "../../../ChooseFlightTicket/Components/TicketItem/TicketItem";
+import { TicketItem } from "../../../ChooseFlightTicket/Components/TicketItem/TicketItem";
+import { FlightDetailsTicket } from "../../../Payment/Components/FlightDetailsTicket/FlightDetailsTicket";
 
 class ViewDetailsBooking extends Component {
     constructor(props) {
@@ -31,7 +32,15 @@ class ViewDetailsBooking extends Component {
         const { bookingDetails } = this.state;
         return (
             <>
-           <TicketItem />
+                <div>
+                    {bookingDetails.map((item) => {
+                        return (
+                            <FlightDetailsTicket 
+                            bookingDetails={bookingDetails}
+                            />
+                        )
+                    })}
+                </div>
 
 
             </>

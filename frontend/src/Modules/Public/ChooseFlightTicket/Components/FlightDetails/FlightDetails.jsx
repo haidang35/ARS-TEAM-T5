@@ -43,7 +43,7 @@ export class FlightDetails extends Component {
                                 <div className="col-md-3">
                                     <div className="list-info">
                                         <Typography className="info-item">
-                                            {data.Flight.Departure.City.Province.Name}
+                                           Departure: {data.Flight.Departure.City.Province.Name}
                                             ({data.Flight.Departure.AirPortCode})
                                         </Typography>
                                         <Typography className="info-item">
@@ -65,7 +65,7 @@ export class FlightDetails extends Component {
                                 <div className="col-md-3">
                                     <div className="list-info">
                                         <Typography className="info-item">
-                                            {data.Flight.Destination.City.Province.Name}
+                                            Destination: {data.Flight.Destination.City.Province.Name}
                                             ({data.Flight.Destination.AirPortCode})
 
                                         </Typography>
@@ -170,7 +170,7 @@ export class FlightDetails extends Component {
                                 <div className="row">
                                     <div className="col-sm-3">
                                         <Typography className="text">
-                                            Carbin baggage : {data.CarbinBag}
+                                            Carbin baggage : {data.CarbinBag} (Kg)
                                         </Typography>
                                     </div>
                                 </div>
@@ -179,7 +179,7 @@ export class FlightDetails extends Component {
                                 <div className="row">
                                     <div className="col-sm-3">
                                         <Typography className="text">
-                                            Checkin baggage : {data.CheckinBag}
+                                            Checkin baggage : {data.CheckinBag} (Kg)
                                         </Typography>
                                     </div>
                                     <div className="col-sm-3">
