@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import React, { Component } from "react";
 import { formatCurrencyToVND } from "../../../../../Helpers/currency";
 import { dateConvert } from "../../../../../Helpers/datetime";
+import { FlightDetailsTicket } from "../FlightDetailsTicket/FlightDetailsTicket";
 import "./PassengerInfomation.scss";
 
 export class PassengerInfomation extends Component {
@@ -82,6 +83,7 @@ export class PassengerInfomation extends Component {
             </div>
           </div>
         </div>
+        
       </>
     );
   }
