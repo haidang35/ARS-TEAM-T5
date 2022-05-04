@@ -3,9 +3,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
 import  SearchTicketBox  from "../Shared/Components/SearchTicketBox/SearchTicketBox";
 import { SlideBar } from "./Components/SlideBar/SlideBar";
-import { ViewDetailsBooking } from "./Components/ViewDetailsBooking/ViewDetailsBooking";
+import  ViewDetailsBooking from "./Components/ViewDetailsBooking/ViewDetailsBooking";
 import { BookingHistory } from "./Components/BookingHistory/BookingHistory";
-import { CustomerProfile } from "./Components/CustomerProfile/CustomerProfile";
+import CustomerProfile from "./Components/CustomerProfile/CustomerProfile";
 
 
 
@@ -33,10 +33,10 @@ export class Profile extends Component {
                                     <Route path="/profile" exact>
                                         <CustomerProfile />
                                     </Route>
-                                    <Route path="/profile/bookings" exact>
+                                    <Route path="/profile/bookings/" exact>
                                         <BookingHistory />
                                     </Route>
-                                    <Route path="/profile/bookings/viewdetails" exact>
+                                    <Route path="/profile/bookings/:bookingCode" exact>
                                         <ViewDetailsBooking />
                                     </Route>
                                 </Switch>

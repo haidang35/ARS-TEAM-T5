@@ -1,6 +1,6 @@
 import { Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "./BookingHistory.scss";
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
@@ -16,12 +16,14 @@ export class BookingHistory extends Component {
         this.state = {
             open: false,
             openAlert: false,
-            bookingList: []
+            bookingList: [],
+            message: "",
+            errMessage: "",
         }
     }
 
     componentDidMount = () => {
-        this.getBookingList();
+        this.getUserBookingList();
     }
 
     handleClickOpen = () => {
@@ -49,19 +51,38 @@ export class BookingHistory extends Component {
         });
     }
 
-    getBookingList = async () => {
-        await publicService.getBookingList()
+    getUserBookingList = async () => {
+        await publicService.getUserBookingList()
             .then((res) => {
+                console.log("🚀 ~ file: BookingHistory.jsx ~ line 55 ~ BookingHistory ~ .then ~ res", res.data)
                 this.setState({
                     bookingList: res.data,
                 });
             });
     }
 
+    deleteUserBooking = async (id) => {
+        await publicService.deleteUserBooking(id)
+            .then((res) => {
+                this.setState({
+                    message: `Cancel booking ${res.data.Flight.departure.city} - ${res.data.Flight.destination.city} successfull`,
+                })
+                this.getUserBookingList();
+            })
+            .catch((err) => {
+                this.setState({
+                    errMessage: `Cancel booking failed, try again please`,
+                });
+            });
+    }
+
+
+
 
     render() {
         const { open, openAlert, bookingList } = this.state;
         let loop = 1;
+        
         return (
             <>
                 <div className="user-booking-list">
@@ -81,48 +102,43 @@ export class BookingHistory extends Component {
                                                 <th>Flight</th>
                                                 <th>Total</th>
                                                 <th>Payment status</th>
-                                                
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {bookingList.map((item) => {
                                                 return (
-                                                    <tr key={item.id}>
+                                                    <tr key={item.Id}>
                                                         <td className="text-bold-500">
-                                                            {loop ++ }
+                                                            {loop++}
                                                         </td>
                                                         <td className="text-bold-500">
-                                                           {dateConvert(
-                                                               item.Flight.ArrivalTime
-                                                           )}
+                                                            {dateConvert(
+                                                                item.BookingTickets[0].Ticket.Flight.ArrivalTime
+                                                            )}
                                                         </td>
                                                         <td className="text-bold-500">
-                                                           {`${ item.Flight.Departure.City.Name} - ${item.Flight.Destination.City.Name}`}
+                                                            {`${item.BookingTickets[0].Ticket.Flight.Departure.City.Name} - ${item.BookingTickets[0].Ticket.Flight.Destination.City.Name}`}
                                                         </td>
                                                         <td className="text-bold-500">
-                                                            {item.Flight.FlightCode}
+                                                            {item.BookingTickets[0].Ticket.Flight.FlightCode}
                                                         </td>
                                                         <td className="text-bold-500">
-                                                            { formatCurrencyToVND (
-                                                                item.Flight.Price 
+                                                            {formatCurrencyToVND(
+                                                                item.BookingTickets[0].Ticket.Price
                                                             )}
                                                         </td>
                                                         <td>
-                                                            Paid
+                                                            {item.BookingTickets.PaymentMethod === 0
+                                                                ? "Unpaid"
+                                                                : "Paid"
+                                                            }
                                                         </td>
                                                         <td>
                                                             <div className="btn-box-control">
-                                                                <Link
-                                                                    to={{
-                                                                        pathname: "/profile/bookings/viewdetails"
-
-                                                                    }}
-                                                                >
+                                                                <Link to={`/profile/bookings/${item.BookingCode}`} >
                                                                     <Button fullWidth variant="contained">View Details</Button>
-
                                                                 </Link>
-
-                                                                <Button variant="outlined" color="error" onClick={this.handleClickOpen}>
+                                                                <Button variant="outlined" className="cancel" color="error" onClick={this.handleClickOpen}>
                                                                     Cancel
                                                                 </Button>
                                                                 <Dialog
@@ -141,7 +157,7 @@ export class BookingHistory extends Component {
                                                                     </DialogContent>
                                                                     <DialogActions>
                                                                         <Button onClick={this.handleClose}>Disagree</Button>
-                                                                        <Button onClick={this.handleCancel} autoFocus>
+                                                                        <Button onClick={this.deleteUserBooking} autoFocus>
                                                                             Agree
                                                                         </Button>
                                                                     </DialogActions>

@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import React, { Component } from "react";
 import "./FlightDetailsTicket.scss";
+import { getTime, getDate } from "../../../../../Helpers/datetime";
 
 export class FlightDetailsTicket extends Component {
     constructor(props) {
@@ -10,6 +11,8 @@ export class FlightDetailsTicket extends Component {
         }
     }
     render() {
+        const { bookingData } = this.props;
+
         return (
             <>
                 <div className="flight-booking-detail">
@@ -31,48 +34,60 @@ export class FlightDetailsTicket extends Component {
                             <div className="col-md-3">
                                 <div className="list-info">
                                     <Typography className="info-item">
-                                        Hà Nội (HAN) 
+                                        {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Departure.City.Name}
+                                        ({bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Departure.AirPortCode})
                                     </Typography>
                                     <Typography className="info-item">
-                                        Airport Nội Bài
+                                        Airport : {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Destination.AirPortName}
                                     </Typography>
                                     <Typography className="info-item">
-                                        Depart 00:00
+                                        Landing : {getTime(
+                                            bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.DepartureTime
+                                        )}
                                     </Typography>
                                     <Typography className="info-item">
-                                        Date 21-04-2022
-                                    </Typography>
-                                </div>
-                            </div>
-                            <div className="col-md-3">
-                                <div className="list-info">
-                                    <Typography className="info-item">
-                                        Hồ Chí Minh (SGN)
-                                    </Typography>
-                                    <Typography className="info-item">
-                                        Airport Tân Sơn Nhất
-                                    </Typography>
-                                    <Typography className="info-item">
-                                        Arrival 00:00
-                                    </Typography>
-                                    <Typography className="info-item">
-                                        Date 22-04-2022
+                                        Date : {getDate(
+                                            bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.CreatedAt
+                                        )}
                                     </Typography>
                                 </div>
                             </div>
                             <div className="col-md-3">
                                 <div className="list-info">
                                     <Typography className="info-item">
-                                        Flight: 18
+                                        {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Destination.City.Province.Name}
+                                        ({bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Destination.AirPortCode})
+
                                     </Typography>
                                     <Typography className="info-item">
-                                        Class: Business
+                                        Airport :  {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Destination.AirPortName}
                                     </Typography>
                                     <Typography className="info-item">
-                                        Ticket type: 100
+                                        Landing :  {getTime(
+                                            bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight
+                                                .ArrivalTime
+                                        )}
                                     </Typography>
                                     <Typography className="info-item">
-                                    Aircraft VNA
+                                        Date :  {getDate(
+                                            bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.UpdatedAt
+                                        )}
+                                    </Typography>
+                                </div>
+                            </div>
+                            <div className="col-md-3">
+                                <div className="list-info">
+                                    <Typography className="info-item">
+                                        Flight :   {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.FlightCode}
+                                    </Typography>
+                                    <Typography className="info-item">
+                                        Available Class: {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.AvailableClass}
+                                    </Typography>
+                                    <Typography className="info-item">
+                                        Ticket: {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.TicketType} 
+                                    </Typography>
+                                    <Typography className="info-item">
+                                        Aircraft :  {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Aircraft}
                                     </Typography>
                                 </div>
                             </div>

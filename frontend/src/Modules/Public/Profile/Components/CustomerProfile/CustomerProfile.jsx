@@ -6,9 +6,10 @@ import "./CustomerProfile.scss";
 import { ErrorForm } from "../../../../../Shared/Components/ErrorMessage";
 import { REGEX_TEL } from "../../../../../Configs/validation";
 import publicService from "../../../Shared/Services/PublicService";
+import { Redirect, withRouter } from "react-router-dom";
 
 
-export class CustomerProfile extends Form {
+ class CustomerProfile extends Form {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,6 +19,7 @@ export class CustomerProfile extends Form {
                 phone: "",
             }),
             onEdit: false,
+            isRedirectSuccess: false,
         }
     }
 
@@ -40,20 +42,29 @@ export class CustomerProfile extends Form {
 
     }
 
-    onSaveChange = () => {
+    onSaveChange = async () => {
         this._validateForm();
         if (this._isFormValid()) {
-            const { form } = this.state;
-            const data = {
-                fullName: form.fullName.value,
-                phone: form.phone.value,
-                email: form.email.value,
+            const { id } = this.props.match.params;
+            const { form, isRedirectSuccess } = this.state;
+            const dataConverted = {
+                Name: form.fullName.value,
+                PhoneNumber: form.phone.value,
+                Email: form.email.value,
             };
-
+            await publicService.updateUser(id, dataConverted)
+                .then((res) => {
+                    this.setState({
+                        isRedirectSuccess: true,
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         }
     }
 
-  
+
     getAuthUser = async () => {
         const authToken = localStorage.getItem('access_token');
         await publicService.getAuthUser(authToken)
@@ -70,8 +81,24 @@ export class CustomerProfile extends Form {
 
     render() {
         const { fullName, email, phone } = this.state.form;
-        const { onEdit } = this.state;
+        const { onEdit, isRedirectSuccess } = this.state;
+        if (isRedirectSuccess) {
+            return (
+                <Redirect
+                    to={{
+                        pathname: "/profile",
+                        state: {
+                            message: {
+                                type: "success",
+                                content: "Update user successful !",
+                            },
+                        },
+                    }}
+                />
+            );
+        }
         return (
+
             <>
                 <div id="customer-info">
                     <div className="card">
@@ -160,19 +187,19 @@ export class CustomerProfile extends Form {
                                             >
                                                 <div className="position-relative">
                                                     <TextField
-                                                         id="outlined-basic"
-                                                         label="Phone Number"
-                                                         pattern={REGEX_TEL}
-                                                         required
-                                                         disabled={!onEdit}
-                                                         variant="outlined"
-                                                         value={phone.value}
-                                                         onChange={(ev) => {
-                                                             this._setValue(
-                                                                 ev,
-                                                                 "phone"
-                                                             )
-                                                         }}
+                                                        id="outlined-basic"
+                                                        label="Phone Number"
+                                                        pattern={REGEX_TEL}
+                                                        required
+                                                        disabled={!onEdit}
+                                                        variant="outlined"
+                                                        value={phone.value}
+                                                        onChange={(ev) => {
+                                                            this._setValue(
+                                                                ev,
+                                                                "phone"
+                                                            )
+                                                        }}
                                                     />
                                                     {phone.message == "*" ? (
                                                         <ErrorForm
@@ -210,3 +237,4 @@ export class CustomerProfile extends Form {
         )
     }
 }
+export default withRouter(CustomerProfile);
