@@ -39,7 +39,7 @@ export class SelectedFlightDetails extends Component {
                                 <div className="col-md-3">
                                     <div className="list-info">
                                         <Typography className="info-item">
-                                            {flightTicket.Flight.Departure.City.Name}
+                                            Departure: {flightTicket.Flight.Departure.City.Name}
                                             ({flightTicket.Flight.Departure.AirPortCode})
                                         </Typography>
                                         <Typography className="info-item">
@@ -61,7 +61,7 @@ export class SelectedFlightDetails extends Component {
                                 <div className="col-md-3">
                                     <div className="list-info">
                                         <Typography className="info-item">
-                                            {flightTicket.Flight.Destination.City.Province.Name}
+                                            Destination: {flightTicket.Flight.Destination.City.Province.Name}
                                             ({flightTicket.Flight.Destination.AirPortCode})
 
                                         </Typography>
@@ -121,7 +121,7 @@ export class SelectedFlightDetails extends Component {
                                     </thead>
                                     <tbody>
                                         {
-                                            
+
                                             passengers.map((psg, index) => {
                                                 if (psg.quantity > 0) {
                                                     totalMoney += psg.quantity * flightTicket.Price + flightTicket.Tax;
@@ -170,7 +170,7 @@ export class SelectedFlightDetails extends Component {
                                     </div>
                                     <div className="col-sm-3">
                                         <Typography className="text">
-                                            {flightTicket.CarbinBag}
+                                            {flightTicket.CarbinBag} (Kg)
                                         </Typography>
                                     </div>
                                 </div>
@@ -184,7 +184,7 @@ export class SelectedFlightDetails extends Component {
                                     </div>
                                     <div className="col-sm-3">
                                         <Typography className="text">
-                                            {flightTicket.CheckinBag}
+                                            {flightTicket.CheckinBag} (Kg)
                                         </Typography>
                                     </div>
                                 </div>

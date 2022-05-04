@@ -1,14 +1,18 @@
 #public {
-    .wrap-container {
-        width: 1300px;
-        margin: auto;
-    }
-
-   
+  .wrap-container {
+    width: 1300px;
+    margin: auto;
+  }
 }
 
 #location-dialog-home {
-    .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
-        width: 100%;
-    }
+  width: 100%;
+
+  .MuiDialog-container.MuiDialog-scrollPaper > div {
+    width: 100%;
+  }
+
+  // .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  //     width: 100%;
+  // }
 }

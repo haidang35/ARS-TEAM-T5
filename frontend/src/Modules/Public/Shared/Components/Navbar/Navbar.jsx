@@ -211,9 +211,10 @@ const Navbar = () => {
                         </Link>
                       ))}
                     </Menu>
-                    <Stack spacing={2} direction="row">
+                    <Stack
+                    className='logout-btn'
+                     spacing={2} direction="row">
                       <Button
-                        className="account"
                         onClick={onLogOut}
                         variant="outlined"
                       >

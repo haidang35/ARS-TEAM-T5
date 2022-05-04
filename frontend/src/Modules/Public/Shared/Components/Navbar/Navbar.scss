@@ -11,10 +11,15 @@
         }
     }
     
-     .css-e53awj-MuiStack-root{
-        float: right;
-        margin-left: 20px;
-    }
+   .logout-btn {
+       float: right;
+       margin-left: 10px;
+   }
+
+    //  .css-e53awj-MuiStack-root{
+    //     float: right;
+    //     margin-left: 20px;
+    // }
 
     .css-2s90m6-MuiAvatar-root{
         margin-right: 8px;
@@ -44,6 +49,7 @@
 
                 .title {
                     font-size: 16px;
+                    margin-left: 1rem;
                 }
 
                 .phone {

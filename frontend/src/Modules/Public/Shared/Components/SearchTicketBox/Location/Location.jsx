@@ -54,6 +54,7 @@ export class Location extends Component {
         return (
             <>
                 <div id="location">
+
                     <Dialog
                         open={open}
                         onClose={this.onCloseDialog}
@@ -65,7 +66,8 @@ export class Location extends Component {
                         <DialogTitle className="alert-dialog-title">
                             {"Destination"}
                         </DialogTitle>
-                        <Autocomplete
+                        <Autocomplete 
+                        
                              className="box"
                              disablePortal
                              id="combo-box-demo"
