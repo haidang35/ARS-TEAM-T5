@@ -350,6 +350,7 @@ export class FlightSearch extends Component {
                   variant="contained"
                   className="btn-search-form"
                   startIcon={<Search />}
+                  fullWidth
                 >
                   Search flights
                 </Button>
