@@ -5,6 +5,9 @@
         display: flex;
         justify-content: center;
         align-content: center;
-        flex-direction: column;
+       
+        .cancel{
+            margin-left: 20px;
+        }
     }
 }

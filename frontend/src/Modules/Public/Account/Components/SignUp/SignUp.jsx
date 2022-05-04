@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button } from "@mui/material";
+import { Autocomplete, Button } from "@mui/material";
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -20,6 +20,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { getDate } from "date-fns";
 import "./SignUp.scss";
+import { Link } from "react-router-dom";
 
 
 
@@ -38,7 +39,22 @@ export class SignUp extends Form {
                 Vocative: "",
                 Address: "",
             }),
-           
+            vocation: [
+                {
+                    label: 'Anh',
+                },
+                {
+                    label: 'Chị',
+                },
+                {
+                    label: 'Qúy Ông',
+                },
+                {
+                    label: 'Qúy Bà',
+                },
+            ],
+
+
         }
     }
 
@@ -73,6 +89,7 @@ export class SignUp extends Form {
 
 
     render() {
+        const { vocation } = this.state;
         const { lastName, firstName, Email, Password, ConfirmationPassword, PhoneNumber, Address, Birthday, Vocative } = this.state.form;
         const theme = createTheme();
         return (
@@ -150,6 +167,48 @@ export class SignUp extends Form {
 
                                                 )}
                                         </Grid>
+                                        <Grid item xs={12} sm={6}>
+                                            <Autocomplete
+                                                disablePortal
+                                                id="combo-box-demo"
+                                                options={vocation}
+                                                sx={{ width: 190 }}
+                                                renderInput={(params) => <TextField {...params} label="Vocation" />}
+                                            />
+                                            {vocation.err == "*"
+                                                ? (
+                                                    <ErrorForm message="Vui lòng nhập   " />
+                                                ) : (
+                                                    <ErrorForm
+                                                        err={vocation.err}
+                                                    />
+                                                )}
+                                        </Grid>
+                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                            <Grid item xs={12} sm={6}>
+                                                <TextField
+                                                    id="date"
+                                                    name="birthday"
+                                                    label="Birthday"
+                                                    type="date"
+                                                    value={Birthday.value}
+                                                    sx={{ width: 190 }}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                    onChange={(ev) => this._setValue(ev, "Birthday")}
+
+                                                />
+                                                {Birthday.err == "*"
+                                                    ? (
+                                                        <ErrorForm message="Vui lòng nhập ngay thang   " />
+                                                    ) : (
+                                                        <ErrorForm
+                                                            err={Birthday.err}
+                                                        />
+                                                    )}
+                                            </Grid>
+                                        </LocalizationProvider>
                                         <Grid item xs={12}>
                                             <TextField
                                                 required
@@ -175,49 +234,8 @@ export class SignUp extends Form {
                                                     />
                                                 )}
                                         </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                required
-                                                className="form-control"
-                                                fullWidth
-                                                name="Vocation"
-                                                label="Vocation"
-                                                value={Vocative.value}
-                                                onChange={(ev) =>
-                                                    this._setValue(
-                                                        ev,
-                                                        "Vocative"
-                                                    )
-                                                }
-                                            />
-                                            {Vocative.err == "*"
-                                                ? (
-                                                    <ErrorForm message="Vui lòng nhập   " />
-                                                ) : (
-                                                    <ErrorForm
-                                                        err={Vocative.err}
-                                                    />
-                                                )}
-                                        </Grid>
-                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                            <Grid item xs={12}>
-                                                <DesktopDatePicker
-                                                    label="Birthday"
-                                                    inputFormat="dd/MM/yyyy"
-                                                    value={Birthday}
-                                                    onChange={this.handleChangeBirthday}
-                                                    renderInput={(params) => <TextField {...params} />}
-                                                />
-                                                {Birthday.err == "*"
-                                                    ? (
-                                                        <ErrorForm message="Vui lòng nhập ngay thang   " />
-                                                    ) : (
-                                                        <ErrorForm
-                                                            err={Birthday.err}
-                                                        />
-                                                    )}
-                                            </Grid>
-                                        </LocalizationProvider>
+                                       
+                                        
                                         <Grid item xs={12}>
                                             <TextField
                                                 required
@@ -335,6 +353,11 @@ export class SignUp extends Form {
                                     >
                                         Sign Up
                                     </Button>
+                                    <Grid item>
+                                        <Link to="/signin" variant="body2">
+                                            {"Don't have an account? Sign Up"}
+                                        </Link>
+                                    </Grid>
                                 </Box>
                             </Box>
                         </Container>
