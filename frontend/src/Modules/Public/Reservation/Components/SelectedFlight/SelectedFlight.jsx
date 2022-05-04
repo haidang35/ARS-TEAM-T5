@@ -10,6 +10,7 @@ import { SelectedFlightDetails } from "../SelectedFlightDetails/SelectedFlightDe
 import { getTime } from "../../../../../Helpers/datetime";
 import { formatCurrencyToVND } from "../../../../../Helpers/currency";
 import { VIEW_MODE } from "../../../ChooseFlightTicket/FlightTicket";
+import { BASE_URL_SERVER } from "../../../../../Configs/server";
 
 
 export class SelectedFlight extends Component {
@@ -36,7 +37,7 @@ export class SelectedFlight extends Component {
                             <div >
                                 <img
                                     className="airline-logo"
-                                    src="https://static.wixstatic.com/media/9d8ed5_b328a87c44a04887ab0d35ef93991f16~mv2.png/v1/fill/w_1000,h_626,al_c,usm_0.66_1.00_0.01/9d8ed5_b328a87c44a04887ab0d35ef93991f16~mv2.png"
+                                    src={`${BASE_URL_SERVER}/${flightTicket && flightTicket.Flight.Airline.Logo}`}
                                 />
                             </div>
                         </div>
