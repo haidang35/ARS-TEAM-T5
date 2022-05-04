@@ -18,7 +18,7 @@ import "./NavbarV2.scss";
 import { Link } from 'react-router-dom';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 
-const settings = ['Profile', 'Account',  'Logout'];
+const settings = ['Profile', 'Account', 'Logout'];
 
 
 const NavbarV2 = () => {
@@ -66,6 +66,11 @@ const NavbarV2 = () => {
     justifyContent: 'center',
   }));
 
+
+
+  const authUser = JSON.parse(localStorage.getItem("auth_user"));
+  const isLogged = localStorage.getItem('access_token') !== '' && localStorage.getItem('access_token');
+
   return (
     <>
       <AppBar position="static" id="navbar-v2">
@@ -73,16 +78,16 @@ const NavbarV2 = () => {
           <Container maxWidth="xl">
             <Toolbar disableGutters>
               <Link to="/" className='form-navbar'>
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-              >
-                <div className="icons">
-               FLIGHT T5
-                </div>
-              </Typography>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+                >
+                  <div className="icons">
+                    FLIGHT T5
+                  </div>
+                </Typography>
               </Link>
 
               <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -114,7 +119,7 @@ const NavbarV2 = () => {
                     display: { xs: 'block', md: 'none' },
                   }}
                 >
-                 
+
                 </Menu>
               </Box>
               <Typography
@@ -126,7 +131,7 @@ const NavbarV2 = () => {
                 LOGO
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                  
+
                 <div className="list-menu">
                   <div className="hotline">
                     <img
@@ -144,7 +149,7 @@ const NavbarV2 = () => {
                         variant="h6"
                         className="phone"
                       >
-                        09111789JQK
+                        19001600
                       </Typography>
                       <Typography
                         variant="h6"
@@ -156,16 +161,12 @@ const NavbarV2 = () => {
                         variant="h6"
                         className="phone"
                       >
-                        09789789JQK
+                        0999998888
                       </Typography>
                     </div>
                   </div>
                 </div>
               </Box>
-
-              <IconButton size="large" aria-label="search" color="inherit">
-                <SearchIcon />
-              </IconButton>
               <IconButton
                 size="large"
                 aria-label="display more actions"
@@ -173,37 +174,45 @@ const NavbarV2 = () => {
                 color="inherit"
               >
               </IconButton>
-              <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting, index) => (
-                    <Link key={index} to="/profile">
+              {isLogged
+                ?
+                <Box sx={{ flexGrow: 0 }}>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                    </IconButton>
+                  </Tooltip>
+                  {authUser && authUser.Name}
+                  <Menu
+                    sx={{ mt: '45px' }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {settings.map((setting, index) => (
+                      <Link
+                        style={{ textDecoration: 'none' }}
+                        key={index} to="/profile">
                         <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                    </Link>
-                  ))}
-                </Menu>
-              </Box>
+                          <Typography textAlign="center">{setting}</Typography>
+                        </MenuItem>
+                      </Link>
+                    ))}
+                  </Menu>
+                </Box>
+                :
+                ""
+              }
             </Toolbar>
           </Container>
         </div>

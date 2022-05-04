@@ -251,7 +251,6 @@ const Navbar = () => {
                         </Button>
                       </Stack>
                     </div>
-
                   </Stack>
               }
             </Toolbar>
