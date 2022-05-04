@@ -12,7 +12,6 @@ export class FlightDetailsTicket extends Component {
     }
     render() {
         const { bookingData } = this.props;
-
         return (
             <>
                 <div className="flight-booking-detail">
@@ -34,7 +33,7 @@ export class FlightDetailsTicket extends Component {
                             <div className="col-md-3">
                                 <div className="list-info">
                                     <Typography className="info-item">
-                                        {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Departure.City.Name}
+                                      Departure:  {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Departure.City.Name}
                                         ({bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Departure.AirPortCode})
                                     </Typography>
                                     <Typography className="info-item">
@@ -55,7 +54,7 @@ export class FlightDetailsTicket extends Component {
                             <div className="col-md-3">
                                 <div className="list-info">
                                     <Typography className="info-item">
-                                        {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Destination.City.Province.Name}
+                                      Destination:  {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Destination.City.Province.Name}
                                         ({bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Destination.AirPortCode})
 
                                     </Typography>
