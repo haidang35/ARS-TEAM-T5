@@ -256,6 +256,7 @@ export class FlightSearch extends Component {
           <div className="formcheck">
             <div className="depature">
               <TextField
+                className="selected-input"
                 label="Departure"
                 value={departure && departure.City.Name}
                 variant="outlined"
@@ -264,6 +265,7 @@ export class FlightSearch extends Component {
             </div>
             <div className="destination">
               <TextField
+                className="selected-input"
                 label="Destination"
                 value={destination && destination.City.Name}
                 variant="outlined"
@@ -278,20 +280,21 @@ export class FlightSearch extends Component {
                   inputFormat="dd/MM/yyyy"
                   disablePast
                   onChange={this.handleDepartureDate}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => <TextField  className="selected-input"{...params} />}
                 />
               </LocalizationProvider>
             </div>
             <div className="date">
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
+                  className="selected-input"
                   disablePast
                   disabled={tripType === TRIP_TYPE.ONEWAY}
                   label="Destination Date"
                   value={returnDate}
                   inputFormat="dd/MM/yyyy"
                   onChange={this.handleReturnDate}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => <TextField className="selected-input" {...params} />}
                 />
               </LocalizationProvider>
             </div>
