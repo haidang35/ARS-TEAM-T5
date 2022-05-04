@@ -35,11 +35,12 @@ class UpdateAirline extends Form {
     this.getAirlineDetails();
   }
 
-  handleChangeFile = (event) => {
-    const file = event.target.files[0];
+  handleChangeLogo = (ev) => {
     let { form } = this.state;
-    form.logo.value = file;
-    this.setState({ form });
+    form["logo"].value = ev.target.files[0];
+    this.setState({
+      form,
+    });
   };
 
   getAirlineDetails = async () => {
@@ -59,22 +60,31 @@ class UpdateAirline extends Form {
     if (this._isFormValid()) {
       const { id } = this.props.match.params;
       const { form, isRedirectSuccess } = this.state;
-      const dataConverted = {
+      let dataConverted = {
         Name: form.name.value,
         Code: form.code.value,
         Country: form.country.value,
         Logo: form.country.value,
       };
-      await airlineService
-        .updateDetails(id, dataConverted)
-        .then((res) => {
-          this.setState({
-            isRedirectSuccess: true,
+      let formData = new FormData();
+      formData.append(
+        "fileUpload",
+        form.logo["value"],
+        form.logo["value"]["name"]
+      );
+      await airlineService.uploadLogo(formData).then(async (res) => {
+        dataConverted['Logo'] = res.data;
+        await airlineService
+          .updateDetails(id, dataConverted)
+          .then((res) => {
+            this.setState({
+              isRedirectSuccess: true,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
           });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      });
     }
   };
 
@@ -167,15 +177,23 @@ class UpdateAirline extends Form {
               </Grid>
 
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      color="secondary"
-                      name="saveAddress"
-                      value="yes"
-                    />
+                <TextField
+                  error={logo.err !== ""}
+                  helperText={
+                    logo.err !== ""
+                      ? logo.err === "*"
+                        ? "Logo cannot be empty"
+                        : logo.err
+                      : ""
                   }
-                  label="Use this address for payment details"
+                  required
+                  type="file"
+                  id="logo"
+                  name="logo"
+                  label="Logo"
+                  autoComplete="given-name"
+                  variant="standard"
+                  onChange={this.handleChangeLogo}
                 />
               </Grid>
               <div id="submit">
