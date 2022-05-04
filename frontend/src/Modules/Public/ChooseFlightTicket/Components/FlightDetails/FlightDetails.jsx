@@ -5,6 +5,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import AirplanemodeInactiveIcon from '@mui/icons-material/AirplanemodeInactive';
 import { getTime, getDate } from "../../../../../Helpers/datetime";
 import { formatCurrencyToVND } from "../../../../../Helpers/currency";
+import { BASE_URL_SERVER } from "../../../../../Configs/server";
 
 
 
@@ -35,15 +36,16 @@ export class FlightDetails extends Component {
                                     <div>
                                         <img
                                             className="airline-logo"
-                                            src="https://static.wixstatic.com/media/9d8ed5_b328a87c44a04887ab0d35ef93991f16~mv2.png/v1/fill/w_1000,h_626,al_c,usm_0.66_1.00_0.01/9d8ed5_b328a87c44a04887ab0d35ef93991f16~mv2.png" 
+                                            src={`${BASE_URL_SERVER}/${data.Flight.Airline.Logo}`}
                                             width={200}
+
                                         />
                                     </div>
                                 </div>
                                 <div className="col-md-3">
                                     <div className="list-info">
                                         <Typography className="info-item">
-                                           Departure: {data.Flight.Departure.City.Province.Name}
+                                            Departure: {data.Flight.Departure.City.Province.Name}
                                             ({data.Flight.Departure.AirPortCode})
                                         </Typography>
                                         <Typography className="info-item">

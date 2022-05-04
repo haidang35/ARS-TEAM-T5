@@ -82,9 +82,7 @@ export class SignUp extends Form {
         }
     };
 
-    handleChangeBirthday = () =>{
-       
-    }
+   
 
 
 
@@ -92,6 +90,7 @@ export class SignUp extends Form {
         const { vocation } = this.state;
         const { lastName, firstName, Email, Password, ConfirmationPassword, PhoneNumber, Address, Birthday, Vocative } = this.state.form;
         const theme = createTheme();
+        
         return (
             <>
                 <div id="signup-form">

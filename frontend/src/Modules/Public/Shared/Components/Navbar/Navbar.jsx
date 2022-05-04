@@ -149,7 +149,7 @@ const Navbar = () => {
                         variant="h6"
                         className="phone"
                       >
-                        09111789JQK
+                        19001600
                       </Typography>
                       <Typography
                         variant="h6"
@@ -161,7 +161,7 @@ const Navbar = () => {
                         variant="h6"
                         className="phone"
                       >
-                        09789789JQK
+                        0999998888
                       </Typography>
                     </div>
                   </div>
@@ -251,7 +251,6 @@ const Navbar = () => {
                         </Button>
                       </Stack>
                     </div>
-
                   </Stack>
               }
             </Toolbar>
