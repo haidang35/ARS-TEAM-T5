@@ -4,6 +4,7 @@ import AirplanemodeInactiveIcon from '@mui/icons-material/AirplanemodeInactive';
 import { Typography } from "@mui/material";
 import "./SelectedFlightDetails.scss";
 import { getTime, getDate } from "../../../../../Helpers/datetime";
+import { formatCurrencyToVND } from "../../../../../Helpers/currency";
 
 export class SelectedFlightDetails extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ export class SelectedFlightDetails extends Component {
         }
     }
     render() {
-        let { flightTicket } = this.props;
+        let { flightTicket, passengers } = this.props;
+        let totalMoney = 0;
         return (
             <>
                 <div className="selected-flight-details">
@@ -27,13 +29,17 @@ export class SelectedFlightDetails extends Component {
                             <div className="row">
                                 <div className="col-md-3">
                                     <div>
-                                        <AirplanemodeInactiveIcon className="logo-box" />
+                                        <img
+                                            className="airline-logo"
+                                            src="https://static.wixstatic.com/media/9d8ed5_b328a87c44a04887ab0d35ef93991f16~mv2.png/v1/fill/w_1000,h_626,al_c,usm_0.66_1.00_0.01/9d8ed5_b328a87c44a04887ab0d35ef93991f16~mv2.png"
+                                            width={200}
+                                        />
                                     </div>
                                 </div>
                                 <div className="col-md-3">
                                     <div className="list-info">
                                         <Typography className="info-item">
-                                            {flightTicket.Flight.Departure.City.Name}
+                                            Departure: {flightTicket.Flight.Departure.City.Name}
                                             ({flightTicket.Flight.Departure.AirPortCode})
                                         </Typography>
                                         <Typography className="info-item">
@@ -55,21 +61,21 @@ export class SelectedFlightDetails extends Component {
                                 <div className="col-md-3">
                                     <div className="list-info">
                                         <Typography className="info-item">
-                                            {flightTicket.Flight.Destination.City.Province.Name}
+                                            Destination: {flightTicket.Flight.Destination.City.Province.Name}
                                             ({flightTicket.Flight.Destination.AirPortCode})
 
                                         </Typography>
                                         <Typography className="info-item">
-                                        Airport : {flightTicket.Flight.Destination.AirPortName}
+                                            Airport : {flightTicket.Flight.Destination.AirPortName}
                                         </Typography>
                                         <Typography className="info-item">
-                                        Landing :  {getTime(
+                                            Landing :  {getTime(
                                                 flightTicket.Flight
                                                     .ArrivalTime
                                             )}
                                         </Typography>
                                         <Typography className="info-item">
-                                        Date :  {getDate(
+                                            Date :  {getDate(
                                                 flightTicket.Flight.UpdatedAt
                                             )}
                                         </Typography>
@@ -78,16 +84,16 @@ export class SelectedFlightDetails extends Component {
                                 <div className="col-md-3">
                                     <div className="list-info">
                                         <Typography className="info-item">
-                                        Flight :   {flightTicket.Flight.Airline.Code}
+                                            Flight :   {flightTicket.Flight.FlightCode}
                                         </Typography>
                                         <Typography className="info-item">
-                                        Available Class: {flightTicket.AvailableClass}
+                                            Available Class: {flightTicket.AvailableClass}
                                         </Typography>
                                         <Typography className="info-item">
-                                        Ticket: {flightTicket.TicketType}
+                                            Ticket: {flightTicket.TicketType}
                                         </Typography>
                                         <Typography className="info-item">
-                                        Aircraft :  {flightTicket.Flight.Aircraft}
+                                            Aircraft :  {flightTicket.Flight.Aircraft}
                                         </Typography>
                                     </div>
                                 </div>
@@ -114,30 +120,32 @@ export class SelectedFlightDetails extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                Adult
-                                            </td>
-                                            <td>
-                                                2
-                                            </td>
-                                            <td>
-                                                200.000vnd
-                                            </td>
-                                            <td>
-                                                200.000vnd
-                                            </td>
-                                            <td>
-                                                400.000vnd
-                                            </td>
-                                        </tr>
+                                        {
+
+                                            passengers.map((psg, index) => {
+                                                if (psg.quantity > 0) {
+                                                    totalMoney += psg.quantity * flightTicket.Price + flightTicket.Tax;
+                                                    return (
+                                                        <tr key={index}>
+                                                            <td>{psg.passengerType}</td>
+                                                            <td>{psg.quantity}</td>
+                                                            <td>{formatCurrencyToVND(flightTicket.Price)}</td>
+                                                            <td>{formatCurrencyToVND(flightTicket.Tax)}</td>
+                                                            <td>{formatCurrencyToVND(psg.quantity * flightTicket.Price + flightTicket.Tax)}</td>
+                                                        </tr>
+                                                    )
+                                                }
+                                            })
+                                        }
                                         <tr>
                                             <td colSpan="4">
-                                                Total fare (VND)
+                                                Total fare(VND)
                                             </td>
                                             <td>
-                                                {"100 "}
-
+                                                {""}
+                                                {formatCurrencyToVND(
+                                                    totalMoney
+                                                )}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -157,12 +165,12 @@ export class SelectedFlightDetails extends Component {
                                 <div className="row">
                                     <div className="col-sm-3">
                                         <Typography className="text">
-                                            Carbin baggage
+                                            Carbin baggage:
                                         </Typography>
                                     </div>
                                     <div className="col-sm-3">
                                         <Typography className="text">
-                                            121
+                                            {flightTicket.CarbinBag} (Kg)
                                         </Typography>
                                     </div>
                                 </div>
@@ -171,12 +179,12 @@ export class SelectedFlightDetails extends Component {
                                 <div className="row">
                                     <div className="col-sm-3">
                                         <Typography className="text">
-                                            Checkin baggage
+                                            Checkin baggage:
                                         </Typography>
                                     </div>
                                     <div className="col-sm-3">
                                         <Typography className="text">
-                                            123
+                                            {flightTicket.CheckinBag} (Kg)
                                         </Typography>
                                     </div>
                                 </div>

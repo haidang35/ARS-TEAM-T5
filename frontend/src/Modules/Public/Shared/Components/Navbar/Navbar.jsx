@@ -200,40 +200,58 @@ const Navbar = () => {
                       onClose={handleCloseUserMenu}
                     >
                       {settings.map((setting, index) => (
-                        <Link key={index} to="/profile" className='profile'>
+                        <Link
+                          key={index}
+                          to="/profile"
+                          className='profile'
+                          style={{ textDecoration: 'none' }}>
                           <MenuItem onClick={handleCloseUserMenu}>
                             <Typography textAlign="center">{setting}</Typography>
                           </MenuItem>
                         </Link>
                       ))}
                     </Menu>
-                    <Stack spacing={2} direction="row">
+                    <Stack
+                    className='logout-btn'
+                     spacing={2} direction="row">
                       <Button
-                        className="account"
                         onClick={onLogOut}
                         variant="outlined"
                       >
                         Log Out
                       </Button>
                     </Stack>
-                  </Box> 
+                  </Box>
                   :
-                  <Stack className='register'>
-                    <Stack spacing={2} direction="row">
-                      <Button
-                       variant="outlined">
-                        <Link to="/signin" >
-                          Login
-                        </Link>
-                      </Button>
-                    </Stack>
-                    <Stack spacing={2} direction="row">
-                      <Button variant="outlined">
-                        <Link to="/signup" >
-                          SignUp
-                        </Link>
-                      </Button>
-                    </Stack>
+                  <Stack className="account-register">
+                    <div>
+                      <Stack
+                        className="login"
+                        direction="row">
+                        <Button
+                          variant="outlined">
+                          <Link
+                            style={{ textDecoration: 'none' }}
+                            to="/signin" >
+                            Login
+                          </Link>
+                        </Button>
+                      </Stack>
+                    </div>
+                    <div>
+                      <Stack
+                        className="signup"
+                        direction="row">
+                        <Button variant="outlined">
+                          <Link
+                            style={{ textDecoration: 'none' }}
+                            to="/signup" >
+                            SignUp
+                          </Link>
+                        </Button>
+                      </Stack>
+                    </div>
+
                   </Stack>
               }
             </Toolbar>

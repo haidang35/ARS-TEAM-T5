@@ -47,33 +47,44 @@ class AddNewAirline extends Form {
     });
   }
 
+  handleChangeLogo = (ev) => {
+    let { form } = this.state;
+    form['logo'].value = ev.target.files[0];
+    this.setState({
+      form
+    })
+  }
+
 
   saveNewAirline = async () => {
-
     this._validateForm();
     console.log(this.state.form);
     if (this._isFormValid()) {
       this.setState({ isLoading: true });
       let { form, content } = this.state;
+      let formData = new FormData();
       let dataConverted = {
         Name: form.name.value,
         Code: form.code.value,
         Country: form.country.value,
-        Logo: "airline.png",
+        Logo: "",
       };
-      await airlineService
-        .createNew(dataConverted)
-        .then((res) => {
-          this.setState({
-            isRedirectSuccess: true,
+      formData.append('fileUpload', form.logo['value'], form.logo['value']['name']);
+      await airlineService.uploadLogo(formData)
+        .then(async (res) => {
+          dataConverted['Logo'] = res.data;
+          await airlineService
+          .createNew(dataConverted)
+          .then((res) => {
+            this.setState({
+              isRedirectSuccess: true,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
           });
         })
-        .catch((err) => {
-          console.log(err);
-        });
-
     }
-
   }
 
   render() {
@@ -140,11 +151,18 @@ class AddNewAirline extends Form {
                   onChange={(ev) => this._setValue(ev, 'country')}
                 />
               </Grid>
-             
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-                  label="Use this address for payment details"
+              <Grid item xs={12} >
+                <TextField
+                  error={logo.err !== ''}
+                  helperText={logo.err !== '' ? logo.err === '*' ? 'Logo cannot be empty' : logo.err : ''}
+                  required
+                  type="file"
+                  id="logo"
+                  name="logo"
+                  label="Logo"
+                  autoComplete="given-name"
+                  variant="standard"
+                  onChange={this.handleChangeLogo}
                 />
               </Grid>
               <div id='submit'>

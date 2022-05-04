@@ -6,6 +6,7 @@ const API_ENDPOINT = {
     USER_REGISTER: "/api/user/register",
     ACCESS_AUTH_TOKEN: "/api/token",
     CURRENT_USER_ROLES: "/api/auth-user/roles",
+  
     
   };
 

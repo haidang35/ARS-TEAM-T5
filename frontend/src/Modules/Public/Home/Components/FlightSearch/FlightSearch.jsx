@@ -285,7 +285,7 @@ export class FlightSearch extends Component {
               </LocalizationProvider>
             </div>
             <div className="date">
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <LocalizationProvider dateAdapter={AdapterDateFns} >
                 <DatePicker
                   className="selected-input"
                   disablePast

@@ -6,16 +6,7 @@ import Form from "../../../../../Shared/Components/Form";
 import "./CustomerInfomation.scss";
 import { getDate } from "../../../../../Helpers/datetime";
 
-const genger = [
-  {
-    value: "USD",
-    label: "Male",
-  },
-  {
-    value: "EUR",
-    label: "Female",
-  },
-];
+
 
 class CustomerInfomation extends Form {
   constructor(props) {
@@ -110,7 +101,6 @@ class CustomerInfomation extends Form {
         }
         data.push(psgDataItem);
       })
-      //TODO Passing data valid to Reservation Component
       this.props.handleCustomerInfomation(data);
     }
   }

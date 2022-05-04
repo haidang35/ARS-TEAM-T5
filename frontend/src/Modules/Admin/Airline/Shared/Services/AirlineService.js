@@ -7,7 +7,8 @@ const API_ENDPOINT = {
   GET_DETAILS: "/api/airlines/",
   UPDATE_DETAILS: "/api/airlines/",
   CREATE_NEW: "/api/airlines",
-  DELETE_Airline: "/api/airlines/"
+  DELETE_Airline: "/api/airlines/",
+  UPLOAD_LOGO: '/api/airlines/upload-logo'
 }
 
 const configs = {
@@ -39,6 +40,14 @@ class AirlineService {
 
   deleteAirline = async (id) => {
     return await axios.delete(BASE_URL_SERVER + API_ENDPOINT.DELETE_Airline + id, configs);
+  }
+
+  uploadLogo = async (data) => {
+    return await axios.post(BASE_URL_SERVER + API_ENDPOINT.UPLOAD_LOGO, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
 }
 
