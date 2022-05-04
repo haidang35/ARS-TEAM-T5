@@ -49,7 +49,6 @@ export class FlightSearch extends Component {
       openLocationDialog: false,
       locationType: "",
       isRedirect: false,
-      onOpenDialog: false,
       openAlertSearchForn: false,
     };
   }
@@ -118,11 +117,7 @@ export class FlightSearch extends Component {
     }
   };
 
-  handleAgree = () => {
-    this.setState({
-      onOpenDialog: false,
-    });
-  };
+ 
 
   changeQuantityPassenger = (passengerType, action) => {
     switch (passengerType) {
@@ -358,24 +353,6 @@ export class FlightSearch extends Component {
                 >
                   Search flights
                 </Button>
-                <Dialog
-                  open={onOpenDialog}
-                  onClose={this.onSearchFlight}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogTitle id="alert-dialog-title">Warning</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                      You have not selected your destination or departure
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={this.handleAgree} autoFocus>
-                      Agree
-                    </Button>
-                  </DialogActions>
-                </Dialog>
               </div>
             </div>
           </div>

@@ -16,7 +16,7 @@ import publicService from "../../../Shared/Services/PublicService";
 import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
 
 const departure = [
-  
+
 ]
 
 
@@ -75,7 +75,7 @@ export class Location extends Component {
                                 options={locations}
                                 getOptionLabel={(location) => `${location.City.Name} (${location.AirPortName} - ${location.AirPortCode})`}
                                 renderInput={(params) =>
-                                <TextField {...params} label="City,airport code" />}
+                                    <TextField {...params} label="City,airport code" />}
                             />
                             <DialogContent>
                                 <div className="choose-country">
@@ -83,22 +83,29 @@ export class Location extends Component {
                                         Việt Nam
                                     </Button>
                                 </div>
-                                <List>
-                                    {
-                                        locations.map((location) => {
-                                            return (
-                                                <ListItem disablePadding key={location.id} onClick={() => this.selectLocation(location)}>
-                                                    <ListItemButton>
-                                                        <ListItemIcon>
-                                                        <AirplaneTicketIcon />
-                                                        </ListItemIcon>
-                                                    <ListItemText primary={`${location.City.Name} (${location.AirPortName} - ${location.AirPortCode})`} />
-                                                    </ListItemButton>
-                                                </ListItem>
-                                            )
-                                        })
-                                    }
-                                </List>
+
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <List >
+                                            {
+                                                locations.map((location) => {
+                                                    return (
+
+                                                        <ListItem disablePadding key={location.id} onClick={() => this.selectLocation(location)}>
+                                                            <ListItemButton>
+                                                                <ListItemIcon>
+                                                                    <AirplaneTicketIcon />
+                                                                </ListItemIcon>
+                                                                <ListItemText primary={`${location.City.Name} (${location.AirPortName} - ${location.AirPortCode})`} />
+                                                            </ListItemButton>
+                                                        </ListItem>
+                                                    )
+                                                })
+                                            }
+                                        </List>
+                                    </div>
+                                </div>
+
                             </DialogContent>
                             <DialogActions>
                                 <Button onClick={this.onCloseDialog}>Cancel</Button>
