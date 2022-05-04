@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import React, { Component } from "react";
 import "./FlightDetailsTicket.scss";
 import { getTime, getDate } from "../../../../../Helpers/datetime";
+import { BASE_URL_SERVER } from "../../../../../Configs/server";
 
 export class FlightDetailsTicket extends Component {
     constructor(props) {
@@ -25,15 +26,15 @@ export class FlightDetailsTicket extends Component {
                             <div className="col-md-3">
                                 <div className="logo-box">
                                     <img
-                                        className="logo"
-                                        src="https://static.wixstatic.com/media/9d8ed5_b328a87c44a04887ab0d35ef93991f16~mv2.png/v1/fill/w_1000,h_626,al_c,usm_0.66_1.00_0.01/9d8ed5_b328a87c44a04887ab0d35ef93991f16~mv2.png"
+                                        src={`${BASE_URL_SERVER}/${bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Airline.Logo}`}
+                                        width={200}
                                     />
                                 </div>
                             </div>
                             <div className="col-md-3">
                                 <div className="list-info">
                                     <Typography className="info-item">
-                                      Departure:  {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Departure.City.Name}
+                                        Departure:  {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Departure.City.Name}
                                         ({bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Departure.AirPortCode})
                                     </Typography>
                                     <Typography className="info-item">
@@ -54,7 +55,7 @@ export class FlightDetailsTicket extends Component {
                             <div className="col-md-3">
                                 <div className="list-info">
                                     <Typography className="info-item">
-                                      Destination:  {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Destination.City.Province.Name}
+                                        Destination:  {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Destination.City.Province.Name}
                                         ({bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Destination.AirPortCode})
 
                                     </Typography>
@@ -83,7 +84,7 @@ export class FlightDetailsTicket extends Component {
                                         Available Class: {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.AvailableClass}
                                     </Typography>
                                     <Typography className="info-item">
-                                        Ticket: {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.TicketType} 
+                                        Ticket: {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.TicketType}
                                     </Typography>
                                     <Typography className="info-item">
                                         Aircraft :  {bookingData.BookingTickets && bookingData.BookingTickets.length > 0 && bookingData.BookingTickets[0].Ticket.Flight.Aircraft}

@@ -83,29 +83,23 @@ export class Location extends Component {
                                         Việt Nam
                                     </Button>
                                 </div>
-
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <List >
-                                            {
-                                                locations.map((location) => {
-                                                    return (
-
-                                                        <ListItem disablePadding key={location.id} onClick={() => this.selectLocation(location)}>
-                                                            <ListItemButton>
-                                                                <ListItemIcon>
-                                                                    <AirplaneTicketIcon />
-                                                                </ListItemIcon>
-                                                                <ListItemText primary={`${location.City.Name} (${location.AirPortName} - ${location.AirPortCode})`} />
-                                                            </ListItemButton>
-                                                        </ListItem>
-                                                    )
-                                                })
-                                            }
-                                        </List>
-                                    </div>
-                                </div>
-
+                                <List>
+                                    {
+                                        locations.map((location) => {
+                                            return (
+                                                <ListItem disablePadding key={location.id} onClick={() => this.selectLocation(location)} xs={4} >
+                                                    <ListItemButton>
+                                                        <ListItemIcon>
+                                                            <AirplaneTicketIcon />
+                                                        </ListItemIcon>
+                                                        <ListItemText primary={`${location.City.Name} (${location.AirPortName} - ${location.AirPortCode})`}
+                                                            />
+                                                    </ListItemButton>
+                                                </ListItem>
+                                            )
+                                        })
+                                    }
+                                </List>
                             </DialogContent>
                             <DialogActions>
                                 <Button onClick={this.onCloseDialog}>Cancel</Button>
