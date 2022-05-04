@@ -191,14 +191,14 @@ export const Sidebar = () => {
                         <ListItemButton
 
                           key={item.label}
-                          sx={{ py: 0, minHeight: 32, color: 'rgba(255,255,255,.8)' }}
+                          sx={{ py: 0, minHeight: 50, color: 'rgba(255,255,255,.8)' }}
                         >
                           <ListItemIcon sx={{ color: 'inherit' }}>
                             {item.icon}
                           </ListItemIcon>
                           <ListItemText
                             primary={item.label}
-                            primaryTypographyProps={{ fontSize: 14, fontWeight: 'medium' }}
+                            primaryTypographyProps={{ fontSize: 18, fontWeight: 'medium' }}
                           />
                         </ListItemButton>
                       </Link>

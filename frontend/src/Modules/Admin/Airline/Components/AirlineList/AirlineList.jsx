@@ -34,6 +34,7 @@ import {
   OutlinedInput,
   Select,
 } from "@mui/material";
+import { BASE_URL_SERVER } from "../../../../../Configs/server";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 80 },
@@ -253,7 +254,9 @@ export default function AirlineList() {
                         <TableCell>{airline.Name}</TableCell>
                         <TableCell>{airline.Code}</TableCell>
                         <TableCell>{airline.Country}</TableCell>
-                        <TableCell>{airline.Logo}</TableCell>
+                        <TableCell>
+                          <img src={`${BASE_URL_SERVER}/${airline.Logo}`} width="150" height="150"/>
+                        </TableCell>
                         <TableCell>
                           <Link to={`/admin/airlines/${airline.Id}`}>
                             <IconButton aria-label="edit-icon">

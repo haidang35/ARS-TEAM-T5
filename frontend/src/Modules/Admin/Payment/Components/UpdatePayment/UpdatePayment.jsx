@@ -14,7 +14,6 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import bookingService from '../../../Booking/Shared/Service/BookingService'
-import paymentService1 from '../../Shared/PaymentService'
 
 class UpdatePayment extends Form {
   constructor(props) {
