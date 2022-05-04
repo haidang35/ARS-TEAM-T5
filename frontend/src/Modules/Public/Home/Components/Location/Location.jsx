@@ -87,13 +87,13 @@ export class Location extends Component {
                                     {
                                         locations.map((location) => {
                                             return (
-                                                <ListItem disablePadding key={location.id} onClick={() => this.selectLocation(location)} xs={4} >
+                                                <ListItem disablePadding key={location.id} onClick={() => this.selectLocation(location)}  >
                                                     <ListItemButton>
                                                         <ListItemIcon>
                                                             <AirplaneTicketIcon />
                                                         </ListItemIcon>
                                                         <ListItemText primary={`${location.City.Name} (${location.AirPortName} - ${location.AirPortCode})`}
-                                                            />
+                                                        />
                                                     </ListItemButton>
                                                 </ListItem>
                                             )
