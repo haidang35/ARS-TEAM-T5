@@ -75,7 +75,7 @@ export class Location extends Component {
                                 options={locations}
                                 getOptionLabel={(location) => `${location.City.Name} (${location.AirPortName} - ${location.AirPortCode})`}
                                 renderInput={(params) =>
-                                <TextField {...params} label="City,airport code" />}
+                                <TextField className="form-search" {...params} label="City,airport code" />}
                             />
                             <DialogContent>
                                 <div className="choose-country">
