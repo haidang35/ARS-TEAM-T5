@@ -42,6 +42,6 @@ class PaymentService {
   }
 }
 
-const paymentService1 = new PaymentService();
-export default paymentService1;
+const paymentService = new PaymentService();
+export default paymentService;
 

@@ -28,6 +28,7 @@ import authService from "./Auth/Service/AuthServices";
 import { ROLES } from "../../Configs/server";
 import AddNewFlightTicket from "./FlightTicket/Components/AddNewFlightTicket/AddNewFlightTicket";
 import UpdateBookingTicket from "./BookingTicket/Components/UpdateBookingTicket/UpdateBookingTicket";
+import UpdatePayment from "./Payment/Components/UpdatePayment/UpdatePayment";
 
 
 export const Admin = () => {
@@ -129,6 +130,9 @@ export const Admin = () => {
                   </Route>
                   <Route exact path="/admin/payment/create">
                     <AddNewPayment />
+                  </Route>
+                  <Route exact path="/admin/payments/:id">
+                    <UpdatePayment />
                   </Route>
                   <Route exact path="/admin/bookings/details/:id">
                     <BookingDetails />

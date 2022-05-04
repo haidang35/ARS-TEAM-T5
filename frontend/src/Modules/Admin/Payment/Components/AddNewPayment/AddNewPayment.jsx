@@ -252,4 +252,4 @@ class AddNewPayment extends Form {
 
 }
 
-export default withRouter(AddNewPayment);
+export default AddNewPayment;

@@ -46,7 +46,7 @@ class UpdateUser extends Form {
       }),
       status: "",
       vocative: "",
-      roleIds:"",
+      roleIds: [],
       content: "",
       isLoading: false,
       isRedirectSuccess: false,
@@ -134,6 +134,7 @@ class UpdateUser extends Form {
       this.setState({
         roleIds: res.data.RoleId,
         status: res.data.Status,
+       
       });
       this._fillForm({
         name: res.data.Name,
@@ -141,7 +142,7 @@ class UpdateUser extends Form {
         email: res.data.Email,
         address: res.data.Address,
         birthday: res.data.Birthday,
-      });
+      }); console.log("🚀 ~ file: UpdateUser.jsx ~ line 137 ~ UpdateUser ~ awaituserService.getUserDetails ~ res.data", res.data)
     });
   };
 
@@ -198,11 +199,7 @@ class UpdateUser extends Form {
       roleIds,
       roleList,
       status,
-      vocative,
-      vocativeList,
       statusList,
-      showPassword,
-      showPasswordConfirm,
     } = this.state;
     if (isRedirectSuccess) {
       return (
@@ -247,28 +244,6 @@ class UpdateUser extends Form {
                   onChange={(ev) => this._setValue(ev, "name")}
                 />
               </Grid>
-              {/* <Grid item xs={6}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="vocative">Select Vocative</InputLabel>
-                    <Select
-                      id="vocative"
-                      name="vocative"
-                      value={vocative}
-                      label="Vocative"
-                      onChange={this.handleChangeVocative}
-                    >
-                      {vocativeList.map((vocative) => {
-                        return (
-                          <MenuItem key={vocative.key} value={vocative.type}>
-                            {vocative.type}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid> */}
               <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <Stack spacing={3}>
@@ -348,59 +323,6 @@ class UpdateUser extends Form {
                   onChange={(ev) => this._setValue(ev, "email")}
                 />
               </Grid>
-              {/* <Grid item xs={6}>
-                <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
-                  <InputLabel htmlFor="standard-adornment-password">
-                    Password
-                  </InputLabel>
-                  <Input
-                    id="standard-adornment-password"
-                    type={showPassword ? "text" : "password"}
-                    value={password.value}
-                    onChange={(ev) => this._setValue(ev, "password")}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={this.handleClickShowPassword}
-                          onMouseDown={this.handleMouseDownPassword}
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={6}>
-                <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
-                  <InputLabel htmlFor="standard-adornment-password">
-                    Confirm Password
-                  </InputLabel>
-                  <Input
-                    id="standard-adornment-password-confirm"
-                    type={showPasswordConfirm ? "text" : "password"}
-                    value={confirmPassword.value}
-                    onChange={(ev) => this._setValue(ev, "confirmPassword")}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={this.handleClickShowPasswordConfirm}
-                          onMouseDown={this.handleMouseDownPasswordConfirm}
-                        >
-                          {showPasswordConfirm ? (
-                            <VisibilityOff />
-                          ) : (
-                            <Visibility />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                </FormControl>
-              </Grid> */}
               <Grid item xs={6}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
