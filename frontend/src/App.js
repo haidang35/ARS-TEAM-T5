@@ -44,7 +44,7 @@ function App() {
           <Route path="/admin">
             {isLogged ? <Admin /> : <Redirect to="/admin-login" />}
           </Route>
-          <Route path="/" exact>
+          <Route path="/">
             <Public />
           </Route>
           <Route path="/admin-login" exact>
