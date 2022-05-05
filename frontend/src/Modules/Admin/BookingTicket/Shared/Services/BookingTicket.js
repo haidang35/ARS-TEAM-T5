@@ -44,6 +44,6 @@ class BookingTicketService {
   }
 }
 
-const bookingTicket = new BookingTicketService();
-export default bookingTicket;
+const bookingTicketService = new BookingTicketService();
+export default bookingTicketService;
 

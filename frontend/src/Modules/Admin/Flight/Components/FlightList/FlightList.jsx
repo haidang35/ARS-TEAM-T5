@@ -24,6 +24,16 @@ import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";  
+import airlineService from "../../../Airline/Shared/Services/AirlineService";
+import locationsService from "../../../Location/Shared/Services/LocationService";
+
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+} from "@mui/material";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 80 },
@@ -37,7 +47,7 @@ const columns = [
   {
     id: "departure",
     label: "Departure",
-    minWidth: 150,
+    minWidth: 100,
     align: "left",
     format: (value) => value.toLocaleString("en-US"),
   },
@@ -79,7 +89,9 @@ const rows = [
   createData("2", "Bamboo Airways", "QH", "Viet Nam", "Cay tre"),
   createData("3", "Vietravel Airlines", "VU", "Viet Nam", "Viettravel"),
 ];
-
+const FILTER_TYPE = {
+  FLIGHT: 1,
+ }
 export default function FlightList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -87,18 +99,67 @@ export default function FlightList() {
   const [flightListAPI, setFlightListAPI] = useState([]);
   const [msg, setMsg] = useState("");
   const [searchValue, setSearchValue] = useState("");
+  const [filterType, setFilterType] = useState('');
+  const [filterByProvince, setFilterByProvince] = useState(0);
+  const [filterAirlineId, setFilterByAirlineId] = useState(0);
+  const [airlineList, setAirlineList] = useState([]);
+  const [departureList, setDepartureList] = useState([]);
+  const [destinationList, setDestinationList] = useState([]);
+  const [filterDepartureId, setFilterDepartureId] = useState(0);
+  const [filterDestinationId, setFilterDestinationId] = useState(0);
+
 
 
 
   useEffect(() => {
     getFlightList();
+    getAirlineList();
+    getLocationList();
     getMsg();
   }, []);
+    
+  useEffect(() => {
+    const flightList = flightListAPI.filter((flight) => {
+      return flight.AirlineId == filterAirlineId
+    })
+
+   setFlightList(flightList)
+  },[filterAirlineId]);
+  useEffect(() => {
+    const flightList = flightListAPI.filter((flight) => {
+      return flight.DepartureId == filterDepartureId
+    })
+
+   setFlightList(flightList)
+  },[filterDepartureId]);
+  useEffect(() => {
+    const flightList = flightListAPI.filter((flight) => {
+      return flight.DestinationId== filterDestinationId
+    })
+
+   setFlightList(flightList)
+  },[filterDestinationId]);
+  
   useEffect(() =>{
     setFlightList(flightListAPI.filter((flight) => {
       return(flight.FlightCode.toLowerCase()).includes(searchValue.toLowerCase())
     }));
   },[searchValue]);
+
+  const getLocationList = async () => {
+    await locationsService.getLocationList()
+    .then ((res) => {
+      setDepartureList(res.data);
+      setDestinationList(res.data);
+    })
+  }
+  
+  const getAirlineList = async () => {
+    await airlineService.getAirlineList()
+      .then((res) => {
+        setAirlineList(res.data);
+      })
+    }
 
   const getFlightList = async () => {
     await flightService
@@ -111,8 +172,29 @@ export default function FlightList() {
         console.log(err);
       });
   };
-
-
+  const handleChangeFilterType = async (ev) => {
+    setFilterType(ev.target.value);
+    if(ev.target.value == FILTER_TYPE.LOCATION) {
+      await flightService.getFlightList()
+        .then((res) => {
+          setFlightList(res.data);
+        })
+    }
+   }
+  
+   const handleChangeDeparture = (ev) =>{
+     
+   setFilterDepartureId(ev.target.value);
+  }
+  const handleChangeDestination = (ev) =>{
+     
+    setFilterDestinationId(ev.target.value);
+   }
+  
+   const handleChangeAirline = (ev) =>{
+     
+    setFilterByAirlineId(ev.target.value)
+  }
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -163,7 +245,7 @@ export default function FlightList() {
           <Typography variant="h4" component="div" gutterBottom>
             Flight
           </Typography>
-          <TableContainer sx={{ maxHeight: 440 }}>
+          <TableContainer sx={{ maxHeight: 5000 }}>
             {msg !== "" ? (
               <Stack sx={{ width: "100%" }} spacing={2}>
                 <Alert severity={msg.type}>{msg.content}</Alert>
@@ -182,7 +264,7 @@ export default function FlightList() {
                         p: "2px 4px",
                         display: "flex",
                         alignItems: "center",
-                        width: 300,
+                        width: 260,
                       }}
                     >
                       <IconButton sx={{ p: "10px" }} aria-label="menu">
@@ -207,6 +289,71 @@ export default function FlightList() {
                         orientation="vertical"
                       />
                     </Paper>
+                    <FormControl sx={{ m: 1, width: 200,right:40, top: 10  }}>
+                      <InputLabel id="demo-multiple-name-label">
+                        Airline
+                      </InputLabel>
+                      <Select
+                        id="airline"
+                        value={filterAirlineId}
+                        onChange={handleChangeAirline}
+                        input={<OutlinedInput label="Select" />}
+                      >
+                        {airlineList.map((airline) => (
+                          <MenuItem
+                            key={airline.Id}
+                            value={airline.Id}
+                          >
+                            {airline.Name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl sx={{ m: 1, width: 200, right: 40, top: 10 }}>
+                      <InputLabel id="demo-multiple-name-label">
+                        Departure
+                      </InputLabel>
+                      <Select
+                        id="departure"
+                        value={filterDepartureId}
+                        onChange={handleChangeDeparture }
+                        input={<OutlinedInput label="Select" />}
+                      >
+                        {departureList.map((departure) => (
+                          <MenuItem
+                            key={departure.Id}
+                            value={departure.Id}
+                          >
+                            {departure.City.Name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl sx={{ m: 1, width: 200, right: 10, top:10 }}>
+                      <InputLabel id="demo-multiple-name-label">
+                        Destination
+                      </InputLabel>
+                      <Select
+                        id="destination"
+                        value={filterDestinationId}
+                        onChange={handleChangeDestination}
+                        input={<OutlinedInput label="Select" />}
+                      >
+                        {destinationList.map((destination) => (
+                          <MenuItem
+                            key={destination.Id}
+                            value={destination.Id}
+                          >
+                            {destination.City.Name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl sx={{ m: 1, top: 20, }}>
+                      <Button variant="contained" startIcon={<SearchIcon />}>
+                        Search
+                      </Button>
+                    </FormControl>
                   </TableCell>
                   <TableCell align="right" colSpan={12}>
                     <Link to={"/admin/flights/create"}>

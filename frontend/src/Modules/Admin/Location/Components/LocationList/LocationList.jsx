@@ -23,6 +23,13 @@ import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+} from "@mui/material";
 
 
 
@@ -57,25 +64,9 @@ const columns = [
 function createData(id, city, province, airportName, country, edit) {
   return { id, city, province, airportName, country, edit };
 }
-
-const rows = [
-  createData('1', 'India', 'IN', 'alo', 3287263, 'VnAirline'),
-  createData('1', 'China', 'CN', '1403500365', 9596961, 'VnAirline'),
-  createData('1', 'Italy', 'IT', '60483973', 301340, 'VnAirline'),
-  createData('1', 'United States', 'US', '327167434', 9833520, 'VnAirline'),
-  createData('1', 'Canada', 'CA', '37602103', 9984670, 'VnAirline'),
-  createData('1', 'Australia', 'AU', '25475400', 7692024, 'VnAirline'),
-  createData('1', 'Germany', 'DE', '83019200', 357578, 'VnAirline'),
-  createData('1', 'Ireland', 'IE', '4857000', 70273, 'VnAirline'),
-  createData('1', 'Mexico', 'MX', '126577691', 1972550, 'VnAirline'),
-  createData('1', 'Japan', 'JP', '126317000', 377973, 'VnAirline'),
-  createData('1', 'France', 'FR', '67022000', 640679, 'VnAirline'),
-  createData('1', 'United Kingdom', 'GB', '67545757', 242495, 'VnAirline'),
-  createData('1', 'Russia', 'RU', '146793744', 17098246, 'VnAirline'),
-  createData('1', 'Nigeria', 'NG', '200962417', 923768, 'VnAirline'),
-  createData('1', 'Brazil', 'BR', '210147125', 8515767, 'VnAirline'),
-];
-
+const FILTER_TYPE = {
+ LOCATION: 1,
+}
 export default function LocationList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -83,11 +74,34 @@ export default function LocationList() {
   const [locationListApi, setLocationListApi] = useState([]); 
   const [msg, setMsg] = useState('');
   const [searchValue, setSearchValue] = useState("");
+  const [filterType, setFilterType] = useState('');
+  const [provinceList, setProvinceList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [filterByProvinceId, setFilterByProvinceId] = useState(0);
+  const [filterByCityId, setFilterByCityId] = useState(0);
+  
 
   useEffect(() => {
     getLocationList();
     getMsg();
+    getProvinceList();
   }, []);
+  useEffect(() => {
+    const locationList = locationListApi.filter((location) => {
+      if(filterType === FILTER_TYPE.LOCATION) {
+        return location.City.ProvinceId == filterByProvinceId
+      }
+    });
+    setLocationList(locationList);
+  }, [filterByProvinceId]);
+  
+  useEffect(() => {
+    const locationList = locationListApi.filter((location) => {
+      return location.CityId == filterByCityId
+    })
+
+   setLocationList(locationList)
+  },[filterByCityId]);
 
   useEffect(() => {
     setLocationList(locationListApi.filter((location) => {
@@ -95,6 +109,30 @@ export default function LocationList() {
     }));
   }, [searchValue]);
 
+
+  const handleChangeFilterType = async (ev) => {
+    setFilterType(ev.target.value);
+    if(ev.target.value == FILTER_TYPE.LOCATION) {
+      await locationsService.getLocationList()
+        .then((res) => {
+          setLocationList(res.data);
+          setLocationListApi(res.data);
+        })
+    }
+   }
+   const handleChangeCity = (ev) =>{
+     
+     setFilterByCityId(ev.target.value)
+   }
+   const handleChangeProvince = (ev) =>{
+    const provinceId = ev.target.value;
+    setFilterByProvinceId(provinceId)
+     locationsService.getCitiesByProvince(provinceId)
+     .then((res) => {
+       setCityList(res.data);
+     })
+   }
+  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -116,6 +154,14 @@ export default function LocationList() {
       }
     }
   }
+
+  const getProvinceList = async () => {
+    await locationsService.getProvinceList()
+      .then((res) => {
+        setProvinceList(res.data);
+      })
+    }
+
 
   const getLocationList = async () => {
     await locationsService.getLocationList()
@@ -153,7 +199,7 @@ export default function LocationList() {
           <Typography variant="h4" component="div" gutterBottom>
             Location
           </Typography>
-          <TableContainer sx={{ maxHeight: 400 }}>
+          <TableContainer sx={{  maxHeight: 5000  }}>
           {
               msg !== '' ? <Stack sx={{ width: '100%' }} spacing={2}>
                 <Alert severity={msg.type}>{msg.content}</Alert>
@@ -194,6 +240,52 @@ export default function LocationList() {
                         orientation="vertical"
                       />
                     </Paper>
+                    <FormControl sx={{ m: 1, width: 250, right: 95, top: 10  }}>
+                      <InputLabel id="demo-multiple-name-label">
+                        Province
+                      </InputLabel>
+                      <Select
+                        id="province"
+                        value={filterByProvinceId}
+                        onChange={handleChangeProvince }
+                        input={<OutlinedInput label="Select" />}
+                      >
+                        {provinceList.map((province) => (
+                          <MenuItem
+                            key={province.Id}
+                            value={province.Id}
+                          >
+                            {province.Name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl sx={{ m: 1, width: 250, right: 60, top: 10 }}>
+                      <InputLabel id="demo-multiple-name-label">
+                        City
+                      </InputLabel>
+                      <Select
+                        id="city"
+                        value={filterByCityId}
+                        onChange={handleChangeCity }
+                        input={<OutlinedInput label="Select" />}
+                      >
+                        {cityList.map((city) => (
+                          <MenuItem
+                            key={city.Id}
+                            value={city.Id}
+                          >
+                            {city.Name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                      
+                    </FormControl>
+                    <FormControl sx={{ m: 1, top: 15, }}>
+                      <Button variant="contained" startIcon={<SearchIcon />}>
+                        Search
+                      </Button>
+                    </FormControl>
                   </TableCell>
                   <TableCell align="right" colSpan={3}>
                     <Link to={"/admin/locations/create"}>
@@ -208,7 +300,7 @@ export default function LocationList() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ top: 57, minWidth: column.minWidth, textAlign: 'left' }}
+                      style={{ top: 57, minWidth: column.maxWidth, textAlign: 'left' }}
                     >
                       {column.label}
                     </TableCell>
@@ -258,7 +350,6 @@ export default function LocationList() {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
-            count={rows.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
