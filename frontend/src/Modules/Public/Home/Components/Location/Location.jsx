@@ -59,6 +59,7 @@ export class Location extends Component {
                 <div id="location-home">
                     <div className="location-form">
                         <Dialog
+                            className="location"
                             open={open}
                             onClose={this.onCloseDialog}
                             aria-labelledby="alert-dialog-title"
