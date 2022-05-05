@@ -19,176 +19,147 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import flightTicketService from '../../Shared/Service/FlightTicketService';
 import { isThursday } from 'date-fns';
+import bookingTicketService from '../../Shared/Services/BookingTicket';
 
 
 
 
 
-class UpdateFlightTicket extends Form {
+class UpdateBookingTicket extends Form {
   constructor(props) {
     super(props);
     this.state = {
       form: this._getInitFormData({
-        carbinBag: "",
-        checkinBag: "",
-        price: "",
-        tax: "",
-        businessSeatFee: "",
-        deluxeSeatFee: "",
-        economySeatFee: "",
-        exitSeatFee: "",
-        ticketType: "",
+       seatFlightCode: "",
+        passengerName: "",
+        passengerBirthday: "",
+       
+        seatFlightFee: "",
+        passengerPhone: "",
+        passengerIdentityNumber:"",
 
       }),
-      availableClass: "",
-      
-      flightId: "",
-      content: "",
-      isLoading: false,
-      postFlightList: [],
-      isRedirectSuccess: false,
-      flightticketList: [],
-      ticketTypeList: [
-        {
-          key:1,
-          type:"Business"
-        },
-        {
-          key:2 ,
-          type: "Economy"
-        },
-        {
-          key:3,
-          type: "Deluxe"
-        },
-      ],
-      availableClassList: [],
-      status: "",
-      statusList:[
-        {
-          key: 0,
-          type: "Active",
-        },
+      passengerGender: "",
+      genderList:[
         {
           key: 1,
-          type: "DeActive",
+          type: "Male",
         },
-      ]
+        {
+          key: 2,
+          type: "Female",
+        },
+        {
+          key: 0,
+          type: "Other",
+        },
+      ],
+      ticketId: "",
+      content: "",
+      isLoading: false,
+      isRedirectSuccess: false,
+      bookingid:"",
+
+      
+     
     }
   }
   componentDidMount() {
-   this.getFlightList();
-   this.getFlightTicketDetails();
-
-
+   this.getBookingTicketDetails();
   }
-  getFlightTicketDetails = async () => {
+  getBookingTicketDetails = async () => {
     const { id } = this.props.match.params;
-    await flightTicketService.getFlightTicketDetails(id).then((res) =>{
+    await bookingTicketService.getBookingTicketDetails(id).then((res) =>{
         this.setState({
-            availableClass: res.data.AvailableClass,
-            flightId: res.data.FlightId, 
-            status: res.data.Status,
+           
+            passengerGender: res.data.PassengerGender,
+            ticketId: res.data.TicketId,
+            bookingid: res.data.BookingId,
 
         });
         this._fillForm({
-            carbinBag: res.data.CarbinBag,
-            checkinBag: res.data.CheckinBag,
-            price: res.data.Price,
-            tax: res.data.Tax,
-            businessSeatFee: res.data.BusinessSeatFee,
-            deluxeSeatFee: res.data.DeluxeSeatFee,
-            economySeatFee: res.data.EconomySeatFee,
-            exitSeatFee: res.data.ExitSeatFee,
-          
-            ticketType: res.data.TicketType,
+          seatFlightCode: res.data.SeatFlightCode,
+          passengerName: res.data.PassengerName,
+          passengerBirthday: res.data.PassengerBirthday,
+          seatFlightFee: res.data.SeatFlightFee,
+          passengerPhone: res.data.PassengerPhone,
+          passengerIdentityNumber: res.data.PassengerIdentityNumber,
         })
     })
   }
 
-  getFlightList = async () => {
-    await flightService.getFlightList().then((res) => {
-      this.setState({
-        flightticketList: res.data,
 
-      });
-    });
-  }
+//   saveUpdateFlightTicket = async () => {
 
+//     this._validateForm();
+//     if (this._isFormValid()) {
+//      const { id } = this.props.match.params;
+//       this.setState({ isLoading: true });
+//       const { form, content, flightId, availableClass, status } = this.state;
+//       const dataConverted = {
+//         FlightId: flightId,
+//         TicketType: form.ticketType.value,
+//         AvailableClass: availableClass,
+//         CarbinBag: form.carbinBag.value,
+//         CheckinBag: form.checkinBag.value,
+//         Status: status,
+//         Price: form.price.value,
+//         Tax: form.tax.value,
+//         BusinessSeatFee: form.businessSeatFee.value,
+//         DeluxeSeatFee: form.deluxeSeatFee.value,
+//         EconomySeatFee: form.economySeatFee.value,
+//         ExitSeatFee: form.exitSeatFee.value,
 
-  saveUpdateFlightTicket = async () => {
+//       };
+//       console.log('1222222222222222222222', dataConverted)
+//       await flightTicketService
+//         .updateDetails(id,dataConverted)
+//         .then((res) => {
+//           console.log(res.data);
+//           this.setState({
+//             isRedirectSuccess: true,
+//           });
+//         })
+//         .catch((err) => {
+//           console.log(err);
+//         });
 
-    this._validateForm();
-    if (this._isFormValid()) {
-     const { id } = this.props.match.params;
-      this.setState({ isLoading: true });
-      const { form, content, flightId, availableClass, status } = this.state;
-      const dataConverted = {
-        FlightId: flightId,
-        TicketType: form.ticketType.value,
-        AvailableClass: availableClass,
-        CarbinBag: form.carbinBag.value,
-        CheckinBag: form.checkinBag.value,
-        Status: status,
-        Price: form.price.value,
-        Tax: form.tax.value,
-        BusinessSeatFee: form.businessSeatFee.value,
-        DeluxeSeatFee: form.deluxeSeatFee.value,
-        EconomySeatFee: form.economySeatFee.value,
-        ExitSeatFee: form.exitSeatFee.value,
-
-      };
-      console.log('1222222222222222222222', dataConverted)
-      await flightTicketService
-        .updateDetails(id,dataConverted)
-        .then((res) => {
-          console.log(res.data);
-          this.setState({
-            isRedirectSuccess: true,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-    }
+//     }
 
 
-  }
-  handleChangeStatus = (ev) => {
-    this.setState({
-      status: ev.target.value,
-    });
-  };
-  handleChangeAvailableClass = (ev) => {
-    this.setState({
-      availableClass: ev.target.value,
-    })
-  }
-  handleChangeAvailableClass = (ev) => {
-    this.setState({
-      availableClass: ev.target.value,
-    })
-  }
-  handleChangeFlight = (ev) => {
-    this.setState({
-      flightId: ev.target.value,
-    })
-  }
+//   }
+//   handleChangeStatus = (ev) => {
+//     this.setState({
+//       status: ev.target.value,
+//     });
+//   };
+//   handleChangeAvailableClass = (ev) => {
+//     this.setState({
+//       availableClass: ev.target.value,
+//     })
+//   }
+//   handleChangeAvailableClass = (ev) => {
+//     this.setState({
+//       availableClass: ev.target.value,
+//     })
+//   }
+//   handleChangeFlight = (ev) => {
+//     this.setState({
+//       flightId: ev.target.value,
+//     })
+//   }
   
   render() {
-    const { carbinBag, checkinBag, price, tax, ticketType,
-      businessSeatFee, economySeatFee, deluxeSeatFee, exitSeatFee, } = this.state.form;
-    const { isRedirectSuccess, content, flightticketList,ticketTypeList,  flightId,  availableClass, status, statusList } = this.state;
+    const { seatFlightCode, seatFlightFee, passengerName, passengerBirthday, passengerPhone,passengerIdentityNumber } = this.state.form;
+    const { isRedirectSuccess, content, passengerGender, genderList, ticketId, bookingid  } = this.state;
     if (isRedirectSuccess) {
       return <Redirect to={{
-        pathname: '/admin/flight-tickets',
+        pathname: '/admin/bookings/details/:id',
         state: {
           message: {
             type: 'success',
-            content: 'Update Flight Ticket successful !'
+            content: 'Update Booking Ticket successful !'
           }
         }
       }} />;
@@ -198,10 +169,102 @@ class UpdateFlightTicket extends Form {
         <React.Fragment>
           <div id='addNewFlight'>
             <Typography variant="h4" gutterBottom >
-              Update Flight Ticket
+              Update Booking Ticket
             </Typography>
             <Grid container spacing={3}>
-              <Grid item xs={6} >
+            <Grid item xs={6}>
+                <TextField
+                  error={seatFlightCode.err !== ''}
+                  helperText={seatFlightCode.err !== '' ? seatFlightCode.err === '*' ? 'Seat Fligt Code cannot be empty' : seatFlightCode.err : ''}
+                  required
+                  id="seatFlightCode"
+                  name="seatFlightCode"
+                  value={seatFlightCode.value}
+                  label="Seat Flight Code"
+                  autoComplete="shipping address-line1"
+                  variant="standard"
+                  onChange={(ev) => this._setValue(ev, 'seatFlightCode')}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  error={seatFlightFee.err !== ''}
+                  helperText={seatFlightFee.err !== '' ? seatFlightFee.err === '*' ? 'Seat Fligt Fee cannot be empty' : seatFlightFee.err : ''}
+                  required
+                  id="seatFlightFee"
+                  name="seatFlightFee"
+                  value={seatFlightFee.value}
+                  label="Seat Flight Fee"
+                  autoComplete="shipping address-line1"
+                  variant="standard"
+                  onChange={(ev) => this._setValue(ev, 'seatFlightFee')}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  error={passengerName.err !== ''}
+                  helperText={passengerName.err !== '' ? passengerName.err === '*' ? 'Passenger Name cannot be empty' : passengerName.err : ''}
+                  required
+                  id="passengerName"
+                  name="passengerName"
+                  value={passengerName.value}
+                  label="Passenger Name"
+                  autoComplete="shipping address-line1"
+                  variant="standard"
+                  onChange={(ev) => this._setValue(ev, 'passengerName')}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <Stack spacing={3}>
+                    <TextField
+                      id="date"
+                      name="passengerBirthday"
+                      label="Passenger Birthday"
+                      type="date"
+                      value={passengerBirthday.value}
+                      sx={{ width: 250 }}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      onChange={(ev) => this._setValue(ev, "passengerBirthday")}
+                    />
+                  </Stack>
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  error={passengerPhone.err !== ''}
+                  helperText={passengerPhone.err !== '' ? passengerPhone.err === '*' ? 'Passenger Phone cannot be empty' : passengerPhone.err : ''}
+                  required
+                  id="passengerPhone"
+                  name="passengerPhone"
+                  value={passengerPhone.value}
+                  label="Passenger Phone"
+                  autoComplete="shipping address-line1"
+                  variant="standard"
+                  onChange={(ev) => this._setValue(ev, 'passengerPhone')}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  error={passengerIdentityNumber.err !== ''}
+                  helperText={passengerIdentityNumber.err !== '' ? passengerIdentityNumber.err === '*' ? 'Passenger Identity Number Phone cannot be empty' : passengerIdentityNumber.err : ''}
+                  required
+                  id="passengerIdentityNumber"
+                  name="passengerIdentityNumber"
+                  value={passengerIdentityNumber.value}
+                  label="Passenger Identity Number"
+                  autoComplete="shipping address-line1"
+                  variant="standard"
+                  onChange={(ev) => this._setValue(ev, 'passengerIdentityNumber')}
+                />
+              </Grid>
+
+
+
+
+              {/* <Grid item xs={6} >
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
                     <InputLabel id="flightId">Select Flight</InputLabel>
@@ -405,7 +468,7 @@ class UpdateFlightTicket extends Form {
                     </Select>
                   </FormControl>
                 </Box>
-              </Grid>
+              </Grid> */}
 
               <Grid item xs={12}>
                 <FormControlLabel
@@ -425,4 +488,4 @@ class UpdateFlightTicket extends Form {
 
 }
 
-export default withRouter(UpdateFlightTicket);
+export default withRouter(UpdateBookingTicket);

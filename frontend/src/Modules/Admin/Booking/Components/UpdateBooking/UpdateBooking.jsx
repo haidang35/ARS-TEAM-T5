@@ -67,11 +67,11 @@ class UpdateBooking extends Form {
       paymentMethod: ev.target.value,
     });
   }
-  handleChangeStatus = (ev) => {
-    this.setState({
-      status: ev.target.value,
-    });
-  };
+    handleChangeStatus = (ev) => {
+      this.setState({
+        status: ev.target.value,
+      });
+    };
 
   handleChangeFile = (event) => {
     const file = event.target.files[0];

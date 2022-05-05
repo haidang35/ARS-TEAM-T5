@@ -1,30 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import React, { useEffect, useState } from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
-import { Link, useLocation } from 'react-router-dom';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
-import IconButton from '@mui/material/IconButton';
-import PreviewIcon from '@mui/icons-material/Preview';
-import bookingService from '../../Shared/Service/BookingService';
+import { Link, useLocation } from "react-router-dom";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
+import IconButton from "@mui/material/IconButton";
+import PreviewIcon from "@mui/icons-material/Preview";
+import bookingService from "../../Shared/Service/BookingService";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import SearchSharpIcon from "@mui/icons-material/SearchSharp";
 import DirectionsIcon from "@mui/icons-material/Directions";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
+import TextField from "@mui/material/TextField";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import {
   FormControl,
   InputLabel,
@@ -32,55 +35,63 @@ import {
   OutlinedInput,
   Select,
 } from "@mui/material";
-import airlineService from '../../../Airline/Shared/Services/AirlineService';
-
+import airlineService from "../../../Airline/Shared/Services/AirlineService";
 
 const columns = [
-  { id: 'id', label: 'Id', minWidth: 80 },
-  { id: 'userId', label: 'User', minWidth: 100 },
-  { id: 'bookingCode', label: 'BookingCode', minWidth: 100 },
-  
-  {
-    id: 'contactPhone',
-    label: 'ContactPhone',
-    minWidth: 100,
-    align: 'left',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'status',
-    label: 'Status',
-    minWidth: 100,
-    align: 'left',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'createdAt',
-    label: 'CreatedAt',
-    minWidth: 100,
-    align: 'left',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'edit', label: 'Edit', minWidth: 80,
-    align: 'left',
-  }
+  { id: "id", label: "Id", minWidth: 80 },
+  { id: "userId", label: "User", minWidth: 100 },
+  { id: "bookingCode", label: "BookingCode", minWidth: 100 },
 
+  {
+    id: "contactPhone",
+    label: "ContactPhone",
+    minWidth: 100,
+    align: "left",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "status",
+    label: "Status",
+    minWidth: 100,
+    align: "left",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "createdAt",
+    label: "CreatedAt",
+    minWidth: 100,
+    align: "left",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "edit",
+    label: "Edit",
+    minWidth: 80,
+    align: "left",
+  },
 ];
 
-function createData(id, userId, bookingCode,  contactPhone, status, createdAt, edit) {
-  return { id, userId, bookingCode,contactPhone, status, createdAt, edit };
+function createData(
+  id,
+  userId,
+  bookingCode,
+  contactPhone,
+  status,
+  createdAt,
+  edit
+) {
+  return { id, userId, bookingCode, contactPhone, status, createdAt, edit };
 }
 
 const rows = [
-  createData('1', 'Vietnam Airline', 'VN', 'Viet Nam', 'Bong sen vang',),
-  createData('2', 'Bamboo Airways', 'QH', 'Viet Nam', 'Cay tre',),
-  createData('3', 'Vietravel Airlines', 'VU', 'Viet Nam', 'Viettravel')
+  createData("1", "Vietnam Airline", "VN", "Viet Nam", "Bong sen vang"),
+  createData("2", "Bamboo Airways", "QH", "Viet Nam", "Cay tre"),
+  createData("3", "Vietravel Airlines", "VU", "Viet Nam", "Viettravel"),
 ];
 
 const FILTER_TYPE = {
   AIRLINE: 1,
-}
+};
 
 export default function BookingList() {
   const [page, setPage] = React.useState(0);
@@ -88,46 +99,65 @@ export default function BookingList() {
   const [bookingList, setBookingList] = useState([]);
   const [bookingListAPI, setBookingListAPI] = useState([]);
   const [bookingTicket, setBookingTicket] = useState([]);
-  const [msg, setMsg] = useState('');
-  const [filterType, setFilterType] = useState('');
+  const [msg, setMsg] = useState("");
+  const [filterType, setFilterType] = useState("");
   const [filterByAirlineId, setFilterByAirId] = useState(0);
   const [airlineList, setAirlineList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
+  const [filterByCreatedAt, setFilterByCreatedAt] = useState("");
 
   useEffect(() => {
     getBookingList();
     getMsg();
   }, []);
 
+  useEffect(() => {
+    const bookingList = bookingListAPI.filter((booking) => {
+      const bookingCreatedAt = new Date(booking.CreatedAt);
+      const filterCreatedAt = new Date(filterByCreatedAt);
+      return (
+        bookingCreatedAt.getDate() === filterCreatedAt.getDate() &&
+        bookingCreatedAt.getMonth() === filterCreatedAt.getMonth() &&
+        bookingCreatedAt.getFullYear() === filterCreatedAt.getFullYear()
+      );
+    });
+    setBookingList(bookingList);
+  }, [filterByCreatedAt]);
 
   useEffect(() => {
     const bookingList = bookingListAPI.filter((booking) => {
-      if(filterType === FILTER_TYPE.AIRLINE) {
-        return booking.BookingTickets[0].Ticket.Flight.AirlineId == filterByAirlineId
+      if (filterType === FILTER_TYPE.AIRLINE) {
+        return (
+          booking.BookingTickets[0].Ticket.Flight.AirlineId == filterByAirlineId
+        );
       }
     });
     setBookingList(bookingList);
   }, [filterByAirlineId]);
 
-  useEffect(() =>{
-    setBookingList(bookingListAPI.filter((booking) => {
-      return(booking.BookingCode.toLowerCase()).includes(searchValue.toLowerCase())
-    }));
-  },[searchValue]);
+  useEffect(() => {
+    setBookingList(
+      bookingListAPI.filter((booking) => {
+        return booking.BookingCode.toLowerCase().includes(
+          searchValue.toLowerCase()
+        );
+      })
+    );
+  }, [searchValue]);
 
   const getBookingList = async () => {
     await bookingService
       .getBookingList()
       .then((res) => {
         setBookingList(res.data);
+        console.log("🚀 ~ file: BookingList.jsx ~ line 154 ~ .then ~ res.data", res.data)
         setBookingListAPI(res.data);
-        console.log("🚀 ~ file: BookingList.jsx ~ line 124 ~ .then ~ res.data", res.data)
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -141,54 +171,57 @@ export default function BookingList() {
   let location = useLocation();
 
   const getMsg = () => {
-    if (typeof location.state !== 'undefined') {
+    if (typeof location.state !== "undefined") {
       let isHasMessage = false;
-      Object.keys(location.state).forEach(key => {
-        if (key === 'message') isHasMessage = true;
+      Object.keys(location.state).forEach((key) => {
+        if (key === "message") isHasMessage = true;
       });
       if (isHasMessage) {
         setMsg(location.state.message);
       }
     }
-  }
+  };
+  const handleChangeCreatedAt = (ev) => {
+    setFilterByCreatedAt(ev.target.value);
+  };
 
- const handleChangeFilterType = async (ev) => {
-  setFilterType(ev.target.value);
-  if(ev.target.value == FILTER_TYPE.AIRLINE) {
-    await airlineService.getAirlineList()
-      .then((res) => {
+  const handleChangeFilterType = async (ev) => {
+    setFilterType(ev.target.value);
+    if (ev.target.value == FILTER_TYPE.AIRLINE) {
+      await airlineService.getAirlineList().then((res) => {
         setAirlineList(res.data);
-      })
-  }
- }
+      });
+    }
+  };
 
   return (
     <>
-      <div id='booking'>
-    
-        <Paper sx={{ width: '100%' }}>
+      <div id="booking">
+        <Paper sx={{ width: "100%" }}>
           <Typography variant="h4" component="div" gutterBottom>
             Booking
           </Typography>
-      
-          <TableContainer sx={{ maxHeight: 440 }}>
-            {
-              msg !== '' ? <Stack sx={{ width: '100%' }} spacing={2}>
+
+          <TableContainer sx={{ maxHeight: 5000 }}>
+            {msg !== "" ? (
+              <Stack sx={{ width: "100%" }} spacing={2}>
                 <Alert severity={msg.type}>{msg.content}</Alert>
-              </Stack> : ''
-            }
-               
+              </Stack>
+            ) : (
+              ""
+            )}
+
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                <TableCell align="center" colSpan={3}>
+                  <TableCell align="center" colSpan={3}>
                     <Paper
                       component="form"
                       sx={{
                         p: "2px 4px",
                         display: "flex",
                         alignItems: "center",
-                        width: 300,
+                        width: 270,
                       }}
                     >
                       <IconButton sx={{ p: "10px" }} aria-label="menu">
@@ -213,9 +246,7 @@ export default function BookingList() {
                         orientation="vertical"
                       />
                     </Paper>
-                  </TableCell>
-                <TableCell colSpan={6} align="center">
-                    <FormControl sx={{ m: 1, width: 300, right: 150 }}>
+                    <FormControl sx={{ m: 1, width: 270, right: 10, top: 10 }}>
                       <InputLabel id="demo-multiple-name-label">
                         Select
                       </InputLabel>
@@ -225,51 +256,61 @@ export default function BookingList() {
                         onChange={handleChangeFilterType}
                         input={<OutlinedInput label="Select" />}
                       >
-                        <MenuItem
-                            value={FILTER_TYPE.AIRLINE}
-                          >
-                            Airlines 
-                          </MenuItem>
+                        <MenuItem value={FILTER_TYPE.AIRLINE}>
+                          Airlines
+                        </MenuItem>
                       </Select>
                     </FormControl>
-                    <FormControl sx={{ m: 1, width: 300, right: 150 }}>
+                    <FormControl sx={{ m: 1, width: 300, left: 20, top: 10 }}>
                       <InputLabel id="demo-multiple-name-label">
                         Airline
                       </InputLabel>
                       <Select
                         id="airline"
                         value={filterByAirlineId}
-                        onChange={(ev) => setFilterByAirId(+ev.target.value) }
+                        onChange={(ev) => setFilterByAirId(+ev.target.value)}
                         input={<OutlinedInput label="Select" />}
                       >
                         {airlineList.map((airline) => (
-                          <MenuItem
-                            key={airline.Id}
-                            value={airline.Id}
-                          >
+                          <MenuItem key={airline.Id} value={airline.Id}>
                             {airline.Name}
                           </MenuItem>
                         ))}
                       </Select>
                     </FormControl>
-                    <FormControl sx={{ m: 1, top: 10, right: 150 }}>
+                  </TableCell>
+                  <TableCell colSpan={6} align="center">
+                    <FormControl sx={{ m: 1, top: 35, right: 10 }}>
+                      <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <Stack spacing={3}>
+                          <TextField
+                            id="date"
+                            name="birthday"
+                            label="Date Time"
+                            type="date"
+                            value={filterByCreatedAt}
+                            sx={{ width: 250 }}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            onChange={handleChangeCreatedAt}
+                          />
+                        </Stack>
+                      </LocalizationProvider>
+                    </FormControl>
+                    <FormControl sx={{ m: 1, top: 35, left: 50 }}>
                       <Button variant="contained" startIcon={<SearchIcon />}>
                         Search
                       </Button>
                     </FormControl>
                   </TableCell>
-
-                 
-                  <TableCell align="right" colSpan={4}>
-                  View 
-                  </TableCell>
                 </TableRow>
-                <TableRow >
+                <TableRow>
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ top: 57, minWidth: column.minWidth }}
+                      style={{ top: 50, minWidth: column.minWidth }}
                     >
                       {column.label}
                     </TableCell>
@@ -281,43 +322,44 @@ export default function BookingList() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((booking) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={booking.Id}>
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={booking.Id}
+                      >
+                        <TableCell>{booking.Id}</TableCell>
+                        <TableCell>{booking.ContactName}</TableCell>
+                        <TableCell>{booking.BookingCode}</TableCell>
+                        <TableCell>{booking.ContactPhone}</TableCell>
                         <TableCell>
-                          {booking.Id}
+                          {booking.Status === 1 ? (
+                            <Button variant="contained" color="error">
+                              Deactive
+                            </Button>
+                          ) : (
+                            <Button variant="contained" color="success">
+                              Active
+                            </Button>
+                          )}
                         </TableCell>
-                        <TableCell>
-                          {booking.ContactName }  
-                        </TableCell>
-                        <TableCell>
-                          {booking.BookingCode}
-                        </TableCell>
-                        <TableCell>
-                          {booking.ContactPhone}
-                        </TableCell>
-                        <TableCell>
-                          {booking.Status === 1 ? 'Deactive' :'Active'}
-                        </TableCell>
-                        <TableCell>
-                          {booking.CreatedAt}
-                        </TableCell>
+                        <TableCell>{booking.CreatedAt}</TableCell>
                         <TableCell>
                           <Link to={`/admin/bookings/details/${booking.Id}`}>
                             <IconButton aria-label="edit-icon">
-                              <PreviewIcon/>
+                              <PreviewIcon />
                             </IconButton>
                             <Link to={`/admin/bookings/${booking.Id}`}>
-                            <IconButton aria-label="edit-icon">
-                              <EditIcon />
-                            </IconButton>
-                          </Link>
+                              <IconButton aria-label="edit-icon">
+                                <EditIcon />
+                              </IconButton>
+                            </Link>
                           </Link>
                         </TableCell>
                       </TableRow>
-
                     );
                   })}
               </TableBody>
-
             </Table>
           </TableContainer>
           <TablePagination
@@ -332,6 +374,5 @@ export default function BookingList() {
         </Paper>
       </div>
     </>
-
   );
 }
