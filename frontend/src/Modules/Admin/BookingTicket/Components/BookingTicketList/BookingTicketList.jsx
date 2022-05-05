@@ -26,8 +26,8 @@ const columns = [
   { id: 'seatFlightCode', label: 'SeatFlightCode', minWidth: 170 },
   { id: 'passengerName', label: 'PassengerName', minWidth: 100 },
   {
-    id: 'passengerPhone',
-    label: 'PassengerPhone',
+    id: 'passengerBirthday',
+    label: 'PassengerBirthday',
     minWidth: 150,
     align: 'left',
     format: (value) => value.toLocaleString('en-US'),
@@ -46,8 +46,8 @@ const columns = [
 
 ];
 
-function createData(id, seatFlightCode, passengerName, passengerPhone, seatFlightFee ,edit) {
-  return {id, seatFlightCode, passengerName,passengerPhone, seatFlightFee ,edit };
+function createData(id, seatFlightCode, passengerName, passengerBirthday, seatFlightFee ,edit) {
+  return {id, seatFlightCode, passengerName,passengerBirthday, seatFlightFee ,edit };
 }
 
 const rows = [
@@ -181,7 +181,7 @@ export default function BookingTicketList() {
                           {bookingTicket.PassengerName}
                         </TableCell>
                         <TableCell>
-                          {bookingTicket.PassengerPhone}
+                          {bookingTicket.PassengerBirthday}
                         </TableCell>
                         <TableCell>
                           {bookingTicket.SeatFlightFee}
