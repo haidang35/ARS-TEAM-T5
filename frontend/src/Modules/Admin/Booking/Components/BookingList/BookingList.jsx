@@ -151,7 +151,6 @@ export default function BookingList() {
       .getBookingList()
       .then((res) => {
         setBookingList(res.data);
-        console.log("🚀 ~ file: BookingList.jsx ~ line 154 ~ .then ~ res.data", res.data)
         setBookingListAPI(res.data);
       })
       .catch((err) => {
