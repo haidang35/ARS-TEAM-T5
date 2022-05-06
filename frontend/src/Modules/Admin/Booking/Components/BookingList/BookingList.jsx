@@ -93,6 +93,13 @@ const FILTER_TYPE = {
   AIRLINE: 1,
 };
 
+const BOOKING_STATUS = {
+  PAID: 1,
+  UNPAID: 2,
+
+
+}
+
 export default function BookingList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -332,7 +339,7 @@ export default function BookingList() {
                         <TableCell>{booking.BookingCode}</TableCell>
                         <TableCell>{booking.ContactPhone}</TableCell>
                         <TableCell>
-                          {booking.Status === 1 ? (
+                          {booking.Status === BOOKING_STATUS.UNPAID ? (
                             <Button variant="contained" color="error">
                              UnPaid
                             </Button>
