@@ -125,7 +125,7 @@ class CustomerInfomation extends Form {
                 </div>
                 <div className="col-md-2">
                   <Typography variant="h6" className="sub-title">
-                    GenDer
+                    Gender
                   </Typography>
                 </div>
                 <div className="col-md-3">
