@@ -59,6 +59,7 @@ export class Location extends Component {
                 <div id="location-home">
                     <div className="location-form">
                         <Dialog
+                            className="location"
                             open={open}
                             onClose={this.onCloseDialog}
                             aria-labelledby="alert-dialog-title"
@@ -87,13 +88,13 @@ export class Location extends Component {
                                     {
                                         locations.map((location) => {
                                             return (
-                                                <ListItem disablePadding key={location.id} onClick={() => this.selectLocation(location)} xs={4} >
+                                                <ListItem disablePadding key={location.id} onClick={() => this.selectLocation(location)}  >
                                                     <ListItemButton>
                                                         <ListItemIcon>
                                                             <AirplaneTicketIcon />
                                                         </ListItemIcon>
                                                         <ListItemText primary={`${location.City.Name} (${location.AirPortName} - ${location.AirPortCode})`}
-                                                            />
+                                                        />
                                                     </ListItemButton>
                                                 </ListItem>
                                             )
