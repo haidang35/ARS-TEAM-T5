@@ -44,11 +44,11 @@ class BookingDEtails extends Form {
       bookingStatus: [
         {
           key: 1,
-          type: "Active",
+          type: "Paid",
         },
         {
           key: 0,
-          type: "DeActive",
+          type: "Unpaid",
         },
       ],
       paymentMethodList: [

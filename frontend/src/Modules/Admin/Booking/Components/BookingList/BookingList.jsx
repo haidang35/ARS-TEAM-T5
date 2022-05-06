@@ -40,11 +40,11 @@ import airlineService from "../../../Airline/Shared/Services/AirlineService";
 const columns = [
   { id: "id", label: "Id", minWidth: 80 },
   { id: "userId", label: "User", minWidth: 100 },
-  { id: "bookingCode", label: "BookingCode", minWidth: 100 },
+  { id: "bookingCode", label: "Booking Code", minWidth: 100 },
 
   {
     id: "contactPhone",
-    label: "ContactPhone",
+    label: "Contact Phone",
     minWidth: 100,
     align: "left",
     format: (value) => value.toLocaleString("en-US"),
@@ -58,7 +58,7 @@ const columns = [
   },
   {
     id: "createdAt",
-    label: "CreatedAt",
+    label: "Created At",
     minWidth: 100,
     align: "left",
     format: (value) => value.toLocaleString("en-US"),
@@ -334,11 +334,11 @@ export default function BookingList() {
                         <TableCell>
                           {booking.Status === 1 ? (
                             <Button variant="contained" color="error">
-                              Deactive
+                             UnPaid
                             </Button>
                           ) : (
                             <Button variant="contained" color="success">
-                              Active
+                              Paid
                             </Button>
                           )}
                         </TableCell>
@@ -348,11 +348,11 @@ export default function BookingList() {
                             <IconButton aria-label="edit-icon">
                               <PreviewIcon />
                             </IconButton>
-                            <Link to={`/admin/bookings/${booking.Id}`}>
+                            {/* <Link to={`/admin/bookings/${booking.Id}`}>
                               <IconButton aria-label="edit-icon">
                                 <EditIcon />
                               </IconButton>
-                            </Link>
+                            </Link> */}
                           </Link>
                         </TableCell>
                       </TableRow>
