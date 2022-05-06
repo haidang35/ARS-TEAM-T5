@@ -63,7 +63,6 @@ export class Header extends Component {
                                 overflow: "hidden"
                             }}
                         />
-
                         <div className="wrap-container">
                             <div className="header-content">
                                 <div className="row">
@@ -75,11 +74,6 @@ export class Header extends Component {
                         </div>
                     </div>
                 </div>
-
-
-
-
-
             </>
         )
     }
