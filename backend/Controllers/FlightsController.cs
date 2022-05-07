@@ -24,7 +24,7 @@ namespace backend.Controllers
         [ResponseType(typeof(ICollection<Flight>))]
         public IHttpActionResult GetFlights()
         {
-            return Ok(db.Flights.ToList());
+            return Ok(db.Flights.OrderByDescending(f => f.CreatedAt).ToList());
         }
 
         // GET: api/Flights/5

@@ -334,6 +334,10 @@
     <Compile Include="Migrations\202204291351129_UpdateDatabase3.designer.cs">
       <DependentUpon>202204291351129_UpdateDatabase3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202205062349036_UpdateDatabase4.cs" />
+    <Compile Include="Migrations\202205062349036_UpdateDatabase4.designer.cs">
+      <DependentUpon>202205062349036_UpdateDatabase4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Airline.cs" />
     <Compile Include="Models\Booking.cs" />
@@ -484,6 +488,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204291351129_UpdateDatabase3.resx">
       <DependentUpon>202204291351129_UpdateDatabase3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205062349036_UpdateDatabase4.resx">
+      <DependentUpon>202205062349036_UpdateDatabase4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

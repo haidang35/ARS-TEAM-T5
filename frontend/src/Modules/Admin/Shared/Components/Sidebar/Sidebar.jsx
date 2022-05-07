@@ -59,7 +59,7 @@ export const Sidebar = () => {
     <>
       <div id="sidebar">
         <Box
-          className="form-sidebar"
+          className="form-sidebar 100-vh"
           sx={{ display: 'flex' }}>
           <ThemeProvider
             theme={createTheme({

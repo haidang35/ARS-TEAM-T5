@@ -19,7 +19,7 @@
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
 
-            context.Provinces.Add(new Models.Province() {
+           /* context.Provinces.Add(new Models.Province() {
                 Id = 1,
                 Name  = "Hà Nội",
                 Country = "Việt Nam"
@@ -175,7 +175,7 @@
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
 
-            });
+            });*/
         }
     }
 }
