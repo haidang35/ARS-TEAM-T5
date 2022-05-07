@@ -1,8 +1,7 @@
 #sidebar{
     float: left;
     .form-sidebar{
-        .css-7nis55-MuiList-root {
-            height: 800px;
-        }
+           height: 100vh;
+           position: fixed;
     }
 }

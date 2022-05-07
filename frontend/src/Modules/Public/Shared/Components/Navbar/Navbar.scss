@@ -11,10 +11,15 @@
         }
     }
     
-     .css-e53awj-MuiStack-root{
-        float: right;
-        margin-left: 20px;
-    }
+   .logout-btn {
+       float: right;
+       margin-left: 10px;
+   }
+
+    //  .css-e53awj-MuiStack-root{
+    //     float: right;
+    //     margin-left: 20px;
+    // }
 
     .css-2s90m6-MuiAvatar-root{
         margin-right: 8px;
@@ -35,6 +40,7 @@
             .icon-24h {
                 margin-right: 1rem;
                 width: 2rem;
+                margin-left: 7rem;
             }
 
             .hotline-info {
@@ -44,6 +50,7 @@
 
                 .title {
                     font-size: 16px;
+                    margin-left: 1rem;
                 }
 
                 .phone {
@@ -74,9 +81,17 @@
 
     }
 
-    .register {
-        .css-1rwt2y5-MuiButtonBase-root-MuiButton-root {
+    .account-register {
+        display: contents;
+       .login{
           
+
+       }
+        .signup{
+          margin-left: 20px;
+           
+         
         }
+      
     }
 }

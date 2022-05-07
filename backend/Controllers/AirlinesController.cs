@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
@@ -83,6 +85,32 @@ namespace backend.Controllers
             }
 
             return Ok(airline);
+        }
+
+        [Route("~/api/airlines/upload-logo")]
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        public string UploadLogo()
+        {
+            string path = HttpContext.Current.Server.MapPath("~/Uploads/");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            HttpPostedFile postedFile = HttpContext.Current.Request.Files["fileUpload"];
+            if (postedFile.ContentLength > 0)
+            {
+                string[] FileExtension = new string[] { ".jpg", ".png", ".jpeg", ".gif" };
+                if (FileExtension.Contains(postedFile.FileName.Substring(postedFile.FileName.LastIndexOf("."))))
+                {
+                    string imageName = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds() + postedFile.FileName.Substring(postedFile.FileName.LastIndexOf("."));
+                    string PathDir = "~/Uploads";
+                    string pathImage = Path.Combine(HttpContext.Current.Server.MapPath(PathDir), imageName);
+                    postedFile.SaveAs(pathImage);
+                    return $"/Uploads/{imageName}";
+                }
+            }
+            return null;
         }
 
         // POST: api/Airlines

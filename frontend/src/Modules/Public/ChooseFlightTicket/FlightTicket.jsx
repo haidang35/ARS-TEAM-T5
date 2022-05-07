@@ -495,6 +495,7 @@ class FlightTicket extends Component {
                   />
                 );
               })}
+            
 
               {tripType == TRIP_TYPE.ROUND_TRIP && (
                 <SelectDateTicketBox

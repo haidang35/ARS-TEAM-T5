@@ -5,6 +5,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import AirplanemodeInactiveIcon from '@mui/icons-material/AirplanemodeInactive';
 import { getTime, getDate } from "../../../../../Helpers/datetime";
 import { formatCurrencyToVND } from "../../../../../Helpers/currency";
+import { BASE_URL_SERVER } from "../../../../../Configs/server";
 
 
 
@@ -33,27 +34,31 @@ export class FlightDetails extends Component {
                             <div className="row">
                                 <div className="col-md-3">
                                     <div>
-                                        <AirplanemodeInactiveIcon className="logo-box" />
+                                        <img
+                                            className="airline-logo"
+                                            src={`${BASE_URL_SERVER}/${data.Flight.Airline.Logo}`}
+                                            width={200}
 
+                                        />
                                     </div>
                                 </div>
                                 <div className="col-md-3">
                                     <div className="list-info">
                                         <Typography className="info-item">
-                                            {data.Flight.Departure.City.Province.Name}
+                                            Departure: {data.Flight.Departure.City.Province.Name}
                                             ({data.Flight.Departure.AirPortCode})
                                         </Typography>
                                         <Typography className="info-item">
-                                           Airport: {data.Flight.Departure.AirPortName}
+                                            Airport: {data.Flight.Departure.AirPortName}
                                         </Typography>
                                         <Typography className="info-item">
-                                          Take off :  {getTime(
+                                            Take off :  {getTime(
                                                 data.Flight
                                                     .DepartureTime
                                             )}
                                         </Typography>
                                         <Typography className="info-item">
-                                           Date : {getDate(
+                                            Date : {getDate(
                                                 data.Flight.CreatedAt
                                             )}
                                         </Typography>
@@ -62,21 +67,21 @@ export class FlightDetails extends Component {
                                 <div className="col-md-3">
                                     <div className="list-info">
                                         <Typography className="info-item">
-                                            {data.Flight.Destination.City.Province.Name}
+                                            Destination: {data.Flight.Destination.City.Province.Name}
                                             ({data.Flight.Destination.AirPortCode})
 
                                         </Typography>
                                         <Typography className="info-item">
-                                           Airport : {data.Flight.Destination.AirPortName}
+                                            Airport : {data.Flight.Destination.AirPortName}
                                         </Typography>
                                         <Typography className="info-item">
-                                          Landing :  {getTime(
+                                            Landing :  {getTime(
                                                 data.Flight
                                                     .ArrivalTime
                                             )}
                                         </Typography>
                                         <Typography className="info-item">
-                                          Date :  {getDate(
+                                            Date :  {getDate(
                                                 data.Flight.UpdatedAt
                                             )}
                                         </Typography>
@@ -85,7 +90,7 @@ export class FlightDetails extends Component {
                                 <div className="col-md-3">
                                     <div className="list-info">
                                         <Typography className="info-item">
-                                         Flight :   {data.Flight.Airline.Code}
+                                            Flight :     {data.Flight.FlightCode}
                                         </Typography>
                                         <Typography className="info-item">
                                             Available Class: {data.AvailableClass}
@@ -94,7 +99,7 @@ export class FlightDetails extends Component {
                                             Ticket: {data.TicketType}
                                         </Typography>
                                         <Typography className="info-item">
-                                        Aircraft :  {data.Flight.Aircraft}
+                                            Aircraft :  {data.Flight.Aircraft}
                                         </Typography>
                                     </div>
                                 </div>
@@ -129,7 +134,7 @@ export class FlightDetails extends Component {
                                                         <tr key={index}>
                                                             <td>{psg.passengerType}</td>
                                                             <td>{psg.quantity}</td>
-                                                            <td>{formatCurrencyToVND(data.Price) }</td>
+                                                            <td>{formatCurrencyToVND(data.Price)}</td>
                                                             <td>{formatCurrencyToVND(data.Tax)}</td>
                                                             <td>{formatCurrencyToVND(psg.quantity * data.Price + data.Tax)}</td>
                                                         </tr>
@@ -167,12 +172,7 @@ export class FlightDetails extends Component {
                                 <div className="row">
                                     <div className="col-sm-3">
                                         <Typography className="text">
-                                            Carbin baggage
-                                        </Typography>
-                                    </div>
-                                    <div className="col-sm-3">
-                                        <Typography className="text">
-
+                                            Carbin baggage : {data.CarbinBag} (Kg)
                                         </Typography>
                                     </div>
                                 </div>
@@ -181,7 +181,7 @@ export class FlightDetails extends Component {
                                 <div className="row">
                                     <div className="col-sm-3">
                                         <Typography className="text">
-                                            Checkin baggage
+                                            Checkin baggage : {data.CheckinBag} (Kg)
                                         </Typography>
                                     </div>
                                     <div className="col-sm-3">

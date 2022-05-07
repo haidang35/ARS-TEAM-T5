@@ -51,11 +51,11 @@ class FlightSeatServiceTicketPrice extends Component {
                       </Typography>
                     </div>
                   </div>
-                  <div className="col-md-4">
+                  {/* <div className="col-md-4">
                     <div className="logo-airline">
                       <LocalAirportIcon />
                     </div>
-                  </div>
+                  </div> */}
                   <div className="col-md-12">
                     <div className="ticket-price">
                       <div className="row">

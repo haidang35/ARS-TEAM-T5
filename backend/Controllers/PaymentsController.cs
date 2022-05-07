@@ -68,6 +68,7 @@ namespace backend.Controllers
                     payment.UpdatedAt = DateTime.Now;
                     db.Payments.Add(payment);
                     booking.Status = BookingStatus.Paid;
+                    db.Entry(booking).State = EntityState.Modified;
                     db.SaveChanges();
                     transaction.Commit();
                 }

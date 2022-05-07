@@ -45,7 +45,6 @@ namespace backend.Controllers
                 var bookingTicketList = db.BookingTickets.Where(bt => bt.BookingId == booking.Id).ToList();
                 var bookingDto = new BookingDto()
                 {
-                    
                     User = booking.User,
                     Status = booking.Status,
                     ContactName = booking.ContactName,
@@ -62,7 +61,7 @@ namespace backend.Controllers
                 };
                 bookingListDto.Add(bookingDto);
             }
-            return Ok(bookingListDto);
+            return Ok(bookingListDto.OrderByDescending(b => b.CreatedAt).ToList());
         }
 
         // GET: api/Bookings/5
@@ -269,18 +268,17 @@ namespace backend.Controllers
 
             try
             {
-               
-
                 TwilioClient.Init(accountSid, authToken);
 
                 var message = MessageResource.Create(
-                    body: $"Flight T5: Your booking {booking.BookingCode} has been booked successfully !",
+                    body: $"Flight T5: Your booking {booking.BookingCode} has been booked successfully !" +
+                    $"You can review ticket booking information at the link https://ars-t5.web.app/bookings/{booking.BookingCode}",
                     from: new Twilio.Types.PhoneNumber(ConfigurationManager.AppSettings["twilio_phone"]),
                     to: new Twilio.Types.PhoneNumber(userBooking.ContactPhone)
                 );
                 string mailSubject = "Congratulations on your successful flight booking at Flight T5";
                 string body = $"Congratulations you have successfully booked your ticket. " +
-                    $"Your booking code is {booking.BookingCode}, you can access the website link to look up flight and ticket information.";
+                    $"Your booking code is {booking.BookingCode}, you can access the website at link https://ars-t5.web.app/bookings/{booking.BookingCode} to look up flight and ticket information.";
                 /*SendMail(userBooking.ContactEmail, mailSubject, body);*/
 
                 var bookingMail = new BookingMail()

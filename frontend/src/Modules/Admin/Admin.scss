@@ -5,16 +5,19 @@
     }
 
     .main-content-admin {
-        width: 82%;
+        width: 83%;
+
+        header{
+            background: #051e34;
+        }
     }
     .css-hmaglg-MuiPaper-root{
         border-radius: 0;
+        max-width: 19.5rem;
     }
     .css-4rovll-MuiButtonBase-root-MuiListItemButton-root{
         margin: 10px;
     }
-    .css-1t29gy6-MuiToolbar-root{
-        background: #051e34;
-        
-    }
+
+    
 }

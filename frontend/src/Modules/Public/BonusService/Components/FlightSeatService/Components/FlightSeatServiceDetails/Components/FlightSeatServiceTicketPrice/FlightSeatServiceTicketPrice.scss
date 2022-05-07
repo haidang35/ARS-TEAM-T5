@@ -25,6 +25,7 @@
                 .flight-time {
                     display: flex;
                     align-items: center;
+                    display: -webkit-inline-box;
 
                     .icon-arrow {
                         font-size: 26px;
@@ -36,11 +37,13 @@
                     }
 
                     .icon-clock {
+                        margin-top: 16px;
                         font-size: 20px;
                         margin-right: 1rem;
                     }
 
                     .time {
+                        margin-top: 16px;
                         font-size: 17px;
                     }
                 }

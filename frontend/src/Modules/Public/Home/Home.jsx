@@ -5,7 +5,6 @@ import { Footer } from "../Shared/Footer/Footer";
 import { SupportInfo } from "../SupportInfo/SupportInfo";
 import FavouriteDestination from "./Components/FavouriteDestination/FavouriteDestination";
 import { Header } from "./Components/Header/Header";
-import { SeachFlightTicket } from "./Components/SearchFlightTicket/SeachFlightTicket";
 
 
 export class Home extends Component {
@@ -29,7 +28,6 @@ export class Home extends Component {
             <>
             <Navbar />
             <Header favouriteDestination={favouriteDestination} />
-            {/* <SeachFlightTicket  /> */}
             <FavouriteDestination onSelectDestinationThumbnail={this.onSelectDestinationThumbnail} />
             <SupportInfo />
             <Footer />

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect, withRouter } from "react-router-dom";
 import { PAYMENT_METHODS } from "../Reservation/Components/Payment/Payment";
 import NavbarV2 from "../Shared/Components/NavbarV2/NavbarV2";
-import  SearchTicketBox  from "../Shared/Components/SearchTicketBox/SearchTicketBox";
+import SearchTicketBox from "../Shared/Components/SearchTicketBox/SearchTicketBox";
 import publicService from "../Shared/Services/PublicService";
 import { ContactsInfomation } from "./Components/ContactInfomation/ContactInfomation";
 import { FlightDetailsTicket } from "./Components/FlightDetailsTicket/FlightDetailsTicket";
@@ -10,7 +10,7 @@ import { NoticeOfBookingStatus } from "./Components/NoticeOfBookingStatus/Notice
 import { PassengerInfomation } from "./Components/PassengerInfomation/PassengerInfomation";
 import { PaymentNoticeBox } from "./Components/PaymentNoticeBox/PaymentNoticeBox";
 import PayPalPayment from "./Components/PaypalPayment/PayPalPayment";
-import { BookingStepBar } from "../ChooseFlightTicket/Components/BookingStepBar/BookingStepBar"; 
+import { BookingStepBar } from "../ChooseFlightTicket/Components/BookingStepBar/BookingStepBar";
 export const BOOKING_STATUS = {
   PAID: 1,
   CANCELLED: 0,
@@ -72,14 +72,14 @@ class Payments extends Component {
   onPayWithPayPal = async (payment) => {
     const { bookingId } = this.state;
     const paymentData = {
-        BookingId: bookingId,
-        PaymentMethod: PAYMENT_METHODS.INTERNATIONAL_PAYMENT_GATEWAY,
-        Amount: payment.purchase_units[0].amount.value
-    }
-    await publicService.paymentBooking(paymentData)
-        .then((res) => {
-            this.checkBookingDetails();
-    })
+      BookingId: bookingId,
+      PaymentMethod: PAYMENT_METHODS.INTERNATIONAL_PAYMENT_GATEWAY,
+      Amount: payment.purchase_units[0].amount.value,
+    };
+    await publicService.paymentBooking(paymentData).then((res) => {
+      window.scrollTo(0, 0);
+      this.checkBookingDetails();
+    });
   };
 
   convertCurrency = async (totalMoney) => {
@@ -115,7 +115,7 @@ class Payments extends Component {
         <NavbarV2 />
         <SearchTicketBox />
         <div className="wrap-container">
-        <BookingStepBar step={4}/>
+          <BookingStepBar step={4} />
           <div className="row">
             <div className="col-md-12">
               <NoticeOfBookingStatus bookingData={bookingData} />
@@ -135,7 +135,7 @@ class Payments extends Component {
               ) : (
                 ""
               )}
-              <FlightDetailsTicket />
+              <FlightDetailsTicket bookingData={bookingData} />
               <PassengerInfomation bookingData={bookingData} />
               <ContactsInfomation bookingData={bookingData} />
             </div>

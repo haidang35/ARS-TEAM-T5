@@ -1,106 +1,62 @@
 #header-left {
-    padding-top: 6rem;
-   
-    .selected-input {
-        width: 100%;
-        background: #ffff;
-        border-radius: 8px;
+  padding-top: 6rem;
+
+    .title{
+        margin-top: 60px;
     }
 
-    .depature {
-        padding-top: 1rem;
-        margin-top: 30px;
-       
-      
+  .selected-input {
+    width: 100%;
+    background: #ffff;
+    border-radius: 8px;
+  }
 
-        // .MuiFormControl-root .MuiTextField-root {
-        //     width: 100% !important;
-            
+  .depature {
+    padding-top: 1rem;
+    margin-top: 30px;
+  }
 
-        //     .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-        //         background: #ffff;
-        //         border-radius: 8px;
+  .oneway {
+    color: #ffff;
+  }
 
+  .roundtrip {
+    color: #ffff;
+  }
 
-        //     }
-        // }
-        // .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
-        //     color: #004E9A;
-        // }
+  .destination {
+    padding-top: 1rem;
+    margin-top: 30px;
+  }
 
+  .date {
+    padding-top: 1rem;
+    margin-top: 30px;
+  }
+
+  .date-time {
+    padding-top: 1rem;
+    margin-top: 30px;
+  }
+
+  .passenger-type{
+    width: 100%;
+
+  }
+  .search {
+    padding-top: 1rem;
+    margin-top: 20px;
+
+    .btn-search-form{
+      width: 100%;
     }
+  }
 
-    .oneway {
-        color: #ffff;
-    }
-
-    .roundtrip {
-        color: #ffff;
-    }
-
-    .destination {
-        padding-top: 1rem;
-        margin-top: 30px;
-
-
-        // .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
-        //     width: 100%;
-         
-        // }
-
-        // .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-        //     background: #ffff;
-        //     border-radius: 8px;
-          
-        // }
-        // .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
-        //     color: #004E9A;
-        // }
-
-
-    }
-
-    .date {
-        padding-top: 1rem;
-        margin-top: 30px;
-
-
-
-
-
-        // .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
-        //     width: 100%;
-        // }
-
-        // .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
-        //     background: #ffff;
-        //     border-radius: 8px;
-        // }
-        // .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root{
-
-        // }
-    }
-
-    .date-time {
-        padding-top: 1rem;
-        margin-top: 30px;
-
-
-    }
-
-    .search {
-        padding-top: 1rem;
-        margin-top: 20px;
-
-    }
-
-    .title-passenger {
-        color: white;
-    }
-    .check-box{
-        color: #C2C8C5;
-    }
-
-
-
+  .title-passenger {
+    color: white;
+    margin-left: 45px;
+  }
+  .check-box {
+    color: #c2c8c5;
+  }
 }
